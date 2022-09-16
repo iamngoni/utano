@@ -7,8 +7,8 @@
 */
 import 'package:dio/dio.dart';
 
-import '../models/network_response.dart';
-import 'abstract/network.dart';
+import '../../models/network_response.dart';
+import '../abstract/network.dart';
 
 class DioHttpService implements NetworkService {
   final Dio _dio = Dio()
