@@ -3,8 +3,8 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
-  auto_updater
   bitsdojo_window_windows
+  permission_handler_windows
   url_launcher_windows
 )
 

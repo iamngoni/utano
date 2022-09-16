@@ -1,36 +1,71 @@
 name: dhra
 description: A Very Good Project created by Very Good CLI.
 version: 1.0.0+1
-publish_to: none
-
+publish_to: 'none'
 environment:
   sdk: ">=2.17.0 <3.0.0"
   flutter: 3.0.5
 
 dependencies:
+  arna: ^1.0.5
+  bitsdojo_window: ^0.1.2
   bloc: ^8.1.0
+  dio: ^4.0.6
+  equatable: ^2.0.3
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.1
   flutter_localizations:
     sdk: flutter
+  freezed_annotation: ^2.1.0
+  get_it: ^7.2.0
+  handy_extensions: ^0.0.6+1
   intl: ^0.17.0
-  auto_updater: ^0.1.5
-  arna: ^1.0.5
-  bitsdojo_window: ^0.1.2
-  window_size:
-    git:
-      url: git://github.com/google/flutter-desktop-embedding.git
-      path: plugins/window_size
-
+  localregex: ^4.0.0
+  logger: ^1.1.0
+  path: ^1.8.1
+  path_provider: ^2.0.11
+  permission_handler: ^10.0.0
+  relative_scale: ^2.0.0
+  shared_preferences: ^2.0.15
 
 dev_dependencies:
   bloc_test: ^9.1.0
+  build_runner: ^2.2.0
+  flutter_native_splash: ^2.2.7
   flutter_test:
     sdk: flutter
+  freezed: ^2.1.0+1
+  json_serializable: ^6.3.1
   mocktail: ^0.3.0
   very_good_analysis: ^3.0.1
 
 flutter:
   uses-material-design: true
   generate: true
+
+  assets:
+    - assets/images/
+    - assets/icons/
+
+  fonts:
+    - family: Poppins
+      fonts:
+        - asset: fonts/Poppins/Poppins-Thin.ttf
+          weight: 100
+        - asset: fonts/Poppins/Poppins-Light.ttf
+          weight: 200
+        - asset: fonts/Poppins/Poppins-ExtraLight.ttf
+          weight: 300
+        - asset: fonts/Poppins/Poppins-Regular.ttf
+          weight: 400
+        - asset: fonts/Poppins/Poppins-Medium.ttf
+          weight: 500
+        - asset: fonts/Poppins/Poppins-SemiBold.ttf
+          weight: 600
+        - asset: fonts/Poppins/Poppins-Bold.ttf
+          weight: 700
+        - asset: fonts/Poppins/Poppins-ExtraBold.ttf
+          weight: 800
+        - asset: fonts/Poppins/Poppins-Black.ttf
+          weight: 900

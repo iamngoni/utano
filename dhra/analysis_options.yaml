@@ -1,4 +1,16 @@
 include: package:very_good_analysis/analysis_options.3.0.1.yaml
 linter:
   rules:
+    avoid_relative_lib_imports: false
     public_member_api_docs: false
+    lines_longer_than_80_chars: true
+    avoid_dynamic_calls: true
+    avoid_type_to_string: true
+    always_declare_return_types: true
+    always_specify_types: false
+    omit_local_variable_types: false
+    prefer_single_quotes: false
+    prefer_relative_imports: true
+    always_use_package_imports: false
+    avoid_setters_without_getters: false
+
