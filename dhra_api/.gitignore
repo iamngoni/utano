@@ -1,0 +1,12 @@
+env/
+*/migrations/*
+.env
+*.pyc
+*~
+*.swp
+media/*
+application.log
+.idea/
+.vscode/
+Pipfile.lock
+*.DS_Store
