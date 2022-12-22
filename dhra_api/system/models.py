@@ -16,16 +16,6 @@ class ApiRequest(SoftDeleteModel):
         table_prefix = "request"
 
 
-class FrequentlyAskedQuestion(SoftDeleteModel):
-    title = models.CharField(max_length=1000, blank=True, null=False, unique=True)
-    answer = models.TextField(blank=True, null=False)
-
-    class Meta:
-        verbose_name = "Frequently Asked Question"
-        verbose_name_plural = "Frequently Asked Questions"
-        table_prefix = "faq"
-
-
 class Gender(EnumModel):
     MALE = "MALE", _("MALE")
     FEMALE = "FEMALE", _("FEMALE")
