@@ -12,14 +12,14 @@ def generate_jwt_payload(user: User) -> dict:
             "id": str(user.id),
             "iat": timezone.now(),
             "exp": timezone.now() + datetime.timedelta(days=1),
-            "iss": "ModestNerd Developers",
+            "iss": "Ngonidzashe Mangudya (H180202M)",
         },
         "refresh": {
             "type": "refresh",
             "id": str(user.id),
             "iat": timezone.now(),
             "exp": timezone.now() + datetime.timedelta(days=30),
-            "iss": "ModestNerd Developers",
+            "iss": "Ngonidzashe Mangudya (H180202M)",
         },
     }
 
