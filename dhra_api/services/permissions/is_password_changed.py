@@ -6,7 +6,7 @@ class IsPasswordChanged(BasePermission):
 
     def has_permission(self, request, view):
         user = request.user
-        password = f"{user.username}@uhuru"
+        password = f"{user.username}@utano"
         if user.check_password(password):
             return False
 
