@@ -1,0 +1,15 @@
+{
+  "name": "Hekima",
+  "project": "Hekima",
+  "format_version": 1,
+  "type": "service_account",
+  "project_id": "hekima-caa31",
+  "private_key_id": "7907c194ba95f2399e4d0edee0291949b337cb59",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQD6oUVY5abAfGdQ\ngyi0FL8g1F0guHxKSu5GJ6a9gfVrej/BfW/DI4HKYfpKEIhp6cQu57q66hEUiv5+\nOBKmCWi77nYpGcyJcTeHUH1HU4e1XS4l8HwKO4BIfVCOxdx4EqoJjrbqEKVHbV1O\nJ3EqwMoBx3vYCYxvx/8Bd1reMB1qFdJryvONdreUR++qWw5Ev541dkyLp9WYsqCl\nXE9oCLMOvkFdQLlTO6EBNIbSQ8SjsRrMbJ1veE9R5YAMReC2eMjAUg9sZ62nEqIe\nTIKusYhbP/+0v6dL7KokAbDhTyGwezgv+5YR8iGwwnkrbyulJshPu1mpJsCCo00v\nVKz33e5BAgMBAAECggEAOpUvLzoQ2e3KPW7G+R7fVQZmlUMiJEBzBRl4F1RVABAV\nbn4KPW/jguGXfi/ynuUaKweV5WJYZzedCHZFX6OT5Fe3LWC/J0I8Q0gMXHt5HWrA\nInSdncuuLuOBzLmRkMx2C+FcvoXxCCrXVDESefaR0UwmVcdXmPpD0D0sk4JmIbkt\nKO49CH/NHw0WyMrKWutcRznPiO7wbWIJvSlSUfZMyiK8zbsiqWbwRVyVAlrshk6R\nvWIcxHBMCzgLhX+dbiTNFz+oF+6JYJg+fqBBM2h/RiAKx8rhEiygzz43sqKYaGPa\nsJDDZj47OwCFkCD6Q/Q+CH/0GHBvy6Ym4O/aX5r9xQKBgQD+0ZUpe74SAyUvolL/\nL6SS3C8lo5QtQtj/nDrlkm6uZEVB/tYdNnJI6UiiKq7lbu8U84nGSS9Dqa/D9vkD\nHoR5xfbHoQ5FozyAOhyfEDP5/id9Te4nsnPWGSlVJREYiecFCjBFJeUQQvSlGg1Y\n7eoGitIBl5Z0BpFblEgN6PsrzQKBgQD7yreSYeOrKeFDtkTchbeLbtWXuNzon5tr\nFEBEdVysnjbar//CCvhmo9dhxVVYT5DaPk+Z0CpdCbDoRaC1aAWRTzayhFgI9A32\n0+9ira6fUdS/8/lUGTQPgAFS0WgithSsMvWibrqeMMgiAg6UmrGiLRdsrP0mUXcC\ntErapvegRQKBgQCwa+534CKCWgce6aXI4/VvcF58Err+cy/GGSZ112Il/2or/QHF\nC/MoI8uT6zVXx+xjdxHGZNkCYbM9W/qffDuAC92F7S3ybMfwh0tVnWQ/CwXQLWpb\ntaOZcaY6OwWRFbkKtjkhRtFG5vR2cokXLvE+QlKPo6IZBosQ+qLAbrOnaQKBgQDf\nPP7+yM1qvwna1+o7vk5aUB0NlLg/gurvyBem2osc/HVT9MEEUGel0NOv+p5NWtXp\nuV8n1zkIHgR8Gud+jsiI6btsEQxge8k5svPGAIkW9h1zRqMjHelbaLlDrSfvxpGT\njubbaeMJR+TYygwVUwX07JedIc6cP5QNkL3hGDHqJQKBgQCxG8pp1NQrJb47IzXu\nCgY+AQXdnLAdjLTI9zE7ytEwtXZxQNYP+L2hAYuJhQQQQCuUVnKurDUvFG0l3imU\neafUWWrQX2b1w4uNJ2BT2uiKdj1Z71da+hh6QdmBdw8jBamEKiwaiNGpauUYsy7C\nG8vHsVMUXm6oM2qYUyc8e/HeJQ==\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-va8xf@hekima-caa31.iam.gserviceaccount.com",
+  "client_id": "110845534743767094179",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-va8xf%40hekima-caa31.iam.gserviceaccount.com"
+}
