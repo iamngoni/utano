@@ -1,6 +1,6 @@
 from rest_framework.views import exception_handler
 
-from services.helpers.hekima_response import hekima_response
+from services.helpers.api_response import hekima_response
 
 
 def custom_exception_handler(exc, context):
@@ -10,7 +10,7 @@ def custom_exception_handler(exc, context):
 
     # Now add the HTTP status code to the response.
     if response is not None:
-        response.data['status_code'] = response.status_code
+        response.data["status_code"] = response.status_code
 
     # create custom fake request object
     request = FakeRequestClass(
@@ -24,7 +24,7 @@ def custom_exception_handler(exc, context):
         message=response.data.get("detail"),
         num_status=response.data.get("status_code"),
         bool_status=False,
-        issues=str(exc)
+        issues=str(exc),
     )
 
 

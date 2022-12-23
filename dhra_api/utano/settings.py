@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     "users.apps.UsersConfig",
     "auth0.apps.Auth0Config",
     "system.apps.SystemConfig",
+    "emails.apps.EmailsConfig",
 ]
 
 MIDDLEWARE = [

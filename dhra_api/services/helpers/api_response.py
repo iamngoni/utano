@@ -52,7 +52,7 @@ def status_meaning(status: int) -> dict:
     return meaning.get(status, None)
 
 
-def hekima_response(
+def api_response(
     request,
     num_status: int = 200,
     bool_status: bool = True,
