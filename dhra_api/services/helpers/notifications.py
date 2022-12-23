@@ -5,8 +5,6 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
 from decouple import config
-from google.oauth2.gdch_credentials import ServiceAccountCredentials
-from google.oauth2.service_account import Credentials
 from loguru import logger
 
 from users.models import User
@@ -74,50 +72,3 @@ def send_email_alt(
         logger.info(f"[Notifications]: Sending email completed.")
     except Exception as e:
         logger.error(f"[Notifications]: Sending TLS mail exception here ---> {e}")
-
-
-def device_notification(user: User, title="Hekima", message="Notification", data=None):
-    if user.receive_email_notifications is False:
-        logger.error("user doesn't allow notifications")
-        logger.error("skipping process")
-        return
-
-    if user.device_token is None:
-        logger.error("user has no linked device")
-        logger.error("skipping process")
-        return
-
-    logger.info(f"sending notification to device {user.device_token}")
-    logger.info(f"sending notification to device {user.device_token}")
-
-    firebase_api = "https://fcm.googleapis.com/v1/projects/hekima-caa31/messages:send"
-
-    payload = {
-        "message": {
-            "token": user.device_token,
-            "android": {
-                "direct_boot_ok": True,
-            },
-            "notification": {
-                "title": title,
-                "body": message,
-            },
-        }
-    }
-
-    if data is not None:
-        payload["message"]["data"] = data
-
-    credentials = Credentials.from_service_account_file(
-        "services/helpers/hekima-service.json"
-    )
-    access_token = credentials.token
-
-    requests.post(
-        firebase_api,
-        data=payload,
-        headers={
-            "Authorization": f"Bearer {access_token}",
-            "Content-Type": "application/json; UTF-8",
-        },
-    )
