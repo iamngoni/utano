@@ -1,6 +1,6 @@
 from rest_framework.views import exception_handler
 
-from services.helpers.api_response import hekima_response
+from services.helpers.api_response import api_response
 
 
 def custom_exception_handler(exc, context):
@@ -19,7 +19,7 @@ def custom_exception_handler(exc, context):
         path=context.get("request").path,
     )
 
-    return hekima_response(
+    return api_response(
         request=request,
         message=response.data.get("detail"),
         num_status=response.data.get("status_code"),
