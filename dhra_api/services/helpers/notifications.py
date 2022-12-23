@@ -8,7 +8,6 @@ from decouple import config
 from loguru import logger
 
 from users.models import User
-import requests
 
 system_host = config("EMAIL_HOST")
 system_email = config("EMAIL_ADDRESS")
