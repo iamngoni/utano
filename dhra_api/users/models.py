@@ -1,6 +1,5 @@
 import json
 
-from decouple import config
 from django.contrib.auth.hashers import make_password, check_password
 from django.contrib.auth.models import AbstractUser
 from django.db import models
@@ -141,4 +140,51 @@ class Patient(SoftDeleteModel):
         ordering = ["-updated_at"]
         verbose_name = "Patient"
         verbose_name_plural = "Patients"
-        table_prefix = "patient"
+        table_prefix = "pt"
+
+
+class Doctor(SoftDeleteModel):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="doctor")
+    registered_at = models.ForeignKey(HealthInstitution, on_delete=models.DO_NOTHING)
+    registered_on = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-updated_at"]
+        verbose_name = "Doctor"
+        verbose_name_plural = "Doctors"
+        table_prefix = "dr"
+
+    def __str__(self):
+        return f"{self.user.first_name} {self.user.last_name}"
+
+
+class Nurse(SoftDeleteModel):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="nurse")
+    registered_at = models.ForeignKey(HealthInstitution, on_delete=models.DO_NOTHING)
+    registered_on = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-updated_at"]
+        verbose_name = "Nurse"
+        verbose_name_plural = "Nurses"
+        table_prefix = "nurse"
+
+    def __str__(self):
+        return f"{self.user.first_name} {self.user.last_name}"
+
+
+class LabTechnician(SoftDeleteModel):
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE, related_name="lab_technician"
+    )
+    registered_at = models.ForeignKey(HealthInstitution, on_delete=models.DO_NOTHING)
+    registered_on = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-updated_at"]
+        verbose_name = "Lab Technician"
+        verbose_name_plural = "Lab Technicians"
+        table_prefix = "ltech"
+
+    def __str__(self):
+        return f"{self.user.first_name} {self.user.last_name}"

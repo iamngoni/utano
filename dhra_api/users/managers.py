@@ -1,5 +1,6 @@
 from django.contrib.auth.base_user import BaseUserManager
 
+
 class UserManager(BaseUserManager):
     def create_superuser(self, username, password, **other_fields):
         other_fields.setdefault("is_staff", True)
