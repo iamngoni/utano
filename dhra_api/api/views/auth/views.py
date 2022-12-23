@@ -1,7 +1,15 @@
+from api.views.auth.serializers import SignInPayloadSerializer
+from rest_framework.parsers import JSONParser
+from rest_framework.renderers import JSONRenderer
+from rest_framework.views import APIView
+from django.contrib.auth import authenticate
+from loguru import logger
+
+
 class SignInView(APIView):
     renderer_classes = [JSONRenderer]
     parser_classes = [JSONParser]
-    serializer_class = LoginSerializer
+    serializer_class = SignInPayloadSerializer
     authentication_classes = ()
 
     def post(self, request):
@@ -18,7 +26,7 @@ class SignInView(APIView):
                 logger.info("USER: ", user)
 
                 if user is None:
-                    return uhuru_response(
+                    return utano_response(
                         num_status=401,
                         bool_status=False,
                         message="Incorrect email or password",
