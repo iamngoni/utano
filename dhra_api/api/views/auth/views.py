@@ -214,7 +214,7 @@ class ForgotPasswordView(APIView):
             payload = self.serializer_class(data=request.data)
             if payload.is_valid():
                 user = User.objects.get(email=payload.data.get("email"))
-                user.generate_email_otp()
+                user.generate_one_time_pin()
                 user.save()
 
                 send_password_reset_otp.delay(user)

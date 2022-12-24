@@ -72,7 +72,7 @@ def send_verification_code_to_user(user: User):
 @job("emails")
 def send_password_reset_otp(user: User):
     # generate one time pin
-    user.generate_email_otp()
+    user.generate_one_time_pin()
 
     html_content = render_to_string(
         "forgot_password.html",
