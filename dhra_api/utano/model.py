@@ -50,7 +50,12 @@ class SoftDeleteModel(models.Model):
         return super(SoftDeleteModel, self).save(*args, **kwargs)
 
     @classmethod
-    def get_item_by_id(cls, pk):
+    def get_item_by_id(cls, pk: str):
+        """
+        Get an item with the specified id key or else None
+        @param pk:
+        @return:
+        """
         return cls.objects.filter(id=pk).first()
 
 

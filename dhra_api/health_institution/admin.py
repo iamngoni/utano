@@ -1,14 +1,9 @@
+from health_institution.models import HealthInstitution
 from django.contrib import admin
-
-from users.models import User, Patient, Nurse, LabTechnician, Doctor
 
 
 @admin.register(
-    User,
-    Patient,
-    Doctor,
-    Nurse,
-    LabTechnician,
+    HealthInstitution,
 )
 class UniversalAdmin(admin.ModelAdmin):
     def get_list_display(self, request):

@@ -1,4 +1,8 @@
-from api.views.auth.serializers import SignInPayloadSerializer, UserModelSerializer
+from api.views.auth.serializers.model import UserModelSerializer
+from api.views.auth.serializers.payload import (
+    SignInPayloadSerializer,
+    RefreshTokenSerializer,
+)
 from rest_framework.parsers import JSONParser
 from rest_framework.renderers import JSONRenderer
 from rest_framework.views import APIView
@@ -6,6 +10,9 @@ from django.contrib.auth import authenticate
 from loguru import logger
 import jwt
 from decouple import config
+from django.shortcuts import redirect
+
+from auth0.models import BlacklistToken
 from services.helpers.api_response import api_response
 from services.helpers.get_client_details import get_client_details
 from services.jwt_service import generate_jwt_payload
@@ -13,6 +20,8 @@ from api.views.auth.tasks import (
     notify_user_about_login_activity,
     send_verification_code_to_user,
 )
+from users.models import User
+from rest_framework.permissions import IsAuthenticated
 
 
 class SignInView(APIView):
@@ -26,11 +35,10 @@ class SignInView(APIView):
             payload = self.serializer_class(data=request.data)
 
             if payload.is_valid():
-
-                email = payload.data.get("email").lower()
+                username = payload.data.get("username")
                 password = payload.data.get("password")
 
-                user = authenticate(email=email, password=password)
+                user = authenticate(username=username, password=password)
 
                 logger.info("USER: ", user)
 
@@ -39,7 +47,7 @@ class SignInView(APIView):
                         request=request,
                         num_status=401,
                         bool_status=False,
-                        message="Incorrect email or password",
+                        message="Incorrect username/email or password",
                     )
 
                 if user is not None:
@@ -61,7 +69,7 @@ class SignInView(APIView):
                     notify_user_about_login_activity.delay(user, details)
 
                     # if user hasn't been verified send another otp code
-                    if not user.account.is_verified:
+                    if not user.is_verified:
                         send_verification_code_to_user.delay(request.user)
 
                     return api_response(
@@ -92,91 +100,104 @@ class SignInView(APIView):
             return api_response(request=request, num_status=500, bool_status=False)
 
 
-# class RefreshAuthView(APIView):
-#     renderer_classes = [JSONRenderer]
-#     parser_classes = [JSONParser]
-#     authentication_classes = []
-#     serializer_class = RefreshTokenSerializer
-#
-#     def post(self, request):
-#         payload = self.serializer_class(data=request.data)
-#
-#         if payload.is_valid():
-#             logger.info(f"PAYLOAD --> {payload.data}")
-#             refresh_token = payload.data.get("refresh_token")
-#
-#             try:
-#                 decoded_refresh_token = jwt.decode(
-#                     jwt=refresh_token,
-#                     key=config("JWT_SECRET"),
-#                     options={"require": ["exp", "iat", "iss"]},
-#                     algorithms=["HS256"],
-#                 )
-#
-#                 if decoded_refresh_token.get("type") != "refresh":
-#                     return api_response(request=request,
-#                         num_status=401,
-#                         bool_status=False,
-#                         message="Incorrect token type",
-#                     )
-#
-#                 user_id = decoded_refresh_token.get("__value")
-#                 user = User.get_user(user_id=user_id)
-#
-#                 if user is not None:
-#                     jwt_payload = generate_jwt_payload(user=user)
-#                     access_token = jwt.encode(
-#                         payload=jwt_payload["access"],
-#                         key=config("JWT_SECRET"),
-#                         algorithm="HS256",
-#                     )
-#                     refresh_token = jwt.encode(
-#                         payload=jwt_payload["refresh"],
-#                         key=config("JWT_SECRET"),
-#                         algorithm="HS256",
-#                     )
-#
-#                     return api_response(request=request,
-#                         data={
-#                             "access_token": access_token,
-#                             "refresh_token": refresh_token,
-#                             "user": UserModelSerializer(user).data,
-#                         }
-#                     )
-#                 else:
-#                     return api_response(request=request,
-#                         num_status=404,
-#                         bool_status=False,
-#                         message="No user associated with token",
-#                     )
-#
-#             except Exception as e:
-#                 logger.error(f"[Auth]: {e}")
-#                 return api_response(request=request,num_status=500, bool_status=False)
-#
-#         else:
-#             return api_response(request=request,
-#                 num_status=400, bool_status=False, issues=payload.errors
-#             )
+class RefreshAuthView(APIView):
+    renderer_classes = (JSONRenderer,)
+    parser_classes = (JSONParser,)
+    authentication_classes = ()
+    serializer_class = RefreshTokenSerializer
+
+    def post(self, request):
+        payload = self.serializer_class(data=request.data)
+
+        if payload.is_valid():
+            refresh_token = payload.data.get("refresh_token")
+
+            try:
+                decoded_refresh_token = jwt.decode(
+                    jwt=refresh_token,
+                    key=config("JWT_SECRET"),
+                    options={"require": ["exp", "iat", "iss"]},
+                    algorithms=["HS256"],
+                )
+
+                if decoded_refresh_token.get("type") != "refresh":
+                    return api_response(
+                        request=request,
+                        num_status=401,
+                        bool_status=False,
+                        message="Incorrect token type",
+                    )
+
+                user_id = decoded_refresh_token.get("id")
+                user = User.get_item_by_id(pk=user_id)
+
+                if user is not None:
+
+                    # destroy old token
+                    authorization_header = request.headers.get("Authorization")
+                    token = authorization_header.split(" ")[1]
+
+                    blacklist = BlacklistToken(token=token)
+                    blacklist.save()
+
+                    jwt_payload = generate_jwt_payload(user=user)
+                    access_token = jwt.encode(
+                        payload=jwt_payload["access"],
+                        key=config("JWT_SECRET"),
+                        algorithm="HS256",
+                    )
+                    refresh_token = jwt.encode(
+                        payload=jwt_payload["refresh"],
+                        key=config("JWT_SECRET"),
+                        algorithm="HS256",
+                    )
+
+                    return api_response(
+                        request=request,
+                        data={
+                            "access_token": access_token,
+                            "refresh_token": refresh_token,
+                            "user": UserModelSerializer(user).data,
+                        },
+                    )
+                else:
+                    return api_response(
+                        request=request,
+                        num_status=404,
+                        bool_status=False,
+                        message="No user associated with token",
+                    )
+
+            except Exception as e:
+                logger.error(f"[Auth]: {e}")
+                return api_response(request=request, num_status=500, bool_status=False)
+
+        else:
+            return api_response(
+                request=request,
+                num_status=400,
+                bool_status=False,
+                issues=payload.errors,
+            )
 
 
-# class DestroyTokenView(APIView):
-#     renderer_classes = [JSONRenderer]
-#     parser_classes = [JSONParser]
-#     permission_classes = (IsAuthenticated,)
-#
-#     def get(self, request):
-#         try:
-#             authorization_header = request.headers.get("Authorization")
-#             token = authorization_header.split(" ")[1]
-#
-#             blacklist = BlacklistToken(token=token)
-#             blacklist.save()
-#
-#             return redirect(to="https://huru-web.netlify.app")
-#         except Exception as e:
-#             logger.error(f"[Auth]: Failed to destroy token: {e}")
-#             return redirect(to="https://huru-web.netlify.app")
+class DestroyTokenView(APIView):
+    renderer_classes = [JSONRenderer]
+    parser_classes = [JSONParser]
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request):
+        try:
+            authorization_header = request.headers.get("Authorization")
+            token = authorization_header.split(" ")[1]
+
+            blacklist = BlacklistToken(token=token)
+            blacklist.save()
+
+            return api_response(request=request)
+        except Exception as e:
+            logger.error(f"[Auth]: Failed to destroy token: {e}")
+            return api_response(request=request, num_status=500, bool_status=False)
 
 
 # class ForgotPasswordView(APIView):
@@ -275,4 +296,4 @@ class SignInView(APIView):
 #             return api_response(request=request,num_status=404, bool_status=False)
 #         except Exception as e:
 #             logger.error(f"[Auth]: {e}")
-#             return api_response(request=request,num_status=500, bool_status=False)
+#             return api_response(request=request,num_status=500, bool_st

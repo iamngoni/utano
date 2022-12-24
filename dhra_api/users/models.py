@@ -25,7 +25,7 @@ class UserRoles(EnumModel):
 class User(SoftDeleteModel, AbstractUser):
     email = models.EmailField(unique=True)
     is_active = models.BooleanField(default=True)
-    is_email_verified = models.BooleanField(default=False)
+    is_verified = models.BooleanField(default=False)
     username = models.CharField(blank=True, null=True, unique=False, max_length=15)
     role = models.CharField(
         choices=UserRoles.choices, max_length=50, blank=False, null=True, default=None
@@ -63,9 +63,9 @@ class User(SoftDeleteModel, AbstractUser):
                 logger.info("PASSWORD_OBJECT: ", password_object)
 
                 if check_password(
-                        password=raw_password,
-                        encoded=password_object.get("password"),
-                        setter=None,
+                    password=raw_password,
+                    encoded=password_object.get("password"),
+                    setter=None,
                 ):
                     raise PasswordUsedException(
                         f"This password was used before and was changed on: "
@@ -102,24 +102,8 @@ class User(SoftDeleteModel, AbstractUser):
         self.save()
 
 
-class HealthInstitution(SoftDeleteModel):
-    name = models.CharField(max_length=255, blank=False, null=False)
-    address = models.CharField(max_length=255, blank=False, null=False)
-    phone_number = models.CharField(max_length=255, blank=False, null=False)
-    email = models.EmailField(blank=False, null=False)
-    logo = models.ImageField(upload_to="health_institutions", blank=True, null=True)
-
-    class Meta:
-        ordering = ["-updated_at"]
-        verbose_name = "Health Institution"
-        verbose_name_plural = "Health Institutions"
-        table_prefix = "hinst"
-
-
 class Patient(SoftDeleteModel):
-    user = models.OneToOneField(
-        User, on_delete=models.CASCADE, related_name="patient"
-    )
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="patient")
     date_of_birth = models.DateField(blank=True)
     place_of_birth = models.CharField(max_length=255, blank=True)
     national_id_number = models.CharField(max_length=255, blank=True, null=True)
@@ -133,7 +117,9 @@ class Patient(SoftDeleteModel):
     father_name = models.CharField(max_length=255, blank=True)
     marital_status = models.CharField(max_length=255, blank=True)
     occupation = models.CharField(max_length=255, blank=True)
-    registered_at = models.ForeignKey(HealthInstitution, on_delete=models.DO_NOTHING)
+    registered_at = models.ForeignKey(
+        "health_institution.HealthInstitution", on_delete=models.DO_NOTHING
+    )
     registered_on = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -145,7 +131,9 @@ class Patient(SoftDeleteModel):
 
 class Doctor(SoftDeleteModel):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="doctor")
-    registered_at = models.ForeignKey(HealthInstitution, on_delete=models.DO_NOTHING)
+    registered_at = models.ForeignKey(
+        "health_institution.HealthInstitution", on_delete=models.DO_NOTHING
+    )
     registered_on = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -160,7 +148,9 @@ class Doctor(SoftDeleteModel):
 
 class Nurse(SoftDeleteModel):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="nurse")
-    registered_at = models.ForeignKey(HealthInstitution, on_delete=models.DO_NOTHING)
+    registered_at = models.ForeignKey(
+        "health_institution.HealthInstitution", on_delete=models.DO_NOTHING
+    )
     registered_on = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -174,10 +164,10 @@ class Nurse(SoftDeleteModel):
 
 
 class LabTechnician(SoftDeleteModel):
-    user = models.OneToOneField(
-        User, on_delete=models.CASCADE, related_name="lab_technician"
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="lab_tech")
+    registered_at = models.ForeignKey(
+        "health_institution.HealthInstitution", on_delete=models.DO_NOTHING
     )
-    registered_at = models.ForeignKey(HealthInstitution, on_delete=models.DO_NOTHING)
     registered_on = models.DateTimeField(auto_now_add=True)
 
     class Meta:

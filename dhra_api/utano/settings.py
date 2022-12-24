@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     "auth0.apps.Auth0Config",
     "system.apps.SystemConfig",
     "emails.apps.EmailsConfig",
+    "health_institution.apps.HealthInstitutionConfig",
 ]
 
 MIDDLEWARE = [
