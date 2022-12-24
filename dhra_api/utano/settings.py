@@ -206,6 +206,9 @@ RQ_QUEUES = {
     "users": {
         "USE_REDIS_CACHE": "default",
     },
+    "health_institution": {
+        "USE_REDIS_CACHE": "default",
+    },
 }
 
 USER_AGENTS_CACHE = "default"
