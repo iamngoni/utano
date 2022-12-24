@@ -1,5 +1,4 @@
 import jwt
-from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 from jwt import ExpiredSignatureError, DecodeError
 from loguru import logger
@@ -8,6 +7,7 @@ from rest_framework.authentication import BaseAuthentication
 
 from auth0.models import BlacklistToken
 from users.models import User
+from decouple import config
 
 
 class IsAPIAuthenticated(BaseAuthentication):
@@ -49,7 +49,7 @@ class IsAPIAuthenticated(BaseAuthentication):
                 decoded = jwt.decode(
                     token,
                     options={"require": ["exp", "iat", "iss"]},
-                    key=settings.JWT_SECRET,
+                    key=config("JWT_SECRET"),
                     verify=True,
                     algorithms=["HS256"],
                 )

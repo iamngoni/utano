@@ -15,7 +15,7 @@ system_port = config("EMAIL_PORT")
 system_password = config("EMAIL_PASSWORD")
 
 
-def send_email(user: User, html_content: str, email_subject: str = "Hekima Therapists"):
+def send_email(user: User, html_content: str, email_subject: str = "Utano EHR"):
     if user.receive_email_notifications is False:
         logger.error("[Send Email]: User has disabled receiving email notifications")
         logger.error("[Send Email]: Skipping process")
@@ -27,7 +27,7 @@ def send_email(user: User, html_content: str, email_subject: str = "Hekima Thera
     server = smtplib.SMTP(host=system_host, port=system_port)
 
     email_message = MIMEMultipart()
-    email_message["From"] = str(Header(f"Hekima Therapists <{system_email}>"))
+    email_message["From"] = str(Header(f"Utano EHR <{system_email}>"))
     email_message["To"] = user.email
     email_message["Subject"] = email_subject
 
@@ -45,9 +45,7 @@ def send_email(user: User, html_content: str, email_subject: str = "Hekima Thera
         logger.error(f"[Notifications]: Sending TLS mail exception here ---> {e}")
 
 
-def send_email_alt(
-    email: str, html_content: str, email_subject: str = "Hekima Therapists"
-):
+def send_email_alt(email: str, html_content: str, email_subject: str = "Utano EHR"):
 
     logger.info(f"[Send Email]: Sending email to {email}")
 
@@ -55,7 +53,7 @@ def send_email_alt(
     server = smtplib.SMTP(host=system_host, port=system_port)
 
     email_message = MIMEMultipart()
-    email_message["From"] = str(Header(f"Hekima Therapists <{system_email}>"))
+    email_message["From"] = str(Header(f"Utano EHR <{system_email}>"))
     email_message["To"] = email
     email_message["Subject"] = email_subject
 

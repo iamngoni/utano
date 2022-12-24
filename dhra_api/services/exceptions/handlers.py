@@ -1,11 +1,15 @@
 from rest_framework.views import exception_handler
 
 from services.helpers.api_response import api_response
+from loguru import logger
 
 
 def custom_exception_handler(exc, context):
     # Call REST framework's default exception handler first,
     # to get the standard error response.
+
+    logger.info(f"Handling exception: {exc}")
+
     response = exception_handler(exc, context)
 
     # Now add the HTTP status code to the response.

@@ -59,7 +59,7 @@ def send_verification_code_to_user(user: User):
     html_content = render_to_string(
         "verification_code.html",
         {
-            "name": user.username.capitalize(),
+            "name": user.get_full_name(),
             "email": user.email,
             "code": user.one_time_pin,
         },
@@ -67,3 +67,24 @@ def send_verification_code_to_user(user: User):
 
     send_email(user=user, html_content=html_content)
     logger.info(f"[Job]: Task Executed!")
+
+
+@job("emails")
+def send_password_reset_otp(user: User):
+    # generate one time pin
+    user.generate_email_otp()
+
+    html_content = render_to_string(
+        "forgot_password.html",
+        {
+            "name": user.get_full_name(),
+            "email": user.email,
+            "code": user.one_time_pin,
+        },
+    )
+    send_email(
+        user=user,
+        html_content=html_content,
+        email_subject="Forgot Password",
+    )
+    logger.success("Job complete")

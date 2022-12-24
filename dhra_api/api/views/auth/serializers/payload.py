@@ -14,3 +14,17 @@ class RefreshTokenSerializer(serializers.Serializer):
 
     def create(self, validated_data):
         return super().create(validated_data)
+
+
+class ForgotPasswordPayloadSerializer(serializers.Serializer):
+    email = serializers.EmailField(required=True)
+
+    def create(self, validated_data):
+        return super().create(validated_data)
+
+
+class ResetPasswordPayloadSerializer(serializers.Serializer):
+    otp = serializers.CharField(required=True)
+
+    def create(self, validated_data):
+        return super().create(validated_data)
