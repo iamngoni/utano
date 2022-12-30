@@ -27,7 +27,12 @@ def readable_date(date: datetime) -> str:
         return "hello world"
 
 
-def readable_date_time_string(date: str) -> str:
+def readable_date_time_string(date: str) -> object:
+    """
+    construct a readable date string from another proper datetime string
+    @param date:
+    @return:
+    """
     logger.debug(f"date: {date}")
     try:
         date_time = date.split(" ")
@@ -40,7 +45,7 @@ def readable_date_time_string(date: str) -> str:
         time_figures_array = time_string.split(":")
         time_period = "pm" if int(time_figures_array[0]) >= 12 else "am"
         formatted_time = f"{divmod(int(time_figures_array[0]), 12)[1]}:{time_figures_array[1]} {time_period}"
-        return f"{formatted_date} around {formatted_time}."
+        return formatted_date, formatted_time
     except Exception as e:
         logger.error(f"failed to return proper date: {e}")
         raise

@@ -74,7 +74,7 @@ class User(SoftDeleteModel, AbstractUser):
                     )
                     raise PasswordUsedException(
                         f"This password was used before and was changed on "
-                        f"{password_changed_on_readable_date}"
+                        f"{password_changed_on_readable_date[0]} around {password_changed_on_readable_date[1]}."
                     )
 
             # Add previous password to history list
