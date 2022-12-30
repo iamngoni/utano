@@ -201,13 +201,16 @@ CACHES = {
 }
 
 RQ_QUEUES = {
-    "utano": {
+    "auth": {
+        "USE_REDIS_CACHE": "default",
+    },
+    "health_institution": {
         "USE_REDIS_CACHE": "default",
     },
     "users": {
         "USE_REDIS_CACHE": "default",
     },
-    "health_institution": {
+    "utano": {
         "USE_REDIS_CACHE": "default",
     },
 }

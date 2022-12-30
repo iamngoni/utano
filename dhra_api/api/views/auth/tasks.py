@@ -9,7 +9,7 @@ from loguru import logger
 from django.template.loader import render_to_string
 
 
-@job("users")
+@job("auth")
 def notify_user_about_login_activity(user: User, details):
     """
     notify user about the login activity on their account i.e
@@ -45,7 +45,7 @@ def notify_user_about_login_activity(user: User, details):
     logger.info(f"[Job]: Task Executed!")
 
 
-@job("users")
+@job("auth")
 def send_verification_code_to_user(user: User):
     """
     send a welcome message to the user as well as a
@@ -69,7 +69,7 @@ def send_verification_code_to_user(user: User):
     logger.info(f"[Job]: Task Executed!")
 
 
-@job("emails")
+@job("auth")
 def send_password_reset_otp(user: User):
     # generate one time pin
     user.generate_one_time_pin()
