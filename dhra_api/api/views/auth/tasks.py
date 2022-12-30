@@ -12,7 +12,7 @@ from django.template.loader import render_to_string
 @job("auth")
 def notify_user_about_login_activity(user: User, details):
     """
-    notify user about the login activity on their account i.e
+    notify user about the login activity on their account i.e.
     inform them about the location, client used, ip address,
     date & time when the login activity occurred
     """

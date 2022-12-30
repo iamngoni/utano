@@ -15,6 +15,7 @@ from decouple import config
 from django.utils import timezone
 
 from auth0.models import BlacklistToken
+from services.exceptions.passwords import PasswordUsedException
 from services.helpers.api_response import api_response
 from services.helpers.get_client_details import get_client_details
 from services.jwt_service import generate_jwt_payload
@@ -99,7 +100,7 @@ class SignInView(APIView):
                     issues=payload.errors,
                 )
         except Exception as e:
-            logger.error(f"[Auth]: {e}")
+            logger.error(f" {e}")
             return api_response(request=request, num_status=500, bool_status=False)
 
 
@@ -172,7 +173,7 @@ class RefreshAuthView(APIView):
                     )
 
             except Exception as e:
-                logger.error(f"[Auth]: {e}")
+                logger.error(f" {e}")
                 return api_response(request=request, num_status=500, bool_status=False)
 
         else:
@@ -199,7 +200,7 @@ class DestroyTokenView(APIView):
 
             return api_response(request=request)
         except Exception as e:
-            logger.error(f"[Auth]: Failed to destroy token: {e}")
+            logger.error(f" Failed to destroy token: {e}")
             return api_response(request=request, num_status=500, bool_status=False)
 
 
@@ -222,7 +223,7 @@ class ForgotPasswordView(APIView):
                     request=request,
                 )
             else:
-                logger.error(f"[Auth]: {payload.errors}")
+                logger.error(f" {payload.errors}")
                 return api_response(
                     request=request,
                     num_status=400,
@@ -230,12 +231,12 @@ class ForgotPasswordView(APIView):
                     issues=payload.errors,
                 )
         except User.DoesNotExist:
-            logger.error("[Auth]: User does not exist")
+            logger.error(" User does not exist")
             return api_response(
                 request=request,
             )
         except Exception as e:
-            logger.error(f"[Auth]: {e}")
+            logger.error(f" {e}")
             return api_response(request=request, num_status=500, bool_status=False)
 
 
@@ -250,21 +251,21 @@ class ResetPasswordView(APIView):
             payload = self.serializer_class(data=request.data)
             if payload.is_valid():
                 otp = payload.data.get("otp")
-                user = User.objects.get(email_pin=otp)
+                user = User.objects.get(one_time_pin=otp)
 
-                issued_at_time = user.email_pin_sent_at
+                issued_at_time = user.one_time_pin_generated_at
                 current_time = timezone.now()
                 time_difference = current_time - issued_at_time
                 logger.info(
-                    f"[Auth]: time difference between issued at and now is {time_difference.total_seconds()} in seconds"
+                    f" time difference between issued at and now is {time_difference.total_seconds()} in seconds"
                 )
                 time_difference = divmod(time_difference.total_seconds(), 60)
                 difference_in_minutes = time_difference[0]
                 logger.info(
-                    f"[Auth]: time difference between issued at and now is {difference_in_minutes} in minutes"
+                    f" time difference between issued at and now is {difference_in_minutes} in minutes"
                 )
 
-                if difference_in_minutes > 5:
+                if difference_in_minutes > 10:
                     return api_response(
                         request=request,
                         num_status=400,
@@ -272,6 +273,9 @@ class ResetPasswordView(APIView):
                         message="OTP Expired",
                     )
 
+                # clear the one time pins
+                user.one_time_pin = None
+                user.one_time_pin_generated_at = None
                 user.set_password(payload.data.get("password"))
                 user.save()
 
@@ -301,7 +305,7 @@ class ResetPasswordView(APIView):
                     },
                 )
             else:
-                logger.error(f"[Auth]: {payload.errors}")
+                logger.error(f" {payload.errors}")
                 return api_response(
                     request=request,
                     num_status=400,
@@ -309,8 +313,13 @@ class ResetPasswordView(APIView):
                     issues=payload.errors,
                 )
         except User.DoesNotExist:
-            logger.error("[Auth]: User does not exist")
+            logger.error(" User does not exist")
             return api_response(request=request, num_status=404, bool_status=False)
+        except PasswordUsedException as e:
+            logger.error("password has been used before")
+            return api_response(
+                request=request, num_status=400, bool_status=False, message=str(e)
+            )
         except Exception as e:
-            logger.error(f"[Auth]: {e}")
+            logger.error(f" {e}")
             return api_response(request=request, num_status=500, bool_status=False)

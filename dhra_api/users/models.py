@@ -9,6 +9,7 @@ from loguru import logger
 
 from services.exceptions.passwords import PasswordUsedException
 from services.helpers.generate_otp import random_otp
+from services.helpers.readable_date import readable_date_time_string
 from users.managers import UserManager
 from utano.model import EnumModel, SoftDeleteModel
 
@@ -67,9 +68,13 @@ class User(SoftDeleteModel, AbstractUser):
                     encoded=password_object.get("password"),
                     setter=None,
                 ):
+                    password_changed_on = password_object.get("changed_on")
+                    password_changed_on_readable_date = readable_date_time_string(
+                        date=password_changed_on
+                    )
                     raise PasswordUsedException(
-                        f"This password was used before and was changed on: "
-                        f"{password_object.get('changed_on')}"
+                        f"This password was used before and was changed on "
+                        f"{password_changed_on_readable_date}"
                     )
 
             # Add previous password to history list
