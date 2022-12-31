@@ -4,7 +4,9 @@ from utano.model import SoftDeleteModel
 
 
 class BlacklistToken(SoftDeleteModel):
-    token = models.CharField(null=False, blank=False, max_length=1000, unique=True)
+    token = models.CharField(
+        null=False, blank=False, max_length=1000, unique=True, db_index=True
+    )
 
     class Meta:
         verbose_name = "BlacklistToken"
