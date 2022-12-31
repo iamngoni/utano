@@ -4,10 +4,14 @@ from utano.model import SoftDeleteModel
 
 
 class HealthInstitution(SoftDeleteModel):
-    name = models.CharField(max_length=255, blank=False, null=False, unique=True)
+    name = models.CharField(
+        max_length=255, blank=False, null=False, unique=True, db_index=True
+    )
     address = models.CharField(max_length=255, blank=False, null=False)
-    phone_number = models.CharField(max_length=255, blank=False, null=False)
-    email = models.EmailField(blank=False, null=False)
+    phone_number = models.CharField(
+        max_length=255, blank=False, null=False, unique=True
+    )
+    email = models.EmailField(blank=False, null=False, unique=True)
     logo = models.ImageField(upload_to="health_institutions", blank=True, null=True)
     district = models.ForeignKey(
         "system.District", blank=False, null=False, on_delete=models.DO_NOTHING
@@ -17,7 +21,7 @@ class HealthInstitution(SoftDeleteModel):
         ordering = ["-updated_at"]
         verbose_name = "Health Institution"
         verbose_name_plural = "Health Institutions"
-        table_prefix = "hinst"
+        table_prefix = "inst"
 
 
 class Client(SoftDeleteModel):
