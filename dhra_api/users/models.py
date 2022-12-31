@@ -28,7 +28,9 @@ class User(SoftDeleteModel, AbstractUser):
     email = models.EmailField(unique=True)
     is_active = models.BooleanField(default=True)
     is_verified = models.BooleanField(default=False)
-    username = models.CharField(blank=True, null=True, unique=False, max_length=15)
+    username = models.CharField(
+        blank=True, null=True, unique=False, max_length=15, db_index=True
+    )
     role = models.CharField(
         choices=UserRoles.choices, max_length=50, blank=False, null=True, default=None
     )
