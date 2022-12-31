@@ -3,6 +3,7 @@ from phonenumber_field.serializerfields import PhoneNumberField
 
 from health_institution.models import HealthInstitution
 from system.models import District
+from django.db.models import Q
 
 
 class HealthInstitutionDetailsPayloadSerializer(serializers.Serializer):
@@ -14,10 +15,12 @@ class HealthInstitutionDetailsPayloadSerializer(serializers.Serializer):
     district = serializers.CharField(required=True)
 
     def validate(self, attrs):
-        health_institutions = HealthInstitution.objects.filter(name=attrs.get("name"))
+        health_institutions = HealthInstitution.objects.filter(
+            Q(name=attrs.get("name")) | Q(phone_number=attrs.get("phone_number"))
+        )
         if health_institutions.count() > 0:
             raise serializers.ValidationError(
-                {"name": "Health institution with name exists already"}
+                {"name": "Health institution with name or phone number exists already"}
             )
 
         district = District.get_item_by_id(attrs.get("district"))
