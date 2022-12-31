@@ -29,7 +29,9 @@ class SystemStatus(EnumModel):
 
 
 class Province(SoftDeleteModel):
-    name = models.CharField(max_length=255, blank=False, null=False, unique=True)
+    name = models.CharField(
+        max_length=255, blank=False, null=False, unique=True, db_index=True
+    )
 
     class Meta:
         verbose_name = "Province"
@@ -41,13 +43,16 @@ class Province(SoftDeleteModel):
 
 
 class District(SoftDeleteModel):
-    name = models.CharField(max_length=255, blank=False, null=False, unique=True)
+    name = models.CharField(
+        max_length=255, blank=False, null=False, unique=True, db_index=True
+    )
     province = models.ForeignKey(
         "system.Province",
         related_name="districts",
         blank=False,
         null=False,
         on_delete=models.CASCADE,
+        db_index=True,
     )
 
     class Meta:
