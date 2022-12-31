@@ -13,7 +13,7 @@ class ApiRequest(SoftDeleteModel):
     class Meta:
         verbose_name = "API Request"
         verbose_name_plural = "API Requests"
-        table_prefix = "request"
+        table_prefix = "req"
 
 
 class Gender(EnumModel):
@@ -26,3 +26,34 @@ class SystemStatus(EnumModel):
     IN_PROGRESS = "IN_PROGRESS", _("In progress")
     COMPLETED = "COMPLETED", _("Completed")
     CANCELLED = "CANCELLED", _("Cancelled")
+
+
+class Province(SoftDeleteModel):
+    name = models.CharField(max_length=255, blank=False, null=False, unique=True)
+
+    class Meta:
+        verbose_name = "Province"
+        verbose_name_plural = "Provinces"
+        table_prefix = "prov"
+
+    def __str__(self):
+        return self.name
+
+
+class District(SoftDeleteModel):
+    name = models.CharField(max_length=255, blank=False, null=False, unique=True)
+    province = models.ForeignKey(
+        "system.Province",
+        related_name="districts",
+        blank=False,
+        null=False,
+        on_delete=models.CASCADE,
+    )
+
+    class Meta:
+        verbose_name = "District"
+        verbose_name_plural = "Districts"
+        table_prefix = "distr"
+
+    def __str__(self):
+        return self.name
