@@ -10,6 +10,7 @@ from loguru import logger
 from services.exceptions.passwords import PasswordUsedException
 from services.helpers.generate_otp import random_otp
 from services.helpers.readable_date import readable_date_time_string
+from system.models import Gender
 from users.managers import UserManager
 from utano.model import EnumModel, SoftDeleteModel
 
@@ -30,6 +31,13 @@ class User(SoftDeleteModel, AbstractUser):
     username = models.CharField(blank=True, null=True, unique=False, max_length=15)
     role = models.CharField(
         choices=UserRoles.choices, max_length=50, blank=False, null=True, default=None
+    )
+    gender = models.CharField(
+        max_length=255,
+        choices=Gender.choices,
+        default=Gender.MALE,
+        blank=False,
+        null=False,
     )
     password_history = models.TextField(blank=True, null=True, editable=False)
     password_updated_at = models.DateTimeField(blank=True, null=True)
