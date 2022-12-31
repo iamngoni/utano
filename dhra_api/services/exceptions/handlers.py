@@ -25,8 +25,10 @@ def custom_exception_handler(exc, context):
 
     return api_response(
         request=request,
-        message=response.data.get("detail"),
-        num_status=response.data.get("status_code"),
+        message=response.data.get("detail")
+        if response is not None
+        else "Server Exception",
+        num_status=response.data.get("status_code") if response is not None else 500,
         bool_status=False,
         issues=str(exc),
     )
