@@ -16,11 +16,15 @@ class HealthInstitutionDetailsPayloadSerializer(serializers.Serializer):
 
     def validate(self, attrs):
         health_institutions = HealthInstitution.objects.filter(
-            Q(name=attrs.get("name")) | Q(phone_number=attrs.get("phone_number"))
+            Q(name=attrs.get("name"))
+            | Q(phone_number=attrs.get("phone_number"))
+            | Q(email=attrs.get("email"))
         )
         if health_institutions.count() > 0:
             raise serializers.ValidationError(
-                {"name": "Health institution with name or phone number exists already"}
+                {
+                    "name": "Health institution with name or phone number or email exists already"
+                }
             )
 
         district = District.get_item_by_id(attrs.get("district"))
