@@ -18,3 +18,21 @@ class HealthInstitution(SoftDeleteModel):
         verbose_name = "Health Institution"
         verbose_name_plural = "Health Institutions"
         table_prefix = "hinst"
+
+
+class Client(SoftDeleteModel):
+    details = models.CharField(max_length=255, blank=False, null=False)
+    health_institution = models.ForeignKey(
+        "health_institution.HealthInstitution",
+        blank=False,
+        null=False,
+        on_delete=models.DO_NOTHING,
+    )
+
+    class Meta:
+        verbose_name = "Client"
+        verbose_name_plural = "Clients"
+        table_prefix = "cli"
+
+    def __str__(self):
+        return f"{self.health_institution.name} | {self.details}"

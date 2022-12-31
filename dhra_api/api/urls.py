@@ -4,8 +4,7 @@ from rest_framework.renderers import CoreJSONRenderer
 
 
 urlpatterns = [
-    path("auth/", include("api.views.auth.urls")),
-    path("health_institute/", include("api.views.health_institution.urls")),
+    path("auth/", include("api.views.auth.urls"), name="Auth URLS"),
     path(
         "docs",
         get_schema_view(
@@ -14,6 +13,12 @@ urlpatterns = [
             version="1.0",
             renderer_classes=(CoreJSONRenderer,),
         ),
-        name="Utano REST API",
+        name="Docs URLS",
     ),
+    path(
+        "health_institution/",
+        include("api.views.health_institution.urls"),
+        name="Health Institute URLS",
+    ),
+    path("staff/", include("api.views.staff.urls"), name="Staff URLS"),
 ]

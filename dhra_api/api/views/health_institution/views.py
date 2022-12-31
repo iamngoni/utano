@@ -1,18 +1,32 @@
 from rest_framework.views import APIView
 
-from health_institution.models import HealthInstitution
+from api.views.health_institution.serializers.model import (
+    HealthInstitutionModelSerializer,
+)
+from health_institution.models import HealthInstitution, Client
+from services.helpers.api_response import api_response
 from services.permissions.is_admin import IsAdmin
 
 
 class HealthInstituteDetailsView(APIView):
-    permission_classes = (IsAdmin,)
-
     def get(self, request):
-        health_institution = HealthInstitution.objects.first()
-        return api_response()
+        client_id = request.headers.get("Client-Id")
+        client = Client.get_item_by_id(client_id)
+        if client is None:
+            return api_response(
+                request,
+                num_status=404,
+                bool_status=False,
+                message="Institution details not saved yet",
+            )
 
-    def post(self, request):
-        pass
+        health_institution = client.health_institution
 
-    def put(self, request):
-        pass
+        return api_response(
+            request,
+            data={
+                "health_institution": HealthInstitutionModelSerializer(
+                    health_institution
+                ).data,
+            },
+        )

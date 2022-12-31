@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     "system.apps.SystemConfig",
     "emails.apps.EmailsConfig",
     "health_institution.apps.HealthInstitutionConfig",
+    "staff.apps.StaffConfig",
 ]
 
 MIDDLEWARE = [
@@ -149,7 +150,7 @@ REST_FRAMEWORK = {
     ],
     "DEFAULT_SCHEMA_CLASS": "rest_framework.schemas.coreapi.AutoSchema",
     "DEFAULT_PERMISSION_CLASSES": [
-        "rest_framework.permissions.AllowAny",
+        "rest_framework.permissions.IsAuthenticated",
     ],
     "DEFAULT_PARSER_CLASSES": [
         "rest_framework.parsers.JSONParser",
