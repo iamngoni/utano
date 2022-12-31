@@ -1,4 +1,7 @@
+import json
+
 from rest_framework.views import APIView
+from rest_framework.generics import ListAPIView
 
 from api.views.staff.serializers.model import HealthInstitutionModelSerializer
 from api.views.staff.serializers.payload import (
@@ -9,10 +12,14 @@ from loguru import logger
 from health_institution.models import HealthInstitution
 from services.helpers.api_response import api_response
 from services.permissions.is_admin import IsAdmin
+from rest_framework.permissions import IsAuthenticated
 
 
 class RegisterHealthInstitutionView(APIView):
-    permission_classes = (IsAdmin,)
+    permission_classes = (
+        IsAuthenticated,
+        IsAdmin,
+    )
     serializer_class = HealthInstitutionDetailsPayloadSerializer
 
     def post(self, request):
@@ -43,6 +50,28 @@ class RegisterHealthInstitutionView(APIView):
                 return api_response(
                     request, num_status=400, bool_status=False, issues=payload.errors
                 )
+        except Exception as exc:
+            logger.error(f"exception: {exc}")
+            return api_response(request, num_status=500, bool_status=False)
+
+
+class HealthInstitutionsView(APIView):
+    permission_classes = (
+        IsAuthenticated,
+        IsAdmin,
+    )
+
+    def get(self, request):
+        try:
+            health_institutions = HealthInstitution.objects.all()
+            return api_response(
+                request,
+                data={
+                    "health_institutions": HealthInstitutionModelSerializer(
+                        health_institutions, many=True
+                    ).data
+                },
+            )
         except Exception as exc:
             logger.error(f"exception: {exc}")
             return api_response(request, num_status=500, bool_status=False)
