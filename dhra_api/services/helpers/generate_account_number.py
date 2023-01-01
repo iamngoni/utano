@@ -12,8 +12,8 @@
 #
 #
 # def generate_account_number() -> str:
-#     characters = string.digits
-#     account_number = "".join(random.choice(characters) for _ in range(15))
+#
+#     account_number = generate_random_numbers(n=15)
 #     logger.info("Checking if account number exists")
 #     try:
 #         account = Account.objects.get(account_number=account_number)

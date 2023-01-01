@@ -1,26 +1,45 @@
-import json
-
+from loguru import logger
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
-from rest_framework.generics import ListAPIView
 
-from api.views.staff.serializers.model import HealthInstitutionModelSerializer
+from api.views.staff.serializers.model import (
+    HealthInstitutionModelSerializer,
+    EmployeeModelSerializer,
+)
 from api.views.staff.serializers.payload import (
     HealthInstitutionDetailsPayloadSerializer,
+    HealthInstitutionAdminPayloadSerializer,
 )
-from loguru import logger
-
 from health_institution.models import HealthInstitution
 from services.helpers.api_response import api_response
-from services.permissions.is_admin import IsAdmin
-from rest_framework.permissions import IsAuthenticated
+from services.helpers.create_username import create_username
+from services.helpers.generate_random_password import generate_random_password
+from services.permissions.is_staff import IsStaff
+from services.permissions.is_system_admin import IsSystemAdmin
+from users.models import UserRoles, User, Employee
 
 
-class RegisterHealthInstitutionView(APIView):
+class HealthInstitutionsView(APIView):
     permission_classes = (
         IsAuthenticated,
-        IsAdmin,
+        IsSystemAdmin,
     )
     serializer_class = HealthInstitutionDetailsPayloadSerializer
+
+    def get(self, request):
+        try:
+            health_institutions = HealthInstitution.objects.all()
+            return api_response(
+                request,
+                data={
+                    "health_institutions": HealthInstitutionModelSerializer(
+                        health_institutions, many=True
+                    ).data
+                },
+            )
+        except Exception as exc:
+            logger.error(f"exception: {exc}")
+            return api_response(request, num_status=500, bool_status=False)
 
     def post(self, request):
         try:
@@ -55,23 +74,110 @@ class RegisterHealthInstitutionView(APIView):
             return api_response(request, num_status=500, bool_status=False)
 
 
-class HealthInstitutionsView(APIView):
-    permission_classes = (
-        IsAuthenticated,
-        IsAdmin,
-    )
+class HealthInstitutionEmployeesView(APIView):
+    permission_classes = (IsStaff,)
 
-    def get(self, request):
+    def get(self, request, health_institution_id):
         try:
-            health_institutions = HealthInstitution.objects.all()
+            health_institution = HealthInstitution.get_item_by_id(health_institution_id)
+            if health_institution is None:
+                logger.error(
+                    f"health institution with id: {health_institution_id} does not exist"
+                )
+                return api_response(request, num_status=404, bool_status=False)
+
+            employees = health_institution.employees.all()
+            return api_response(
+                request,
+                data={"employees": EmployeeModelSerializer(employees, many=True).data},
+            )
+
+        except Exception as exc:
+            logger.error(f"exception: {exc}")
+            return api_response(request, num_status=500, bool_status=False)
+
+    def post(self, request):
+        pass
+
+
+class HealthInstitutionAdminsView(APIView):
+    permission_classes = (IsSystemAdmin,)
+    serializer_class = HealthInstitutionAdminPayloadSerializer
+
+    def get(self, request, health_institution_id):
+        try:
+            health_institution = HealthInstitution.get_item_by_id(health_institution_id)
+            if health_institution is None:
+                logger.error(
+                    f"health institution with id: {health_institution_id} does not exist"
+                )
+                return api_response(request, num_status=404, bool_status=False)
+
+            admin_employees = health_institution.employees.filter(
+                user__role=UserRoles.ADMIN
+            )
             return api_response(
                 request,
                 data={
-                    "health_institutions": HealthInstitutionModelSerializer(
-                        health_institutions, many=True
-                    ).data
+                    "admins": EmployeeModelSerializer(admin_employees, many=True).data
                 },
             )
+
+        except Exception as exc:
+            logger.error(f"exception: {exc}")
+            return api_response(request, num_status=500, bool_status=False)
+
+    def post(self, request, health_institution_id):
+        try:
+            health_institution = HealthInstitution.get_item_by_id(health_institution_id)
+            if health_institution is None:
+                logger.error(
+                    f"health institution with id: {health_institution_id} does not exist"
+                )
+                return api_response(request, num_status=404, bool_status=False)
+
+            payload = self.serializer_class(data=request.data)
+            if payload.is_valid():
+                # generate username
+                username = create_username(
+                    first_name=payload.validated_data.get("first_name"),
+                    last_name=payload.validated_data.get("last_name"),
+                )
+                # create new user
+                user = User(
+                    first_name=payload.validated_data.get("first_name"),
+                    last_name=payload.validated_data.get("last_name"),
+                    gender=payload.validated_data.get("gender"),
+                    email=payload.validated_data.get("email"),
+                    username=username,
+                    role=UserRoles.ADMIN,
+                    is_staff=True,
+                    is_active=True,
+                    is_verified=True,
+                )
+
+                # generate and set password
+                password = generate_random_password()
+                user.set_password(password)
+                user.save()
+
+                # create employee
+                employee = Employee(
+                    user=user,
+                    registered_at=health_institution,
+                )
+                employee.save()
+                return api_response(
+                    request,
+                    data={
+                        "admin": EmployeeModelSerializer(employee).data,
+                    },
+                )
+            else:
+                logger.error(f"invalid payload: {payload.errors}")
+                return api_response(
+                    request, num_status=400, bool_status=False, issues=payload.errors
+                )
         except Exception as exc:
             logger.error(f"exception: {exc}")
             return api_response(request, num_status=500, bool_status=False)

@@ -18,6 +18,7 @@ from utano.model import EnumModel, SoftDeleteModel
 class UserRoles(EnumModel):
     PATIENT = "PATIENT", _("PATIENT")
     DOCTOR = "DOCTOR", _("DOCTOR")
+    SYSTEM_ADMIN = "SYSTEM_ADMIN", _("SYSTEM_ADMIN")
     ADMIN = "ADMIN", _("ADMIN")
     NURSE = "NURSE", _("NURSE")
     HEALTH_INSTITUTION = "HEALTH_INSTITUTION", _("HEALTH_INSTITUTION")
@@ -29,10 +30,10 @@ class User(SoftDeleteModel, AbstractUser):
     is_active = models.BooleanField(default=True)
     is_verified = models.BooleanField(default=False)
     username = models.CharField(
-        blank=True, null=True, unique=False, max_length=15, db_index=True
+        blank=False, null=False, unique=True, max_length=15, db_index=True
     )
     role = models.CharField(
-        choices=UserRoles.choices, max_length=50, blank=False, null=True, default=None
+        choices=UserRoles.choices, max_length=50, blank=False, null=False
     )
     gender = models.CharField(
         max_length=255,
@@ -69,9 +70,9 @@ class User(SoftDeleteModel, AbstractUser):
             else:
                 password_history = []
             for password_json in password_history:
-                logger.info("PASSWORD_JSON: ", password_json)
+                logger.debug(f"password_json: {password_json}")
                 password_object = json.loads(password_json)
-                logger.info("PASSWORD_OBJECT: ", password_object)
+                logger.debug(f"password_object: {password_object}")
 
                 if check_password(
                     password=raw_password,
@@ -88,7 +89,7 @@ class User(SoftDeleteModel, AbstractUser):
                     )
 
             # Add previous password to history list
-            logger.info("CHANGING PASSWORD RIGHT NOW: ", timezone.now())
+            logger.debug(f"changing password right now: {timezone.now()}")
             password_history.append(
                 json.dumps(
                     {"password": self.password, "changed_on": str(timezone.now())}
@@ -99,8 +100,8 @@ class User(SoftDeleteModel, AbstractUser):
             self.password = make_password(raw_password)
             self._password = raw_password
             self.password_updated_at = timezone.now()
-        except Exception as e:
-            logger.info("SETTING PASSWORD EXCEPTION: ", e)
+        except Exception as exc:
+            logger.error(f"exception setting password: {exc}")
             raise
 
     def save(self, *args, **kwargs):
@@ -144,52 +145,20 @@ class Patient(SoftDeleteModel):
         table_prefix = "pt"
 
 
-class Doctor(SoftDeleteModel):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="doctor")
+class Employee(SoftDeleteModel):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="employee")
     registered_at = models.ForeignKey(
-        "health_institution.HealthInstitution", on_delete=models.DO_NOTHING
+        "health_institution.HealthInstitution",
+        on_delete=models.DO_NOTHING,
+        related_name="employees",
     )
     registered_on = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         ordering = ["-updated_at"]
-        verbose_name = "Doctor"
-        verbose_name_plural = "Doctors"
-        table_prefix = "dr"
-
-    def __str__(self):
-        return f"{self.user.first_name} {self.user.last_name}"
-
-
-class Nurse(SoftDeleteModel):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="nurse")
-    registered_at = models.ForeignKey(
-        "health_institution.HealthInstitution", on_delete=models.DO_NOTHING
-    )
-    registered_on = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        ordering = ["-updated_at"]
-        verbose_name = "Nurse"
-        verbose_name_plural = "Nurses"
-        table_prefix = "nurse"
-
-    def __str__(self):
-        return f"{self.user.first_name} {self.user.last_name}"
-
-
-class LabTechnician(SoftDeleteModel):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="lab_tech")
-    registered_at = models.ForeignKey(
-        "health_institution.HealthInstitution", on_delete=models.DO_NOTHING
-    )
-    registered_on = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        ordering = ["-updated_at"]
-        verbose_name = "Lab Technician"
-        verbose_name_plural = "Lab Technicians"
-        table_prefix = "ltech"
+        verbose_name = "Employee"
+        verbose_name_plural = "Employees"
+        table_prefix = "employee"
 
     def __str__(self):
         return f"{self.user.first_name} {self.user.last_name}"

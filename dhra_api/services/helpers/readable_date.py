@@ -27,7 +27,7 @@ def readable_date(date: datetime) -> str:
         return "hello world"
 
 
-def readable_date_time_string(date: str) -> object:
+def readable_date_time_string(date: str):
     """
     construct a readable date string from another proper datetime string
     @param date:
