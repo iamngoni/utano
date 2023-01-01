@@ -5,12 +5,13 @@ from users.models import User
 
 
 def create_username(first_name: str, last_name: str, exists: bool = False):
-    random_text = generate_random_numbers()
 
-    if exists:
-        username = f"{first_name[:1]}{last_name}_{random_text}"[:10]
+    if exists is True:
+        random_text = generate_random_numbers()
+        logger.debug(f"using random text: {random_text}")
+        username = (f"{first_name[:1]}{last_name[:4]}_{random_text}"[:10]).lower()
     else:
-        username = f"{first_name[:1]}{last_name}"
+        username = f"{first_name[:1]}{last_name}".lower()
 
     logger.info(f"generated username: {username}")
 
@@ -22,4 +23,4 @@ def create_username(first_name: str, last_name: str, exists: bool = False):
         return create_username(first_name, last_name, exists=True)
     else:
         logger.success(f"{username} successfully generated")
-        return username.lower()
+        return username
