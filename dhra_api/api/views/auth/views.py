@@ -4,6 +4,7 @@ from api.views.auth.serializers.payload import (
     RefreshTokenSerializer,
     ForgotPasswordPayloadSerializer,
     ResetPasswordPayloadSerializer,
+    UpdatePasswordPayloadSerializer,
 )
 from rest_framework.parsers import JSONParser
 from rest_framework.renderers import JSONRenderer
@@ -323,3 +324,40 @@ class ResetPasswordView(APIView):
         except Exception as e:
             logger.error(f" {e}")
             return api_response(request=request, num_status=500, bool_status=False)
+
+
+class UpdatePasswordView(APIView):
+    parser_classes = (JSONParser,)
+    renderer_classes = (JSONRenderer,)
+    authentication_classes = (IsAuthenticated,)
+    serializer_class = UpdatePasswordPayloadSerializer
+
+    def put(self, request):
+        try:
+            payload = self.serializer_class(data=request.data)
+            if payload.is_valid():
+                if request.user.check_password(
+                    payload.validated_data.get("old_password")
+                ):
+                    request.user.set_password(payload.validated_data.get("password"))
+                    request.user.save()
+
+                    notify_user_that_their_password_has_been_updated.delay(request.user)
+
+                    return api_response(request)
+                else:
+                    logger.error("Incorrect current password")
+                    return api_response(
+                        request,
+                        num_status=400,
+                        bool_status=False,
+                        message="Incorrect current password",
+                    )
+            else:
+                logger.error(payload.errors)
+                return api_response(
+                    request, num_status=400, bool_status=False, issues=payload.errors
+                )
+        except Exception as exc:
+            logger.error(exc)
+            return api_response(request, num_status=500, bool_status=False)

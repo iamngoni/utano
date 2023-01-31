@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login Activity</title>
+    <title>Notification</title>
 
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Mulish:wght@200;300;400;500;600;700;800;900&display=swap");
@@ -35,25 +35,7 @@
     "
   >
     <p style="color: black; font-size: 16px; text-align: left; margin: 25px 0">
-      Hello, we've noticed sign-in activity into your account: {{email}}
-    </p>
-    <p style="color: black; font-size: 16px; text-align: left; margin: 25px 0">
-      Location : {{location}}
-    </p>
-    <p style="color: black; font-size: 16px; text-align: left; margin: 25px 0">
-      Device : {{client}}
-    </p>
-    <p style="color: black; font-size: 16px; text-align: left; margin: 25px 0">
-      IP : {{ip}}
-    </p>
-    <p style="color: black; font-size: 16px; text-align: left; margin: 25px 0">
-      Time : {{time}}
-    </p>
-    <p style="color: black; font-size: 16px; text-align: left; margin: 25px 0">
-      If you've signed in recently and recognize the location, relax and don't
-      panic. But if you don't recognize this sign-in, we recommend you change
-      your password immediately. There are cases, in which the location shown
-      could differ from your actual location.
+      {{ message }}
     </p>
     <hr />
     <p style="color: black; font-size: 16px; text-align: left; margin: 25px 0">

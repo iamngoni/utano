@@ -1,6 +1,9 @@
+from datetime import datetime
+
 from django.utils import timezone
 
-from services.helpers.notifications import send_email
+from services.helpers.notifications import send_email, send_email_alt
+from services.helpers.readable_date import readable_date
 from users.models import User
 from django_rq import job
 from decouple import config
@@ -88,3 +91,25 @@ def send_password_reset_otp(user: User):
         email_subject="Forgot Password",
     )
     logger.success("Job complete")
+
+
+@job("auth")
+def notify_user_that_their_password_has_been_updated(user: User, date: datetime):
+    """
+    Notify user that their password has been updated
+    """
+
+    human_readable_date = readable_date(date)
+
+    html_content = render_to_string(
+        "notification.html",
+        {
+            "message": f"Good day, {user.get_full_name()}.\n\nYour password was successfully updated on "
+            f"{human_readable_date}.",
+            "email": user.email,
+        },
+    )
+    send_email_alt(
+        email=user.email, html_content=html_content, email_subject="Password Update"
+    )
+    logger.info("[Job]: Task Executed!")
