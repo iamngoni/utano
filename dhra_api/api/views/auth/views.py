@@ -24,6 +24,7 @@ from api.views.auth.tasks import (
     notify_user_about_login_activity,
     send_verification_code_to_user,
     send_password_reset_otp,
+    notify_user_that_their_password_has_been_updated,
 )
 from users.models import User
 from rest_framework.permissions import IsAuthenticated
