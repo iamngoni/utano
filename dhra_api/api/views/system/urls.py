@@ -7,8 +7,9 @@
 
 from django.urls import path
 
-from api.views.system.views import ProvincesView
+from api.views.system.views import ProvincesView, DistrictsView
 
 urlpatterns = [
     path("provinces", ProvincesView.as_view(), name="Provinces View"),
+    path("districts", DistrictsView.as_view(), name="Districts View"),
 ]
