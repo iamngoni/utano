@@ -1,0 +1,35 @@
+version: "3.9"
+services:
+    database:
+      image: postgres
+      volumes:
+        - ./data/db:/var/lib/postgresql/data
+      environment:
+        - POSTGRES_DB=utano
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=root
+
+    redis-queue:
+      image: redis
+      container_name: redis
+      restart: unless-stopped
+      environment:
+        - ALLOW_EMPTY_PASSWORD=yes
+
+    api:
+      build: .
+      command: python manage.py runserver 0.0.0.0:8000
+      volumes:
+        - .:/app
+      ports:
+        - "8000:8000"
+      depends_on:
+        - database
+        - redis-queue
+
+    queue-worker:
+      build: .
+      command: python manage.py rqworker utano users health_institution --with-scheduler true --sentry-debug true
+      restart: unless-stopped
+      depends_on:
+        - api

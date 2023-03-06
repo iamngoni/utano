@@ -1,10 +1,9 @@
-from health_institution.models import HealthInstitution, Client
+from health_institution.models import HealthInstitution
 from django.contrib import admin
 
 
 @admin.register(
     HealthInstitution,
-    Client,
 )
 class UniversalAdmin(admin.ModelAdmin):
     def get_list_display(self, request):

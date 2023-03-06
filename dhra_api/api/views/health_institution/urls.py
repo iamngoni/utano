@@ -1,10 +1,18 @@
-from api.views.health_institution.views import HealthInstituteDetailsView
+from api.views.health_institution.views import (
+    HealthInstitutionDetailsView,
+    HealthInstitutionEmployeesView,
+)
 from django.urls import path
 
 urlpatterns = [
     path(
         "details",
-        HealthInstituteDetailsView.as_view(),
+        HealthInstitutionDetailsView.as_view(),
         name="Health Institute Details View",
+    ),
+    path(
+        "employees",
+        HealthInstitutionEmployeesView.as_view(),
+        name="Health Institution Employees View",
     ),
 ]

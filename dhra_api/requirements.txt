@@ -36,7 +36,7 @@ msgpack==1.0.4
 multidict==6.0.3
 phonenumbers==8.13.3
 Pillow==9.3.0
-psycopg2==2.9.5
+psycopg2-binary
 pydantic==1.10.2
 PyJWT==2.6.0
 pyotp==2.8.0
