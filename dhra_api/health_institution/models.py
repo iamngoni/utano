@@ -16,6 +16,7 @@ class HealthInstitution(SoftDeleteModel):
     district = models.ForeignKey(
         "system.District", blank=False, null=False, on_delete=models.DO_NOTHING
     )
+    is_active = models.BooleanField(default=True)
 
     class Meta:
         ordering = ["-updated_at"]

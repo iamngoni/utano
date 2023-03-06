@@ -37,6 +37,7 @@ class Province(SoftDeleteModel):
         verbose_name = "Province"
         verbose_name_plural = "Provinces"
         table_prefix = "prov"
+        ordering = ["name"]
 
     def __str__(self):
         return self.name
@@ -59,6 +60,7 @@ class District(SoftDeleteModel):
         verbose_name = "District"
         verbose_name_plural = "Districts"
         table_prefix = "distr"
+        ordering = ["name"]
 
     def __str__(self):
         return self.name
