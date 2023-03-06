@@ -1,3 +1,4 @@
+from django.db import transaction
 from loguru import logger
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
@@ -41,6 +42,7 @@ class HealthInstitutionsView(APIView):
             logger.error(f"exception: {exc}")
             return api_response(request, num_status=500, bool_status=False)
 
+    @transaction.atomic()
     def post(self, request):
         try:
             payload = self.serializer_class(data=request.data)
@@ -54,6 +56,29 @@ class HealthInstitutionsView(APIView):
                     logo=request.FILES.get("logo"),
                 )
                 health_institution.save()
+
+                # create admin user for the newly registered health institution
+                username = create_username(
+                    first_name=health_institution.name,
+                    last_name=health_institution.district.name,
+                )
+
+                user = User(
+                    first_name=health_institution.name,
+                    last_name=health_institution.district.name,
+                    email=health_institution.email,
+                    username=username,
+                    role=UserRoles.ADMIN,
+                    is_staff=True,
+                    is_active=True,
+                    is_verified=True,
+                )
+
+                password = generate_random_password()
+                user.set_password(password)
+                user.save()
+
+                # todo: notify health institution about the generated details
 
                 return api_response(
                     request,

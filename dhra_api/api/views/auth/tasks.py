@@ -44,7 +44,7 @@ def notify_user_about_login_activity(user: User, details):
         },
     )
 
-    send_email(user=user, html_content=html_content)
+    send_email.delay(user=user, html_content=html_content)
     logger.info(f"[Job]: Task Executed!")
 
 
@@ -68,7 +68,7 @@ def send_verification_code_to_user(user: User):
         },
     )
 
-    send_email(user=user, html_content=html_content)
+    send_email.delay(user=user, html_content=html_content)
     logger.info(f"[Job]: Task Executed!")
 
 
@@ -85,13 +85,12 @@ def send_password_reset_otp(user: User):
             "code": user.one_time_pin,
         },
     )
-    send_email(
+    send_email.delay(
         user=user,
         html_content=html_content,
         email_subject="Forgot Password",
     )
-    logger.success("Job complete")
-
+    
 
 @job("auth")
 def notify_user_that_their_password_has_been_updated(user: User, date: datetime):
@@ -109,7 +108,7 @@ def notify_user_that_their_password_has_been_updated(user: User, date: datetime)
             "email": user.email,
         },
     )
-    send_email_alt(
+    send_email_alt.delay(
         email=user.email, html_content=html_content, email_subject="Password Update"
     )
     logger.info("[Job]: Task Executed!")

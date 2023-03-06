@@ -5,6 +5,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
 from decouple import config
+from django_rq import job
 from loguru import logger
 
 from users.models import User
@@ -15,6 +16,7 @@ system_port = config("EMAIL_PORT")
 system_password = config("EMAIL_PASSWORD")
 
 
+@job("notifications")
 def send_email(user: User, html_content: str, email_subject: str = "Utano EHR"):
     if user.receive_email_notifications is False:
         logger.error("[Send Email]: User has disabled receiving email notifications")
@@ -45,8 +47,8 @@ def send_email(user: User, html_content: str, email_subject: str = "Utano EHR"):
         logger.error(f"[Notifications]: Sending TLS mail exception here ---> {e}")
 
 
+@job("notifications")
 def send_email_alt(email: str, html_content: str, email_subject: str = "Utano EHR"):
-
     logger.info(f"[Send Email]: Sending email to {email}")
 
     context = ssl.create_default_context()
