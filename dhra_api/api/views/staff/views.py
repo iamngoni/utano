@@ -12,12 +12,13 @@ from api.views.staff.serializers.payload import (
     HealthInstitutionAdminPayloadSerializer,
 )
 from health_institution.models import HealthInstitution
-from services.helpers.api_response import api_response
+from services.helpers.api_response import ApiResponse
 from services.helpers.create_username import create_username
 from services.helpers.generate_random_password import generate_random_password
 from services.permissions.is_staff import IsStaff
 from services.permissions.is_system_admin import IsSystemAdmin
 from users.models import UserRoles, User, Employee
+from api.views.health_institution.tasks import notify_health_institution_on_registration
 
 
 class HealthInstitutionsView(APIView):
@@ -30,8 +31,7 @@ class HealthInstitutionsView(APIView):
     def get(self, request):
         try:
             health_institutions = HealthInstitution.objects.all()
-            return api_response(
-                request,
+            return ApiResponse(
                 data={
                     "health_institutions": HealthInstitutionModelSerializer(
                         health_institutions, many=True
@@ -40,7 +40,7 @@ class HealthInstitutionsView(APIView):
             )
         except Exception as exc:
             logger.error(f"exception: {exc}")
-            return api_response(request, num_status=500, bool_status=False)
+            return ApiResponse(num_status=500, bool_status=False)
 
     @transaction.atomic()
     def post(self, request):
@@ -78,10 +78,18 @@ class HealthInstitutionsView(APIView):
                 user.set_password(password)
                 user.save()
 
-                # todo: notify health institution about the generated details
+                # create employee
+                employee = Employee(
+                    user=user,
+                    registered_at=health_institution,
+                )
+                employee.save()
 
-                return api_response(
-                    request,
+                notify_health_institution_on_registration.delay(
+                    health_institution, password
+                )
+
+                return ApiResponse(
                     num_status=201,
                     data={
                         "health_institution": HealthInstitutionModelSerializer(
@@ -91,12 +99,12 @@ class HealthInstitutionsView(APIView):
                 )
             else:
                 logger.error(f"invalid payload: {payload.errors}")
-                return api_response(
-                    request, num_status=400, bool_status=False, issues=payload.errors
+                return ApiResponse(
+                    num_status=400, bool_status=False, issues=payload.errors
                 )
         except Exception as exc:
             logger.error(f"exception: {exc}")
-            return api_response(request, num_status=500, bool_status=False)
+            return ApiResponse(num_status=500, bool_status=False)
 
 
 class HealthInstitutionEmployeesView(APIView):
@@ -109,17 +117,16 @@ class HealthInstitutionEmployeesView(APIView):
                 logger.error(
                     f"health institution with id: {health_institution_id} does not exist"
                 )
-                return api_response(request, num_status=404, bool_status=False)
+                return ApiResponse(num_status=404, bool_status=False)
 
             employees = health_institution.employees.all()
-            return api_response(
-                request,
+            return ApiResponse(
                 data={"employees": EmployeeModelSerializer(employees, many=True).data},
             )
 
         except Exception as exc:
             logger.error(f"exception: {exc}")
-            return api_response(request, num_status=500, bool_status=False)
+            return ApiResponse(num_status=500, bool_status=False)
 
     def post(self, request):
         pass
@@ -136,13 +143,12 @@ class HealthInstitutionAdminsView(APIView):
                 logger.error(
                     f"health institution with id: {health_institution_id} does not exist"
                 )
-                return api_response(request, num_status=404, bool_status=False)
+                return ApiResponse(num_status=404, bool_status=False)
 
             admin_employees = health_institution.employees.filter(
                 user__role=UserRoles.ADMIN
             )
-            return api_response(
-                request,
+            return ApiResponse(
                 data={
                     "admins": EmployeeModelSerializer(admin_employees, many=True).data
                 },
@@ -150,7 +156,7 @@ class HealthInstitutionAdminsView(APIView):
 
         except Exception as exc:
             logger.error(f"exception: {exc}")
-            return api_response(request, num_status=500, bool_status=False)
+            return ApiResponse(num_status=500, bool_status=False)
 
     def post(self, request, health_institution_id):
         try:
@@ -159,7 +165,7 @@ class HealthInstitutionAdminsView(APIView):
                 logger.error(
                     f"health institution with id: {health_institution_id} does not exist"
                 )
-                return api_response(request, num_status=404, bool_status=False)
+                return ApiResponse(num_status=404, bool_status=False)
 
             payload = self.serializer_class(data=request.data)
             if payload.is_valid():
@@ -192,17 +198,16 @@ class HealthInstitutionAdminsView(APIView):
                     registered_at=health_institution,
                 )
                 employee.save()
-                return api_response(
-                    request,
+                return ApiResponse(
                     data={
                         "admin": EmployeeModelSerializer(employee).data,
                     },
                 )
             else:
                 logger.error(f"invalid payload: {payload.errors}")
-                return api_response(
-                    request, num_status=400, bool_status=False, issues=payload.errors
+                return ApiResponse(
+                    num_status=400, bool_status=False, issues=payload.errors
                 )
         except Exception as exc:
             logger.error(f"exception: {exc}")
-            return api_response(request, num_status=500, bool_status=False)
+            return ApiResponse(num_status=500, bool_status=False)

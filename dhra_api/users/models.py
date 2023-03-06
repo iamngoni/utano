@@ -107,7 +107,7 @@ class User(SoftDeleteModel, AbstractUser):
     def save(self, *args, **kwargs):
         # set admin user permissions
         if self.is_superuser:
-            self.role = UserRoles.ADMIN
+            self.role = UserRoles.SYSTEM_ADMIN
             self.is_verified = True
         super().save(*args, **kwargs)
 

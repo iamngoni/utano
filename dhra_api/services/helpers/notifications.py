@@ -19,11 +19,11 @@ system_password = config("EMAIL_PASSWORD")
 @job("notifications")
 def send_email(user: User, html_content: str, email_subject: str = "Utano EHR"):
     if user.receive_email_notifications is False:
-        logger.error("[Send Email]: User has disabled receiving email notifications")
-        logger.error("[Send Email]: Skipping process")
+        logger.error("user has disabled receiving email notifications")
+        logger.error("skipping process")
         return
 
-    logger.info(f"[Send Email]: Sending email to {user.email}")
+    logger.info(f"sending email to {user.email}")
 
     context = ssl.create_default_context()
     server = smtplib.SMTP(host=system_host, port=system_port)
@@ -42,14 +42,15 @@ def send_email(user: User, html_content: str, email_subject: str = "Utano EHR"):
         server.ehlo()
         server.login(system_email, system_password)
         server.sendmail(config("EMAIL_ADDRESS"), user.email, email_content)
-        logger.info(f"[Notifications]: Sending email completed.")
+        logger.success("sending email completed.")
     except Exception as e:
-        logger.error(f"[Notifications]: Sending TLS mail exception here ---> {e}")
+        logger.error(e)
+        raise
 
 
 @job("notifications")
 def send_email_alt(email: str, html_content: str, email_subject: str = "Utano EHR"):
-    logger.info(f"[Send Email]: Sending email to {email}")
+    logger.info(f"sending email to {email}")
 
     context = ssl.create_default_context()
     server = smtplib.SMTP(host=system_host, port=system_port)
@@ -68,6 +69,7 @@ def send_email_alt(email: str, html_content: str, email_subject: str = "Utano EH
         server.ehlo()
         server.login(system_email, system_password)
         server.sendmail(config("EMAIL_ADDRESS"), email, email_content)
-        logger.info(f"[Notifications]: Sending email completed.")
+        logger.success("sending email completed.")
     except Exception as e:
-        logger.error(f"[Notifications]: Sending TLS mail exception here ---> {e}")
+        logger.error(e)
+        raise

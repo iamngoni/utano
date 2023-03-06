@@ -5,7 +5,7 @@ from health_institution.models import HealthInstitution
 from services.helpers.notifications import send_email_alt
 
 
-@job("health_institutions")
+@job("health_institution")
 def notify_health_institution_on_registration(health_institution: HealthInstitution, password: str):
     html_content = render_to_string(
         "notification.html",

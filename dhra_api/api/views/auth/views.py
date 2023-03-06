@@ -17,7 +17,7 @@ from django.utils import timezone
 
 from auth0.models import BlacklistToken
 from services.exceptions.passwords import PasswordUsedException
-from services.helpers.api_response import api_response
+from services.helpers.api_response import ApiResponse
 from services.helpers.get_client_details import get_client_details
 from services.jwt_service import generate_jwt_payload
 from api.views.auth.tasks import (
@@ -49,8 +49,7 @@ class SignInView(APIView):
                 logger.info("USER: ", user)
 
                 if user is None:
-                    return api_response(
-                        request=request,
+                    return ApiResponse(
                         num_status=401,
                         bool_status=False,
                         message="Incorrect username/email or password",
@@ -78,8 +77,7 @@ class SignInView(APIView):
                     if not user.is_verified:
                         send_verification_code_to_user.delay(request.user)
 
-                    return api_response(
-                        request=request,
+                    return ApiResponse(
                         data={
                             "access_token": access_token,
                             "refresh_token": refresh_token,
@@ -88,22 +86,20 @@ class SignInView(APIView):
                     )
 
                 else:
-                    return api_response(
-                        request=request,
+                    return ApiResponse(
                         num_status=401,
                         bool_status=False,
                         message="No user found",
                     )
             else:
-                return api_response(
-                    request=request,
+                return ApiResponse(
                     num_status=400,
                     bool_status=False,
                     issues=payload.errors,
                 )
         except Exception as e:
             logger.error(f" {e}")
-            return api_response(request=request, num_status=500, bool_status=False)
+            return ApiResponse(num_status=500, bool_status=False)
 
 
 class RefreshAuthView(APIView):
@@ -127,8 +123,7 @@ class RefreshAuthView(APIView):
                 )
 
                 if decoded_refresh_token.get("type") != "refresh":
-                    return api_response(
-                        request=request,
+                    return ApiResponse(
                         num_status=401,
                         bool_status=False,
                         message="Incorrect token type",
@@ -158,8 +153,7 @@ class RefreshAuthView(APIView):
                         algorithm="HS256",
                     )
 
-                    return api_response(
-                        request=request,
+                    return ApiResponse(
                         data={
                             "access_token": access_token,
                             "refresh_token": refresh_token,
@@ -167,8 +161,7 @@ class RefreshAuthView(APIView):
                         },
                     )
                 else:
-                    return api_response(
-                        request=request,
+                    return ApiResponse(
                         num_status=404,
                         bool_status=False,
                         message="No user associated with token",
@@ -176,11 +169,10 @@ class RefreshAuthView(APIView):
 
             except Exception as e:
                 logger.error(f" {e}")
-                return api_response(request=request, num_status=500, bool_status=False)
+                return ApiResponse(num_status=500, bool_status=False)
 
         else:
-            return api_response(
-                request=request,
+            return ApiResponse(
                 num_status=400,
                 bool_status=False,
                 issues=payload.errors,
@@ -200,10 +192,10 @@ class DestroyTokenView(APIView):
             blacklist = BlacklistToken(token=token)
             blacklist.save()
 
-            return api_response(request=request)
+            return ApiResponse()
         except Exception as e:
             logger.error(f" Failed to destroy token: {e}")
-            return api_response(request=request, num_status=500, bool_status=False)
+            return ApiResponse(num_status=500, bool_status=False)
 
 
 class ForgotPasswordView(APIView):
@@ -221,25 +213,20 @@ class ForgotPasswordView(APIView):
                 user.save()
 
                 send_password_reset_otp.delay(user)
-                return api_response(
-                    request=request,
-                )
+                return ApiResponse()
             else:
                 logger.error(f" {payload.errors}")
-                return api_response(
-                    request=request,
+                return ApiResponse(
                     num_status=400,
                     bool_status=False,
                     issues=payload.errors,
                 )
         except User.DoesNotExist:
             logger.error(" User does not exist")
-            return api_response(
-                request=request,
-            )
+            return ApiResponse()
         except Exception as e:
             logger.error(f" {e}")
-            return api_response(request=request, num_status=500, bool_status=False)
+            return ApiResponse(num_status=500, bool_status=False)
 
 
 class ResetPasswordView(APIView):
@@ -268,8 +255,7 @@ class ResetPasswordView(APIView):
                 )
 
                 if difference_in_minutes > 10:
-                    return api_response(
-                        request=request,
+                    return ApiResponse(
                         num_status=400,
                         bool_status=False,
                         message="OTP Expired",
@@ -298,8 +284,7 @@ class ResetPasswordView(APIView):
                 details = get_client_details(request)
                 notify_user_about_login_activity.delay(user, details)
 
-                return api_response(
-                    request=request,
+                return ApiResponse(
                     data={
                         "access_token": access_token,
                         "refresh_token": refresh_token,
@@ -308,23 +293,20 @@ class ResetPasswordView(APIView):
                 )
             else:
                 logger.error(f" {payload.errors}")
-                return api_response(
-                    request=request,
+                return ApiResponse(
                     num_status=400,
                     bool_status=False,
                     issues=payload.errors,
                 )
         except User.DoesNotExist:
             logger.error(" User does not exist")
-            return api_response(request=request, num_status=404, bool_status=False)
+            return ApiResponse(num_status=404, bool_status=False)
         except PasswordUsedException as e:
             logger.error("password has been used before")
-            return api_response(
-                request=request, num_status=400, bool_status=False, message=str(e)
-            )
+            return ApiResponse(num_status=400, bool_status=False, message=str(e))
         except Exception as e:
             logger.error(f" {e}")
-            return api_response(request=request, num_status=500, bool_status=False)
+            return ApiResponse(num_status=500, bool_status=False)
 
 
 class UpdatePasswordView(APIView):
@@ -345,20 +327,19 @@ class UpdatePasswordView(APIView):
 
                     notify_user_that_their_password_has_been_updated.delay(request.user)
 
-                    return api_response(request)
+                    return ApiResponse()
                 else:
                     logger.error("Incorrect current password")
-                    return api_response(
-                        request,
+                    return ApiResponse(
                         num_status=400,
                         bool_status=False,
                         message="Incorrect current password",
                     )
             else:
                 logger.error(payload.errors)
-                return api_response(
-                    request, num_status=400, bool_status=False, issues=payload.errors
+                return ApiResponse(
+                    num_status=400, bool_status=False, issues=payload.errors
                 )
         except Exception as exc:
             logger.error(exc)
-            return api_response(request, num_status=500, bool_status=False)
+            return ApiResponse(num_status=500, bool_status=False)
