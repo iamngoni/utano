@@ -21,4 +21,5 @@ urlpatterns = [
         name="Health Institute URLS",
     ),
     path("staff/", include("api.views.staff.urls"), name="Staff URLS"),
+    path("system/", include("api.views.system.urls"), name="System URLS"),
 ]
