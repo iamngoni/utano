@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     "emails.apps.EmailsConfig",
     "health_institution.apps.HealthInstitutionConfig",
     "staff.apps.StaffConfig",
+    "patient.apps.PatientConfig",
 ]
 
 MIDDLEWARE = [
