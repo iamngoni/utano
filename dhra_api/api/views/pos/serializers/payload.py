@@ -23,6 +23,15 @@ class PatientCheckInPayloadSerializer(serializers.Serializer):
     address = serializers.CharField(required=True)
     mobile_number = PhoneNumberField(required=True, region="ZW")
     gender = serializers.CharField(required=True)
+    temperature = serializers.FloatField(required=True)
+    systolic_blood_pressure = serializers.FloatField(required=True)
+    diastolic_blood_pressure = serializers.FloatField(required=True)
+    pulse = serializers.FloatField(required=True)
+    respiratory_rate = serializers.FloatField(required=False)
+    patient_notes = serializers.CharField(required=True)
+    examination_notes = serializers.CharField(required=True)
+    diagnosis_notes = serializers.CharField(required=True)
+    treatment_notes = serializers.CharField(required=True)
 
     def validate(self, attrs):
         if not attrs.get("date_of_birth") and not attrs.get("age"):
@@ -36,8 +45,9 @@ class PatientCheckInPayloadSerializer(serializers.Serializer):
             logger.info(days)
             date_of_birth = timezone.now() - datetime.timedelta(days=days)
             logger.info(f"generated date of birth: {date_of_birth}")
-            setattr(attrs, "date_of_birth", date_of_birth)
-            delattr(attrs, "age")
+            attrs["date_of_birth"] = date_of_birth.date()
+            del attrs["age"]
+            logger.success("date of birth generated successfully")
 
         if not attrs.get("gender") in Gender.get_list_of_options():
             raise serializers.ValidationError({"gender": "Gender not recognized"})

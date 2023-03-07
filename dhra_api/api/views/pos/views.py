@@ -4,7 +4,7 @@
 #
 #  Created by Ngonidzashe Mangudya on 7/3/2023.
 #  Copyright (c) 2023 ModestNerds, Co
-
+from django.db import transaction
 from loguru import logger
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
@@ -23,6 +23,7 @@ from services.helpers.generate_medical_record_number import (
 )
 from services.helpers.generate_random_password import generate_random_password
 from services.permissions.is_employee import IsEmployee
+from system.models import CheckInStatus
 from users.models import Patient, User
 
 
@@ -30,6 +31,7 @@ class PatientCheckInView(APIView):
     permission_classes = (IsAuthenticated, IsEmployee)
     serializer_class = PatientCheckInPayloadSerializer
 
+    @transaction.atomic()
     def post(self, request):
         try:
             payload = self.serializer_class(data=request.data)
@@ -41,6 +43,15 @@ class PatientCheckInView(APIView):
                 )
                 check_in.save()
                 logger.success("check in information saved")
+
+                # look for previous check ins  and set them as dismissed
+                previous_check_ins = PatientCheckIn.objects.filter(
+                    mobile_number=check_in.patient.mobile_number
+                ).exclude(id=check_in.id)
+
+                for check_in in previous_check_ins:
+                    check_in.status = CheckInStatus.DISMISSED
+                    check_in.save()
 
                 if check_in.patient is None:
                     logger.info(
@@ -85,6 +96,8 @@ class PatientCheckInView(APIView):
                     # welcome user and send verification code
                     send_welcome_note_to_patient.delay(user)
                     send_verification_code_to_user.delay(user)
+                else:
+                    logger.info("information relates to an existing patient")
 
                 return ApiResponse(
                     data={"check_in": PatientCheckInModelSerializer(check_in).data}

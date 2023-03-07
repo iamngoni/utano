@@ -17,6 +17,15 @@ class PatientCheckIn(SoftDeleteModel):
     gender = models.CharField(
         max_length=20, choices=Gender.choices, blank=False, null=False
     )
+    temperature = models.FloatField(blank=False, null=False)
+    systolic_blood_pressure = models.FloatField(blank=False, null=False)
+    diastolic_blood_pressure = models.FloatField(blank=False, null=False)
+    pulse = models.FloatField(blank=False, null=False)
+    respiratory_rate = models.FloatField(blank=True, null=True)
+    patient_notes = models.TextField(blank=False, null=False)
+    examination_notes = models.TextField(blank=False, null=False)
+    diagnosis_notes = models.TextField(blank=False, null=False)
+    treatment_notes = models.TextField(blank=False, null=False)
     status = models.CharField(
         max_length=20,
         choices=CheckInStatus.choices,
@@ -44,6 +53,10 @@ class PatientCheckIn(SoftDeleteModel):
     @property
     def get_mobile_number(self):
         return f"0{self.mobile_number.national_number}"
+
+    @property
+    def blood_pressure(self):
+        return f"{self.systolic_blood_pressure}/{self.diastolic_blood_pressure} mmHg"
 
 
 class Prescription(SoftDeleteModel):
