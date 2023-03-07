@@ -7,6 +7,7 @@
 
 from rest_framework import serializers
 
+from patient.models import EmergencyContact
 from users.models import Patient, User
 
 
@@ -39,3 +40,9 @@ class PatientModelSerializer(serializers.ModelSerializer):
         patient = super(PatientModelSerializer, self).to_representation(instance)
         patient["user"] = UserModelSerializer(patient["user"]).data
         return patient
+
+
+class EmergencyContactModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EmergencyContact
+        fields = "__all__"

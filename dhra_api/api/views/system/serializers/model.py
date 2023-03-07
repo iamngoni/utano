@@ -7,7 +7,7 @@
 
 from rest_framework import serializers
 
-from system.models import Province, District
+from system.models import Province, District, ApiRequest
 
 
 class ProvinceModelSerializer(serializers.ModelSerializer):
@@ -27,3 +27,9 @@ class DistrictModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = District
         fields = ["id", "name"]
+
+
+class ApiRequestModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ApiRequest
+        fields = "__all__"
