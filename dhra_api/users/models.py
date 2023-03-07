@@ -120,6 +120,7 @@ class User(SoftDeleteModel, AbstractUser):
 
 class Patient(SoftDeleteModel):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="patient")
+    medical_record_number = models.CharField(max_length=10, blank=False, null=False)
     date_of_birth = models.DateField(blank=True)
     place_of_birth = models.CharField(max_length=255, blank=True)
     national_id_number = models.CharField(max_length=255, blank=True, null=True)
