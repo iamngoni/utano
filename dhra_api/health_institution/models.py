@@ -23,3 +23,19 @@ class HealthInstitution(SoftDeleteModel):
         verbose_name = "Health Institution"
         verbose_name_plural = "Health Institutions"
         table_prefix = "inst"
+
+
+class HealthInstitutionRoom(SoftDeleteModel):
+    health_institution = models.ForeignKey(
+        "health_institution.HealthInstitution",
+        related_name="rooms",
+        on_delete=models.CASCADE,
+        blank=False,
+        null=False,
+    )
+    room_number = models.CharField(max_length=6, blank=False, null=False)
+
+    class Meta:
+        verbose_name = "Room"
+        verbose_name_plural = "Rooms"
+        table_prefix = "room"

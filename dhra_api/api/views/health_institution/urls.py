@@ -1,6 +1,7 @@
 from api.views.health_institution.views import (
     HealthInstitutionDetailsView,
     HealthInstitutionEmployeesView,
+    HealthInstitutionStatsView,
 )
 from django.urls import path
 
@@ -14,5 +15,10 @@ urlpatterns = [
         "employees",
         HealthInstitutionEmployeesView.as_view(),
         name="Health Institution Employees View",
+    ),
+    path(
+        "statistics",
+        HealthInstitutionStatsView.as_view(),
+        name="Health Institution Stats View",
     ),
 ]

@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "health_institution.apps.HealthInstitutionConfig",
     "staff.apps.StaffConfig",
     "patient.apps.PatientConfig",
+    "pos.apps.PosConfig",
 ]
 
 MIDDLEWARE = [

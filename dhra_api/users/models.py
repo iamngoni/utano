@@ -2,11 +2,13 @@ import json
 
 from django.contrib.auth.hashers import make_password, check_password
 from django.contrib.auth.models import AbstractUser
+from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from loguru import logger
 from phonenumber_field.modelfields import PhoneNumberField
+from rest_framework.fields import ListField
 
 from services.exceptions.passwords import PasswordUsedException
 from services.helpers.generate_otp import random_otp
@@ -169,6 +171,12 @@ class Employee(SoftDeleteModel):
         "health_institution.HealthInstitution",
         on_delete=models.DO_NOTHING,
         related_name="employees",
+    )
+    professional_title = models.CharField(max_length=255, blank=True, null=True)
+    bio = models.TextField(blank=True, null=True)
+    tags = ArrayField(models.CharField(max_length=255), default=list, null=False)
+    qualifications = ArrayField(
+        models.CharField(max_length=255), default=list, null=False
     )
     registered_on = models.DateTimeField(auto_now_add=True)
 

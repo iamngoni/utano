@@ -1,5 +1,6 @@
 from django.db import transaction
 from loguru import logger
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 
 from api.views.health_institution.serializers.model import (
@@ -13,6 +14,8 @@ from health_institution.models import HealthInstitution
 from services.helpers.api_response import ApiResponse
 from services.helpers.generate_random_password import generate_random_password
 from services.permissions.is_admin import IsAdmin
+from services.permissions.is_employee import IsEmployee
+from system.models import CheckInStatus
 from users.models import UserRoles, User, Employee
 from api.views.health_institution.tasks import notify_employee_on_registration
 
@@ -96,6 +99,50 @@ class HealthInstitutionEmployeesView(APIView):
                 return ApiResponse(
                     num_status=400, bool_status=False, issues=payload.errors
                 )
+        except Exception as exc:
+            logger.error(exc)
+            return ApiResponse(num_status=500, bool_status=False)
+
+
+class HealthInstitutionStatsView(APIView):
+    permission_classes = (
+        IsAuthenticated,
+        IsEmployee,
+    )
+
+    def get(self, request):
+        try:
+            health_institution = request.user.employee.registered_at
+
+            patients = health_institution.check_ins.filter(
+                status=CheckInStatus.CHECKED_IN
+            ).count()
+            employees = health_institution.employees.count()
+            rooms = health_institution.rooms.count()
+            doctors = health_institution.employees.filter(
+                user__role=UserRoles.DOCTOR
+            ).count()
+            nurses = health_institution.employees.filter(
+                user__role=UserRoles.NURSE
+            ).count()
+            lab_technicians = health_institution.employees.filter(
+                user__role=UserRoles.LAB_TECHNICIAN
+            ).count()
+            admins = health_institution.employees.filter(
+                user__role=UserRoles.ADMIN
+            ).count()
+
+            statistics = {
+                "patients": patients,
+                "employees": employees,
+                "rooms": rooms,
+                "doctors": doctors,
+                "nurses": nurses,
+                "lab_technicians": lab_technicians,
+                "admins": admins,
+            }
+
+            return ApiResponse(data=statistics)
         except Exception as exc:
             logger.error(exc)
             return ApiResponse(num_status=500, bool_status=False)

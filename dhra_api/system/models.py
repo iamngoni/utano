@@ -89,3 +89,9 @@ class District(SoftDeleteModel):
 
     def __str__(self):
         return self.name
+
+
+class CheckInStatus(EnumModel):
+    ADMITTED = "ADMITTED", _("ADMITTED")
+    DISMISSED = "DISMISSED", _("DISMISSED")
+    CHECKED_IN = "CHECKED_IN", _("CHECKED_IN")
