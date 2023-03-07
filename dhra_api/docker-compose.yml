@@ -3,7 +3,7 @@ services:
     database:
       image: postgres
       volumes:
-        - utano:/var/lib/postgresql/data
+        - utano-pg:/var/lib/postgresql/data
       environment:
         - POSTGRES_DB=utano
         - POSTGRES_USER=postgres
@@ -35,7 +35,7 @@ services:
 
     queue-worker:
       build: .
-      command: python manage.py rqworker utano users health_institution
+      command: python manage.py rqworker utano users health_institution auth
       restart: unless-stopped
       depends_on:
         - api
@@ -48,3 +48,4 @@ networks:
 
 volumes:
   utano:
+  utano-pg:
