@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "rest_framework",
     "django_rq",
+    "django_extensions",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -187,7 +188,7 @@ APPEND_SLASH = False
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis-queue",
+        "LOCATION": config("REDIS_HOST"),
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
             "MAX_ENTRIES": 500,
@@ -224,11 +225,7 @@ SESSION_CACHE_ALIAS = "default"
 
 DATA_UPLOAD_MAX_MEMORY_SIZE = 5242880
 
-CHANNEL_LAYERS = {
-    "default": {
-        "BACKEND": "channels_redis.core.RedisChannelLayer",
-        "CONFIG": {
-            "hosts": ["redis-queue"],
-        },
-    },
+GRAPH_MODELS = {
+    "all_applications": True,
+    "group_models": True,
 }
