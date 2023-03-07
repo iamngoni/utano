@@ -85,7 +85,7 @@ def send_sms_text(mobile_number: str, message: str):
         logger.debug(password)
         client = GatewayClient(email, password)
         client.authenticate()
-        client.send_sms(message, receiver=mobile_number, sender_id="Tumai")
+        # client.send_sms(message, receiver=mobile_number, sender_id="Tumai")
     except Exception as exc:
         logger.error(exc)
         raise

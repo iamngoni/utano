@@ -398,7 +398,26 @@ class PatientPreregistrationView(APIView):
                 send_welcome_note_to_patient.delay(user)
                 send_verification_code_to_user.delay(user)
 
-                return ApiResponse()
+                jwt_payload = generate_jwt_payload(user)
+
+                access_token = jwt.encode(
+                    payload=jwt_payload["access"],
+                    key=config("JWT_SECRET"),
+                    algorithm="HS256",
+                )
+                refresh_token = jwt.encode(
+                    payload=jwt_payload["refresh"],
+                    key=config("JWT_SECRET"),
+                    algorithm="HS256",
+                )
+
+                return ApiResponse(
+                    data={
+                        "access_token": access_token,
+                        "refresh_token": refresh_token,
+                        "user": UserModelSerializer(user).data,
+                    },
+                )
             else:
                 logger.error(payload.errors)
                 return ApiResponse(
