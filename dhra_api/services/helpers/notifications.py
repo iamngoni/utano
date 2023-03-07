@@ -6,6 +6,7 @@ from email.mime.text import MIMEText
 
 from decouple import config
 from django_rq import job
+from intelli_gateway.gateway_client import GatewayClient
 from loguru import logger
 
 from users.models import User
@@ -72,4 +73,19 @@ def send_email_alt(email: str, html_content: str, email_subject: str = "Utano EH
         logger.success("sending email completed.")
     except Exception as e:
         logger.error(e)
+        raise
+
+
+@job("notifications")
+def send_sms_text(mobile_number: str, message: str):
+    try:
+        email = config("SMS_ID")
+        password = config("SMS_KEY")
+        logger.debug(email)
+        logger.debug(password)
+        client = GatewayClient(email, password)
+        client.authenticate()
+        client.send_sms(message, receiver=mobile_number, sender_id="Tumai")
+    except Exception as exc:
+        logger.error(exc)
         raise

@@ -1,6 +1,8 @@
+from phonenumber_field.serializerfields import PhoneNumberField
 from rest_framework import serializers
 from django.contrib.auth.password_validation import validate_password
 
+from system.models import Gender, MaritalStatus, EmploymentStatus
 from users.models import User
 
 
@@ -58,3 +60,62 @@ class UpdatePasswordPayloadSerializer(serializers.Serializer):
             )
 
         return attrs
+
+
+class PreregistrationPayloadSerializer(serializers.Serializer):
+    first_name = serializers.CharField(required=True)
+    last_name = serializers.CharField(required=True)
+    email = serializers.EmailField(required=False)
+    mobile_number = PhoneNumberField(required=True)
+    gender = serializers.CharField(required=True)
+    date_of_birth = serializers.DateField(required=True)
+    marital_status = serializers.CharField(required=False)
+    national_id_number = serializers.CharField(required=False)
+    address = serializers.CharField(required=False)
+    employment_status = serializers.CharField(required=False)
+    password = serializers.CharField(required=True, validators=[validate_password])
+    password_confirmation = serializers.CharField(
+        required=True, validators=[validate_password]
+    )
+
+    def validate(self, attrs):
+        if attrs.get("password") != attrs.get("password_confirmation"):
+            raise serializers.ValidationError(
+                {"password": "Password fields didn't match."}
+            )
+
+        users = User.objects.filter(email=attrs.get("email"))
+        if len(users) > 0:
+            raise serializers.ValidationError({"email": "Email already in use"})
+
+        if not attrs.get("gender") in Gender.get_list_of_options():
+            raise serializers.ValidationError(
+                {"gender": "Specified gender not acceptable"}
+            )
+
+        if not attrs.get("email"):
+            email = f"{attrs.get('mobile_number')}@utano.modestnerd.co"
+            setattr(attrs, "email", email)
+
+        if (
+            attrs.get("marital_status")
+            and not attrs.get("marital_status") in MaritalStatus.get_list_of_options()
+        ):
+            raise serializers.ValidationError(
+                {"marital_status": "Marital status not recognized"}
+            )
+
+        if (
+            attrs.get("employment_status")
+            and not attrs.get("employment_status")
+            in EmploymentStatus.get_list_of_options()
+        ):
+            raise serializers.ValidationError(
+                {"employment_status": "Employment status not recognized"}
+            )
+
+        return attrs
+
+
+class AccountVerificationPayloadSerializer(serializers.Serializer):
+    otp = serializers.CharField(required=True, max_length=6)

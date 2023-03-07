@@ -1,3 +1,5 @@
+from django.db import transaction
+
 from api.views.auth.serializers.model import UserModelSerializer
 from api.views.auth.serializers.payload import (
     SignInPayloadSerializer,
@@ -5,6 +7,8 @@ from api.views.auth.serializers.payload import (
     ForgotPasswordPayloadSerializer,
     ResetPasswordPayloadSerializer,
     UpdatePasswordPayloadSerializer,
+    PreregistrationPayloadSerializer,
+    AccountVerificationPayloadSerializer,
 )
 from rest_framework.parsers import JSONParser
 from rest_framework.renderers import JSONRenderer
@@ -18,6 +22,10 @@ from django.utils import timezone
 from auth0.models import BlacklistToken
 from services.exceptions.passwords import PasswordUsedException
 from services.helpers.api_response import ApiResponse
+from services.helpers.create_username import create_username
+from services.helpers.generate_medical_record_number import (
+    generate_medical_record_number,
+)
 from services.helpers.get_client_details import get_client_details
 from services.jwt_service import generate_jwt_payload
 from api.views.auth.tasks import (
@@ -25,8 +33,9 @@ from api.views.auth.tasks import (
     send_verification_code_to_user,
     send_password_reset_otp,
     notify_user_that_their_password_has_been_updated,
+    send_welcome_note_to_patient,
 )
-from users.models import User
+from users.models import User, UserRoles, Patient
 from rest_framework.permissions import IsAuthenticated
 
 
@@ -193,8 +202,8 @@ class DestroyTokenView(APIView):
             blacklist.save()
 
             return ApiResponse()
-        except Exception as e:
-            logger.error(f" Failed to destroy token: {e}")
+        except Exception as exc:
+            logger.error(exc)
             return ApiResponse(num_status=500, bool_status=False)
 
 
@@ -343,3 +352,141 @@ class UpdatePasswordView(APIView):
         except Exception as exc:
             logger.error(exc)
             return ApiResponse(num_status=500, bool_status=False)
+
+
+class PatientPreregistrationView(APIView):
+    authentication_classes = ()
+    serializer_class = PreregistrationPayloadSerializer
+
+    @transaction.atomic()
+    def post(self, request):
+        try:
+            payload = self.serializer_class(data=request.data)
+            if payload.is_valid():
+                logger.info("creating account for patient")
+                user = User(
+                    email=payload.validated_data.get("email"),
+                    username=create_username(
+                        first_name=payload.validated_data.get("first_name"),
+                        last_name=payload.validated_data.get("last_name"),
+                    ),
+                    first_name=payload.validated_data.get("first_name"),
+                    last_name=payload.validated_data.get("last_name"),
+                    role=UserRoles.PATIENT,
+                    gender=payload.validated_data.get("gender"),
+                )
+                user.set_password(payload.validated_data.get("password"))
+                user.save()
+                logger.success("user account created successfully")
+
+                # create patient profile
+                logger.info("creating patient profile")
+                medical_record_number = generate_medical_record_number()
+                patient = Patient(
+                    user=user,
+                    medical_record_number=medical_record_number,
+                    mobile_number=payload.validated_data.get("mobile_number"),
+                    date_of_birth=payload.validated_data.get("date_of_birth"),
+                    marital_status=payload.validated_data.get("marital_status"),
+                    national_id_number=payload.validated_data.get("national_id_number"),
+                    address=payload.validated_data.get("address"),
+                    employment_status=payload.validated_data.get("employment_status"),
+                )
+                patient.save()
+
+                # welcome user and send verification code
+                send_welcome_note_to_patient.delay(user)
+                send_verification_code_to_user.delay(user)
+
+                return ApiResponse()
+            else:
+                logger.error(payload.errors)
+                return ApiResponse(
+                    num_status=400, bool_status=False, issues=payload.errors
+                )
+        except Exception as exc:
+            logger.error(exc)
+            return ApiResponse(num_status=500, bool_status=False)
+
+
+class VerifyAccountView(APIView):
+    renderer_classes = [JSONRenderer]
+    parser_classes = [JSONParser]
+    permission_classes = (IsAuthenticated,)
+    serializer_class = AccountVerificationPayloadSerializer
+
+    def get(self, request):
+        try:
+            if request.user.is_verified is True:
+                return ApiResponse()
+
+            send_verification_code_to_user.delay(request.user)
+            return ApiResponse()
+
+        except Exception as e:
+            logger.error(f"[Auth]: {e}")
+            return ApiResponse(
+                num_status=500,
+                bool_status=False,
+            )
+
+    def post(self, request):
+        user = request.user
+        try:
+            payload = self.serializer_class(data=request.data)
+
+            if payload.is_valid():
+                otp = payload.validated_data.get("otp")
+
+                if user.is_verified:
+                    return ApiResponse()
+
+                # Check if pin hasn't expired (time 5 minutes)
+                issued_at_time = user.one_time_pin_generated_at
+                current_time = timezone.now()
+                time_difference = current_time - issued_at_time
+                logger.info(
+                    f"[Auth]: Time difference between issued at and now is {time_difference.total_seconds()} in seconds"
+                )
+                time_difference = divmod(time_difference.total_seconds(), 60)
+                difference_in_minutes = time_difference[0]
+                logger.info(
+                    f"[Auth]: Time difference between issued at and now is {difference_in_minutes} in minutes"
+                )
+
+                if difference_in_minutes > 5:
+                    send_verification_code_to_user.delay(request.user)
+                    return ApiResponse(
+                        num_status=400,
+                        bool_status=False,
+                        message="OTP Expired",
+                    )
+
+                if user.one_time_pin == otp:
+                    user.is_verified = True
+                    user.one_time_pin = None
+                    user.one_time_pin_generated_at = None
+                    user.save()
+
+                    return ApiResponse(
+                        data={"user": UserModelSerializer(user).data},
+                    )
+                else:
+                    return ApiResponse(
+                        num_status=400,
+                        bool_status=False,
+                        issues={"otp": "Invalid OTP"},
+                    )
+            else:
+                return ApiResponse(
+                    num_status=400,
+                    bool_status=False,
+                    issues=payload.errors,
+                )
+
+        except Exception as e:
+            logger.error(f"[Auth]: {e}")
+            return ApiResponse(
+                num_status=500,
+                bool_status=False,
+            )
