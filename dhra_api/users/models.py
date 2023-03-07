@@ -133,7 +133,6 @@ class Patient(SoftDeleteModel):
     fitzpatrick_skin_type = models.CharField(max_length=255, blank=True)
     wheelchair = models.BooleanField(default=False)
     mobile_number = PhoneNumberField(unique=True, region="ZW")
-    email_address = models.EmailField(blank=True)
     mother_name = models.CharField(max_length=255, blank=True)
     father_name = models.CharField(max_length=255, blank=True)
     marital_status = models.CharField(

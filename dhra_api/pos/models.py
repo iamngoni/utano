@@ -3,7 +3,7 @@ from typing import Union
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 
-from system.models import CheckInStatus
+from system.models import CheckInStatus, Gender
 from users.models import Patient
 from utano.model import SoftDeleteModel
 
@@ -14,6 +14,9 @@ class PatientCheckIn(SoftDeleteModel):
     date_of_birth = models.DateField(blank=False, null=False)
     address = models.TextField(blank=False, null=False)
     mobile_number = PhoneNumberField(region="ZW")
+    gender = models.CharField(
+        max_length=20, choices=Gender.choices, blank=False, null=False
+    )
     status = models.CharField(
         max_length=20,
         choices=CheckInStatus.choices,
@@ -37,3 +40,17 @@ class PatientCheckIn(SoftDeleteModel):
     @property
     def patient(self) -> Union[None, Patient]:
         return Patient.objects.filter(mobile_number=self.mobile_number).first()
+
+    @property
+    def get_mobile_number(self):
+        return f"0{self.mobile_number.national_number}"
+
+
+class Prescription(SoftDeleteModel):
+    patient = models.ForeignKey(
+        "users.Patient",
+        related_name="prescriptions",
+        on_delete=models.CASCADE,
+        blank=False,
+        null=False,
+    )
