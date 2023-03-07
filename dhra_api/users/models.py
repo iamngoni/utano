@@ -8,7 +8,6 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from loguru import logger
 from phonenumber_field.modelfields import PhoneNumberField
-from rest_framework.fields import ListField
 
 from services.exceptions.passwords import PasswordUsedException
 from services.helpers.generate_otp import random_otp
@@ -26,6 +25,7 @@ class UserRoles(EnumModel):
     NURSE = "NURSE", _("NURSE")
     HEALTH_INSTITUTION = "HEALTH_INSTITUTION", _("HEALTH_INSTITUTION")
     LAB_TECHNICIAN = "LAB_TECHNICIAN", _("LAB_TECHNICIAN")
+    PHARMACIST = "PHARMACIST", _("PHARMACIST")
 
 
 class User(SoftDeleteModel, AbstractUser):

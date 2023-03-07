@@ -67,3 +67,40 @@ class Prescription(SoftDeleteModel):
         blank=False,
         null=False,
     )
+    check_in = models.ForeignKey(
+        "pos.PatientCheckIn",
+        related_name="prescriptions",
+        on_delete=models.CASCADE,
+        blank=False,
+        null=False,
+    )
+    notes = models.TextField(blank=False, null=False)
+
+    class Meta:
+        verbose_name = "Prescription"
+        verbose_name_plural = "Prescriptions"
+        table_prefix = "pres"
+
+
+class PrescriptionItem(SoftDeleteModel):
+    prescription = models.ForeignKey(
+        "pos.Prescription",
+        related_name="items",
+        on_delete=models.CASCADE,
+        blank=False,
+        null=False,
+    )
+    drug = models.ForeignKey(
+        "pharmacy.Drug",
+        related_name="prescriptions",
+        on_delete=models.CASCADE,
+        blank=False,
+        null=False,
+    )
+    quantity = models.IntegerField(blank=False, null=False)
+    frequency = models.IntegerField(blank=False, null=False)
+
+    class Meta:
+        verbose_name = "Prescription Item"
+        verbose_name_plural = "Prescription Items"
+        table_prefix = "pres-item"
