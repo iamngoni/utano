@@ -142,6 +142,8 @@ class Patient(SoftDeleteModel):
         blank=True,
     )
     occupation = models.CharField(max_length=255, blank=True)
+    height = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
+    weight = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
     registered_at = models.ForeignKey(
         "health_institution.HealthInstitution",
         on_delete=models.DO_NOTHING,
