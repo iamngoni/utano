@@ -80,6 +80,9 @@ class Prescription(SoftDeleteModel):
         blank=False,
         null=False,
     )
+    prescription_number = models.CharField(
+        max_length=20, blank=False, null=False, unique=True
+    )
     prepared_by = models.ForeignKey(
         "users.Employee", on_delete=models.CASCADE, blank=False, null=False
     )

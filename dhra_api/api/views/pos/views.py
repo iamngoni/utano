@@ -27,6 +27,7 @@ from services.helpers.create_username import create_username
 from services.helpers.generate_medical_record_number import (
     generate_medical_record_number,
 )
+from services.helpers.generate_prescription_number import generate_prescription_number
 from services.helpers.generate_random_password import generate_random_password
 from services.permissions.is_employee import IsEmployee
 from system.models import CheckInStatus
@@ -149,12 +150,15 @@ class PatientCheckInPrescriptionView(APIView):
             if payload.is_valid():
                 check_in = PatientCheckIn.objects.get(id=check_in_id)
                 # create a new prescription
+                prescription_number = generate_prescription_number()
+
                 prescription = Prescription(
                     patient=check_in.patient,
                     check_in=check_in,
                     prepared_at=check_in.health_institution,
                     prepared_by=request.user.employee,
                     notes=check_in.treatment_notes,
+                    prescription_number=prescription_number,
                 )
                 prescription.save()
 

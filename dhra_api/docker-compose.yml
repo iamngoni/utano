@@ -14,7 +14,7 @@ services:
 
     redis-queue:
       image: redis
-      container_name: utano-redis
+      container_name: redis
       restart: unless-stopped
       environment:
         - ALLOW_EMPTY_PASSWORD=yes
