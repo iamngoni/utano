@@ -3,6 +3,19 @@ from django.db import models
 from utano.model import SoftDeleteModel
 
 
+class ApprovedMedicine(SoftDeleteModel):
+    name = models.CharField(max_length=255, unique=True)
+    description = models.TextField()
+
+    class Meta:
+        verbose_name = "Approved Medicine"
+        verbose_name_plural = "Approved Medicines"
+        table_prefix = "medicine"
+
+    def __str__(self):
+        return self.name
+
+
 class Drug(SoftDeleteModel):
     name = models.CharField(max_length=255, blank=False, null=False, unique=True)
     description = models.TextField(blank=True, null=True)
@@ -11,7 +24,6 @@ class Drug(SoftDeleteModel):
     )
     quantity = models.IntegerField(blank=False, null=False)
     is_active = models.BooleanField(default=True)
-    is_in_stock = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = "Drug"

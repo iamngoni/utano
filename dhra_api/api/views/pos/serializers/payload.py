@@ -12,6 +12,7 @@ from loguru import logger
 from phonenumber_field.serializerfields import PhoneNumberField
 from rest_framework import serializers
 
+from pharmacy.models import Drug, ApprovedMedicine
 from system.models import Gender
 
 
@@ -53,3 +54,35 @@ class PatientCheckInPayloadSerializer(serializers.Serializer):
             raise serializers.ValidationError({"gender": "Gender not recognized"})
 
         return attrs
+
+
+class PrescriptionItemPayloadSerializer(serializers.Serializer):
+    medicine = serializers.CharField(required=True)
+    frequency = serializers.IntegerField(required=True, min_value=1)
+    quantity = serializers.IntegerField(required=True, min_value=1)
+    instructions = serializers.CharField(required=True)
+
+    def validate(self, attrs):
+        if attrs.get("frequency") > 4:
+            raise serializers.ValidationError(
+                {"frequency": "Frequency cannot be more than 4 times a day"}
+            )
+
+        # check if drug exists in the system
+        medicines = ApprovedMedicine.objects.filter(id=attrs.get("medicine"))
+        if not medicines.exists():
+            raise serializers.ValidationError(
+                {"medicine": "Medicine not found in approved list"}
+            )
+
+        attrs["medicine_name"] = medicines.first().name
+
+        return attrs
+
+
+class PrescriptionPayloadSerializer(serializers.Serializer):
+    prescription_items = serializers.ListField(
+        required=True,
+        child=PrescriptionItemPayloadSerializer(required=True),
+        min_length=1,
+    )

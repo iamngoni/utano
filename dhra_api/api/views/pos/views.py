@@ -13,9 +13,15 @@ from api.views.auth.tasks import (
     send_verification_code_to_user,
     send_welcome_note_to_patient,
 )
-from api.views.pos.serializers.model import PatientCheckInModelSerializer
-from api.views.pos.serializers.payload import PatientCheckInPayloadSerializer
-from pos.models import PatientCheckIn
+from api.views.pos.serializers.model import (
+    PatientCheckInModelSerializer,
+    PrescriptionModelSerializer,
+)
+from api.views.pos.serializers.payload import (
+    PatientCheckInPayloadSerializer,
+    PrescriptionPayloadSerializer,
+)
+from pos.models import PatientCheckIn, Prescription, PrescriptionItem
 from services.helpers.api_response import ApiResponse
 from services.helpers.create_username import create_username
 from services.helpers.generate_medical_record_number import (
@@ -101,6 +107,74 @@ class PatientCheckInView(APIView):
 
                 return ApiResponse(
                     data={"check_in": PatientCheckInModelSerializer(check_in).data}
+                )
+            else:
+                logger.error(payload.errors)
+                return ApiResponse(
+                    num_status=400, bool_status=False, issues=payload.errors
+                )
+        except Exception as exc:
+            logger.error(exc)
+            return ApiResponse(num_status=500, bool_status=False)
+
+
+class PatientCheckInPrescriptionView(APIView):
+    permission_classes = (IsAuthenticated, IsEmployee)
+    serializer_class = PrescriptionPayloadSerializer
+
+    def get(self, request, check_in_id):
+        try:
+            check_in = PatientCheckIn.objects.get(id=check_in_id)
+            try:
+
+                return ApiResponse(
+                    data={
+                        "prescription": PrescriptionModelSerializer(
+                            check_in.prescription
+                        ).data
+                    }
+                )
+            except Exception as exc:
+                logger.error("probably prescription not found")
+                logger.error(exc)
+                return ApiResponse(num_status=404, bool_status=False)
+        except Exception as exc:
+            logger.error(exc)
+            return ApiResponse(num_status=500, bool_status=False)
+
+    @transaction.atomic()
+    def post(self, request, check_in_id):
+        try:
+            payload = self.serializer_class(data=request.data)
+            if payload.is_valid():
+                check_in = PatientCheckIn.objects.get(id=check_in_id)
+                # create a new prescription
+                prescription = Prescription(
+                    patient=check_in.patient,
+                    check_in=check_in,
+                    prepared_at=check_in.health_institution,
+                    prepared_by=request.user.employee,
+                    notes=check_in.treatment_notes,
+                )
+                prescription.save()
+
+                for item in payload.validated_data.get("prescription_items"):
+                    prescription_item = PrescriptionItem(
+                        prescription=prescription,
+                        medicine=item.get("medicine_name"),
+                        medicine_id=item.get("medicine"),
+                        quantity=item.get("quantity"),
+                        frequency=item.get("frequency"),
+                        instructions=item.get("instructions"),
+                    )
+                    prescription_item.save()
+
+                # todo: send prescription to user
+
+                return ApiResponse(
+                    data={
+                        "prescription": PrescriptionModelSerializer(prescription).data
+                    }
                 )
             else:
                 logger.error(payload.errors)

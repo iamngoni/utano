@@ -44,7 +44,7 @@ class PatientCheckIn(SoftDeleteModel):
     class Meta:
         verbose_name = "Patient Check-In"
         verbose_name_plural = "Patient Check-Ins"
-        table_prefix = "p-in"
+        table_prefix = "checkin"
 
     @property
     def patient(self) -> Union[None, Patient]:
@@ -67,12 +67,21 @@ class Prescription(SoftDeleteModel):
         blank=False,
         null=False,
     )
-    check_in = models.ForeignKey(
+    check_in = models.OneToOneField(
         "pos.PatientCheckIn",
-        related_name="prescriptions",
+        related_name="prescription",
         on_delete=models.CASCADE,
         blank=False,
         null=False,
+    )
+    prepared_at = models.ForeignKey(
+        "health_institution.HealthInstitution",
+        on_delete=models.CASCADE,
+        blank=False,
+        null=False,
+    )
+    prepared_by = models.ForeignKey(
+        "users.Employee", on_delete=models.CASCADE, blank=False, null=False
     )
     notes = models.TextField(blank=False, null=False)
 
@@ -90,15 +99,11 @@ class PrescriptionItem(SoftDeleteModel):
         blank=False,
         null=False,
     )
-    drug = models.ForeignKey(
-        "pharmacy.Drug",
-        related_name="prescriptions",
-        on_delete=models.CASCADE,
-        blank=False,
-        null=False,
-    )
+    medicine = models.CharField(max_length=255, blank=False, null=False)
+    medicine_id = models.CharField(max_length=255, blank=True, null=True)
     quantity = models.IntegerField(blank=False, null=False)
     frequency = models.IntegerField(blank=False, null=False)
+    instructions = models.TextField(blank=False, null=False)
 
     class Meta:
         verbose_name = "Prescription Item"
