@@ -2,6 +2,7 @@ version: "3.9"
 services:
     database:
       image: postgres
+      container_name: utano-db
       volumes:
         - utano-pg:/var/lib/postgresql/data
       environment:
@@ -13,7 +14,7 @@ services:
 
     redis-queue:
       image: redis
-      container_name: redis
+      container_name: utano-redis
       restart: unless-stopped
       environment:
         - ALLOW_EMPTY_PASSWORD=yes
@@ -22,6 +23,7 @@ services:
 
     api:
       build: .
+      container_name: utano
       command: python manage.py runserver 0.0.0.0:8000
       volumes:
         - utano:/app
@@ -35,6 +37,7 @@ services:
 
     queue-worker:
       build: .
+      container_name: utano-queue-worker
       command: python manage.py rqworker utano users health_institution auth
       restart: unless-stopped
       depends_on:
