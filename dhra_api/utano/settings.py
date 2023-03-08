@@ -212,6 +212,9 @@ RQ_QUEUES = {
     "utano": {
         "USE_REDIS_CACHE": "default",
     },
+    "pos": {
+        "USE_REDIS_CACHE": "default",
+    },
     "notifications": {
         "USE_REDIS_CACHE": "default",
     },

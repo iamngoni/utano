@@ -32,6 +32,7 @@ from services.helpers.generate_random_password import generate_random_password
 from services.permissions.is_employee import IsEmployee
 from system.models import CheckInStatus
 from users.models import Patient, User
+from api.views.pos.tasks import send_prescription_to_patient
 
 
 class PatientCheckInView(APIView):
@@ -173,7 +174,7 @@ class PatientCheckInPrescriptionView(APIView):
                     )
                     prescription_item.save()
 
-                # todo: send prescription to user
+                send_prescription_to_patient.delay(prescription)
 
                 return ApiResponse(
                     data={
