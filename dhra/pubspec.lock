@@ -441,10 +441,10 @@ packages:
     dependency: "direct main"
     description:
       name: localregex
-      sha256: eb7e68a0173bb67b4c1cb39bb8527ae00d2812ac293e2f974e1a3067e148a140
+      sha256: "58a9198d9878f25f5eee90a2054acbfe621b301ff30212c49602d3c499f65c9f"
       url: "https://pub.dev"
     source: hosted
-    version: "4.0.2"
+    version: "4.0.5"
   logger:
     dependency: "direct main"
     description:
@@ -461,6 +461,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.1"
+  macos_ui:
+    dependency: "direct main"
+    description:
+      name: macos_ui
+      sha256: "57208eec8180656acd379e1c754e9b6d8830f32a020b94571ae2188f8112075b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.12.2"
   matcher:
     dependency: transitive
     description:
