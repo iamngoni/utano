@@ -8,7 +8,7 @@
 
 import 'package:dio/dio.dart';
 
-import '../models/network_response.dart';
+import '../models/data/network_response.dart';
 
 class DioResponseInterceptor extends Interceptor {
   @override

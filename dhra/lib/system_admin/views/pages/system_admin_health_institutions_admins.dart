@@ -1,5 +1,5 @@
 //
-//  system_admin_home
+//  system_admin_health_institutions_admins
 //  dhra
 //
 //  Created by Ngonidzashe Mangudya on 3/4/2023.
@@ -8,8 +8,8 @@
 
 import 'package:flutter/material.dart';
 
-class SystemAdminHomePage extends StatelessWidget {
-  const SystemAdminHomePage({super.key});
+class SystemAdminHealthInstitutionsAdminsPage extends StatelessWidget {
+  const SystemAdminHealthInstitutionsAdminsPage({super.key});
 
   @override
   Widget build(BuildContext context) {

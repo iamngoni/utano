@@ -10,9 +10,9 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 
 import '../../../../core/configs/logger.dart';
-import '../../../../core/models/application_error.dart';
-import '../../../../core/models/auth_response.dart';
-import '../../../../core/models/network_response.dart';
+import '../../../../core/models/data/application_error.dart';
+import '../../../../core/models/data/auth_response.dart';
+import '../../../../core/models/data/network_response.dart';
 import '../../../../core/utils/dio_error_to_application_error.dart';
 import '../abstract/auth_repository.dart';
 
@@ -38,8 +38,10 @@ class DioAuthRepository implements AuthRepository {
       return Right(authResponse);
     } on DioError catch (e) {
       return Left(dioErrorToApplicationError(e));
-    } catch (e) {
-      logger.error(e);
+    } catch (e, s) {
+      logger
+        ..e(e)
+        ..e(s);
       return Left(ApplicationError.unknownError());
     }
   }

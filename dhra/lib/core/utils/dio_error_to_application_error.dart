@@ -8,7 +8,7 @@
 
 import 'package:dio/dio.dart';
 
-import '../models/application_error.dart';
+import '../models/data/application_error.dart';
 
 ApplicationError dioErrorToApplicationError(DioError error) {
   late ApplicationError exception;

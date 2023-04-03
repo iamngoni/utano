@@ -22,7 +22,7 @@ User _$UserFromJson(Map<String, dynamic> json) {
 mixin _$User {
   String get id => throw _privateConstructorUsedError;
   @JsonKey(name: 'last_login')
-  bool? get lastLogin => throw _privateConstructorUsedError;
+  DateTime? get lastLogin => throw _privateConstructorUsedError;
   @JsonKey(name: 'is_superuser')
   bool get isSuperuser => throw _privateConstructorUsedError;
   @JsonKey(name: 'first_name')
@@ -61,7 +61,7 @@ abstract class $UserCopyWith<$Res> {
   $Res call(
       {String id,
       @JsonKey(name: 'last_login')
-          bool? lastLogin,
+          DateTime? lastLogin,
       @JsonKey(name: 'is_superuser')
           bool isSuperuser,
       @JsonKey(name: 'first_name')
@@ -125,7 +125,7 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
       lastLogin: freezed == lastLogin
           ? _value.lastLogin
           : lastLogin // ignore: cast_nullable_to_non_nullable
-              as bool?,
+              as DateTime?,
       isSuperuser: null == isSuperuser
           ? _value.isSuperuser
           : isSuperuser // ignore: cast_nullable_to_non_nullable
@@ -191,7 +191,7 @@ abstract class _$$_UserCopyWith<$Res> implements $UserCopyWith<$Res> {
   $Res call(
       {String id,
       @JsonKey(name: 'last_login')
-          bool? lastLogin,
+          DateTime? lastLogin,
       @JsonKey(name: 'is_superuser')
           bool isSuperuser,
       @JsonKey(name: 'first_name')
@@ -251,7 +251,7 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
       lastLogin: freezed == lastLogin
           ? _value.lastLogin
           : lastLogin // ignore: cast_nullable_to_non_nullable
-              as bool?,
+              as DateTime?,
       isSuperuser: null == isSuperuser
           ? _value.isSuperuser
           : isSuperuser // ignore: cast_nullable_to_non_nullable
@@ -346,7 +346,7 @@ class _$_User implements _User {
   final String id;
   @override
   @JsonKey(name: 'last_login')
-  final bool? lastLogin;
+  final DateTime? lastLogin;
   @override
   @JsonKey(name: 'is_superuser')
   final bool isSuperuser;
@@ -463,7 +463,7 @@ abstract class _User implements User {
   factory _User(
       {required final String id,
       @JsonKey(name: 'last_login')
-          required final bool? lastLogin,
+          required final DateTime? lastLogin,
       @JsonKey(name: 'is_superuser')
           required final bool isSuperuser,
       @JsonKey(name: 'first_name')
@@ -495,7 +495,7 @@ abstract class _User implements User {
   String get id;
   @override
   @JsonKey(name: 'last_login')
-  bool? get lastLogin;
+  DateTime? get lastLogin;
   @override
   @JsonKey(name: 'is_superuser')
   bool get isSuperuser;

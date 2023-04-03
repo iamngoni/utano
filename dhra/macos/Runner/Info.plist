@@ -29,6 +29,6 @@
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 	<key>keychain-access-groups</key>
-    <array/>
+	<array/>
 </dict>
 </plist>

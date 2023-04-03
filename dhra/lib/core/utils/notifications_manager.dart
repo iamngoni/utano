@@ -12,7 +12,7 @@ import 'package:handy_extensions/handy_extensions.dart';
 import 'package:relative_scale/relative_scale.dart';
 
 import '../configs/configs.dart';
-import '../models/system_notification.dart';
+import '../models/data/system_notification.dart';
 import '../services/di.dart';
 import '../services/notifications.dart';
 

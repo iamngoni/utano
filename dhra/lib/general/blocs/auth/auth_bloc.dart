@@ -4,8 +4,8 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:jwt_decode/jwt_decode.dart';
 
 import '../../../core/configs/configs.dart';
-import '../../../core/models/application_error.dart';
-import '../../../core/models/auth_response.dart';
+import '../../../core/models/data/application_error.dart';
+import '../../../core/models/data/auth_response.dart';
 import '../../../core/services/di.dart';
 import '../../../core/services/secure_storage.dart';
 import '../../models/repos/abstract/auth_repository.dart';

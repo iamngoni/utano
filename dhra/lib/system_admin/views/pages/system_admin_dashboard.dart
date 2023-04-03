@@ -1,5 +1,5 @@
 //
-//  nurse_dashboard
+//  system_admin_dashboard
 //  dhra
 //
 //  Created by Ngonidzashe Mangudya on 3/4/2023.
@@ -14,8 +14,8 @@ import '../../../core/configs/colors.dart';
 import '../../../core/views/widgets/dashboard_stats_widget.dart';
 import '../../../core/views/widgets/page_header.dart';
 
-class NurseDashboardPage extends StatelessWidget {
-  const NurseDashboardPage({super.key});
+class SystemAdminDashboardPage extends StatelessWidget {
+  const SystemAdminDashboardPage({super.key});
 
   @override
   Widget build(BuildContext context) {

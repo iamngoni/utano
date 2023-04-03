@@ -8,8 +8,8 @@
 
 import 'package:dartz/dartz.dart';
 
-import '../../../../core/models/application_error.dart';
-import '../../../../core/models/auth_response.dart';
+import '../../../../core/models/data/application_error.dart';
+import '../../../../core/models/data/auth_response.dart';
 
 abstract class AuthRepository {
   Future<Either<ApplicationError, AuthResponse>> login(

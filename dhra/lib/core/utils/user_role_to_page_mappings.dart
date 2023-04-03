@@ -14,8 +14,8 @@ import '../../health_institution/views/pages/health_institution_home.dart';
 import '../../lab_technician/views/pages/lab_technician_home.dart';
 import '../../nurse/views/pages/nurse_app.dart';
 import '../../pharmacist/views/pages/pharmacist_home.dart';
-import '../../system_admin/views/pages/system_admin_home.dart';
-import '../models/user_role.dart';
+import '../../system_admin/views/pages/system_admin_app.dart';
+import '../models/data/user_role.dart';
 
 final Map<UserRole, Widget> userRoleToPageMappings = {
   UserRole.admin: const AdminHomePage(),
@@ -24,5 +24,5 @@ final Map<UserRole, Widget> userRoleToPageMappings = {
   UserRole.healthInstitution: const HealthInstitutionHomePage(),
   UserRole.labTechnician: const LabTechnicianHomePage(),
   UserRole.pharmacist: const PharmacistHomePage(),
-  UserRole.systemAdmin: const SystemAdminHomePage(),
+  UserRole.systemAdmin: const SystemAdminApp(),
 };

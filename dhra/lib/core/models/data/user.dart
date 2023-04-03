@@ -17,7 +17,7 @@ part 'user.g.dart';
 class User with _$User {
   factory User({
     required String id,
-    @JsonKey(name: 'last_login') required bool? lastLogin,
+    @JsonKey(name: 'last_login') required DateTime? lastLogin,
     @JsonKey(name: 'is_superuser') required bool isSuperuser,
     @JsonKey(name: 'first_name') required String firstName,
     @JsonKey(name: 'last_name') required String lastName,

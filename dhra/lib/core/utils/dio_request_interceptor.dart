@@ -10,8 +10,8 @@ import 'package:dio/dio.dart';
 import 'package:jwt_decode/jwt_decode.dart';
 
 import '../configs/configs.dart';
-import '../models/auth_response.dart';
-import '../models/network_response.dart';
+import '../models/data/auth_response.dart';
+import '../models/data/network_response.dart';
 import '../services/di.dart';
 import '../services/secure_storage.dart';
 
