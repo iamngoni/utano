@@ -1,6 +1,6 @@
 # Utano
 
-![logo.png](assets%2Fimages%2Flogo.png)
+![logo.png](screenshots%2Flogo.png)
 
 
 ![coverage][coverage_badge]
