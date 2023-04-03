@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:macos_ui/macos_ui.dart';
 
 import 'general/views/pages/landing.dart';
 
@@ -7,9 +8,12 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MacosApp(
+      theme: MacosThemeData.light(),
+      darkTheme: MacosThemeData.dark(),
+      themeMode: ThemeMode.system,
       title: 'Utano',
-      home: LandingPage(),
+      home: const LandingPage(),
     );
   }
 }

@@ -1,12 +1,13 @@
-/*
-    @Project: hekima_patient
-    @Date: 10, September, 2022
-    @Author: Ngonidzashe Mangudya
- 
-    Copyright (c) 2022 ModestNerd
-*/
+//
+//  api
+//  dhra
+//
+//  Created by Ngonidzashe Mangudya on 3/4/2023.
+//  Copyright (c) 2023 ModestNerds, Co
+//
+
 class ApiConfig {
-  static const _api = "https://hekima.modestnerd.co/api";
-  static const _apiVersion = "1.0";
-  static const baseUrl = "$_api/$_apiVersion";
+  static const _api = 'http://127.0.0.1:8000/api';
+  static const _apiVersion = '1.0';
+  static const baseUrl = '$_api/$_apiVersion';
 }

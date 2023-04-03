@@ -1,10 +1,10 @@
-/*
-    @Project: hekima_patient
-    @Date: 16, September, 2022
-    @Author: Ngonidzashe Mangudya
-
-    Copyright (c) 2022 ModestNerd
-*/
+//
+//  logger
+//  dhra
+//
+//  Created by Ngonidzashe Mangudya on 3/4/2023.
+//  Copyright (c) 2023 ModestNerds, Co
+//
 
 import 'package:logger/logger.dart';
 

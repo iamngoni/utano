@@ -1,11 +1,12 @@
-/*
-    @Project: hekima_patient
-    @Date: 10, September, 2022
-    @Author: Ngonidzashe Mangudya
+//
+//  colors
+//  dhra
+//
+//  Created by Ngonidzashe Mangudya on 3/4/2023.
+//  Copyright (c) 2023 ModestNerds, Co
+//
 
-    Copyright (c) 2022 ModestNerd
-*/
-import 'package:flutter/material.dart';
+import 'dart:ui';
 
 class AppColors {
   static const Color primary = Color(0xFF3366FF);
