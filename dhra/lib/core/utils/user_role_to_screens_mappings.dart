@@ -1,0 +1,26 @@
+//
+//  user_role_to_screens_mappings
+//  dhra
+//
+//  Created by Ngonidzashe Mangudya on 3/4/2023.
+//  Copyright (c) 2023 ModestNerds, Co
+//
+
+import 'package:flutter/material.dart';
+
+import '../../nurse/views/pages/nurse_dashboard.dart';
+import '../../nurse/views/pages/nurse_patients.dart';
+import '../../nurse/views/pages/nurse_prescriptions.dart';
+import '../models/user_role.dart';
+import '../views/pages/change_password.dart';
+import '../views/pages/point_of_service.dart';
+
+final Map<UserRole, List<Widget>> userRoleToScreensMappings = {
+  UserRole.nurse: [
+    const NurseDashboardPage(),
+    const PointOfServicePage(),
+    const NursePatientsPage(),
+    const NursePrescriptionsPage(),
+    const ChangePasswordPage(),
+  ],
+};

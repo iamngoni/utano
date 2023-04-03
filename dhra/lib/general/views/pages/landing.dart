@@ -9,7 +9,9 @@ import 'package:relative_scale/relative_scale.dart';
 
 import '../../../core/configs/configs.dart';
 import '../../../core/utils/user_role_to_page_mappings.dart';
+import '../../../core/utils/user_role_to_screens_mappings.dart';
 import '../../blocs/auth/auth_bloc.dart';
+import '../../blocs/navigation/navigation_bloc.dart';
 import '../widgets/login_form.dart';
 
 class LandingPage extends StatefulWidget {
@@ -48,7 +50,14 @@ class _LandingPageState extends State<LandingPage> {
                 if (state is Authenticated) {
                   logger.i('Authenticated signal ...');
                   context.goToRefresh(
-                    page: userRoleToPageMappings[state.authResponse.user.role]!,
+                    page: BlocProvider<NavigationBloc>(
+                      create: (_) => NavigationBloc(
+                        screens: userRoleToScreensMappings[
+                            state.authResponse.user.role]!,
+                      ),
+                      child:
+                          userRoleToPageMappings[state.authResponse.user.role],
+                    ),
                   );
                 }
               },

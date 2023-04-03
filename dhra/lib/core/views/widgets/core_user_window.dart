@@ -12,8 +12,9 @@ import 'package:handy_extensions/handy_extensions.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:relative_scale/relative_scale.dart';
 
-import '../../general/blocs/auth/auth_bloc.dart';
-import '../../general/views/pages/landing.dart';
+import '../../../general/blocs/auth/auth_bloc.dart';
+import '../../../general/blocs/navigation/navigation_bloc.dart';
+import '../../../general/views/pages/landing.dart';
 import 'core_side_bar.dart';
 import 'side_bar_tab_item.dart';
 
@@ -48,8 +49,32 @@ class CoreUserWindow extends StatelessWidget {
                     sideBarBottomTabItems: sideBarBottomTabItems,
                   ),
                   Expanded(
-                    child: Container(
-                      color: Colors.white,
+                    child: BlocBuilder<NavigationBloc, NavigationState>(
+                      builder: (context, state) {
+                        if (state is! Navigation) {
+                          return Center(
+                            child: Image(
+                              image: const AssetImage(
+                                'assets/images/logo-red.png',
+                              ),
+                              height: sy(100),
+                            ),
+                          );
+                        }
+
+                        return Container(
+                          height: context.height,
+                          width: context.width,
+                          color: Colors.white,
+                          padding: EdgeInsets.symmetric(
+                            horizontal: sx(20),
+                            vertical: sy(40),
+                          ),
+                          child: context
+                              .read<NavigationBloc>()
+                              .screens[state.index],
+                        );
+                      },
                     ),
                   ),
                 ],

@@ -11,8 +11,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:handy_extensions/handy_extensions.dart';
 import 'package:relative_scale/relative_scale.dart';
 
-import '../../general/blocs/auth/auth_bloc.dart';
-import '../configs/colors.dart';
+import '../../../general/blocs/auth/auth_bloc.dart';
+import '../../configs/colors.dart';
 import 'side_bar_tab_item.dart';
 
 class CoreSideBar extends StatelessWidget {
@@ -75,16 +75,16 @@ class CoreSideBar extends StatelessWidget {
                               ' ${state.authResponse.user.lastName}',
                               style: TextStyle(
                                 color: Colors.black,
-                                fontWeight: FontWeight.w700,
-                                fontSize: sy(12),
+                                fontWeight: FontWeight.w600,
+                                fontSize: sy(10),
                               ),
                             ),
                             Text(
                               state.authResponse.user.role.name.titleCase,
                               style: TextStyle(
-                                color: Colors.black54,
+                                color: UtanoColors.grey,
                                 fontWeight: FontWeight.w400,
-                                fontSize: sy(12),
+                                fontSize: sy(8),
                               ),
                             ),
                           ],
@@ -106,7 +106,7 @@ class CoreSideBar extends StatelessWidget {
                     style: TextStyle(
                       color: UtanoColors.black,
                       fontWeight: FontWeight.w500,
-                      fontSize: sy(12),
+                      fontSize: sy(10),
                     ),
                   ),
                   SizedBox(
@@ -122,7 +122,7 @@ class CoreSideBar extends StatelessWidget {
                     style: TextStyle(
                       color: UtanoColors.black,
                       fontWeight: FontWeight.w500,
-                      fontSize: sy(12),
+                      fontSize: sy(10),
                     ),
                   ),
                   SizedBox(

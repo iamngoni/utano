@@ -17,7 +17,7 @@ import '../../pharmacist/views/pages/pharmacist_home.dart';
 import '../../system_admin/views/pages/system_admin_home.dart';
 import '../models/user_role.dart';
 
-Map<UserRole, Widget> userRoleToPageMappings = {
+final Map<UserRole, Widget> userRoleToPageMappings = {
   UserRole.admin: const AdminHomePage(),
   UserRole.doctor: const DoctorHomePage(),
   UserRole.nurse: const NurseApp(),

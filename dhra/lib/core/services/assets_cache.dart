@@ -14,6 +14,8 @@ List<String> imageAssets = [
   'assets/images/bg-3.jpeg',
   'assets/images/logo.png',
   'assets/images/logo-full.png',
+  'assets/images/logo-red.png',
+  'assets/images/logo-red-black.png',
   'assets/images/moh.png',
 ];
 
