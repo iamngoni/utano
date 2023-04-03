@@ -28,6 +28,31 @@ class SystemStatus(EnumModel):
     CANCELLED = "CANCELLED", _("Cancelled")
 
 
+class MaritalStatus(EnumModel):
+    MARRIED = "MARRIED", _("MARRIED")
+    DIVORCED = "DIVORCED", _("DIVORCED")
+    SEPARATED = "SEPARATED", _("SEPARATED")
+    WIDOWED = "WIDOWED", _("WIDOWED")
+    SINGLE = "SINGLE", _("SINGLE")
+
+
+class EmploymentStatus(EnumModel):
+    EMPLOYEE = "EMPLOYEE", _("EMPLOYEE")
+    SELF_EMPLOYED = "SELF_EMPLOYED", _("SELF_EMPLOYED")
+    CONTRACTOR = "CONTRACTOR", _("CONTRACTOR")
+
+
+class RelationshipType(EnumModel):
+    SISTER = "SISTER", _("Sister")
+    FATHER = "FATHER", _("Father")
+    MOTHER = "MOTHER", _("Mother")
+    DAUGHTER = "DAUGHTER", _("Daughter")
+    SON = "SON", _("Son")
+    BROTHER = "BROTHER", _("Brother")
+    FRIEND = "FRIEND", _("Friend")
+    SPOUSE = "SPOUSE", _("Spouse")
+
+
 class Province(SoftDeleteModel):
     name = models.CharField(
         max_length=255, blank=False, null=False, unique=True, db_index=True
@@ -37,6 +62,7 @@ class Province(SoftDeleteModel):
         verbose_name = "Province"
         verbose_name_plural = "Provinces"
         table_prefix = "prov"
+        ordering = ["name"]
 
     def __str__(self):
         return self.name
@@ -59,6 +85,13 @@ class District(SoftDeleteModel):
         verbose_name = "District"
         verbose_name_plural = "Districts"
         table_prefix = "distr"
+        ordering = ["name"]
 
     def __str__(self):
         return self.name
+
+
+class CheckInStatus(EnumModel):
+    ADMITTED = "ADMITTED", _("ADMITTED")
+    DISMISSED = "DISMISSED", _("DISMISSED")
+    CHECKED_IN = "CHECKED_IN", _("CHECKED_IN")

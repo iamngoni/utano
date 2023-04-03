@@ -7,9 +7,8 @@ environment:
   flutter: 3.0.5
 
 dependencies:
-  arna: ^1.0.5
-  bitsdojo_window: ^0.1.2
   bloc: ^8.1.0
+  cupertino_icons:
   dio: ^4.0.6
   equatable: ^2.0.3
   flutter:
@@ -21,8 +20,9 @@ dependencies:
   get_it: ^7.2.0
   handy_extensions: ^0.0.6+1
   intl: ^0.17.0
-  localregex: ^4.0.0
+  localregex: ^4.0.5
   logger: ^1.1.0
+  macos_ui: ^1.12.2
   path: ^1.8.1
   path_provider: ^2.0.11
   permission_handler: ^10.0.0
@@ -37,7 +37,7 @@ dev_dependencies:
   freezed: ^2.1.0+1
   json_serializable: ^6.3.1
   mocktail: ^0.3.0
-  very_good_analysis: ^3.0.1
+  very_good_analysis: ^4.0.0+1
 
 flutter:
   uses-material-design: true

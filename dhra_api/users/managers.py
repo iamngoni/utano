@@ -6,7 +6,9 @@ class UserManager(BaseUserManager):
         other_fields.setdefault("is_staff", True)
         other_fields.setdefault("is_superuser", True)
         other_fields.setdefault("is_active", True)
-        other_fields.setdefault("role", "SYSTEM_ADMIN")
+        from users.models import UserRoles
+
+        other_fields.setdefault("role", UserRoles.SYSTEM_ADMIN)
 
         if other_fields.get("is_staff") is not True:
             raise ValueError("Superuser must be assigned to is_staff=True.")

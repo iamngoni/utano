@@ -2,15 +2,17 @@ import json
 
 from django.contrib.auth.hashers import make_password, check_password
 from django.contrib.auth.models import AbstractUser
+from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from loguru import logger
+from phonenumber_field.modelfields import PhoneNumberField
 
 from services.exceptions.passwords import PasswordUsedException
 from services.helpers.generate_otp import random_otp
 from services.helpers.readable_date import readable_date_time_string
-from system.models import Gender
+from system.models import Gender, MaritalStatus, EmploymentStatus
 from users.managers import UserManager
 from utano.model import EnumModel, SoftDeleteModel
 
@@ -23,6 +25,7 @@ class UserRoles(EnumModel):
     NURSE = "NURSE", _("NURSE")
     HEALTH_INSTITUTION = "HEALTH_INSTITUTION", _("HEALTH_INSTITUTION")
     LAB_TECHNICIAN = "LAB_TECHNICIAN", _("LAB_TECHNICIAN")
+    PHARMACIST = "PHARMACIST", _("PHARMACIST")
 
 
 class User(SoftDeleteModel, AbstractUser):
@@ -38,9 +41,8 @@ class User(SoftDeleteModel, AbstractUser):
     gender = models.CharField(
         max_length=255,
         choices=Gender.choices,
-        default=Gender.MALE,
-        blank=False,
-        null=False,
+        blank=True,
+        null=True,
     )
     password_history = models.TextField(blank=True, null=True, editable=False)
     password_updated_at = models.DateTimeField(blank=True, null=True)
@@ -107,7 +109,7 @@ class User(SoftDeleteModel, AbstractUser):
     def save(self, *args, **kwargs):
         # set admin user permissions
         if self.is_superuser:
-            self.role = UserRoles.ADMIN
+            self.role = UserRoles.SYSTEM_ADMIN
             self.is_verified = True
         super().save(*args, **kwargs)
 
@@ -120,29 +122,48 @@ class User(SoftDeleteModel, AbstractUser):
 
 class Patient(SoftDeleteModel):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="patient")
+    medical_record_number = models.CharField(max_length=10, blank=False, null=False)
     date_of_birth = models.DateField(blank=True)
     place_of_birth = models.CharField(max_length=255, blank=True)
-    national_id_number = models.CharField(max_length=255, blank=True, null=True)
+    national_id_number = models.CharField(
+        max_length=255, blank=True, null=True, unique=True
+    )
     address = models.CharField(max_length=255, blank=True)
     blood_type = models.CharField(max_length=255, blank=True)
     fitzpatrick_skin_type = models.CharField(max_length=255, blank=True)
     wheelchair = models.BooleanField(default=False)
-    mobile_number = models.CharField(max_length=255, blank=True)
-    email_address = models.EmailField(blank=True)
+    mobile_number = PhoneNumberField(unique=True, region="ZW")
     mother_name = models.CharField(max_length=255, blank=True)
     father_name = models.CharField(max_length=255, blank=True)
-    marital_status = models.CharField(max_length=255, blank=True)
+    marital_status = models.CharField(
+        max_length=20,
+        choices=MaritalStatus.choices,
+        default=MaritalStatus.SINGLE,
+        blank=True,
+    )
     occupation = models.CharField(max_length=255, blank=True)
+    height = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
+    weight = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
     registered_at = models.ForeignKey(
-        "health_institution.HealthInstitution", on_delete=models.DO_NOTHING
+        "health_institution.HealthInstitution",
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
     )
     registered_on = models.DateTimeField(auto_now_add=True)
+    employment_status = models.CharField(
+        max_length=20, choices=EmploymentStatus.choices, blank=True, null=True
+    )
 
     class Meta:
         ordering = ["-updated_at"]
         verbose_name = "Patient"
         verbose_name_plural = "Patients"
         table_prefix = "pt"
+
+    @property
+    def get_mobile_number(self):
+        return f"0{self.mobile_number.national_number}"
 
 
 class Employee(SoftDeleteModel):
@@ -151,6 +172,12 @@ class Employee(SoftDeleteModel):
         "health_institution.HealthInstitution",
         on_delete=models.DO_NOTHING,
         related_name="employees",
+    )
+    professional_title = models.CharField(max_length=255, blank=True, null=True)
+    bio = models.TextField(blank=True, null=True)
+    tags = ArrayField(models.CharField(max_length=255), default=list, null=False)
+    qualifications = ArrayField(
+        models.CharField(max_length=255), default=list, null=False
     )
     registered_on = models.DateTimeField(auto_now_add=True)
 

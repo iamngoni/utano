@@ -2,7 +2,7 @@ from datetime import datetime
 
 from django.utils import timezone
 
-from services.helpers.notifications import send_email, send_email_alt
+from services.helpers.notifications import send_email, send_email_alt, send_sms_text
 from services.helpers.readable_date import readable_date
 from users.models import User
 from django_rq import job
@@ -44,8 +44,37 @@ def notify_user_about_login_activity(user: User, details):
         },
     )
 
-    send_email(user=user, html_content=html_content)
+    send_email.delay(user=user, html_content=html_content)
     logger.info(f"[Job]: Task Executed!")
+
+
+@job("auth")
+def send_welcome_note_to_patient(user: User):
+    """
+    send a welcome message to the user as well as a
+    verification code that they can use to verify their email
+    address if they didn't use social authentication
+    """
+    # generate one time pin
+    user.generate_one_time_pin()
+
+    # Send email to user
+    html_content = render_to_string(
+        "notification.html",
+        {
+            "message": f"Hi {user.get_full_name()}, we're glad to have you as part of this great digital migration "
+            f"towards better healthcare services.",
+            "email": user.email,
+        },
+    )
+
+    send_email.delay(user=user, html_content=html_content)
+
+    text_message = (
+        f"Hi {user.get_full_name()}, we're glad to have you as part of this great digital migration "
+        f"towards better healthcare services."
+    )
+    send_sms_text.delay(user.patient.get_mobile_number, text_message)
 
 
 @job("auth")
@@ -68,8 +97,10 @@ def send_verification_code_to_user(user: User):
         },
     )
 
-    send_email(user=user, html_content=html_content)
-    logger.info(f"[Job]: Task Executed!")
+    send_email.delay(user=user, html_content=html_content)
+
+    text_message = f"Hi {user.get_full_name()}, use this verification code to verify your account:\n\n{user.one_time_pin}"
+    send_sms_text.delay(user.patient.get_mobile_number, text_message)
 
 
 @job("auth")
@@ -85,12 +116,11 @@ def send_password_reset_otp(user: User):
             "code": user.one_time_pin,
         },
     )
-    send_email(
+    send_email.delay(
         user=user,
         html_content=html_content,
         email_subject="Forgot Password",
     )
-    logger.success("Job complete")
 
 
 @job("auth")
@@ -109,7 +139,7 @@ def notify_user_that_their_password_has_been_updated(user: User, date: datetime)
             "email": user.email,
         },
     )
-    send_email_alt(
+    send_email_alt.delay(
         email=user.email, html_content=html_content, email_subject="Password Update"
     )
     logger.info("[Job]: Task Executed!")

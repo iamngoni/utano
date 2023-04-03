@@ -1,0 +1,54 @@
+version: "3.9"
+services:
+    database:
+      image: postgres
+      container_name: utano-db
+      volumes:
+        - utano-pg:/var/lib/postgresql/data
+      environment:
+        - POSTGRES_DB=utano
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=root
+      networks:
+        - utano-network
+
+    redis-queue:
+      image: redis
+      container_name: redis
+      restart: unless-stopped
+      environment:
+        - ALLOW_EMPTY_PASSWORD=yes
+      networks:
+        - utano-network
+
+    api:
+      build: .
+      container_name: utano
+      command: python manage.py runserver 0.0.0.0:8000
+      volumes:
+        - utano:/app
+      ports:
+        - "8000:8000"
+      depends_on:
+        - database
+        - redis-queue
+      networks:
+        - utano-network
+
+    queue-worker:
+      build: .
+      container_name: utano-queue-worker
+      command: python manage.py rqworker utano users health_institution auth
+      restart: unless-stopped
+      depends_on:
+        - api
+      networks:
+        - utano-network
+
+networks:
+  utano-network:
+    driver: bridge
+
+volumes:
+  utano:
+  utano-pg:

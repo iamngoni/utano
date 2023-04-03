@@ -10,3 +10,4 @@ application.log
 .vscode/
 Pipfile.lock
 *.DS_Store
+schema.dot

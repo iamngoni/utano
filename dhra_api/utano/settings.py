@@ -5,7 +5,6 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
@@ -18,13 +17,13 @@ DEBUG = True
 ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 CSRF_TRUSTED_ORIGINS = ["http://127.0.0.1:8000"]
 
-
 # Application definition
 
 INSTALLED_APPS = [
     "corsheaders",
     "rest_framework",
     "django_rq",
+    "django_extensions",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -37,6 +36,9 @@ INSTALLED_APPS = [
     "emails.apps.EmailsConfig",
     "health_institution.apps.HealthInstitutionConfig",
     "staff.apps.StaffConfig",
+    "patient.apps.PatientConfig",
+    "pos.apps.PosConfig",
+    "pharmacy.apps.PharmacyConfig",
 ]
 
 MIDDLEWARE = [
@@ -48,6 +50,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "services.middleware.middleware.RequestLoggerMiddleware",
 ]
 
 ROOT_URLCONF = "utano.urls"
@@ -70,7 +73,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "utano.wsgi.application"
 
-
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
@@ -84,7 +86,6 @@ DATABASES = {
         "PORT": config("DATABASE_PORT"),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -106,7 +107,6 @@ AUTH_PASSWORD_VALIDATORS = [
 
 AUTHENTICATION_BACKENDS = ["services.authentication.auth_backend.AuthModelBackend"]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
@@ -120,7 +120,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
@@ -131,7 +130,6 @@ STATIC_URL = "/static/"
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = "/media/"
-
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -193,7 +191,7 @@ APPEND_SLASH = False
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://localhost:6379/0",
+        "LOCATION": config("REDIS_HOST"),
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
             "MAX_ENTRIES": 500,
@@ -214,6 +212,12 @@ RQ_QUEUES = {
     "utano": {
         "USE_REDIS_CACHE": "default",
     },
+    "pos": {
+        "USE_REDIS_CACHE": "default",
+    },
+    "notifications": {
+        "USE_REDIS_CACHE": "default",
+    },
 }
 
 USER_AGENTS_CACHE = "default"
@@ -227,11 +231,7 @@ SESSION_CACHE_ALIAS = "default"
 
 DATA_UPLOAD_MAX_MEMORY_SIZE = 5242880
 
-CHANNEL_LAYERS = {
-    "default": {
-        "BACKEND": "channels_redis.core.RedisChannelLayer",
-        "CONFIG": {
-            "hosts": [("127.0.0.1", 6379)],
-        },
-    },
+GRAPH_MODELS = {
+    "all_applications": True,
+    "group_models": True,
 }

@@ -16,6 +16,7 @@ class HealthInstitution(SoftDeleteModel):
     district = models.ForeignKey(
         "system.District", blank=False, null=False, on_delete=models.DO_NOTHING
     )
+    is_active = models.BooleanField(default=True)
 
     class Meta:
         ordering = ["-updated_at"]
@@ -24,19 +25,17 @@ class HealthInstitution(SoftDeleteModel):
         table_prefix = "inst"
 
 
-class Client(SoftDeleteModel):
-    details = models.CharField(max_length=255, blank=False, null=False)
+class HealthInstitutionRoom(SoftDeleteModel):
     health_institution = models.ForeignKey(
         "health_institution.HealthInstitution",
+        related_name="rooms",
+        on_delete=models.CASCADE,
         blank=False,
         null=False,
-        on_delete=models.DO_NOTHING,
     )
+    room_number = models.CharField(max_length=6, blank=False, null=False)
 
     class Meta:
-        verbose_name = "Client"
-        verbose_name_plural = "Clients"
-        table_prefix = "cli"
-
-    def __str__(self):
-        return f"{self.health_institution.name} | {self.details}"
+        verbose_name = "Room"
+        verbose_name_plural = "Rooms"
+        table_prefix = "room"

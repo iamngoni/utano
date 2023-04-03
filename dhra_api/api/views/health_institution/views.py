@@ -1,32 +1,148 @@
+from django.db import transaction
+from loguru import logger
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 
 from api.views.health_institution.serializers.model import (
     HealthInstitutionModelSerializer,
+    EmployeeModelSerializer,
 )
-from health_institution.models import HealthInstitution, Client
-from services.helpers.api_response import api_response
+from api.views.health_institution.serializers.payload import (
+    HealthInstitutionEmployeesPayloadSerializer,
+)
+from health_institution.models import HealthInstitution
+from services.helpers.api_response import ApiResponse
+from services.helpers.generate_random_password import generate_random_password
 from services.permissions.is_admin import IsAdmin
+from services.permissions.is_employee import IsEmployee
+from system.models import CheckInStatus
+from users.models import UserRoles, User, Employee
+from api.views.health_institution.tasks import notify_employee_on_registration
 
 
-class HealthInstituteDetailsView(APIView):
+class HealthInstitutionDetailsView(APIView):
+    permission_classes = [IsAdmin]
+
     def get(self, request):
-        client_id = request.headers.get("Client-Id")
-        client = Client.get_item_by_id(client_id)
-        if client is None:
-            return api_response(
-                request,
-                num_status=404,
-                bool_status=False,
-                message="Institution details not saved yet",
+        try:
+            health_institution = request.user.employee.registered_at
+            return ApiResponse(
+                data={
+                    "health_institution": HealthInstitutionModelSerializer(
+                        health_institution
+                    ).data
+                }
             )
+        except Exception as exc:
+            logger.error(exc)
+            return ApiResponse(num_status=500, bool_status=False)
 
-        health_institution = client.health_institution
 
-        return api_response(
-            request,
-            data={
-                "health_institution": HealthInstitutionModelSerializer(
-                    health_institution
-                ).data,
-            },
-        )
+class HealthInstitutionEmployeesView(APIView):
+    permission_classes = [IsAdmin]
+    serializer_class = HealthInstitutionEmployeesPayloadSerializer
+
+    def get(self, request):
+        try:
+            health_institution = request.user.employee.registered_at
+            # check if request has a role query params
+            role = request.query_params.get("role")
+            if role:
+                if role not in UserRoles.get_list_of_options():
+                    return ApiResponse(
+                        num_status=400,
+                        bool_status=False,
+                        message="Invalid role",
+                    )
+                if role != UserRoles.PATIENT:
+                    employees = health_institution.employees.filter(user__role=role)
+                else:
+                    return ApiResponse(
+                        num_status=400,
+                        bool_status=False,
+                        message="Invalid role",
+                    )
+            else:
+                employees = health_institution.employees.all()
+            return ApiResponse(
+                data={"employees": EmployeeModelSerializer(employees, many=True).data}
+            )
+        except Exception as exc:
+            logger.error(exc)
+            return ApiResponse(num_status=500, bool_status=False)
+
+    @transaction.atomic()
+    def post(self, request):
+        try:
+            payload = self.serializer_class(data=request.data)
+            if payload.is_valid():
+                user = User(
+                    first_name=payload.validated_data.get("first_name"),
+                    last_name=payload.validated_data.get("last_name"),
+                    role=payload.validated_data.get("role"),
+                    email=payload.validated_data.get("email"),
+                    gender=payload.validated_data.get("gender"),
+                )
+                password = generate_random_password()
+                user.set_password(password)
+                user.save()
+
+                employee = Employee(
+                    user=user, registered_at=request.user.employee.registered_at
+                )
+                employee.save()
+
+                notify_employee_on_registration.delay(user, password)
+                return ApiResponse()
+            else:
+                logger.error(payload.errors)
+                return ApiResponse(
+                    num_status=400, bool_status=False, issues=payload.errors
+                )
+        except Exception as exc:
+            logger.error(exc)
+            return ApiResponse(num_status=500, bool_status=False)
+
+
+class HealthInstitutionStatsView(APIView):
+    permission_classes = (
+        IsAuthenticated,
+        IsEmployee,
+    )
+
+    def get(self, request):
+        try:
+            health_institution = request.user.employee.registered_at
+
+            patients = health_institution.check_ins.filter(
+                status=CheckInStatus.CHECKED_IN
+            ).count()
+            employees = health_institution.employees.count()
+            rooms = health_institution.rooms.count()
+            doctors = health_institution.employees.filter(
+                user__role=UserRoles.DOCTOR
+            ).count()
+            nurses = health_institution.employees.filter(
+                user__role=UserRoles.NURSE
+            ).count()
+            lab_technicians = health_institution.employees.filter(
+                user__role=UserRoles.LAB_TECHNICIAN
+            ).count()
+            admins = health_institution.employees.filter(
+                user__role=UserRoles.ADMIN
+            ).count()
+
+            statistics = {
+                "patients": patients,
+                "employees": employees,
+                "rooms": rooms,
+                "doctors": doctors,
+                "nurses": nurses,
+                "lab_technicians": lab_technicians,
+                "admins": admins,
+            }
+
+            return ApiResponse(data=statistics)
+        except Exception as exc:
+            logger.error(exc)
+            return ApiResponse(num_status=500, bool_status=False)
