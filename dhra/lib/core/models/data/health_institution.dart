@@ -8,6 +8,8 @@
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import 'district.dart';
+
 part 'health_institution.freezed.dart';
 part 'health_institution.g.dart';
 
@@ -23,9 +25,26 @@ class HealthInstitution<T> with _$HealthInstitution {
     @JsonKey(name: 'phone_number') required String phoneNumber,
     required String email,
     required String logo,
-    required T district,
+    @JsonKey(fromJson: districtFromJson, toJson: districtToJson)
+        required T district,
   }) = _HealthInstitution;
 
   factory HealthInstitution.fromJson(Map<String, dynamic> json) =>
       _$HealthInstitutionFromJson(json);
+}
+
+dynamic districtFromJson(dynamic value) {
+  if (value is Map<String, dynamic>) {
+    return District.fromJson(value);
+  } else {
+    return value;
+  }
+}
+
+dynamic districtToJson(dynamic value) {
+  if (value is District) {
+    return value.toJson();
+  } else {
+    return value;
+  }
 }

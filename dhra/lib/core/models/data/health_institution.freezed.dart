@@ -33,6 +33,7 @@ mixin _$HealthInstitution<T> {
   String get phoneNumber => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
   String get logo => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: districtFromJson, toJson: districtToJson)
   T get district => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -57,7 +58,7 @@ abstract class $HealthInstitutionCopyWith<T, $Res> {
       @JsonKey(name: 'phone_number') String phoneNumber,
       String email,
       String logo,
-      T district});
+      @JsonKey(fromJson: districtFromJson, toJson: districtToJson) T district});
 }
 
 /// @nodoc
@@ -148,7 +149,7 @@ abstract class _$$_HealthInstitutionCopyWith<T, $Res>
       @JsonKey(name: 'phone_number') String phoneNumber,
       String email,
       String logo,
-      T district});
+      @JsonKey(fromJson: districtFromJson, toJson: districtToJson) T district});
 }
 
 /// @nodoc
@@ -223,15 +224,20 @@ class __$$_HealthInstitutionCopyWithImpl<T, $Res>
 class _$_HealthInstitution<T> implements _HealthInstitution<T> {
   _$_HealthInstitution(
       {required this.id,
-      @JsonKey(name: 'created_at') required this.createdAt,
-      @JsonKey(name: 'updated_at') required this.updatedAt,
-      @JsonKey(name: 'deleted_at') required this.deletedAt,
+      @JsonKey(name: 'created_at')
+          required this.createdAt,
+      @JsonKey(name: 'updated_at')
+          required this.updatedAt,
+      @JsonKey(name: 'deleted_at')
+          required this.deletedAt,
       required this.name,
       required this.address,
-      @JsonKey(name: 'phone_number') required this.phoneNumber,
+      @JsonKey(name: 'phone_number')
+          required this.phoneNumber,
       required this.email,
       required this.logo,
-      required this.district});
+      @JsonKey(fromJson: districtFromJson, toJson: districtToJson)
+          required this.district});
 
   factory _$_HealthInstitution.fromJson(Map<String, dynamic> json) =>
       _$$_HealthInstitutionFromJson(json);
@@ -259,6 +265,7 @@ class _$_HealthInstitution<T> implements _HealthInstitution<T> {
   @override
   final String logo;
   @override
+  @JsonKey(fromJson: districtFromJson, toJson: districtToJson)
   final T district;
 
   @override
@@ -320,15 +327,20 @@ class _$_HealthInstitution<T> implements _HealthInstitution<T> {
 abstract class _HealthInstitution<T> implements HealthInstitution<T> {
   factory _HealthInstitution(
       {required final String id,
-      @JsonKey(name: 'created_at') required final DateTime createdAt,
-      @JsonKey(name: 'updated_at') required final DateTime updatedAt,
-      @JsonKey(name: 'deleted_at') required final DateTime? deletedAt,
+      @JsonKey(name: 'created_at')
+          required final DateTime createdAt,
+      @JsonKey(name: 'updated_at')
+          required final DateTime updatedAt,
+      @JsonKey(name: 'deleted_at')
+          required final DateTime? deletedAt,
       required final String name,
       required final String address,
-      @JsonKey(name: 'phone_number') required final String phoneNumber,
+      @JsonKey(name: 'phone_number')
+          required final String phoneNumber,
       required final String email,
       required final String logo,
-      required final T district}) = _$_HealthInstitution<T>;
+      @JsonKey(fromJson: districtFromJson, toJson: districtToJson)
+          required final T district}) = _$_HealthInstitution<T>;
 
   factory _HealthInstitution.fromJson(Map<String, dynamic> json) =
       _$_HealthInstitution<T>.fromJson;
@@ -356,6 +368,7 @@ abstract class _HealthInstitution<T> implements HealthInstitution<T> {
   @override
   String get logo;
   @override
+  @JsonKey(fromJson: districtFromJson, toJson: districtToJson)
   T get district;
   @override
   @JsonKey(ignore: true)
