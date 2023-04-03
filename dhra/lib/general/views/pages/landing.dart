@@ -7,6 +7,7 @@ import 'package:handy_extensions/handy_extensions.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:relative_scale/relative_scale.dart';
 
+import '../../../core/utils/user_role_to_page_mappings.dart';
 import '../../blocs/auth/auth_bloc.dart';
 import '../widgets/login_form.dart';
 
@@ -18,7 +19,6 @@ class LandingPage extends StatefulWidget {
 }
 
 class _LandingPageState extends State<LandingPage> {
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
@@ -44,14 +44,96 @@ class _LandingPageState extends State<LandingPage> {
             ),
             child: BlocConsumer<AuthBloc, AuthState>(
               listener: (context, state) {
-                // TODO: implement listener
+                if (state is Authenticated) {
+                  context.goToRefresh(
+                    page: userRoleToPageMappings[state.authResponse.user.role]!,
+                  );
+                }
               },
               builder: (context, state) {
                 late Widget authWidget;
 
                 if (state is AuthError) {
-                  authWidget = Column(
-                    children: [],
+                  authWidget = Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          CupertinoIcons.xmark_shield_fill,
+                          color: Colors.red,
+                          size: sy(100),
+                        ),
+                        SizedBox(
+                          height: sy(10),
+                        ),
+                        Text(
+                          state.error.title,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w500,
+                            fontSize: sy(20),
+                          ),
+                        ),
+                        SizedBox(
+                          height: sy(5),
+                        ),
+                        Text(
+                          state.error.message,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w400,
+                            fontSize: sy(15),
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        SizedBox(
+                          height: sy(20),
+                        ),
+                        SizedBox(
+                          width: sx(200),
+                          child: PushButton(
+                            buttonSize: ButtonSize.large,
+                            onPressed: () => context.read<AuthBloc>().add(
+                                  AuthLogin(
+                                    email: usernameController.text,
+                                    password: passwordController.text,
+                                  ),
+                                ),
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.white,
+                            padding: EdgeInsets.symmetric(
+                              vertical: sy(10),
+                            ),
+                            pressedOpacity: 0.7,
+                            child: Text(
+                              'RETRY',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w700,
+                                fontSize: sy(12),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: sy(10),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            context.read<AuthBloc>().add(AuthLogout());
+                          },
+                          child: Text(
+                            'go back to login',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w400,
+                              fontSize: sy(12),
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ],
+                    ),
                   );
                 } else if (state is AuthLoading) {
                   authWidget = Center(
@@ -61,7 +143,6 @@ class _LandingPageState extends State<LandingPage> {
                   );
                 } else {
                   authWidget = LoginForm(
-                    formKey: formKey,
                     usernameController: usernameController,
                     passwordController: passwordController,
                   );

@@ -16,6 +16,7 @@ import '../configs/configs.dart';
 import '../utils/dio_on_error_interceptor.dart';
 import '../utils/dio_request_interceptor.dart';
 import '../utils/dio_response_interceptor.dart';
+import 'notifications.dart';
 import 'secure_storage.dart';
 import 'storage.dart';
 
@@ -43,6 +44,7 @@ Future<void> setupServices() async {
         ..interceptors.add(DioResponseInterceptor())
         ..interceptors.add(DioOnErrorInterceptor())
         ..options.connectTimeout = 60000,
-    );
+    )
+    ..registerSingleton<NotificationsService>(NotificationsService());
   logger.info('Services registered: [storage, secure-storage, dio]');
 }

@@ -4,6 +4,8 @@ import 'package:equatable/equatable.dart';
 
 import '../../../core/models/application_error.dart';
 import '../../../core/models/auth_response.dart';
+import '../../../core/services/di.dart';
+import '../../../core/services/secure_storage.dart';
 import '../../models/repos/abstract/auth_repository.dart';
 
 part 'auth_event.dart';
@@ -19,13 +21,21 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           event.email,
           event.password,
         );
-        response.fold(
-          (ApplicationError error) => emit(AuthError(error)),
-          (AuthResponse response) => emit(Authenticated(response)),
-        );
+        response.fold((ApplicationError error) => emit(AuthError(error)),
+            (AuthResponse response) async {
+          emit(Authenticated(response));
+          await di<SecureStorageService>()
+              .saveToDisk('access_token', response.accessToken);
+          await di<SecureStorageService>()
+              .saveToDisk('refresh_token', response.refreshToken);
+        });
       } catch (e) {
         emit(AuthError(ApplicationError.unknownError()));
       }
+    });
+    on<AuthLogout>((event, emit) async {
+      await di<SecureStorageService>().clearDisk();
+      emit(UnAuthenticated());
     });
   }
 
