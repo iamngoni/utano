@@ -14,7 +14,7 @@ class App extends StatelessWidget {
     return MacosApp(
       theme: MacosThemeData.light(),
       darkTheme: MacosThemeData.dark(),
-      themeMode: ThemeMode.system,
+      themeMode: ThemeMode.light,
       title: 'Utano',
       builder: (context, widget) {
         return NotificationsManager(child: widget!);

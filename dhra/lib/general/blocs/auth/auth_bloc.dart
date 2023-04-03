@@ -1,7 +1,9 @@
-import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:jwt_decode/jwt_decode.dart';
 
+import '../../../core/configs/configs.dart';
 import '../../../core/models/application_error.dart';
 import '../../../core/models/auth_response.dart';
 import '../../../core/services/di.dart';
@@ -11,7 +13,7 @@ import '../../models/repos/abstract/auth_repository.dart';
 part 'auth_event.dart';
 part 'auth_state.dart';
 
-class AuthBloc extends Bloc<AuthEvent, AuthState> {
+class AuthBloc extends HydratedBloc<AuthEvent, AuthState> {
   AuthBloc({required this.repository}) : super(UnAuthenticated()) {
     on<AuthLogin>((event, emit) async {
       try {
@@ -37,6 +39,32 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       await di<SecureStorageService>().clearDisk();
       emit(UnAuthenticated());
     });
+  }
+
+  @override
+  AuthState? fromJson(Map<String, dynamic> json) {
+    try {
+      final AuthResponse authResponse = AuthResponse.fromJson(json);
+      // check if token is not expired
+      if (Jwt.isExpired(authResponse.accessToken)) {
+        logger.i('Token is expired.');
+        return null;
+      }
+
+      logger.i('User authenticated using existing token');
+      return Authenticated(authResponse);
+    } catch (_) {
+      return null;
+    }
+  }
+
+  @override
+  Map<String, dynamic>? toJson(AuthState state) {
+    if (state is Authenticated) {
+      return state.authResponse.toJson();
+    }
+
+    return null;
   }
 
   final AuthRepository repository;

@@ -7,6 +7,7 @@ import 'package:handy_extensions/handy_extensions.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:relative_scale/relative_scale.dart';
 
+import '../../../core/configs/configs.dart';
 import '../../../core/utils/user_role_to_page_mappings.dart';
 import '../../blocs/auth/auth_bloc.dart';
 import '../widgets/login_form.dart';
@@ -45,6 +46,7 @@ class _LandingPageState extends State<LandingPage> {
             child: BlocConsumer<AuthBloc, AuthState>(
               listener: (context, state) {
                 if (state is Authenticated) {
+                  logger.i('Authenticated signal ...');
                   context.goToRefresh(
                     page: userRoleToPageMappings[state.authResponse.user.role]!,
                   );

@@ -47,6 +47,11 @@ class LoginForm extends StatelessWidget {
                 width: sx(200),
                 child: MacosTextField(
                   placeholder: 'Username',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w400,
+                    fontSize: sy(12),
+                  ),
                   controller: usernameController,
                   placeholderStyle: TextStyle(
                     color: Colors.white.withOpacity(0.3),
@@ -70,6 +75,11 @@ class LoginForm extends StatelessWidget {
                 width: sx(200),
                 child: MacosTextField(
                   placeholder: 'Password',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w400,
+                    fontSize: sy(12),
+                  ),
                   controller: passwordController,
                   placeholderStyle: TextStyle(
                     color: Colors.white.withOpacity(0.3),

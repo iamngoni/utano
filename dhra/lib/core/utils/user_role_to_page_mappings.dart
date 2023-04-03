@@ -12,7 +12,7 @@ import '../../admin/views/pages/admin_home.dart';
 import '../../doctor/views/pages/doctor_home.dart';
 import '../../health_institution/views/pages/health_institution_home.dart';
 import '../../lab_technician/views/pages/lab_technician_home.dart';
-import '../../nurse/views/pages/nurse_home.dart';
+import '../../nurse/views/pages/nurse_app.dart';
 import '../../pharmacist/views/pages/pharmacist_home.dart';
 import '../../system_admin/views/pages/system_admin_home.dart';
 import '../models/user_role.dart';
@@ -20,7 +20,7 @@ import '../models/user_role.dart';
 Map<UserRole, Widget> userRoleToPageMappings = {
   UserRole.admin: const AdminHomePage(),
   UserRole.doctor: const DoctorHomePage(),
-  UserRole.nurse: const NurseHomePage(),
+  UserRole.nurse: const NurseApp(),
   UserRole.healthInstitution: const HealthInstitutionHomePage(),
   UserRole.labTechnician: const LabTechnicianHomePage(),
   UserRole.pharmacist: const PharmacistHomePage(),
