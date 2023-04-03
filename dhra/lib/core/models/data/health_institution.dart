@@ -8,13 +8,11 @@
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'district.dart';
-
 part 'health_institution.freezed.dart';
 part 'health_institution.g.dart';
 
 @freezed
-class HealthInstitution with _$HealthInstitution {
+class HealthInstitution<T> with _$HealthInstitution {
   factory HealthInstitution({
     required String id,
     @JsonKey(name: 'created_at') required DateTime createdAt,
@@ -25,7 +23,7 @@ class HealthInstitution with _$HealthInstitution {
     @JsonKey(name: 'phone_number') required String phoneNumber,
     required String email,
     required String logo,
-    District? district,
+    required T district,
   }) = _HealthInstitution;
 
   factory HealthInstitution.fromJson(Map<String, dynamic> json) =>

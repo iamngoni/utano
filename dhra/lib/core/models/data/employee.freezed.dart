@@ -36,7 +36,8 @@ mixin _$Employee {
   DateTime get registeredOn => throw _privateConstructorUsedError;
   User get user => throw _privateConstructorUsedError;
   @JsonKey(name: 'registered_at')
-  HealthInstitution get registeredAt => throw _privateConstructorUsedError;
+  HealthInstitution<dynamic> get registeredAt =>
+      throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -60,10 +61,10 @@ abstract class $EmployeeCopyWith<$Res> {
       List<String> qualifications,
       @JsonKey(name: 'registered_on') DateTime registeredOn,
       User user,
-      @JsonKey(name: 'registered_at') HealthInstitution registeredAt});
+      @JsonKey(name: 'registered_at') HealthInstitution<dynamic> registeredAt});
 
   $UserCopyWith<$Res> get user;
-  $HealthInstitutionCopyWith<$Res> get registeredAt;
+  $HealthInstitutionCopyWith<dynamic, $Res> get registeredAt;
 }
 
 /// @nodoc
@@ -135,7 +136,7 @@ class _$EmployeeCopyWithImpl<$Res, $Val extends Employee>
       registeredAt: null == registeredAt
           ? _value.registeredAt
           : registeredAt // ignore: cast_nullable_to_non_nullable
-              as HealthInstitution,
+              as HealthInstitution<dynamic>,
     ) as $Val);
   }
 
@@ -149,8 +150,9 @@ class _$EmployeeCopyWithImpl<$Res, $Val extends Employee>
 
   @override
   @pragma('vm:prefer-inline')
-  $HealthInstitutionCopyWith<$Res> get registeredAt {
-    return $HealthInstitutionCopyWith<$Res>(_value.registeredAt, (value) {
+  $HealthInstitutionCopyWith<dynamic, $Res> get registeredAt {
+    return $HealthInstitutionCopyWith<dynamic, $Res>(_value.registeredAt,
+        (value) {
       return _then(_value.copyWith(registeredAt: value) as $Val);
     });
   }
@@ -174,12 +176,12 @@ abstract class _$$_EmployeeCopyWith<$Res> implements $EmployeeCopyWith<$Res> {
       List<String> qualifications,
       @JsonKey(name: 'registered_on') DateTime registeredOn,
       User user,
-      @JsonKey(name: 'registered_at') HealthInstitution registeredAt});
+      @JsonKey(name: 'registered_at') HealthInstitution<dynamic> registeredAt});
 
   @override
   $UserCopyWith<$Res> get user;
   @override
-  $HealthInstitutionCopyWith<$Res> get registeredAt;
+  $HealthInstitutionCopyWith<dynamic, $Res> get registeredAt;
 }
 
 /// @nodoc
@@ -249,7 +251,7 @@ class __$$_EmployeeCopyWithImpl<$Res>
       registeredAt: null == registeredAt
           ? _value.registeredAt
           : registeredAt // ignore: cast_nullable_to_non_nullable
-              as HealthInstitution,
+              as HealthInstitution<dynamic>,
     ));
   }
 }
@@ -314,7 +316,7 @@ class _$_Employee implements _Employee {
   final User user;
   @override
   @JsonKey(name: 'registered_at')
-  final HealthInstitution registeredAt;
+  final HealthInstitution<dynamic> registeredAt;
 
   @override
   String toString() {
@@ -378,23 +380,24 @@ class _$_Employee implements _Employee {
 
 abstract class _Employee implements Employee {
   factory _Employee(
-      {required final String id,
-      @JsonKey(name: 'created_at')
-          required final DateTime createdAt,
-      @JsonKey(name: 'updated_at')
-          required final DateTime updatedAt,
-      @JsonKey(name: 'deleted_at')
-          final DateTime? deletedAt,
-      @JsonKey(name: 'professional_title')
-          final String? professionalTitle,
-      final String? bio,
-      required final List<String> tags,
-      required final List<String> qualifications,
-      @JsonKey(name: 'registered_on')
-          required final DateTime registeredOn,
-      required final User user,
-      @JsonKey(name: 'registered_at')
-          required final HealthInstitution registeredAt}) = _$_Employee;
+          {required final String id,
+          @JsonKey(name: 'created_at')
+              required final DateTime createdAt,
+          @JsonKey(name: 'updated_at')
+              required final DateTime updatedAt,
+          @JsonKey(name: 'deleted_at')
+              final DateTime? deletedAt,
+          @JsonKey(name: 'professional_title')
+              final String? professionalTitle,
+          final String? bio,
+          required final List<String> tags,
+          required final List<String> qualifications,
+          @JsonKey(name: 'registered_on')
+              required final DateTime registeredOn,
+          required final User user,
+          @JsonKey(name: 'registered_at')
+              required final HealthInstitution<dynamic> registeredAt}) =
+      _$_Employee;
 
   factory _Employee.fromJson(Map<String, dynamic> json) = _$_Employee.fromJson;
 
@@ -425,7 +428,7 @@ abstract class _Employee implements Employee {
   User get user;
   @override
   @JsonKey(name: 'registered_at')
-  HealthInstitution get registeredAt;
+  HealthInstitution<dynamic> get registeredAt;
   @override
   @JsonKey(ignore: true)
   _$$_EmployeeCopyWith<_$_Employee> get copyWith =>

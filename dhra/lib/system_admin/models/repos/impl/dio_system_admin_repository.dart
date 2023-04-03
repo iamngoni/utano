@@ -46,7 +46,7 @@ class DioSystemAdminRepository implements SystemAdminRepository {
       final NetworkResponse networkResponse = response.data!;
 
       final List<HealthInstitution> healthInstitutions =
-          (networkResponse.data! as List)
+          (networkResponse.data!['health_institutions'] as List)
               .map((e) => HealthInstitution.fromJson(e as Map<String, dynamic>))
               .toList();
       return Right(healthInstitutions);
