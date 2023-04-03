@@ -6,9 +6,19 @@
 //  Copyright (c) 2023 ModestNerds, Co
 //
 
-class NetworkResponse {
-  NetworkResponse({required this.status, this.data, this.message});
-  final bool status;
-  final Map<String, dynamic>? data;
-  final String? message;
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'network_response.freezed.dart';
+part 'network_response.g.dart';
+
+@freezed
+class NetworkResponse with _$NetworkResponse {
+  factory NetworkResponse({
+    required bool status,
+    Map<String, dynamic>? data,
+    String? message,
+  }) = _NetworkResponse;
+
+  factory NetworkResponse.fromJson(Map<String, dynamic> json) =>
+      _$NetworkResponseFromJson(json);
 }

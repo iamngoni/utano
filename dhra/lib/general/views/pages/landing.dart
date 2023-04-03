@@ -38,8 +38,7 @@ class LandingPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Image(
-                        image: const AssetImage('assets/images/logo.png'),
-                        color: Colors.white,
+                        image: const AssetImage('assets/images/logo-red.png'),
                         height: sy(70),
                       ),
                       SizedBox(
@@ -95,14 +94,16 @@ class LandingPage extends StatelessWidget {
                           buttonSize: ButtonSize.large,
                           onPressed: () {},
                           borderRadius: BorderRadius.circular(10),
+                          color: Colors.white,
                           padding: EdgeInsets.symmetric(
                             vertical: sy(10),
                           ),
+                          pressedOpacity: 0.7,
                           child: Text(
                             'LOGIN',
                             style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w400,
+                              color: Colors.black,
+                              fontWeight: FontWeight.w700,
                               fontSize: sy(12),
                             ),
                           ),

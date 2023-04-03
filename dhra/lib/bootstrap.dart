@@ -8,10 +8,11 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'core/services/di.dart';
+import 'providers.dart';
 
 class AppBlocObserver extends BlocObserver {
   @override
@@ -39,7 +40,8 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
   await setupServices();
 
   await runZonedGuarded(
-    () async => runApp(await builder()),
+    () async =>
+        runApp(MultiBlocProvider(providers: providers, child: await builder())),
     (error, stackTrace) => log(error.toString(), stackTrace: stackTrace),
   );
 }
