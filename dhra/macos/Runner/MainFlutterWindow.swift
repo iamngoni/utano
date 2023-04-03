@@ -39,9 +39,8 @@ class MainFlutterWindow: NSWindow, NSWindowDelegate {
   override func awakeFromNib() {
     delegate = self
     let blurryContainerViewController = BlurryContainerViewController()
-    let windowFrame = self.frame
     self.contentViewController = blurryContainerViewController
-    self.setFrame(windowFrame, display: true)
+    self.setFrame(NSRect(x:0, y:0, width: 1280, height: 720), display: true)
 
     if #available(macOS 10.13, *) {
       let customToolbar = NSToolbar()

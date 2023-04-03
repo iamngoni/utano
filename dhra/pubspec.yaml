@@ -8,6 +8,7 @@ environment:
 
 dependencies:
   bloc: ^8.1.0
+  cupertino_icons:
   dio: ^4.0.6
   equatable: ^2.0.3
   flutter:
