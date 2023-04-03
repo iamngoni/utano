@@ -112,7 +112,12 @@ class LandingPage extends StatelessWidget {
                   ),
                 ),
                 Positioned(
-                  child: Icon(CupertinoIcons.settings),
+                  bottom: sy(10),
+                  right: sx(5),
+                  child: const Icon(
+                    CupertinoIcons.settings,
+                    color: Colors.white,
+                  ),
                 ),
               ],
             ),
