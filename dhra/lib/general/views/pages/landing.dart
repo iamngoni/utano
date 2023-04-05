@@ -10,6 +10,7 @@ import 'package:relative_scale/relative_scale.dart';
 import '../../../core/configs/configs.dart';
 import '../../../core/utils/user_role_to_page_mappings.dart';
 import '../../../core/utils/user_role_to_screens_mappings.dart';
+import '../../../core/views/widgets/loader_widget.dart';
 import '../../blocs/auth/auth_bloc.dart';
 import '../../blocs/navigation/navigation_bloc.dart';
 import '../widgets/login_form.dart';
@@ -147,11 +148,7 @@ class _LandingPageState extends State<LandingPage> {
                     ),
                   );
                 } else if (state is AuthLoading) {
-                  authWidget = Center(
-                    child: CupertinoActivityIndicator(
-                      radius: sy(15),
-                    ),
-                  );
+                  authWidget = const LoaderWidget();
                 } else {
                   authWidget = LoginForm(
                     usernameController: usernameController,

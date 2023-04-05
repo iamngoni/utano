@@ -16,11 +16,11 @@ class HealthInstitutionsBloc
       : super(HealthInstitutionsInitial()) {
     on<ListHealthInstitutions>((event, emit) async {
       try {
-        final Either<ApplicationError, List<HealthInstitution>> response =
-            await repository.listHealthInstitutions();
+        final Either<ApplicationError, List<HealthInstitution<String>>>
+            response = await repository.listHealthInstitutions();
         response.fold(
           (ApplicationError error) => emit(HealthInstitutionsError(error)),
-          (List<HealthInstitution> healthInstitutions) =>
+          (List<HealthInstitution<String>> healthInstitutions) =>
               emit(HealthInstitutionsLoaded(healthInstitutions)),
         );
       } catch (e, s) {

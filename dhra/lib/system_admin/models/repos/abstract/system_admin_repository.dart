@@ -15,9 +15,9 @@ import '../../../../core/models/data/employee.dart';
 import '../../../../core/models/data/health_institution.dart';
 
 abstract class SystemAdminRepository {
-  Future<Either<ApplicationError, List<HealthInstitution>>>
+  Future<Either<ApplicationError, List<HealthInstitution<String>>>>
       listHealthInstitutions();
-  Future<Either<ApplicationError, HealthInstitution>>
+  Future<Either<ApplicationError, HealthInstitution<String>>>
       registerHealthInstitution({
     required String name,
     required String address,

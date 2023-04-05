@@ -7,11 +7,16 @@
 //
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:handy_extensions/handy_extensions.dart';
 import 'package:relative_scale/relative_scale.dart';
 
 import '../../../core/configs/configs.dart';
+import '../../../core/views/widgets/active_tab_indicator.dart';
+import '../../../core/views/widgets/loader_widget.dart';
 import '../../../core/views/widgets/page_header.dart';
+import '../../blocs/health_institutions/health_institutions_bloc.dart';
+import '../widgets/health_institutions_table.dart';
 
 class SystemAdminHealthInstitutionsPage extends StatelessWidget {
   const SystemAdminHealthInstitutionsPage({super.key});
@@ -32,6 +37,75 @@ class SystemAdminHealthInstitutionsPage extends StatelessWidget {
               ),
               SizedBox(
                 height: sy(20),
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Health Institutions',
+                          style: TextStyle(
+                            color: UtanoColors.black,
+                            fontWeight: FontWeight.w400,
+                            fontSize: sy(12),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          'Register Health Institution',
+                          style: TextStyle(
+                            color: UtanoColors.black,
+                            fontWeight: FontWeight.w400,
+                            fontSize: sy(12),
+                          ),
+                        ),
+                        const ActiveTabIndicator(),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: sy(20),
+              ),
+              Expanded(
+                child: BlocBuilder<HealthInstitutionsBloc,
+                    HealthInstitutionsState>(
+                  builder: (context, state) {
+                    late Widget healthInstitutionsWidget;
+
+                    if (state is HealthInstitutionsError) {
+                      healthInstitutionsWidget = const LoaderWidget(
+                        color: UtanoColors.black,
+                      );
+                    } else if (state is HealthInstitutionsLoading) {
+                      healthInstitutionsWidget = const LoaderWidget(
+                        color: UtanoColors.black,
+                      );
+                    } else if (state is HealthInstitutionsLoaded) {
+                      healthInstitutionsWidget = HealthInstitutionsTable(
+                        healthInstitutions: state.healthInstitutions,
+                      );
+                    } else {
+                      healthInstitutionsWidget = const LoaderWidget(
+                        color: UtanoColors.black,
+                      );
+                    }
+
+                    return AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 200),
+                      child: healthInstitutionsWidget,
+                    );
+                  },
+                ),
               ),
             ],
           ),
