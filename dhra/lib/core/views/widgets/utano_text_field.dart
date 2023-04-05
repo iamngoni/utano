@@ -44,7 +44,7 @@ class UtanoTextField extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: sy(7),
+              height: sy(3),
             ),
             MacosTextField(
               padding: EdgeInsets.symmetric(
