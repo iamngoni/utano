@@ -8,6 +8,8 @@
 
 import 'dart:ui';
 
+import 'package:flutter/material.dart';
+
 class UtanoColors {
   static const Color active = Color(0xFF105DFC);
   static const Color inactive = Color(0xFFA1A0A3);
@@ -18,4 +20,6 @@ class UtanoColors {
   static const Color activeGrey = Color(0xFFF6F6F6);
   static const Color border = Color(0xFFD3D3D3);
   static const Color activeTab = Color(0xFFEDF1FD);
+  static const Color red = Color(0xFFF44336);
+  static const Color green = Color(0xFF4CAF50);
 }

@@ -25,15 +25,27 @@ class TableHeaderTitle extends StatelessWidget {
       builder: (context, height, width, sy, sx) {
         return TableCell(
           child: Container(
-            margin: EdgeInsets.only(
-              bottom: sy(10),
+            // margin: EdgeInsets.only(
+            //   bottom: sy(5),
+            // ),
+            decoration: const BoxDecoration(
+              border: Border(
+                bottom: BorderSide(
+                  color: UtanoColors.border,
+                ),
+              ),
             ),
-            child: Text(
-              title,
-              style: TextStyle(
-                color: UtanoColors.grey,
-                fontWeight: FontWeight.w400,
-                fontSize: sy(10),
+            child: Padding(
+              padding: EdgeInsets.only(
+                bottom: sy(10),
+              ),
+              child: Text(
+                title,
+                style: TextStyle(
+                  color: UtanoColors.grey,
+                  fontWeight: FontWeight.w400,
+                  fontSize: sy(10),
+                ),
               ),
             ),
           ),

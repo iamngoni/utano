@@ -16,6 +16,7 @@ class HealthInstitutionsBloc
       : super(HealthInstitutionsInitial()) {
     on<ListHealthInstitutions>((event, emit) async {
       try {
+        emit(HealthInstitutionsLoading());
         final Either<ApplicationError, List<HealthInstitution<String>>>
             response = await repository.listHealthInstitutions();
         response.fold(

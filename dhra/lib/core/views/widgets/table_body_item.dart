@@ -7,6 +7,7 @@
 //
 
 import 'package:flutter/material.dart';
+import 'package:macos_ui/macos_ui.dart';
 import 'package:relative_scale/relative_scale.dart';
 
 import '../../configs/configs.dart';
@@ -28,16 +29,30 @@ class TableBodyItem extends StatelessWidget {
     return RelativeBuilder(
       builder: (context, height, width, sy, sx) {
         return TableCell(
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-              vertical: sy(10),
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border(
+                bottom: BorderSide(
+                  color: UtanoColors.border.withOpacity(0.3),
+                ),
+              ),
             ),
-            child: Text(
-              text,
-              style: TextStyle(
-                color: textColor,
-                fontWeight: bold ? FontWeight.w600 : FontWeight.w400,
-                fontSize: sy(10),
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                vertical: sy(10),
+              ),
+              child: MacosTooltip(
+                message: text,
+                child: Text(
+                  text,
+                  style: TextStyle(
+                    color: textColor,
+                    fontWeight: bold ? FontWeight.w600 : FontWeight.w400,
+                    fontSize: sy(10),
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
             ),
           ),

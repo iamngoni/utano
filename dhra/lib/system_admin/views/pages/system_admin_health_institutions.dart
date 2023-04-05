@@ -16,10 +16,28 @@ import '../../../core/views/widgets/active_tab_indicator.dart';
 import '../../../core/views/widgets/loader_widget.dart';
 import '../../../core/views/widgets/page_header.dart';
 import '../../blocs/health_institutions/health_institutions_bloc.dart';
+import '../widgets/health_institutions_registration_form.dart';
 import '../widgets/health_institutions_table.dart';
 
-class SystemAdminHealthInstitutionsPage extends StatelessWidget {
+class SystemAdminHealthInstitutionsPage extends StatefulWidget {
   const SystemAdminHealthInstitutionsPage({super.key});
+
+  @override
+  State<SystemAdminHealthInstitutionsPage> createState() =>
+      _SystemAdminHealthInstitutionsPageState();
+}
+
+class _SystemAdminHealthInstitutionsPageState
+    extends State<SystemAdminHealthInstitutionsPage> {
+  final PageController pageController = PageController();
+  int index = 0;
+
+  void _changeCurrentTab(int index) {
+    setState(() {
+      this.index = index;
+    });
+    pageController.jumpToPage(index);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,34 +59,55 @@ class SystemAdminHealthInstitutionsPage extends StatelessWidget {
               Row(
                 children: [
                   Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Health Institutions',
-                          style: TextStyle(
-                            color: UtanoColors.black,
-                            fontWeight: FontWeight.w400,
-                            fontSize: sy(12),
+                    child: GestureDetector(
+                      onTap: () => _changeCurrentTab(0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Health Institutions',
+                            style: TextStyle(
+                              color: UtanoColors.black,
+                              fontWeight: FontWeight.w400,
+                              fontSize: sy(12),
+                            ),
                           ),
-                        ),
-                      ],
+                          AnimatedCrossFade(
+                            firstChild: const ActiveTabIndicator(),
+                            secondChild: const SizedBox.shrink(),
+                            crossFadeState: index == 0
+                                ? CrossFadeState.showFirst
+                                : CrossFadeState.showSecond,
+                            duration: const Duration(milliseconds: 200),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text(
-                          'Register Health Institution',
-                          style: TextStyle(
-                            color: UtanoColors.black,
-                            fontWeight: FontWeight.w400,
-                            fontSize: sy(12),
+                    child: GestureDetector(
+                      onTap: () => _changeCurrentTab(1),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            'Register Health Institution',
+                            style: TextStyle(
+                              color: UtanoColors.black,
+                              fontWeight: FontWeight.w400,
+                              fontSize: sy(12),
+                            ),
                           ),
-                        ),
-                        const ActiveTabIndicator(),
-                      ],
+                          AnimatedCrossFade(
+                            firstChild: const ActiveTabIndicator(),
+                            secondChild: const SizedBox.shrink(),
+                            crossFadeState: index == 1
+                                ? CrossFadeState.showFirst
+                                : CrossFadeState.showSecond,
+                            duration: const Duration(milliseconds: 200),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],
@@ -83,16 +122,23 @@ class SystemAdminHealthInstitutionsPage extends StatelessWidget {
                     late Widget healthInstitutionsWidget;
 
                     if (state is HealthInstitutionsError) {
-                      healthInstitutionsWidget = const LoaderWidget(
-                        color: UtanoColors.black,
+                      healthInstitutionsWidget = Center(
+                        child: Text(state.error.message),
                       );
                     } else if (state is HealthInstitutionsLoading) {
                       healthInstitutionsWidget = const LoaderWidget(
                         color: UtanoColors.black,
                       );
                     } else if (state is HealthInstitutionsLoaded) {
-                      healthInstitutionsWidget = HealthInstitutionsTable(
-                        healthInstitutions: state.healthInstitutions,
+                      healthInstitutionsWidget = PageView(
+                        physics: const NeverScrollableScrollPhysics(),
+                        controller: pageController,
+                        children: [
+                          HealthInstitutionsTable(
+                            healthInstitutions: state.healthInstitutions,
+                          ),
+                          HealthInstitutionsRegistrationForm(),
+                        ],
                       );
                     } else {
                       healthInstitutionsWidget = const LoaderWidget(
