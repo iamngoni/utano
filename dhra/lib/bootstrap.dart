@@ -8,8 +8,13 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:path_provider/path_provider.dart';
+
+import 'core/services/di.dart';
+import 'providers.dart';
 
 class AppBlocObserver extends BlocObserver {
   @override
@@ -26,14 +31,22 @@ class AppBlocObserver extends BlocObserver {
 }
 
 Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   FlutterError.onError = (details) {
     log(details.exceptionAsString(), stackTrace: details.stack);
   };
 
   Bloc.observer = AppBlocObserver();
+  HydratedBloc.storage = await HydratedStorage.build(
+    storageDirectory: await getApplicationDocumentsDirectory(),
+  );
+
+  await setupServices();
 
   await runZonedGuarded(
-    () async => runApp(await builder()),
+    () async =>
+        runApp(MultiBlocProvider(providers: providers, child: await builder())),
     (error, stackTrace) => log(error.toString(), stackTrace: stackTrace),
   );
 }

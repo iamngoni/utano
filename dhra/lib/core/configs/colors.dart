@@ -8,19 +8,18 @@
 
 import 'dart:ui';
 
-class AppColors {
-  static const Color primary = Color(0xFF3366FF);
-  static const Color secondary = Color(0xFFF5F5F5);
-  static const Color darkSecondary = Color(0xFF2D2D2D);
-  static const Color success = Color(0xFF008036);
-  static const Color danger = Color(0xFFEF4D48);
-  static const Color warning = Color(0xFFFEDD5A);
-  static const Color info = Color(0xFF1890FF);
-  static const Color tertiary = Color(0xFF333D49);
-  static const Color dark = Color(0xFF212121);
-  static const Color light = Color(0xFFF8FAFC);
-  static const Color muted = Color(0xFF637281);
-  static const Color grey = Color.fromRGBO(145, 158, 171, 0.24);
-  static const Color grey2 = Color(0xFF919EAB);
-  static const Color background = Color(0xFF0B3530);
+import 'package:flutter/material.dart';
+
+class UtanoColors {
+  static const Color active = Color(0xFF105DFC);
+  static const Color inactive = Color(0xFFA1A0A3);
+  static const Color black = Color(0xFF1D1D1F);
+  static const Color grey = Color(0xFF717075);
+  static const Color blueGrey = Color(0xFFF9FBFC);
+  static const Color white = Color(0xFFFFFFFF);
+  static const Color activeGrey = Color(0xFFF6F6F6);
+  static const Color border = Color(0xFFD3D3D3);
+  static const Color activeTab = Color(0xFFEDF1FD);
+  static const Color red = Color(0xFFF44336);
+  static const Color green = Color(0xFF4CAF50);
 }

@@ -2,12 +2,35 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:handy_extensions/handy_extensions.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:relative_scale/relative_scale.dart';
 
-class LandingPage extends StatelessWidget {
+import '../../../core/configs/configs.dart';
+import '../../../core/utils/user_role_to_page_mappings.dart';
+import '../../../core/utils/user_role_to_screens_mappings.dart';
+import '../../../core/views/widgets/loader_widget.dart';
+import '../../blocs/auth/auth_bloc.dart';
+import '../../blocs/navigation/navigation_bloc.dart';
+import '../widgets/login_form.dart';
+
+class LandingPage extends StatefulWidget {
   const LandingPage({super.key});
+
+  @override
+  State<LandingPage> createState() => _LandingPageState();
+}
+
+class _LandingPageState extends State<LandingPage> {
+  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
+  bool isEmail = false;
+
+  void switchBetweenUsernameAndEmail() => setState(() {
+        isEmail = !isEmail;
+      });
 
   @override
   Widget build(BuildContext context) {
@@ -23,98 +46,131 @@ class LandingPage extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-            child: Stack(
-              children: [
-                BackdropFilter(
-                  filter: ImageFilter.blur(sigmaY: 5, sigmaX: 5),
-                  child: Container(
-                    color: Colors.black.withOpacity(0.7),
-                  ),
-                ),
-                SizedBox(
-                  height: context.height,
-                  width: context.width,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image(
-                        image: const AssetImage('assets/images/logo.png'),
-                        color: Colors.white,
-                        height: sy(70),
+            child: BlocConsumer<AuthBloc, AuthState>(
+              listener: (context, state) {
+                if (state is Authenticated) {
+                  logger.i('Authenticated signal ...');
+                  context.goToRefresh(
+                    page: BlocProvider<NavigationBloc>(
+                      create: (_) => NavigationBloc(
+                        screens: userRoleToScreensMappings[
+                            state.authResponse.user.role]!,
                       ),
-                      SizedBox(
-                        height: sy(20),
-                      ),
-                      SizedBox(
-                        width: sx(200),
-                        child: MacosTextField(
-                          placeholder: 'Username',
-                          placeholderStyle: TextStyle(
-                            color: Colors.white.withOpacity(0.3),
-                            fontWeight: FontWeight.w400,
-                            fontSize: sy(12),
-                          ),
-                          padding: EdgeInsets.symmetric(
-                            vertical: sy(10),
-                            horizontal: sx(10),
-                          ),
-                          decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.2),
-                            borderRadius: BorderRadius.circular(10),
+                      child:
+                          userRoleToPageMappings[state.authResponse.user.role],
+                    ),
+                  );
+                }
+              },
+              builder: (context, state) {
+                late Widget authWidget;
+
+                if (state is AuthError) {
+                  authWidget = Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          CupertinoIcons.xmark_shield_fill,
+                          color: Colors.red,
+                          size: sy(100),
+                        ),
+                        SizedBox(
+                          height: sy(10),
+                        ),
+                        Text(
+                          state.error.title,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w500,
+                            fontSize: sy(20),
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        height: sy(20),
-                      ),
-                      SizedBox(
-                        width: sx(200),
-                        child: MacosTextField(
-                          placeholder: 'Password',
-                          placeholderStyle: TextStyle(
-                            color: Colors.white.withOpacity(0.3),
+                        SizedBox(
+                          height: sy(5),
+                        ),
+                        Text(
+                          state.error.message,
+                          style: TextStyle(
+                            color: Colors.white,
                             fontWeight: FontWeight.w400,
-                            fontSize: sy(12),
+                            fontSize: sy(15),
                           ),
-                          padding: EdgeInsets.symmetric(
-                            vertical: sy(10),
-                            horizontal: sx(10),
-                          ),
-                          decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.2),
+                          textAlign: TextAlign.center,
+                        ),
+                        SizedBox(
+                          height: sy(20),
+                        ),
+                        SizedBox(
+                          width: sx(200),
+                          child: PushButton(
+                            buttonSize: ButtonSize.large,
+                            onPressed: () => context.read<AuthBloc>().add(
+                                  AuthLogin(
+                                    email: usernameController.text,
+                                    password: passwordController.text,
+                                  ),
+                                ),
                             borderRadius: BorderRadius.circular(10),
+                            color: Colors.white,
+                            padding: EdgeInsets.symmetric(
+                              vertical: sy(10),
+                            ),
+                            pressedOpacity: 0.7,
+                            child: Text(
+                              'RETRY',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w700,
+                                fontSize: sy(12),
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        height: sy(20),
-                      ),
-                      SizedBox(
-                        width: sx(200),
-                        child: PushButton(
-                          buttonSize: ButtonSize.large,
-                          onPressed: () {},
-                          borderRadius: BorderRadius.circular(10),
-                          padding: EdgeInsets.symmetric(
-                            vertical: sy(10),
-                          ),
+                        SizedBox(
+                          height: sy(10),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            context.read<AuthBloc>().add(AuthLogout());
+                          },
                           child: Text(
-                            'LOGIN',
+                            'go back to login',
                             style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w400,
                               fontSize: sy(12),
                             ),
+                            textAlign: TextAlign.center,
                           ),
                         ),
+                      ],
+                    ),
+                  );
+                } else if (state is AuthLoading) {
+                  authWidget = const LoaderWidget();
+                } else {
+                  authWidget = LoginForm(
+                    usernameController: usernameController,
+                    passwordController: passwordController,
+                  );
+                }
+
+                return Stack(
+                  children: [
+                    BackdropFilter(
+                      filter: ImageFilter.blur(sigmaY: 5, sigmaX: 5),
+                      child: Container(
+                        color: Colors.black.withOpacity(0.7),
                       ),
-                    ],
-                  ),
-                ),
-                Positioned(
-                  child: Icon(CupertinoIcons.settings),
-                ),
-              ],
+                    ),
+                    AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 200),
+                      child: authWidget,
+                    ),
+                  ],
+                );
+              },
             ),
           ),
         );
