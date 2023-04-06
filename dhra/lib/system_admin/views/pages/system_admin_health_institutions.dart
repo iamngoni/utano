@@ -11,6 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:handy_extensions/handy_extensions.dart';
 import 'package:relative_scale/relative_scale.dart';
 
+import '../../../core/blocs/file_picker/file_picker_bloc.dart';
 import '../../../core/configs/configs.dart';
 import '../../../core/views/widgets/active_tab_indicator.dart';
 import '../../../core/views/widgets/loader_widget.dart';
@@ -137,7 +138,10 @@ class _SystemAdminHealthInstitutionsPageState
                           HealthInstitutionsTable(
                             healthInstitutions: state.healthInstitutions,
                           ),
-                          HealthInstitutionsRegistrationForm(),
+                          BlocProvider(
+                            create: (context) => FilePickerBloc(),
+                            child: HealthInstitutionsRegistrationForm(),
+                          ),
                         ],
                       );
                     } else {
