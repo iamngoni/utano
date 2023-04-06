@@ -1,3 +1,3 @@
 # Utano
 
-![logo](dhra/screenshots/logo.png)
+![logo](dhra/assets/logo-red.png)
