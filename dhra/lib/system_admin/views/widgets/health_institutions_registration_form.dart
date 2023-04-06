@@ -7,9 +7,12 @@
 //
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:relative_scale/relative_scale.dart';
 
+import '../../../core/blocs/file_picker/file_picker_bloc.dart';
 import '../../../core/configs/configs.dart';
+import '../../../core/views/widgets/file_picker_button.dart';
 import '../../../core/views/widgets/utano_text_field.dart';
 
 class HealthInstitutionsRegistrationForm extends StatelessWidget {
@@ -113,39 +116,8 @@ class HealthInstitutionsRegistrationForm extends StatelessWidget {
                         SizedBox(
                           height: sy(7),
                         ),
-                        Container(
-                          padding: EdgeInsets.symmetric(
-                            vertical: sy(10),
-                            horizontal: sx(7),
-                          ),
-                          decoration: BoxDecoration(
-                            color: UtanoColors.white,
-                            border: Border.all(
-                              color: UtanoColors.border.withOpacity(0.5),
-                              width: 1.5,
-                            ),
-                            borderRadius: BorderRadius.circular(7),
-                          ),
-                          child: Row(
-                            children: [
-                              Icon(
-                                CupertinoIcons.photo,
-                                color: UtanoColors.grey,
-                                size: sy(15),
-                              ),
-                              SizedBox(
-                                width: sx(5),
-                              ),
-                              Text(
-                                'Upload Logo',
-                                style: TextStyle(
-                                  color: UtanoColors.grey,
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: sy(12),
-                                ),
-                              ),
-                            ],
-                          ),
+                        FilePickerButton(
+                          bloc: context.read<FilePickerBloc>(),
                         ),
                       ],
                     ),
@@ -164,24 +136,7 @@ class HealthInstitutionsRegistrationForm extends StatelessWidget {
               SizedBox(
                 height: sy(10),
               ),
-              Container(
-                padding: EdgeInsets.symmetric(
-                  vertical: sy(10),
-                ),
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: UtanoColors.active,
-                  borderRadius: BorderRadius.circular(7),
-                ),
-                child: Text(
-                  'SUBMIT',
-                  style: TextStyle(
-                    color: UtanoColors.white,
-                    fontWeight: FontWeight.w500,
-                    fontSize: sy(12),
-                  ),
-                ),
-              ),
+              UtanoButton(),
             ],
           ),
         );
