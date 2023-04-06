@@ -15,9 +15,6 @@ part 'province.g.dart';
 class Province with _$Province {
   factory Province({
     required String id,
-    @JsonKey(name: 'created_at') required DateTime createdAt,
-    @JsonKey(name: 'updated_at') required DateTime updatedAt,
-    @JsonKey(name: 'deleted_at') required DateTime? deletedAt,
     required String name,
   }) = _Province;
 

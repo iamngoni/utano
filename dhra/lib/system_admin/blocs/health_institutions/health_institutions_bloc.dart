@@ -33,6 +33,29 @@ class HealthInstitutionsBloc
         emit(HealthInstitutionsError(ApplicationError.unknownError()));
       }
     });
+    on<RegisterHealthInstitution>((event, emit) async {
+      try {
+        emit(HealthInstitutionsLoading());
+        final Either<ApplicationError, HealthInstitution<String>> response =
+            await repository.registerHealthInstitution(
+          name: event.name,
+          address: event.address,
+          phoneNumber: event.phoneNumber,
+          email: event.email,
+          logo: event.logo,
+          district: event.district,
+        );
+        response.fold((l) => emit(HealthInstitutionsError(l)), (r) {
+          emit(HealthInstitutionsLoaded([r]));
+          add(ListHealthInstitutions());
+        });
+      } catch (e, s) {
+        logger
+          ..e(e)
+          ..e(s);
+        emit(HealthInstitutionsError(ApplicationError.unknownError()));
+      }
+    });
   }
 
   final SystemAdminRepository repository;

@@ -73,9 +73,35 @@ class DioSystemAdminRepository implements SystemAdminRepository {
     required String email,
     required File logo,
     required String district,
-  }) {
-    // TODO: implement registerHealthInstitution
-    throw UnimplementedError();
+  }) async {
+    try {
+      final FormData formData = FormData.fromMap({
+        'name': name,
+        'address': address,
+        'phone_number': phoneNumber,
+        'email': email,
+        'district': district,
+        'logo': await MultipartFile.fromFile(logo.path,
+            filename: logo.path.split('/').last),
+      });
+
+      final Response<NetworkResponse> response = await dio.post(
+        '/staff/health_institutions',
+        data: formData,
+      );
+      final NetworkResponse networkResponse = response.data!;
+      final HealthInstitution<String> healthInstitution =
+          HealthInstitution.fromJson(networkResponse.data!['health_institution']
+              as Map<String, dynamic>);
+      return Right(healthInstitution);
+    } on DioError catch (e) {
+      return Left(dioErrorToApplicationError(e));
+    } catch (e, s) {
+      logger
+        ..e(e)
+        ..e(s);
+      return Left(ApplicationError.unknownError());
+    }
   }
 
   final Dio dio;

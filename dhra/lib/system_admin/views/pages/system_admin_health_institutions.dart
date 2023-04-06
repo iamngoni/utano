@@ -14,6 +14,7 @@ import 'package:relative_scale/relative_scale.dart';
 import '../../../core/blocs/file_picker/file_picker_bloc.dart';
 import '../../../core/configs/configs.dart';
 import '../../../core/views/widgets/active_tab_indicator.dart';
+import '../../../core/views/widgets/exception_widget.dart';
 import '../../../core/views/widgets/loader_widget.dart';
 import '../../../core/views/widgets/page_header.dart';
 import '../../blocs/health_institutions/health_institutions_bloc.dart';
@@ -123,12 +124,17 @@ class _SystemAdminHealthInstitutionsPageState
                     late Widget healthInstitutionsWidget;
 
                     if (state is HealthInstitutionsError) {
-                      healthInstitutionsWidget = Center(
-                        child: Text(state.error.message),
+                      healthInstitutionsWidget = ExceptionWidget(
+                        error: state.error,
+                        onPressed: () => context
+                            .read<HealthInstitutionsBloc>()
+                            .add(ListHealthInstitutions()),
                       );
                     } else if (state is HealthInstitutionsLoading) {
-                      healthInstitutionsWidget = const LoaderWidget(
-                        color: UtanoColors.black,
+                      healthInstitutionsWidget = const Center(
+                        child: LoaderWidget(
+                          color: UtanoColors.black,
+                        ),
                       );
                     } else if (state is HealthInstitutionsLoaded) {
                       healthInstitutionsWidget = PageView(
@@ -140,7 +146,7 @@ class _SystemAdminHealthInstitutionsPageState
                           ),
                           BlocProvider(
                             create: (context) => FilePickerBloc(),
-                            child: HealthInstitutionsRegistrationForm(),
+                            child: const HealthInstitutionsRegistrationForm(),
                           ),
                         ],
                       );

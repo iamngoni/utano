@@ -21,12 +21,6 @@ District _$DistrictFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$District {
   String get id => throw _privateConstructorUsedError;
-  @JsonKey(name: 'created_at')
-  DateTime get createdAt => throw _privateConstructorUsedError;
-  @JsonKey(name: 'updated_at')
-  DateTime get updatedAt => throw _privateConstructorUsedError;
-  @JsonKey(name: 'deleted_at')
-  DateTime? get deletedAt => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   Province? get province => throw _privateConstructorUsedError;
 
@@ -41,13 +35,7 @@ abstract class $DistrictCopyWith<$Res> {
   factory $DistrictCopyWith(District value, $Res Function(District) then) =
       _$DistrictCopyWithImpl<$Res, District>;
   @useResult
-  $Res call(
-      {String id,
-      @JsonKey(name: 'created_at') DateTime createdAt,
-      @JsonKey(name: 'updated_at') DateTime updatedAt,
-      @JsonKey(name: 'deleted_at') DateTime? deletedAt,
-      String name,
-      Province? province});
+  $Res call({String id, String name, Province? province});
 
   $ProvinceCopyWith<$Res>? get province;
 }
@@ -66,9 +54,6 @@ class _$DistrictCopyWithImpl<$Res, $Val extends District>
   @override
   $Res call({
     Object? id = null,
-    Object? createdAt = null,
-    Object? updatedAt = null,
-    Object? deletedAt = freezed,
     Object? name = null,
     Object? province = freezed,
   }) {
@@ -77,18 +62,6 @@ class _$DistrictCopyWithImpl<$Res, $Val extends District>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      updatedAt: null == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      deletedAt: freezed == deletedAt
-          ? _value.deletedAt
-          : deletedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -120,13 +93,7 @@ abstract class _$$_DistrictCopyWith<$Res> implements $DistrictCopyWith<$Res> {
       __$$_DistrictCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String id,
-      @JsonKey(name: 'created_at') DateTime createdAt,
-      @JsonKey(name: 'updated_at') DateTime updatedAt,
-      @JsonKey(name: 'deleted_at') DateTime? deletedAt,
-      String name,
-      Province? province});
+  $Res call({String id, String name, Province? province});
 
   @override
   $ProvinceCopyWith<$Res>? get province;
@@ -144,9 +111,6 @@ class __$$_DistrictCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? createdAt = null,
-    Object? updatedAt = null,
-    Object? deletedAt = freezed,
     Object? name = null,
     Object? province = freezed,
   }) {
@@ -155,18 +119,6 @@ class __$$_DistrictCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      updatedAt: null == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      deletedAt: freezed == deletedAt
-          ? _value.deletedAt
-          : deletedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -182,13 +134,7 @@ class __$$_DistrictCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_District implements _District {
-  _$_District(
-      {required this.id,
-      @JsonKey(name: 'created_at') required this.createdAt,
-      @JsonKey(name: 'updated_at') required this.updatedAt,
-      @JsonKey(name: 'deleted_at') required this.deletedAt,
-      required this.name,
-      this.province});
+  _$_District({required this.id, required this.name, this.province});
 
   factory _$_District.fromJson(Map<String, dynamic> json) =>
       _$$_DistrictFromJson(json);
@@ -196,23 +142,9 @@ class _$_District implements _District {
   @override
   final String id;
   @override
-  @JsonKey(name: 'created_at')
-  final DateTime createdAt;
-  @override
-  @JsonKey(name: 'updated_at')
-  final DateTime updatedAt;
-  @override
-  @JsonKey(name: 'deleted_at')
-  final DateTime? deletedAt;
-  @override
   final String name;
   @override
   final Province? province;
-
-  @override
-  String toString() {
-    return 'District(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt, name: $name, province: $province)';
-  }
 
   @override
   bool operator ==(dynamic other) {
@@ -220,12 +152,6 @@ class _$_District implements _District {
         (other.runtimeType == runtimeType &&
             other is _$_District &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt) &&
-            (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt) &&
-            (identical(other.deletedAt, deletedAt) ||
-                other.deletedAt == deletedAt) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.province, province) ||
                 other.province == province));
@@ -233,8 +159,7 @@ class _$_District implements _District {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, createdAt, updatedAt, deletedAt, name, province);
+  int get hashCode => Object.hash(runtimeType, id, name, province);
 
   @JsonKey(ignore: true)
   @override
@@ -253,9 +178,6 @@ class _$_District implements _District {
 abstract class _District implements District {
   factory _District(
       {required final String id,
-      @JsonKey(name: 'created_at') required final DateTime createdAt,
-      @JsonKey(name: 'updated_at') required final DateTime updatedAt,
-      @JsonKey(name: 'deleted_at') required final DateTime? deletedAt,
       required final String name,
       final Province? province}) = _$_District;
 
@@ -263,15 +185,6 @@ abstract class _District implements District {
 
   @override
   String get id;
-  @override
-  @JsonKey(name: 'created_at')
-  DateTime get createdAt;
-  @override
-  @JsonKey(name: 'updated_at')
-  DateTime get updatedAt;
-  @override
-  @JsonKey(name: 'deleted_at')
-  DateTime? get deletedAt;
   @override
   String get name;
   @override

@@ -148,7 +148,7 @@ class _LandingPageState extends State<LandingPage> {
                     ),
                   );
                 } else if (state is AuthLoading) {
-                  authWidget = const LoaderWidget();
+                  authWidget = const Center(child: LoaderWidget());
                 } else {
                   authWidget = LoginForm(
                     usernameController: usernameController,

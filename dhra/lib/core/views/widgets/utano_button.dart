@@ -13,28 +13,36 @@ import '../../configs/colors.dart';
 
 class UtanoButton extends StatelessWidget {
   const UtanoButton({
+    this.text = 'SUBMIT',
+    this.onTap,
     super.key,
   });
+
+  final String text;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
     return RelativeBuilder(
       builder: (context, height, width, sy, sx) {
-        return Container(
-          padding: EdgeInsets.symmetric(
-            vertical: sy(10),
-          ),
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: UtanoColors.active,
-            borderRadius: BorderRadius.circular(7),
-          ),
-          child: Text(
-            'SUBMIT',
-            style: TextStyle(
-              color: UtanoColors.white,
-              fontWeight: FontWeight.w500,
-              fontSize: sy(12),
+        return GestureDetector(
+          onTap: onTap,
+          child: Container(
+            padding: EdgeInsets.symmetric(
+              vertical: sy(10),
+            ),
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: UtanoColors.active,
+              borderRadius: BorderRadius.circular(7),
+            ),
+            child: Text(
+              text,
+              style: TextStyle(
+                color: UtanoColors.white,
+                fontWeight: FontWeight.w500,
+                fontSize: sy(12),
+              ),
             ),
           ),
         );
