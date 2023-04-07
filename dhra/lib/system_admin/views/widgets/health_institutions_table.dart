@@ -12,17 +12,16 @@ import 'package:handy_extensions/handy_extensions.dart';
 import 'package:relative_scale/relative_scale.dart';
 
 import '../../../core/configs/colors.dart';
-import '../../../core/models/data/health_institution.dart';
 import '../../../core/models/utils/table_action.dart';
+import '../../../core/views/widgets/exception_widget.dart';
+import '../../../core/views/widgets/loader_widget.dart';
 import '../../../core/views/widgets/table_actions_row.dart';
 import '../../../core/views/widgets/table_body_item.dart';
 import '../../../core/views/widgets/table_header_title.dart';
 import '../../blocs/health_institutions/health_institutions_bloc.dart';
 
 class HealthInstitutionsTable extends StatelessWidget {
-  const HealthInstitutionsTable({required this.healthInstitutions, super.key});
-
-  final List<HealthInstitution<String>> healthInstitutions;
+  const HealthInstitutionsTable({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -84,59 +83,96 @@ class HealthInstitutionsTable extends StatelessWidget {
                 height: sy(10),
               ),
               Expanded(
-                child: Table(
-                  children: [
-                    const TableRow(
-                      children: [
-                        TableHeaderTitle(
-                          title: 'Name',
+                child: BlocBuilder<HealthInstitutionsBloc,
+                    HealthInstitutionsState>(
+                  builder: (context, state) {
+                    late Widget healthInstitutionsTableWidget;
+
+                    if (state is HealthInstitutionsError) {
+                      healthInstitutionsTableWidget = ExceptionWidget(
+                        error: state.error,
+                        onRetry: () => context
+                            .read<HealthInstitutionsBloc>()
+                            .add(ListHealthInstitutions()),
+                      );
+                    } else if (state is HealthInstitutionsLoading) {
+                      healthInstitutionsTableWidget = const Center(
+                        child: LoaderWidget(
+                          color: UtanoColors.black,
                         ),
-                        TableHeaderTitle(
-                          title: 'Email',
-                        ),
-                        TableHeaderTitle(
-                          title: 'Phone',
-                        ),
-                        TableHeaderTitle(
-                          title: 'Address',
-                        ),
-                        TableHeaderTitle(
-                          title: 'Actions',
-                        ),
-                      ],
-                    ),
-                    ...healthInstitutions.map(
-                      (e) => TableRow(
-                        // decoration: BoxDecoration(),
-                        children: [
-                          TableBodyItem(e.name),
-                          TableBodyItem(e.email),
-                          TableBodyItem(e.phoneNumber),
-                          TableBodyItem(e.address),
-                          TableActionsRow(
-                            actions: const [
-                              TableAction(
-                                icon: CupertinoIcons.eye,
-                                tooltipText: 'View',
-                                color: UtanoColors.active,
+                      );
+                    } else if (state is HealthInstitutionsLoaded) {
+                      healthInstitutionsTableWidget = SizedBox(
+                        height: context.height,
+                        width: context.width,
+                        child: Table(
+                          children: [
+                            const TableRow(
+                              children: [
+                                TableHeaderTitle(
+                                  title: 'Name',
+                                ),
+                                TableHeaderTitle(
+                                  title: 'Email',
+                                ),
+                                TableHeaderTitle(
+                                  title: 'Phone',
+                                ),
+                                TableHeaderTitle(
+                                  title: 'Address',
+                                ),
+                                TableHeaderTitle(
+                                  title: 'Actions',
+                                ),
+                              ],
+                            ),
+                            ...state.healthInstitutions.map(
+                              (e) => TableRow(
+                                // decoration: BoxDecoration(),
+                                children: [
+                                  TableBodyItem(e.name),
+                                  TableBodyItem(e.email),
+                                  TableBodyItem(e.phoneNumber),
+                                  TableBodyItem(e.address),
+                                  TableActionsRow(
+                                    actions: const [
+                                      TableAction(
+                                        icon: CupertinoIcons.eye,
+                                        tooltipText: 'View',
+                                        color: UtanoColors.active,
+                                      ),
+                                      TableAction(
+                                        icon: CupertinoIcons
+                                            .person_crop_circle_badge_plus,
+                                        tooltipText: 'Add Administrators',
+                                        color: UtanoColors.green,
+                                      ),
+                                      TableAction(
+                                        icon: CupertinoIcons.delete,
+                                        tooltipText: 'Delete From System',
+                                        color: UtanoColors.red,
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ),
-                              TableAction(
-                                icon: CupertinoIcons
-                                    .person_crop_circle_badge_plus,
-                                tooltipText: 'Add Administrators',
-                                color: UtanoColors.green,
-                              ),
-                              TableAction(
-                                icon: CupertinoIcons.delete,
-                                tooltipText: 'Delete From System',
-                                color: UtanoColors.red,
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+                            ),
+                          ],
+                        ),
+                      );
+                    } else {
+                      healthInstitutionsTableWidget = const Center(
+                        child: LoaderWidget(
+                          color: UtanoColors.black,
+                        ),
+                      );
+                    }
+
+                    return AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 200),
+                      child: healthInstitutionsTableWidget,
+                    );
+                  },
                 ),
               ),
             ],

@@ -21,6 +21,8 @@ class District with _$District {
     Province? province,
   }) = _District;
 
+  const District._();
+
   factory District.fromJson(Map<String, dynamic> json) =>
       _$DistrictFromJson(json);
 

@@ -133,8 +133,9 @@ class __$$_DistrictCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_District implements _District {
-  _$_District({required this.id, required this.name, this.province});
+class _$_District extends _District {
+  _$_District({required this.id, required this.name, this.province})
+      : super._();
 
   factory _$_District.fromJson(Map<String, dynamic> json) =>
       _$$_DistrictFromJson(json);
@@ -175,11 +176,12 @@ class _$_District implements _District {
   }
 }
 
-abstract class _District implements District {
+abstract class _District extends District {
   factory _District(
       {required final String id,
       required final String name,
       final Province? province}) = _$_District;
+  _District._() : super._();
 
   factory _District.fromJson(Map<String, dynamic> json) = _$_District.fromJson;
 

@@ -32,6 +32,7 @@ class UtanoDropdownButton<T> extends StatelessWidget {
       builder: (context, height, width, sy, sx) {
         return MacosPopupButton<T>(
           value: value,
+          alignment: Alignment.centerLeft,
           onChanged: onChanged,
           items: items.map<MacosPopupMenuItem<T>>((T value) {
             return MacosPopupMenuItem<T>(

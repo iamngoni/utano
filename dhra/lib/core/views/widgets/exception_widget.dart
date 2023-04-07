@@ -17,12 +17,12 @@ import '../../models/data/application_error.dart';
 class ExceptionWidget extends StatelessWidget {
   const ExceptionWidget({
     required this.error,
-    this.onPressed,
+    this.onRetry,
     super.key,
   });
 
   final ApplicationError error;
-  final VoidCallback? onPressed;
+  final VoidCallback? onRetry;
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +64,7 @@ class ExceptionWidget extends StatelessWidget {
               ),
               PushButton(
                 buttonSize: ButtonSize.large,
-                onPressed: onPressed,
+                onPressed: onRetry,
                 child: const Text('RETRY'),
               ),
             ],
