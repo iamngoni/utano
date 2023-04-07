@@ -18,18 +18,19 @@ class ExceptionWidget extends StatelessWidget {
   const ExceptionWidget({
     required this.error,
     this.onRetry,
+    this.onGoBack,
     super.key,
   });
 
   final ApplicationError error;
   final VoidCallback? onRetry;
+  final VoidCallback? onGoBack;
 
   @override
   Widget build(BuildContext context) {
     return RelativeBuilder(
       builder: (context, height, width, sy, sx) {
         return Container(
-          height: context.height,
           width: context.width,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -58,6 +59,7 @@ class ExceptionWidget extends StatelessWidget {
                   fontWeight: FontWeight.w400,
                   fontSize: sy(12),
                 ),
+                textAlign: TextAlign.center,
               ),
               SizedBox(
                 height: sy(15),
@@ -67,6 +69,23 @@ class ExceptionWidget extends StatelessWidget {
                 onPressed: onRetry,
                 child: const Text('RETRY'),
               ),
+              SizedBox(
+                height: sy(5),
+              ),
+              if (onGoBack != null)
+                GestureDetector(
+                  onTap: onGoBack,
+                  child: Text(
+                    'go back',
+                    style: TextStyle(
+                      color: UtanoColors.active,
+                      fontWeight: FontWeight.w400,
+                      fontSize: sy(10),
+                    ),
+                  ),
+                )
+              else
+                const SizedBox.shrink(),
             ],
           ),
         );

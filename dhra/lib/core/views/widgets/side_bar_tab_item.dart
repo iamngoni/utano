@@ -58,7 +58,7 @@ class SideBarTabItem extends StatelessWidget {
                     style: TextStyle(
                       color: isActive ? UtanoColors.active : UtanoColors.grey,
                       fontWeight: FontWeight.w400,
-                      fontSize: sy(8),
+                      fontSize: sy(10),
                     ),
                   ),
                 ),

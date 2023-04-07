@@ -24,14 +24,14 @@ ApplicationError dioErrorToApplicationError(DioError error) {
       exception = ApplicationError(
         'Sorry Utano is unable to communicate with the remote resources at '
         'the moment, please check your internet connection 📡 and retry.',
-        title: 'Connection ApplicationError',
+        title: 'Connection Error',
       );
       break;
     case DioErrorType.receiveTimeout:
       exception = ApplicationError(
         'Sorry Utano is unable to communicate with the remote resources at '
         'the moment, please check your internet connection 📡 and retry.',
-        title: 'Connection ApplicationError',
+        title: 'Connection Error',
       );
       break;
     case DioErrorType.response:
@@ -43,7 +43,7 @@ ApplicationError dioErrorToApplicationError(DioError error) {
       exception = ApplicationError(
         'Sorry Utano is unable to communicate with the remote resources at '
         'the moment, please check your internet connection 📡 and retry.',
-        title: 'Network ApplicationError',
+        title: 'Network Error',
       );
       break;
     case DioErrorType.cancel:

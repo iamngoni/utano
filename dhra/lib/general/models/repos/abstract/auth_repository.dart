@@ -17,4 +17,9 @@ abstract class AuthRepository {
     String password,
   );
   Future<Either<ApplicationError, AuthResponse>> refreshAuthToken(String token);
+  Future<Either<ApplicationError, void>> updatePassword({
+    required String oldPassword,
+    required String password,
+    required String passwordConfirmation,
+  });
 }

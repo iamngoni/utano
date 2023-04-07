@@ -9,6 +9,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'core/blocs/change_password/change_password_bloc.dart';
 import 'core/blocs/system_configs/system_configs_bloc.dart';
 import 'core/models/repos/impl/dio_system_configs_repository.dart';
 import 'core/services/di.dart';
@@ -29,6 +30,11 @@ List<BlocProvider> providers = [
   ),
   BlocProvider<AuthBloc>(
     create: (_) => AuthBloc(
+      repository: DioAuthRepository(dio),
+    ),
+  ),
+  BlocProvider<ChangePasswordBloc>(
+    create: (_) => ChangePasswordBloc(
       repository: DioAuthRepository(dio),
     ),
   ),

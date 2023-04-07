@@ -8,6 +8,8 @@
 
 import 'package:flutter/material.dart';
 
+import '../../admin/views/pages/admin_dashboard.dart';
+import '../../admin/views/pages/admin_employees_page.dart';
 import '../../nurse/views/pages/nurse_dashboard.dart';
 import '../../nurse/views/pages/nurse_patients.dart';
 import '../../nurse/views/pages/nurse_prescriptions.dart';
@@ -24,12 +26,17 @@ final Map<UserRole, List<Widget>> userRoleToScreensMappings = {
     const PointOfServicePage(),
     const NursePatientsPage(),
     const NursePrescriptionsPage(),
-    const ChangePasswordPage(),
+    ChangePasswordPage(),
   ],
   UserRole.systemAdmin: [
     const SystemAdminDashboardPage(),
     const SystemAdminHealthInstitutionsPage(),
     const SystemAdminHealthInstitutionsAdminsPage(),
-    const ChangePasswordPage(),
+    ChangePasswordPage(),
+  ],
+  UserRole.admin: [
+    const AdminDashboardPage(),
+    const AdminEmployeesPage(),
+    ChangePasswordPage(),
   ],
 };
