@@ -10,19 +10,23 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 enum UserRole {
   @JsonValue('PATIENT')
-  patient,
+  patient('PATIENT'),
   @JsonValue('DOCTOR')
-  doctor,
+  doctor('DOCTOR'),
   @JsonValue('SYSTEM_ADMIN')
-  systemAdmin,
+  systemAdmin('SYSTEM_ADMIN'),
   @JsonValue('ADMIN')
-  admin,
+  admin('ADMIN'),
   @JsonValue('NURSE')
-  nurse,
-  @JsonValue('HEALTH_INSTITUTION')
-  healthInstitution,
+  nurse('NURSE'),
   @JsonValue('LAB_TECHNICIAN')
-  labTechnician,
+  labTechnician('LAB_TECHNICIAN'),
   @JsonValue('PHARMACIST')
-  pharmacist,
+  pharmacist('PHARMACIST');
+
+  const UserRole(this.value);
+  final String value;
+
+  @override
+  String toString() => value;
 }

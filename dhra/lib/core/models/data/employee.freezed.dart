@@ -25,11 +25,6 @@ mixin _$Employee {
   DateTime get createdAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'updated_at')
   DateTime get updatedAt => throw _privateConstructorUsedError;
-  @JsonKey(name: 'deleted_at')
-  DateTime? get deletedAt => throw _privateConstructorUsedError;
-  @JsonKey(name: 'professional_title')
-  String? get professionalTitle => throw _privateConstructorUsedError;
-  String? get bio => throw _privateConstructorUsedError;
   List<String> get tags => throw _privateConstructorUsedError;
   List<String> get qualifications => throw _privateConstructorUsedError;
   @JsonKey(name: 'registered_on')
@@ -37,6 +32,11 @@ mixin _$Employee {
   User get user => throw _privateConstructorUsedError;
   @JsonKey(name: 'registered_at')
   HealthInstitution get registeredAt => throw _privateConstructorUsedError;
+  @JsonKey(name: 'deleted_at')
+  DateTime? get deletedAt => throw _privateConstructorUsedError;
+  @JsonKey(name: 'professional_title')
+  String? get professionalTitle => throw _privateConstructorUsedError;
+  String? get bio => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -53,14 +53,14 @@ abstract class $EmployeeCopyWith<$Res> {
       {String id,
       @JsonKey(name: 'created_at') DateTime createdAt,
       @JsonKey(name: 'updated_at') DateTime updatedAt,
-      @JsonKey(name: 'deleted_at') DateTime? deletedAt,
-      @JsonKey(name: 'professional_title') String? professionalTitle,
-      String? bio,
       List<String> tags,
       List<String> qualifications,
       @JsonKey(name: 'registered_on') DateTime registeredOn,
       User user,
-      @JsonKey(name: 'registered_at') HealthInstitution registeredAt});
+      @JsonKey(name: 'registered_at') HealthInstitution registeredAt,
+      @JsonKey(name: 'deleted_at') DateTime? deletedAt,
+      @JsonKey(name: 'professional_title') String? professionalTitle,
+      String? bio});
 
   $UserCopyWith<$Res> get user;
   $HealthInstitutionCopyWith<$Res> get registeredAt;
@@ -82,14 +82,14 @@ class _$EmployeeCopyWithImpl<$Res, $Val extends Employee>
     Object? id = null,
     Object? createdAt = null,
     Object? updatedAt = null,
-    Object? deletedAt = freezed,
-    Object? professionalTitle = freezed,
-    Object? bio = freezed,
     Object? tags = null,
     Object? qualifications = null,
     Object? registeredOn = null,
     Object? user = null,
     Object? registeredAt = null,
+    Object? deletedAt = freezed,
+    Object? professionalTitle = freezed,
+    Object? bio = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -104,18 +104,6 @@ class _$EmployeeCopyWithImpl<$Res, $Val extends Employee>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      deletedAt: freezed == deletedAt
-          ? _value.deletedAt
-          : deletedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      professionalTitle: freezed == professionalTitle
-          ? _value.professionalTitle
-          : professionalTitle // ignore: cast_nullable_to_non_nullable
-              as String?,
-      bio: freezed == bio
-          ? _value.bio
-          : bio // ignore: cast_nullable_to_non_nullable
-              as String?,
       tags: null == tags
           ? _value.tags
           : tags // ignore: cast_nullable_to_non_nullable
@@ -136,6 +124,18 @@ class _$EmployeeCopyWithImpl<$Res, $Val extends Employee>
           ? _value.registeredAt
           : registeredAt // ignore: cast_nullable_to_non_nullable
               as HealthInstitution,
+      deletedAt: freezed == deletedAt
+          ? _value.deletedAt
+          : deletedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      professionalTitle: freezed == professionalTitle
+          ? _value.professionalTitle
+          : professionalTitle // ignore: cast_nullable_to_non_nullable
+              as String?,
+      bio: freezed == bio
+          ? _value.bio
+          : bio // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 
@@ -167,14 +167,14 @@ abstract class _$$_EmployeeCopyWith<$Res> implements $EmployeeCopyWith<$Res> {
       {String id,
       @JsonKey(name: 'created_at') DateTime createdAt,
       @JsonKey(name: 'updated_at') DateTime updatedAt,
-      @JsonKey(name: 'deleted_at') DateTime? deletedAt,
-      @JsonKey(name: 'professional_title') String? professionalTitle,
-      String? bio,
       List<String> tags,
       List<String> qualifications,
       @JsonKey(name: 'registered_on') DateTime registeredOn,
       User user,
-      @JsonKey(name: 'registered_at') HealthInstitution registeredAt});
+      @JsonKey(name: 'registered_at') HealthInstitution registeredAt,
+      @JsonKey(name: 'deleted_at') DateTime? deletedAt,
+      @JsonKey(name: 'professional_title') String? professionalTitle,
+      String? bio});
 
   @override
   $UserCopyWith<$Res> get user;
@@ -196,14 +196,14 @@ class __$$_EmployeeCopyWithImpl<$Res>
     Object? id = null,
     Object? createdAt = null,
     Object? updatedAt = null,
-    Object? deletedAt = freezed,
-    Object? professionalTitle = freezed,
-    Object? bio = freezed,
     Object? tags = null,
     Object? qualifications = null,
     Object? registeredOn = null,
     Object? user = null,
     Object? registeredAt = null,
+    Object? deletedAt = freezed,
+    Object? professionalTitle = freezed,
+    Object? bio = freezed,
   }) {
     return _then(_$_Employee(
       id: null == id
@@ -218,18 +218,6 @@ class __$$_EmployeeCopyWithImpl<$Res>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      deletedAt: freezed == deletedAt
-          ? _value.deletedAt
-          : deletedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      professionalTitle: freezed == professionalTitle
-          ? _value.professionalTitle
-          : professionalTitle // ignore: cast_nullable_to_non_nullable
-              as String?,
-      bio: freezed == bio
-          ? _value.bio
-          : bio // ignore: cast_nullable_to_non_nullable
-              as String?,
       tags: null == tags
           ? _value._tags
           : tags // ignore: cast_nullable_to_non_nullable
@@ -250,6 +238,18 @@ class __$$_EmployeeCopyWithImpl<$Res>
           ? _value.registeredAt
           : registeredAt // ignore: cast_nullable_to_non_nullable
               as HealthInstitution,
+      deletedAt: freezed == deletedAt
+          ? _value.deletedAt
+          : deletedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      professionalTitle: freezed == professionalTitle
+          ? _value.professionalTitle
+          : professionalTitle // ignore: cast_nullable_to_non_nullable
+              as String?,
+      bio: freezed == bio
+          ? _value.bio
+          : bio // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -261,14 +261,14 @@ class _$_Employee implements _Employee {
       {required this.id,
       @JsonKey(name: 'created_at') required this.createdAt,
       @JsonKey(name: 'updated_at') required this.updatedAt,
-      @JsonKey(name: 'deleted_at') this.deletedAt,
-      @JsonKey(name: 'professional_title') this.professionalTitle,
-      this.bio,
       required final List<String> tags,
       required final List<String> qualifications,
       @JsonKey(name: 'registered_on') required this.registeredOn,
       required this.user,
-      @JsonKey(name: 'registered_at') required this.registeredAt})
+      @JsonKey(name: 'registered_at') required this.registeredAt,
+      @JsonKey(name: 'deleted_at') this.deletedAt,
+      @JsonKey(name: 'professional_title') this.professionalTitle,
+      this.bio})
       : _tags = tags,
         _qualifications = qualifications;
 
@@ -283,14 +283,6 @@ class _$_Employee implements _Employee {
   @override
   @JsonKey(name: 'updated_at')
   final DateTime updatedAt;
-  @override
-  @JsonKey(name: 'deleted_at')
-  final DateTime? deletedAt;
-  @override
-  @JsonKey(name: 'professional_title')
-  final String? professionalTitle;
-  @override
-  final String? bio;
   final List<String> _tags;
   @override
   List<String> get tags {
@@ -315,10 +307,18 @@ class _$_Employee implements _Employee {
   @override
   @JsonKey(name: 'registered_at')
   final HealthInstitution registeredAt;
+  @override
+  @JsonKey(name: 'deleted_at')
+  final DateTime? deletedAt;
+  @override
+  @JsonKey(name: 'professional_title')
+  final String? professionalTitle;
+  @override
+  final String? bio;
 
   @override
   String toString() {
-    return 'Employee(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt, professionalTitle: $professionalTitle, bio: $bio, tags: $tags, qualifications: $qualifications, registeredOn: $registeredOn, user: $user, registeredAt: $registeredAt)';
+    return 'Employee(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, tags: $tags, qualifications: $qualifications, registeredOn: $registeredOn, user: $user, registeredAt: $registeredAt, deletedAt: $deletedAt, professionalTitle: $professionalTitle, bio: $bio)';
   }
 
   @override
@@ -331,11 +331,6 @@ class _$_Employee implements _Employee {
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
                 other.updatedAt == updatedAt) &&
-            (identical(other.deletedAt, deletedAt) ||
-                other.deletedAt == deletedAt) &&
-            (identical(other.professionalTitle, professionalTitle) ||
-                other.professionalTitle == professionalTitle) &&
-            (identical(other.bio, bio) || other.bio == bio) &&
             const DeepCollectionEquality().equals(other._tags, _tags) &&
             const DeepCollectionEquality()
                 .equals(other._qualifications, _qualifications) &&
@@ -343,7 +338,12 @@ class _$_Employee implements _Employee {
                 other.registeredOn == registeredOn) &&
             (identical(other.user, user) || other.user == user) &&
             (identical(other.registeredAt, registeredAt) ||
-                other.registeredAt == registeredAt));
+                other.registeredAt == registeredAt) &&
+            (identical(other.deletedAt, deletedAt) ||
+                other.deletedAt == deletedAt) &&
+            (identical(other.professionalTitle, professionalTitle) ||
+                other.professionalTitle == professionalTitle) &&
+            (identical(other.bio, bio) || other.bio == bio));
   }
 
   @JsonKey(ignore: true)
@@ -353,14 +353,14 @@ class _$_Employee implements _Employee {
       id,
       createdAt,
       updatedAt,
-      deletedAt,
-      professionalTitle,
-      bio,
       const DeepCollectionEquality().hash(_tags),
       const DeepCollectionEquality().hash(_qualifications),
       registeredOn,
       user,
-      registeredAt);
+      registeredAt,
+      deletedAt,
+      professionalTitle,
+      bio);
 
   @JsonKey(ignore: true)
   @override
@@ -383,18 +383,18 @@ abstract class _Employee implements Employee {
           required final DateTime createdAt,
       @JsonKey(name: 'updated_at')
           required final DateTime updatedAt,
-      @JsonKey(name: 'deleted_at')
-          final DateTime? deletedAt,
-      @JsonKey(name: 'professional_title')
-          final String? professionalTitle,
-      final String? bio,
       required final List<String> tags,
       required final List<String> qualifications,
       @JsonKey(name: 'registered_on')
           required final DateTime registeredOn,
       required final User user,
       @JsonKey(name: 'registered_at')
-          required final HealthInstitution registeredAt}) = _$_Employee;
+          required final HealthInstitution registeredAt,
+      @JsonKey(name: 'deleted_at')
+          final DateTime? deletedAt,
+      @JsonKey(name: 'professional_title')
+          final String? professionalTitle,
+      final String? bio}) = _$_Employee;
 
   factory _Employee.fromJson(Map<String, dynamic> json) = _$_Employee.fromJson;
 
@@ -407,14 +407,6 @@ abstract class _Employee implements Employee {
   @JsonKey(name: 'updated_at')
   DateTime get updatedAt;
   @override
-  @JsonKey(name: 'deleted_at')
-  DateTime? get deletedAt;
-  @override
-  @JsonKey(name: 'professional_title')
-  String? get professionalTitle;
-  @override
-  String? get bio;
-  @override
   List<String> get tags;
   @override
   List<String> get qualifications;
@@ -426,6 +418,14 @@ abstract class _Employee implements Employee {
   @override
   @JsonKey(name: 'registered_at')
   HealthInstitution get registeredAt;
+  @override
+  @JsonKey(name: 'deleted_at')
+  DateTime? get deletedAt;
+  @override
+  @JsonKey(name: 'professional_title')
+  String? get professionalTitle;
+  @override
+  String? get bio;
   @override
   @JsonKey(ignore: true)
   _$$_EmployeeCopyWith<_$_Employee> get copyWith =>

@@ -50,7 +50,6 @@ const _$UserRoleEnumMap = {
   UserRole.systemAdmin: 'SYSTEM_ADMIN',
   UserRole.admin: 'ADMIN',
   UserRole.nurse: 'NURSE',
-  UserRole.healthInstitution: 'HEALTH_INSTITUTION',
   UserRole.labTechnician: 'LAB_TECHNICIAN',
   UserRole.pharmacist: 'PHARMACIST',
 };

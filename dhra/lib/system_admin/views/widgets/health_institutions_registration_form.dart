@@ -201,8 +201,10 @@ class _HealthInstitutionsRegistrationFormState
                                   late Widget dropdownWidget;
 
                                   if (state is SystemConfigsLoading) {
-                                    dropdownWidget =
-                                        const Center(child: LoaderWidget());
+                                    dropdownWidget = const Center(
+                                        child: LoaderWidget(
+                                      color: UtanoColors.black,
+                                    ));
                                   } else if (state is SystemConfigsError) {
                                     dropdownWidget = const Center(
                                       child:
@@ -215,7 +217,7 @@ class _HealthInstitutionsRegistrationFormState
                                           DropdownButtonBloc<District>(),
                                       child: Builder(
                                         builder: (context) {
-                                          return Container(
+                                          return SizedBox(
                                             height: sy(30),
                                             width: context.width,
                                             child:

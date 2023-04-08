@@ -36,10 +36,18 @@ class AdminApp extends StatelessWidget {
             ),
             SideBarTabItem(
               title: 'Employees',
-              imageIcon: const AssetImage('assets/icons/home.png'),
+              imageIcon: const AssetImage('assets/icons/database.png'),
               isActive: state.index == 1,
               onTap: () => context.read<NavigationBloc>().add(
                     const Navigate(1),
+                  ),
+            ),
+            SideBarTabItem(
+              title: 'Register Employees',
+              imageIcon: const AssetImage('assets/icons/user-add.png'),
+              isActive: state.index == 2,
+              onTap: () => context.read<NavigationBloc>().add(
+                    const Navigate(2),
                   ),
             ),
           ],
@@ -49,7 +57,7 @@ class AdminApp extends StatelessWidget {
               imageIcon: const AssetImage('assets/icons/lock.png'),
               isActive: state.index == 3,
               onTap: () => context.read<NavigationBloc>().add(
-                    const Navigate(2),
+                    const Navigate(3),
                   ),
             ),
             SideBarTabItem(

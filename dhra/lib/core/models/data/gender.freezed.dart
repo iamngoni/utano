@@ -102,8 +102,8 @@ class __$$_GenderCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Gender implements _Gender {
-  _$_Gender({required this.value, required this.description});
+class _$_Gender extends _Gender {
+  _$_Gender({required this.value, required this.description}) : super._();
 
   factory _$_Gender.fromJson(Map<String, dynamic> json) =>
       _$$_GenderFromJson(json);
@@ -112,11 +112,6 @@ class _$_Gender implements _Gender {
   final String value;
   @override
   final String description;
-
-  @override
-  String toString() {
-    return 'Gender(value: $value, description: $description)';
-  }
 
   @override
   bool operator ==(dynamic other) {
@@ -146,10 +141,11 @@ class _$_Gender implements _Gender {
   }
 }
 
-abstract class _Gender implements Gender {
+abstract class _Gender extends Gender {
   factory _Gender(
       {required final String value,
       required final String description}) = _$_Gender;
+  _Gender._() : super._();
 
   factory _Gender.fromJson(Map<String, dynamic> json) = _$_Gender.fromJson;
 

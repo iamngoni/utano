@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 
 import '../../admin/views/pages/admin_dashboard.dart';
 import '../../admin/views/pages/admin_employees_page.dart';
+import '../../admin/views/pages/admin_register_employee.dart';
 import '../../nurse/views/pages/nurse_dashboard.dart';
 import '../../nurse/views/pages/nurse_patients.dart';
 import '../../nurse/views/pages/nurse_prescriptions.dart';
@@ -36,7 +37,8 @@ final Map<UserRole, List<Widget>> userRoleToScreensMappings = {
   ],
   UserRole.admin: [
     const AdminDashboardPage(),
-    AdminEmployeesPage(),
+    const AdminEmployeesPage(),
+    const AdminRegisterEmployeePage(),
     ChangePasswordPage(),
   ],
 };

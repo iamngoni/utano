@@ -55,7 +55,7 @@ class DioHealthInstitutionRepository extends HealthInstitutionRepository {
           'first_name': firstName,
           'last_name': lastName,
           'email': email,
-          'role': role.name,
+          'role': role.value,
           'gender': gender.value,
         },
       );
