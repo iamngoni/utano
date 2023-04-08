@@ -17,7 +17,7 @@ from services.helpers.create_username import create_username
 from services.helpers.generate_random_password import generate_random_password
 from services.permissions.is_staff import IsStaff
 from services.permissions.is_system_admin import IsSystemAdmin
-from users.models import UserRoles, User, Employee
+from users.models import UserRoles, User, Employee, Patient
 from api.views.health_institution.tasks import notify_health_institution_on_registration
 
 
@@ -210,4 +210,26 @@ class HealthInstitutionAdminsView(APIView):
                 )
         except Exception as exc:
             logger.error(f"exception: {exc}")
+            return ApiResponse(num_status=500, bool_status=False)
+
+
+
+class SystemStatisticsView(APIView):
+    permission_classes = (IsAuthenticated, IsSystemAdmin,)
+
+    def get(self, request):
+        try:
+            health_institutions = HealthInstitution.objects.count()
+            employees = Employee.objects.count()
+            patients = Patient.objects.count()
+
+            return ApiResponse(
+                data={
+                    "health_institutions": health_institutions,
+                    "employees": employees,
+                    "patients": patients,
+                }
+            )
+        except Exception as exc:
+            logger.error(exc)
             return ApiResponse(num_status=500, bool_status=False)

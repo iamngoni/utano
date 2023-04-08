@@ -4,6 +4,7 @@ from api.views.staff.views import (
     HealthInstitutionsView,
     HealthInstitutionAdminsView,
     HealthInstitutionEmployeesView,
+    SystemStatisticsView,
 )
 
 urlpatterns = [
@@ -22,4 +23,5 @@ urlpatterns = [
         HealthInstitutionEmployeesView.as_view(),
         name="Health Institution Employees View",
     ),
+    path("system_statistics", SystemStatisticsView.as_view(), name="System Statistics View",),
 ]
