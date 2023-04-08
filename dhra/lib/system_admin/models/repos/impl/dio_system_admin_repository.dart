@@ -38,17 +38,17 @@ class DioSystemAdminRepository implements SystemAdminRepository {
   }
 
   @override
-  Future<Either<ApplicationError, List<HealthInstitution<String>>>>
+  Future<Either<ApplicationError, List<HealthInstitution>>>
       listHealthInstitutions() async {
     try {
       final Response<NetworkResponse> response =
           await dio.get('/staff/health_institutions');
       final NetworkResponse networkResponse = response.data!;
 
-      final List<HealthInstitution<String>> healthInstitutions =
+      final List<HealthInstitution> healthInstitutions =
           (networkResponse.data!['health_institutions'] as List)
               .map(
-                (e) => HealthInstitution<String>.fromJson(
+                (e) => HealthInstitution.fromJson(
                   e as Map<String, dynamic>,
                 ),
               )
@@ -65,7 +65,7 @@ class DioSystemAdminRepository implements SystemAdminRepository {
   }
 
   @override
-  Future<Either<ApplicationError, HealthInstitution<String>>>
+  Future<Either<ApplicationError, HealthInstitution>>
       registerHealthInstitution({
     required String name,
     required String address,
@@ -90,9 +90,8 @@ class DioSystemAdminRepository implements SystemAdminRepository {
         data: formData,
       );
       final NetworkResponse networkResponse = response.data!;
-      final HealthInstitution<String> healthInstitution =
-          HealthInstitution.fromJson(networkResponse.data!['health_institution']
-              as Map<String, dynamic>);
+      final HealthInstitution healthInstitution = HealthInstitution.fromJson(
+          networkResponse.data!['health_institution'] as Map<String, dynamic>);
       return Right(healthInstitution);
     } on DioError catch (e) {
       return Left(dioErrorToApplicationError(e));

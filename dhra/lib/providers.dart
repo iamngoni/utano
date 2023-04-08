@@ -9,8 +9,10 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'admin/blocs/employees/employees_bloc.dart';
 import 'core/blocs/change_password/change_password_bloc.dart';
 import 'core/blocs/system_configs/system_configs_bloc.dart';
+import 'core/models/repos/impl/dio_health_institution_repository.dart';
 import 'core/models/repos/impl/dio_system_configs_repository.dart';
 import 'core/services/di.dart';
 import 'general/blocs/auth/auth_bloc.dart';
@@ -41,6 +43,11 @@ List<BlocProvider> providers = [
   BlocProvider<HealthInstitutionsBloc>(
     create: (_) => HealthInstitutionsBloc(
       repository: DioSystemAdminRepository(dio),
+    ),
+  ),
+  BlocProvider<EmployeesBloc>(
+    create: (_) => EmployeesBloc(
+      repository: DioHealthInstitutionRepository(dio),
     ),
   ),
 ];

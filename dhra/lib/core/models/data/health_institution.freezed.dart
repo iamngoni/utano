@@ -14,12 +14,12 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-HealthInstitution<T> _$HealthInstitutionFromJson<T>(Map<String, dynamic> json) {
-  return _HealthInstitution<T>.fromJson(json);
+HealthInstitution _$HealthInstitutionFromJson(Map<String, dynamic> json) {
+  return _HealthInstitution.fromJson(json);
 }
 
 /// @nodoc
-mixin _$HealthInstitution<T> {
+mixin _$HealthInstitution {
   String get id => throw _privateConstructorUsedError;
   @JsonKey(name: 'created_at')
   DateTime get createdAt => throw _privateConstructorUsedError;
@@ -33,20 +33,19 @@ mixin _$HealthInstitution<T> {
   String get phoneNumber => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
   String get logo => throw _privateConstructorUsedError;
-  @JsonKey(fromJson: districtFromJson, toJson: districtToJson)
-  T get district => throw _privateConstructorUsedError;
+  District get district => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $HealthInstitutionCopyWith<T, HealthInstitution<T>> get copyWith =>
+  $HealthInstitutionCopyWith<HealthInstitution> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $HealthInstitutionCopyWith<T, $Res> {
-  factory $HealthInstitutionCopyWith(HealthInstitution<T> value,
-          $Res Function(HealthInstitution<T>) then) =
-      _$HealthInstitutionCopyWithImpl<T, $Res, HealthInstitution<T>>;
+abstract class $HealthInstitutionCopyWith<$Res> {
+  factory $HealthInstitutionCopyWith(
+          HealthInstitution value, $Res Function(HealthInstitution) then) =
+      _$HealthInstitutionCopyWithImpl<$Res, HealthInstitution>;
   @useResult
   $Res call(
       {String id,
@@ -58,13 +57,14 @@ abstract class $HealthInstitutionCopyWith<T, $Res> {
       @JsonKey(name: 'phone_number') String phoneNumber,
       String email,
       String logo,
-      @JsonKey(fromJson: districtFromJson, toJson: districtToJson) T district});
+      District district});
+
+  $DistrictCopyWith<$Res> get district;
 }
 
 /// @nodoc
-class _$HealthInstitutionCopyWithImpl<T, $Res,
-        $Val extends HealthInstitution<T>>
-    implements $HealthInstitutionCopyWith<T, $Res> {
+class _$HealthInstitutionCopyWithImpl<$Res, $Val extends HealthInstitution>
+    implements $HealthInstitutionCopyWith<$Res> {
   _$HealthInstitutionCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
@@ -84,7 +84,7 @@ class _$HealthInstitutionCopyWithImpl<T, $Res,
     Object? phoneNumber = null,
     Object? email = null,
     Object? logo = null,
-    Object? district = freezed,
+    Object? district = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -123,20 +123,28 @@ class _$HealthInstitutionCopyWithImpl<T, $Res,
           ? _value.logo
           : logo // ignore: cast_nullable_to_non_nullable
               as String,
-      district: freezed == district
+      district: null == district
           ? _value.district
           : district // ignore: cast_nullable_to_non_nullable
-              as T,
+              as District,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $DistrictCopyWith<$Res> get district {
+    return $DistrictCopyWith<$Res>(_value.district, (value) {
+      return _then(_value.copyWith(district: value) as $Val);
+    });
   }
 }
 
 /// @nodoc
-abstract class _$$_HealthInstitutionCopyWith<T, $Res>
-    implements $HealthInstitutionCopyWith<T, $Res> {
-  factory _$$_HealthInstitutionCopyWith(_$_HealthInstitution<T> value,
-          $Res Function(_$_HealthInstitution<T>) then) =
-      __$$_HealthInstitutionCopyWithImpl<T, $Res>;
+abstract class _$$_HealthInstitutionCopyWith<$Res>
+    implements $HealthInstitutionCopyWith<$Res> {
+  factory _$$_HealthInstitutionCopyWith(_$_HealthInstitution value,
+          $Res Function(_$_HealthInstitution) then) =
+      __$$_HealthInstitutionCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -149,15 +157,18 @@ abstract class _$$_HealthInstitutionCopyWith<T, $Res>
       @JsonKey(name: 'phone_number') String phoneNumber,
       String email,
       String logo,
-      @JsonKey(fromJson: districtFromJson, toJson: districtToJson) T district});
+      District district});
+
+  @override
+  $DistrictCopyWith<$Res> get district;
 }
 
 /// @nodoc
-class __$$_HealthInstitutionCopyWithImpl<T, $Res>
-    extends _$HealthInstitutionCopyWithImpl<T, $Res, _$_HealthInstitution<T>>
-    implements _$$_HealthInstitutionCopyWith<T, $Res> {
-  __$$_HealthInstitutionCopyWithImpl(_$_HealthInstitution<T> _value,
-      $Res Function(_$_HealthInstitution<T>) _then)
+class __$$_HealthInstitutionCopyWithImpl<$Res>
+    extends _$HealthInstitutionCopyWithImpl<$Res, _$_HealthInstitution>
+    implements _$$_HealthInstitutionCopyWith<$Res> {
+  __$$_HealthInstitutionCopyWithImpl(
+      _$_HealthInstitution _value, $Res Function(_$_HealthInstitution) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -172,9 +183,9 @@ class __$$_HealthInstitutionCopyWithImpl<T, $Res>
     Object? phoneNumber = null,
     Object? email = null,
     Object? logo = null,
-    Object? district = freezed,
+    Object? district = null,
   }) {
-    return _then(_$_HealthInstitution<T>(
+    return _then(_$_HealthInstitution(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -211,33 +222,28 @@ class __$$_HealthInstitutionCopyWithImpl<T, $Res>
           ? _value.logo
           : logo // ignore: cast_nullable_to_non_nullable
               as String,
-      district: freezed == district
+      district: null == district
           ? _value.district
           : district // ignore: cast_nullable_to_non_nullable
-              as T,
+              as District,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$_HealthInstitution<T> implements _HealthInstitution<T> {
+class _$_HealthInstitution implements _HealthInstitution {
   _$_HealthInstitution(
       {required this.id,
-      @JsonKey(name: 'created_at')
-          required this.createdAt,
-      @JsonKey(name: 'updated_at')
-          required this.updatedAt,
-      @JsonKey(name: 'deleted_at')
-          required this.deletedAt,
+      @JsonKey(name: 'created_at') required this.createdAt,
+      @JsonKey(name: 'updated_at') required this.updatedAt,
+      @JsonKey(name: 'deleted_at') required this.deletedAt,
       required this.name,
       required this.address,
-      @JsonKey(name: 'phone_number')
-          required this.phoneNumber,
+      @JsonKey(name: 'phone_number') required this.phoneNumber,
       required this.email,
       required this.logo,
-      @JsonKey(fromJson: districtFromJson, toJson: districtToJson)
-          required this.district});
+      required this.district});
 
   factory _$_HealthInstitution.fromJson(Map<String, dynamic> json) =>
       _$$_HealthInstitutionFromJson(json);
@@ -265,19 +271,18 @@ class _$_HealthInstitution<T> implements _HealthInstitution<T> {
   @override
   final String logo;
   @override
-  @JsonKey(fromJson: districtFromJson, toJson: districtToJson)
-  final T district;
+  final District district;
 
   @override
   String toString() {
-    return 'HealthInstitution<$T>(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt, name: $name, address: $address, phoneNumber: $phoneNumber, email: $email, logo: $logo, district: $district)';
+    return 'HealthInstitution(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt, name: $name, address: $address, phoneNumber: $phoneNumber, email: $email, logo: $logo, district: $district)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_HealthInstitution<T> &&
+            other is _$_HealthInstitution &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
@@ -291,59 +296,45 @@ class _$_HealthInstitution<T> implements _HealthInstitution<T> {
                 other.phoneNumber == phoneNumber) &&
             (identical(other.email, email) || other.email == email) &&
             (identical(other.logo, logo) || other.logo == logo) &&
-            const DeepCollectionEquality().equals(other.district, district));
+            (identical(other.district, district) ||
+                other.district == district));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      createdAt,
-      updatedAt,
-      deletedAt,
-      name,
-      address,
-      phoneNumber,
-      email,
-      logo,
-      const DeepCollectionEquality().hash(district));
+  int get hashCode => Object.hash(runtimeType, id, createdAt, updatedAt,
+      deletedAt, name, address, phoneNumber, email, logo, district);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_HealthInstitutionCopyWith<T, _$_HealthInstitution<T>> get copyWith =>
-      __$$_HealthInstitutionCopyWithImpl<T, _$_HealthInstitution<T>>(
+  _$$_HealthInstitutionCopyWith<_$_HealthInstitution> get copyWith =>
+      __$$_HealthInstitutionCopyWithImpl<_$_HealthInstitution>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_HealthInstitutionToJson<T>(
+    return _$$_HealthInstitutionToJson(
       this,
     );
   }
 }
 
-abstract class _HealthInstitution<T> implements HealthInstitution<T> {
+abstract class _HealthInstitution implements HealthInstitution {
   factory _HealthInstitution(
       {required final String id,
-      @JsonKey(name: 'created_at')
-          required final DateTime createdAt,
-      @JsonKey(name: 'updated_at')
-          required final DateTime updatedAt,
-      @JsonKey(name: 'deleted_at')
-          required final DateTime? deletedAt,
+      @JsonKey(name: 'created_at') required final DateTime createdAt,
+      @JsonKey(name: 'updated_at') required final DateTime updatedAt,
+      @JsonKey(name: 'deleted_at') required final DateTime? deletedAt,
       required final String name,
       required final String address,
-      @JsonKey(name: 'phone_number')
-          required final String phoneNumber,
+      @JsonKey(name: 'phone_number') required final String phoneNumber,
       required final String email,
       required final String logo,
-      @JsonKey(fromJson: districtFromJson, toJson: districtToJson)
-          required final T district}) = _$_HealthInstitution<T>;
+      required final District district}) = _$_HealthInstitution;
 
   factory _HealthInstitution.fromJson(Map<String, dynamic> json) =
-      _$_HealthInstitution<T>.fromJson;
+      _$_HealthInstitution.fromJson;
 
   @override
   String get id;
@@ -368,10 +359,9 @@ abstract class _HealthInstitution<T> implements HealthInstitution<T> {
   @override
   String get logo;
   @override
-  @JsonKey(fromJson: districtFromJson, toJson: districtToJson)
-  T get district;
+  District get district;
   @override
   @JsonKey(ignore: true)
-  _$$_HealthInstitutionCopyWith<T, _$_HealthInstitution<T>> get copyWith =>
+  _$$_HealthInstitutionCopyWith<_$_HealthInstitution> get copyWith =>
       throw _privateConstructorUsedError;
 }

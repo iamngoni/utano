@@ -19,11 +19,11 @@ class HealthInstitutionsBloc
     on<ListHealthInstitutions>((event, emit) async {
       try {
         emit(HealthInstitutionsLoading());
-        final Either<ApplicationError, List<HealthInstitution<String>>>
-            response = await repository.listHealthInstitutions();
+        final Either<ApplicationError, List<HealthInstitution>> response =
+            await repository.listHealthInstitutions();
         response.fold(
           (ApplicationError error) => emit(HealthInstitutionsError(error)),
-          (List<HealthInstitution<String>> healthInstitutions) =>
+          (List<HealthInstitution> healthInstitutions) =>
               emit(HealthInstitutionsLoaded(healthInstitutions)),
         );
       } catch (e, s) {
@@ -36,7 +36,7 @@ class HealthInstitutionsBloc
     on<RegisterHealthInstitution>((event, emit) async {
       try {
         emit(HealthInstitutionsLoading());
-        final Either<ApplicationError, HealthInstitution<String>> response =
+        final Either<ApplicationError, HealthInstitution> response =
             await repository.registerHealthInstitution(
           name: event.name,
           address: event.address,

@@ -16,7 +16,7 @@ class HealthInstitutionsLoading extends HealthInstitutionsState {
 
 class HealthInstitutionsLoaded extends HealthInstitutionsState {
   const HealthInstitutionsLoaded(this.healthInstitutions);
-  final List<HealthInstitution<String>> healthInstitutions;
+  final List<HealthInstitution> healthInstitutions;
 
   @override
   List<Object> get props => [healthInstitutions];

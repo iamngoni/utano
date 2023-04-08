@@ -21,7 +21,7 @@ _$_Employee _$$_EmployeeFromJson(Map<String, dynamic> json) => _$_Employee(
           .toList(),
       registeredOn: DateTime.parse(json['registered_on'] as String),
       user: User.fromJson(json['user'] as Map<String, dynamic>),
-      registeredAt: HealthInstitution<dynamic>.fromJson(
+      registeredAt: HealthInstitution.fromJson(
           json['registered_at'] as Map<String, dynamic>),
     );
 
