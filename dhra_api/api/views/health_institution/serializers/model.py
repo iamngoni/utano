@@ -8,10 +8,11 @@ class HealthInstitutionModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = HealthInstitution
         fields = "__all__"
+        depth = 2
 
 
 class EmployeeModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Employee
         fields = "__all__"
-        depth = 2
+        depth = 3

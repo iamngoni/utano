@@ -12,6 +12,7 @@ from api.views.health_institution.serializers.payload import (
 )
 from health_institution.models import HealthInstitution
 from services.helpers.api_response import ApiResponse
+from services.helpers.create_username import create_username
 from services.helpers.generate_random_password import generate_random_password
 from services.permissions.is_admin import IsAdmin
 from services.permissions.is_employee import IsEmployee
@@ -63,7 +64,9 @@ class HealthInstitutionEmployeesView(APIView):
                         message="Invalid role",
                     )
             else:
-                employees = health_institution.employees.all()
+                employees = health_institution.employees.select_related(
+                    "user", "registered_at"
+                )
             return ApiResponse(
                 data={"employees": EmployeeModelSerializer(employees, many=True).data}
             )
@@ -82,6 +85,10 @@ class HealthInstitutionEmployeesView(APIView):
                     role=payload.validated_data.get("role"),
                     email=payload.validated_data.get("email"),
                     gender=payload.validated_data.get("gender"),
+                    username=create_username(
+                        first_name=payload.validated_data.get("first_name"),
+                        last_name=payload.validated_data.get("last_name"),
+                    ),
                 )
                 password = generate_random_password()
                 user.set_password(password)

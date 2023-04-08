@@ -9,6 +9,7 @@ class HealthInstitutionModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = HealthInstitution
         fields = "__all__"
+        depth = 2
 
     def to_representation(self, instance):
         institution = super(HealthInstitutionModelSerializer, self).to_representation(
