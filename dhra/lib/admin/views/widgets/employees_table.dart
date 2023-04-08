@@ -12,6 +12,7 @@ import 'package:handy_extensions/handy_extensions.dart';
 import 'package:relative_scale/relative_scale.dart';
 
 import '../../../core/configs/colors.dart';
+import '../../../core/models/data/employee.dart';
 import '../../../core/models/data/user_role.dart';
 import '../../../core/models/utils/table_action.dart';
 import '../../../core/views/widgets/exception_widget.dart';
@@ -25,6 +26,14 @@ class EmployeesTable extends StatelessWidget {
   const EmployeesTable({this.role, super.key});
 
   final UserRole? role;
+
+  bool passesRole(Employee employee) {
+    if (role != null) {
+      return employee.user.role == role;
+    } else {
+      return true;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -103,70 +112,85 @@ class EmployeesTable extends StatelessWidget {
                       tableWidget = SizedBox(
                         height: context.height,
                         width: context.width,
-                        child: Table(
-                          children: [
-                            const TableRow(
-                              children: [
-                                TableHeaderTitle(
-                                  title: 'Full Name',
-                                ),
-                                TableHeaderTitle(
-                                  title: 'Professional Title',
-                                ),
-                                TableHeaderTitle(
-                                  title: 'Role',
-                                ),
-                                TableHeaderTitle(
-                                  title: 'Institution',
-                                ),
-                                TableHeaderTitle(
-                                  title: 'Province',
-                                ),
-                                TableHeaderTitle(
-                                  title: 'District',
-                                ),
-                                TableHeaderTitle(
-                                  title: 'Actions',
-                                ),
-                              ],
-                            ),
-                            ...state.employees
-                                .where((e) =>
-                                    role != null ? e.user.role == role : true)
-                                .map(
-                                  (e) => TableRow(
+                        child: state.employees.where(passesRole).isNotEmpty
+                            ? Table(
+                                children: [
+                                  const TableRow(
                                     children: [
-                                      TableBodyItem(
-                                        '${e.user.firstName} ${e.user.lastName}',
+                                      TableHeaderTitle(
+                                        title: 'Full Name',
                                       ),
-                                      TableBodyItem(
-                                          e.professionalTitle ?? 'n/a'),
-                                      TableBodyItem(e.user.role.name.titleCase),
-                                      TableBodyItem(e.registeredAt.name),
-                                      TableBodyItem(
-                                        '${e.registeredAt.district.province?.name}',
+                                      TableHeaderTitle(
+                                        title: 'Professional Title',
                                       ),
-                                      TableBodyItem(
-                                          e.registeredAt.district.name),
-                                      TableActionsRow(
-                                        actions: const [
-                                          TableAction(
-                                            icon: CupertinoIcons.pen,
-                                            tooltipText: 'Edit Information',
-                                            color: UtanoColors.green,
-                                          ),
-                                          TableAction(
-                                            icon: CupertinoIcons.delete,
-                                            tooltipText: 'Delete From System',
-                                            color: UtanoColors.red,
-                                          ),
-                                        ],
+                                      TableHeaderTitle(
+                                        title: 'Role',
+                                      ),
+                                      TableHeaderTitle(
+                                        title: 'Institution',
+                                      ),
+                                      TableHeaderTitle(
+                                        title: 'Province',
+                                      ),
+                                      TableHeaderTitle(
+                                        title: 'District',
+                                      ),
+                                      TableHeaderTitle(
+                                        title: 'Actions',
                                       ),
                                     ],
                                   ),
+                                  ...state.employees.where(passesRole).map(
+                                        (e) => TableRow(
+                                          children: [
+                                            TableBodyItem(
+                                              '${e.user.firstName} ${e.user.lastName}',
+                                            ),
+                                            TableBodyItem(
+                                              e.professionalTitle ?? 'n/a',
+                                            ),
+                                            TableBodyItem(
+                                              e.user.role.name.titleCase,
+                                            ),
+                                            TableBodyItem(e.registeredAt.name),
+                                            TableBodyItem(
+                                              '${e.registeredAt.district.province?.name}',
+                                            ),
+                                            TableBodyItem(
+                                              e.registeredAt.district.name,
+                                            ),
+                                            TableActionsRow(
+                                              actions: const [
+                                                TableAction(
+                                                  icon: CupertinoIcons.pen,
+                                                  tooltipText:
+                                                      'Edit Information',
+                                                  color: UtanoColors.green,
+                                                ),
+                                                TableAction(
+                                                  icon: CupertinoIcons.delete,
+                                                  tooltipText:
+                                                      'Delete From System',
+                                                  color: UtanoColors.red,
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                ],
+                              )
+                            : Center(
+                                child: Text(
+                                  'Unfortunately no employees matching selected'
+                                  ' role ☹️',
+                                  style: TextStyle(
+                                    color: UtanoColors.black,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: sy(12),
+                                  ),
                                 ),
-                          ],
-                        ),
+                              ),
                       );
                     } else {
                       tableWidget = const SizedBox.shrink();
