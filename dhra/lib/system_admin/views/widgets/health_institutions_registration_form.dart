@@ -90,9 +90,10 @@ class _HealthInstitutionsRegistrationFormState
 
               if (state is HealthInstitutionsLoading) {
                 formChild = const Center(
-                    child: LoaderWidget(
-                  color: UtanoColors.black,
-                ));
+                  child: LoaderWidget(
+                    color: UtanoColors.black,
+                  ),
+                );
               } else if (state is HealthInstitutionsError) {
                 formChild = ExceptionWidget(
                   error: state.error,

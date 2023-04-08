@@ -28,6 +28,11 @@ class HealthInstitution with _$HealthInstitution {
     required District district,
   }) = _HealthInstitution;
 
+  const HealthInstitution._();
+
   factory HealthInstitution.fromJson(Map<String, dynamic> json) =>
       _$HealthInstitutionFromJson(json);
+
+  @override
+  String toString() => name;
 }

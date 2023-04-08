@@ -232,7 +232,7 @@ class __$$_HealthInstitutionCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_HealthInstitution implements _HealthInstitution {
+class _$_HealthInstitution extends _HealthInstitution {
   _$_HealthInstitution(
       {required this.id,
       @JsonKey(name: 'created_at') required this.createdAt,
@@ -243,7 +243,8 @@ class _$_HealthInstitution implements _HealthInstitution {
       @JsonKey(name: 'phone_number') required this.phoneNumber,
       required this.email,
       required this.logo,
-      required this.district});
+      required this.district})
+      : super._();
 
   factory _$_HealthInstitution.fromJson(Map<String, dynamic> json) =>
       _$$_HealthInstitutionFromJson(json);
@@ -272,11 +273,6 @@ class _$_HealthInstitution implements _HealthInstitution {
   final String logo;
   @override
   final District district;
-
-  @override
-  String toString() {
-    return 'HealthInstitution(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt, name: $name, address: $address, phoneNumber: $phoneNumber, email: $email, logo: $logo, district: $district)';
-  }
 
   @override
   bool operator ==(dynamic other) {
@@ -320,7 +316,7 @@ class _$_HealthInstitution implements _HealthInstitution {
   }
 }
 
-abstract class _HealthInstitution implements HealthInstitution {
+abstract class _HealthInstitution extends HealthInstitution {
   factory _HealthInstitution(
       {required final String id,
       @JsonKey(name: 'created_at') required final DateTime createdAt,
@@ -332,6 +328,7 @@ abstract class _HealthInstitution implements HealthInstitution {
       required final String email,
       required final String logo,
       required final District district}) = _$_HealthInstitution;
+  _HealthInstitution._() : super._();
 
   factory _HealthInstitution.fromJson(Map<String, dynamic> json) =
       _$_HealthInstitution.fromJson;

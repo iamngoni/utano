@@ -12,6 +12,7 @@ import 'package:dartz/dartz.dart';
 
 import '../../../../core/models/data/application_error.dart';
 import '../../../../core/models/data/employee.dart';
+import '../../../../core/models/data/gender.dart';
 import '../../../../core/models/data/health_institution.dart';
 import '../../data/system_stats.dart';
 
@@ -35,4 +36,11 @@ abstract class SystemAdminRepository {
     String healthInstitutionId,
   );
   Future<Either<ApplicationError, SystemStats>> getSystemStats();
+  Future<Either<ApplicationError, Employee>> registerHealthInstitutionAdmin({
+    required String healthInstitutionId,
+    required String firstName,
+    required String lastName,
+    required String email,
+    required Gender gender,
+  });
 }

@@ -18,6 +18,7 @@ import 'core/models/repos/impl/dio_system_configs_repository.dart';
 import 'core/services/di.dart';
 import 'general/blocs/auth/auth_bloc.dart';
 import 'general/models/repos/impl/dio_auth_repository.dart';
+import 'system_admin/blocs/admin_registration/admin_registration_bloc.dart';
 import 'system_admin/blocs/health_institutions/health_institutions_bloc.dart';
 import 'system_admin/blocs/system_stats/system_stats_bloc.dart';
 import 'system_admin/models/repos/impl/dio_system_admin_repository.dart';
@@ -59,6 +60,11 @@ List<BlocProvider> providers = [
   ),
   BlocProvider<SystemStatsBloc>(
     create: (_) => SystemStatsBloc(
+      repository: DioSystemAdminRepository(dio),
+    ),
+  ),
+  BlocProvider<AdminRegistrationBloc>(
+    create: (_) => AdminRegistrationBloc(
       repository: DioSystemAdminRepository(dio),
     ),
   ),

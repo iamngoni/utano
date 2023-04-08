@@ -14,6 +14,7 @@ import 'package:dio/dio.dart';
 import '../../../../core/configs/configs.dart';
 import '../../../../core/models/data/application_error.dart';
 import '../../../../core/models/data/employee.dart';
+import '../../../../core/models/data/gender.dart';
 import '../../../../core/models/data/health_institution.dart';
 import '../../../../core/models/data/network_response.dart';
 import '../../../../core/utils/dio_error_to_application_error.dart';
@@ -152,6 +153,38 @@ class DioSystemAdminRepository implements SystemAdminRepository {
       final SystemStats systemStats =
           SystemStats.fromJson(networkResponse.data!);
       return Right(systemStats);
+    } on DioError catch (e) {
+      return Left(dioErrorToApplicationError(e));
+    } catch (e, s) {
+      logger
+        ..e(e)
+        ..e(s);
+      return Left(ApplicationError.unknownError());
+    }
+  }
+
+  @override
+  Future<Either<ApplicationError, Employee>> registerHealthInstitutionAdmin({
+    required String healthInstitutionId,
+    required String firstName,
+    required String lastName,
+    required String email,
+    required Gender gender,
+  }) async {
+    try {
+      final Response<NetworkResponse> response = await dio.post(
+        '/staff/health_institutions/$healthInstitutionId/admins',
+        data: {
+          'email': email,
+          'gender': gender.value,
+          'first_name': firstName,
+          'last_name': lastName,
+        },
+      );
+      final NetworkResponse networkResponse = response.data!;
+      final Employee admin = Employee.fromJson(
+          networkResponse.data!['admin'] as Map<String, dynamic>);
+      return Right(admin);
     } on DioError catch (e) {
       return Left(dioErrorToApplicationError(e));
     } catch (e, s) {
