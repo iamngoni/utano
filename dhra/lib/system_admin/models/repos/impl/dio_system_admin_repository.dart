@@ -25,16 +25,52 @@ class DioSystemAdminRepository implements SystemAdminRepository {
   @override
   Future<Either<ApplicationError, List<Employee>>> listHealthInstitutionAdmins(
     String healthInstitutionId,
-  ) {
-    // TODO: implement listHealthInstitutionAdmins
-    throw UnimplementedError();
+  ) async {
+    try {
+      final Response<NetworkResponse> response = await dio
+          .get('/staff/health_institutions/$healthInstitutionId/admins');
+      final NetworkResponse networkResponse = response.data!;
+      final List<Employee> employees =
+          (networkResponse.data!['employees'] as List)
+              .map(
+                (employee) =>
+                    Employee.fromJson(employee as Map<String, dynamic>),
+              )
+              .toList();
+      return Right(employees);
+    } on DioError catch (e) {
+      return Left(dioErrorToApplicationError(e));
+    } catch (e, s) {
+      logger
+        ..e(e)
+        ..e(s);
+      return Left(ApplicationError.unknownError());
+    }
   }
 
   @override
   Future<Either<ApplicationError, List<Employee>>>
-      listHealthInstitutionEmployees(String healthInstitutionId) {
-    // TODO: implement listHealthInstitutionEmployees
-    throw UnimplementedError();
+      listHealthInstitutionEmployees(String healthInstitutionId) async {
+    try {
+      final Response<NetworkResponse> response = await dio
+          .get('/staff/health_institutions/$healthInstitutionId/employees');
+      final NetworkResponse networkResponse = response.data!;
+      final List<Employee> employees =
+          (networkResponse.data!['employees'] as List)
+              .map(
+                (employee) =>
+                    Employee.fromJson(employee as Map<String, dynamic>),
+              )
+              .toList();
+      return Right(employees);
+    } on DioError catch (e) {
+      return Left(dioErrorToApplicationError(e));
+    } catch (e, s) {
+      logger
+        ..e(e)
+        ..e(s);
+      return Left(ApplicationError.unknownError());
+    }
   }
 
   @override
@@ -81,8 +117,10 @@ class DioSystemAdminRepository implements SystemAdminRepository {
         'phone_number': phoneNumber,
         'email': email,
         'district': district,
-        'logo': await MultipartFile.fromFile(logo.path,
-            filename: logo.path.split('/').last),
+        'logo': await MultipartFile.fromFile(
+          logo.path,
+          filename: logo.path.split('/').last,
+        ),
       });
 
       final Response<NetworkResponse> response = await dio.post(
@@ -91,7 +129,8 @@ class DioSystemAdminRepository implements SystemAdminRepository {
       );
       final NetworkResponse networkResponse = response.data!;
       final HealthInstitution healthInstitution = HealthInstitution.fromJson(
-          networkResponse.data!['health_institution'] as Map<String, dynamic>);
+        networkResponse.data!['health_institution'] as Map<String, dynamic>,
+      );
       return Right(healthInstitution);
     } on DioError catch (e) {
       return Left(dioErrorToApplicationError(e));
