@@ -36,7 +36,7 @@ final Map<UserRole, List<Widget>> userRoleToScreensMappings = {
   ],
   UserRole.admin: [
     const AdminDashboardPage(),
-    const AdminEmployeesPage(),
+    AdminEmployeesPage(),
     ChangePasswordPage(),
   ],
 };

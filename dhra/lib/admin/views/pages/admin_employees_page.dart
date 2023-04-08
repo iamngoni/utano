@@ -7,16 +7,33 @@
 //
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:handy_extensions/handy_extensions.dart';
 import 'package:relative_scale/relative_scale.dart';
 
 import '../../../core/configs/colors.dart';
+import '../../../core/models/data/user_role.dart';
+import '../../../core/views/widgets/active_tab_indicator.dart';
 import '../../../core/views/widgets/page_header.dart';
-import '../../blocs/employees/employees_bloc.dart';
+import '../widgets/employees_table.dart';
 
-class AdminEmployeesPage extends StatelessWidget {
+class AdminEmployeesPage extends StatefulWidget {
   const AdminEmployeesPage({super.key});
+
+  @override
+  State<AdminEmployeesPage> createState() => _AdminEmployeesPageState();
+}
+
+class _AdminEmployeesPageState extends State<AdminEmployeesPage> {
+  final PageController pageController = PageController();
+
+  int index = 0;
+
+  void _changeCurrentTab(int index) {
+    setState(() {
+      this.index = index;
+    });
+    pageController.jumpToPage(index);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,65 +52,191 @@ class AdminEmployeesPage extends StatelessWidget {
               SizedBox(
                 height: sy(20),
               ),
-              Expanded(
-                child: Container(
-                  height: context.height,
-                  width: context.width,
-                  padding: EdgeInsets.symmetric(
-                    horizontal: sx(10),
-                    vertical: sy(20),
-                  ),
-                  decoration: BoxDecoration(
-                    color: UtanoColors.white,
-                    border:
-                        Border.all(color: UtanoColors.border.withOpacity(0.4)),
-                    boxShadow: [
-                      BoxShadow(
-                        color: UtanoColors.grey.withOpacity(0.05),
-                        spreadRadius: 1,
-                        blurRadius: 6,
-                        offset: const Offset(0.5, 0.5),
-                      ),
-                      BoxShadow(
-                        color: UtanoColors.grey.withOpacity(0.07),
-                        spreadRadius: 1,
-                        blurRadius: 6,
-                        offset: const Offset(-0.5, -0.5),
-                      ),
-                    ],
-                    borderRadius: BorderRadius.circular(11),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              Row(
+                children: [
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () => _changeCurrentTab(0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Employees',
+                            'All Employees',
                             style: TextStyle(
                               color: UtanoColors.black,
-                              fontWeight: FontWeight.w500,
-                              fontSize: sy(12),
+                              fontWeight: FontWeight.w400,
+                              fontSize: sy(10),
                             ),
                           ),
-                          GestureDetector(
-                            onTap: () => context
-                                .read<EmployeesBloc>()
-                                .add(ListEmployees()),
-                            child: Icon(
-                              CupertinoIcons.refresh_thick,
-                              color: UtanoColors.grey,
-                              size: sy(15),
-                            ),
+                          AnimatedCrossFade(
+                            firstChild: const ActiveTabIndicator(),
+                            secondChild: const SizedBox.shrink(),
+                            crossFadeState: index == 0
+                                ? CrossFadeState.showFirst
+                                : CrossFadeState.showSecond,
+                            duration: const Duration(milliseconds: 200),
                           ),
                         ],
                       ),
-                      SizedBox(
-                        height: sy(10),
-                      ),
-                    ],
+                    ),
                   ),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () => _changeCurrentTab(1),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Admins',
+                            style: TextStyle(
+                              color: UtanoColors.black,
+                              fontWeight: FontWeight.w400,
+                              fontSize: sy(10),
+                            ),
+                          ),
+                          AnimatedCrossFade(
+                            firstChild: const ActiveTabIndicator(),
+                            secondChild: const SizedBox.shrink(),
+                            crossFadeState: index == 1
+                                ? CrossFadeState.showFirst
+                                : CrossFadeState.showSecond,
+                            duration: const Duration(milliseconds: 200),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () => _changeCurrentTab(2),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Doctors',
+                            style: TextStyle(
+                              color: UtanoColors.black,
+                              fontWeight: FontWeight.w400,
+                              fontSize: sy(10),
+                            ),
+                          ),
+                          AnimatedCrossFade(
+                            firstChild: const ActiveTabIndicator(),
+                            secondChild: const SizedBox.shrink(),
+                            crossFadeState: index == 2
+                                ? CrossFadeState.showFirst
+                                : CrossFadeState.showSecond,
+                            duration: const Duration(milliseconds: 200),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () => _changeCurrentTab(3),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Nurses',
+                            style: TextStyle(
+                              color: UtanoColors.black,
+                              fontWeight: FontWeight.w400,
+                              fontSize: sy(10),
+                            ),
+                          ),
+                          AnimatedCrossFade(
+                            firstChild: const ActiveTabIndicator(),
+                            secondChild: const SizedBox.shrink(),
+                            crossFadeState: index == 3
+                                ? CrossFadeState.showFirst
+                                : CrossFadeState.showSecond,
+                            duration: const Duration(milliseconds: 200),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () => _changeCurrentTab(4),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Lab Technicians',
+                            style: TextStyle(
+                              color: UtanoColors.black,
+                              fontWeight: FontWeight.w400,
+                              fontSize: sy(10),
+                            ),
+                          ),
+                          AnimatedCrossFade(
+                            firstChild: const ActiveTabIndicator(),
+                            secondChild: const SizedBox.shrink(),
+                            crossFadeState: index == 4
+                                ? CrossFadeState.showFirst
+                                : CrossFadeState.showSecond,
+                            duration: const Duration(milliseconds: 200),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () => _changeCurrentTab(5),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Pharmacists',
+                            style: TextStyle(
+                              color: UtanoColors.black,
+                              fontWeight: FontWeight.w400,
+                              fontSize: sy(10),
+                            ),
+                          ),
+                          AnimatedCrossFade(
+                            firstChild: const ActiveTabIndicator(),
+                            secondChild: const SizedBox.shrink(),
+                            crossFadeState: index == 5
+                                ? CrossFadeState.showFirst
+                                : CrossFadeState.showSecond,
+                            duration: const Duration(milliseconds: 200),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: sy(20),
+              ),
+              Expanded(
+                child: PageView(
+                  physics: const NeverScrollableScrollPhysics(),
+                  controller: pageController,
+                  children: const [
+                    EmployeesTable(),
+                    EmployeesTable(
+                      role: UserRole.admin,
+                    ),
+                    EmployeesTable(
+                      role: UserRole.doctor,
+                    ),
+                    EmployeesTable(
+                      role: UserRole.nurse,
+                    ),
+                    EmployeesTable(
+                      role: UserRole.labTechnician,
+                    ),
+                    EmployeesTable(
+                      role: UserRole.pharmacist,
+                    ),
+                  ],
                 ),
               ),
             ],

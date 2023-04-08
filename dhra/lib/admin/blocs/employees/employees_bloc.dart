@@ -19,7 +19,7 @@ class EmployeesBloc extends Bloc<EmployeesEvent, EmployeesState> {
             await repository.listEmployees();
         response.fold(
           (l) => emit(EmployeesError(l)),
-          EmployeesLoaded.new,
+          (r) => emit(EmployeesLoaded(r)),
         );
       } catch (e, s) {
         logger
