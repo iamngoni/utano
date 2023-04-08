@@ -13,9 +13,21 @@ import '../../../core/views/widgets/core_user_window.dart';
 import '../../../core/views/widgets/side_bar_tab_item.dart';
 import '../../../general/blocs/auth/auth_bloc.dart';
 import '../../../general/blocs/navigation/navigation_bloc.dart';
+import '../../blocs/employees/employees_bloc.dart';
 
-class AdminApp extends StatelessWidget {
+class AdminApp extends StatefulWidget {
   const AdminApp({super.key});
+
+  @override
+  State<AdminApp> createState() => _AdminAppState();
+}
+
+class _AdminAppState extends State<AdminApp> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<EmployeesBloc>().add(ListEmployees());
+  }
 
   @override
   Widget build(BuildContext context) {

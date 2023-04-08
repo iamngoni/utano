@@ -41,7 +41,7 @@ class DioHealthInstitutionRepository extends HealthInstitutionRepository {
   }
 
   @override
-  Future<Either<ApplicationError, void>> createEmployee({
+  Future<Either<ApplicationError, bool>> createEmployee({
     required String firstName,
     required String lastName,
     required String email,
@@ -59,8 +59,7 @@ class DioHealthInstitutionRepository extends HealthInstitutionRepository {
           'gender': gender.value,
         },
       );
-      logger.d(response.statusCode);
-      return const Right(null);
+      return const Right(true);
     } on DioError catch (e) {
       return Left(dioErrorToApplicationError(e));
     } catch (e, s) {

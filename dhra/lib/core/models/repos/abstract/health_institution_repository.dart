@@ -17,7 +17,7 @@ import '../../data/user_role.dart';
 
 abstract class HealthInstitutionRepository {
   Future<Either<ApplicationError, List<Employee>>> listEmployees();
-  Future<Either<ApplicationError, void>> createEmployee({
+  Future<Either<ApplicationError, bool>> createEmployee({
     required String firstName,
     required String lastName,
     required String email,

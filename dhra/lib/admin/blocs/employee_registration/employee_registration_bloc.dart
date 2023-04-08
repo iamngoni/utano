@@ -14,11 +14,11 @@ part 'employee_registration_state.dart';
 class EmployeeRegistrationBloc
     extends Bloc<EmployeeRegistrationEvent, EmployeeRegistrationState> {
   EmployeeRegistrationBloc({required this.repository})
-      : super(EmployeeRegistrationInitial()) {
+      : super(const EmployeeRegistrationInitial()) {
     on<RegisterEmployee>((event, emit) async {
       emit(const EmployeeRegistrationLoading());
       try {
-        final Either<ApplicationError, void> response =
+        final Either<ApplicationError, bool> response =
             await repository.createEmployee(
           firstName: event.firstName,
           lastName: event.lastName,
@@ -28,7 +28,7 @@ class EmployeeRegistrationBloc
         );
         response.fold(
           (l) => emit(EmployeeRegistrationError(l)),
-          (r) => const EmployeeRegistrationInitial(),
+          (r) => emit(const EmployeeRegistrationInitial()),
         );
       } catch (e, s) {
         logger
