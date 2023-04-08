@@ -16,7 +16,8 @@ import '../services/secure_storage.dart';
 class DioOnErrorInterceptor extends Interceptor {
   @override
   Future<void> onError(DioError err, ErrorInterceptorHandler handler) async {
-    if (err.response?.statusCode == 401) {
+    if (err.response?.statusCode == 401 &&
+        !err.requestOptions.uri.path.contains('/signin')) {
       final String? refreshToken =
           await di<SecureStorageService>().getFromDisk('refresh_token');
       if (refreshToken != null) {

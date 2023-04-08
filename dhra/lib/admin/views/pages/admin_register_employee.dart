@@ -133,261 +133,256 @@ class _AdminRegisterEmployeePageState extends State<AdminRegisterEmployeePage> {
               SizedBox(
                 height: sy(20),
               ),
-              Expanded(
-                child: Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: sx(10),
-                    vertical: sy(20),
-                  ),
-                  decoration: BoxDecoration(
-                    color: UtanoColors.white,
-                    border:
-                        Border.all(color: UtanoColors.border.withOpacity(0.4)),
-                    boxShadow: [
-                      BoxShadow(
-                        color: UtanoColors.grey.withOpacity(0.05),
-                        spreadRadius: 1,
-                        blurRadius: 6,
-                        offset: const Offset(0.5, 0.5),
-                      ),
-                      BoxShadow(
-                        color: UtanoColors.grey.withOpacity(0.07),
-                        spreadRadius: 1,
-                        blurRadius: 6,
-                        offset: const Offset(-0.5, -0.5),
-                      ),
-                    ],
-                    borderRadius: BorderRadius.circular(11),
-                  ),
-                  child: BlocConsumer<EmployeeRegistrationBloc,
-                      EmployeeRegistrationState>(
-                    listener: (context, state) {
-                      if (state is EmployeeRegistrationInitial) {
-                        if (!state.reset) {
-                          firstNameController.clear();
-                          lastNameController.clear();
-                          emailAddressController.clear();
-                          userRole = null;
-                          gender = null;
+              Container(
+                padding: EdgeInsets.symmetric(
+                  horizontal: sx(10),
+                  vertical: sy(20),
+                ),
+                decoration: BoxDecoration(
+                  color: UtanoColors.white,
+                  border:
+                      Border.all(color: UtanoColors.border.withOpacity(0.4)),
+                  boxShadow: [
+                    BoxShadow(
+                      color: UtanoColors.grey.withOpacity(0.05),
+                      spreadRadius: 1,
+                      blurRadius: 6,
+                      offset: const Offset(0.5, 0.5),
+                    ),
+                    BoxShadow(
+                      color: UtanoColors.grey.withOpacity(0.07),
+                      spreadRadius: 1,
+                      blurRadius: 6,
+                      offset: const Offset(-0.5, -0.5),
+                    ),
+                  ],
+                  borderRadius: BorderRadius.circular(11),
+                ),
+                child: BlocConsumer<EmployeeRegistrationBloc,
+                    EmployeeRegistrationState>(
+                  listener: (context, state) {
+                    if (state is EmployeeRegistrationInitial) {
+                      if (!state.reset) {
+                        firstNameController.clear();
+                        lastNameController.clear();
+                        emailAddressController.clear();
+                        userRole = null;
+                        gender = null;
 
-                          di<NotificationsService>().showSuccesssNotification(
-                            title: 'Success',
-                            message: 'Employee has been registered',
-                          );
-                          context.read<EmployeesBloc>().add(ListEmployees());
-                        }
+                        di<NotificationsService>().showSuccesssNotification(
+                          title: 'Success',
+                          message: 'Employee has been registered',
+                        );
+                        context.read<EmployeesBloc>().add(ListEmployees());
                       }
-                    },
-                    builder: (context, state) {
-                      late Widget formWidget;
+                    }
+                  },
+                  builder: (context, state) {
+                    late Widget formWidget;
 
-                      if (state is EmployeeRegistrationLoading) {
-                        formWidget = const Center(
-                          child: LoaderWidget(
-                            color: UtanoColors.black,
+                    if (state is EmployeeRegistrationLoading) {
+                      formWidget = const Center(
+                        child: LoaderWidget(
+                          color: UtanoColors.black,
+                        ),
+                      );
+                    } else if (state is EmployeeRegistrationError) {
+                      formWidget = ExceptionWidget(
+                        error: state.error,
+                        onRetry: _registerEmployee,
+                        onGoBack: () => context
+                            .read<EmployeeRegistrationBloc>()
+                            .add(const ResetRegistrationForm()),
+                      );
+                    } else {
+                      formWidget = Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Register New Employee',
+                            style: TextStyle(
+                              color: UtanoColors.black,
+                              fontWeight: FontWeight.w500,
+                              fontSize: sy(12),
+                            ),
                           ),
-                        );
-                      } else if (state is EmployeeRegistrationError) {
-                        formWidget = ExceptionWidget(
-                          error: state.error,
-                          onRetry: _registerEmployee,
-                          onGoBack: () => context
-                              .read<EmployeeRegistrationBloc>()
-                              .add(const ResetRegistrationForm()),
-                        );
-                      } else {
-                        formWidget = Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Register New Employee',
-                              style: TextStyle(
-                                color: UtanoColors.black,
-                                fontWeight: FontWeight.w500,
-                                fontSize: sy(12),
+                          SizedBox(
+                            height: sy(10),
+                          ),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: UtanoTextField(
+                                  controller: firstNameController,
+                                  label: 'First Name',
+                                  placeholder: 'Ngonidzashe',
+                                  keyboardType: TextInputType.name,
+                                ),
                               ),
-                            ),
-                            SizedBox(
-                              height: sy(10),
-                            ),
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: UtanoTextField(
-                                    controller: firstNameController,
-                                    label: 'First Name',
-                                    placeholder: 'Ngonidzashe',
-                                    keyboardType: TextInputType.name,
-                                  ),
+                              Expanded(
+                                child: UtanoTextField(
+                                  controller: lastNameController,
+                                  label: 'Last Name',
+                                  placeholder: 'Mangudya',
+                                  keyboardType: TextInputType.name,
                                 ),
-                                Expanded(
-                                  child: UtanoTextField(
-                                    controller: lastNameController,
-                                    label: 'Last Name',
-                                    placeholder: 'Mangudya',
-                                    keyboardType: TextInputType.name,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: sy(10),
-                            ),
-                            UtanoTextField(
-                              controller: emailAddressController,
-                              label: 'Email Address',
-                              placeholder: 'employee@modestnerd.co',
-                              keyboardType: TextInputType.emailAddress,
-                            ),
-                            SizedBox(
-                              height: sy(10),
-                            ),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'Role',
-                                        style: TextStyle(
-                                          color: UtanoColors.grey,
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: sy(12),
-                                        ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: sy(10),
+                          ),
+                          UtanoTextField(
+                            controller: emailAddressController,
+                            label: 'Email Address',
+                            placeholder: 'employee@modestnerd.co',
+                            keyboardType: TextInputType.emailAddress,
+                          ),
+                          SizedBox(
+                            height: sy(10),
+                          ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Role',
+                                      style: TextStyle(
+                                        color: UtanoColors.grey,
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: sy(12),
                                       ),
-                                      SizedBox(
-                                        height: sy(7),
-                                      ),
-                                      BlocProvider<
-                                          DropdownButtonBloc<UserRole>>(
-                                        create: (context) =>
-                                            DropdownButtonBloc<UserRole>(),
-                                        child: Builder(
-                                          builder: (context) {
-                                            return SizedBox(
-                                              height: sy(30),
-                                              width: context.width,
-                                              child:
-                                                  UtanoDropdownButton<UserRole>(
-                                                title: 'User Role',
-                                                items: acceptableRoles,
-                                                onChanged: (UserRole? role) {
-                                                  setState(() {
-                                                    userRole = role;
-                                                  });
-                                                },
-                                                value: userRole,
-                                              ),
-                                            );
-                                          },
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: sx(5),
-                                ),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'Gender',
-                                        style: TextStyle(
-                                          color: UtanoColors.grey,
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: sy(12),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: sy(7),
-                                      ),
-                                      BlocBuilder<SystemConfigsBloc,
-                                          SystemConfigsState>(
-                                        builder: (context, state) {
-                                          late Widget dropdownWidget;
-
-                                          if (state is SystemConfigsLoading) {
-                                            dropdownWidget = const Center(
-                                              child: LoaderWidget(
-                                                color: UtanoColors.black,
-                                                radius: 7,
-                                              ),
-                                            );
-                                          } else if (state
-                                              is SystemConfigsError) {
-                                            dropdownWidget = const Center(
-                                              child: Text(
-                                                'Failed to load configs. Retry',
-                                              ),
-                                            );
-                                          } else if (state
-                                              is SystemConfigsLoaded) {
-                                            dropdownWidget = BlocProvider<
-                                                DropdownButtonBloc<Gender>>(
-                                              create: (context) =>
-                                                  DropdownButtonBloc<Gender>(),
-                                              child: Builder(
-                                                builder: (context) {
-                                                  return SizedBox(
-                                                    height: sy(30),
-                                                    width: context.width,
-                                                    child: UtanoDropdownButton<
-                                                        Gender>(
-                                                      title: 'Gender',
-                                                      items: state.genders,
-                                                      onChanged:
-                                                          (Gender? gender) {
-                                                        setState(() {
-                                                          this.gender = gender;
-                                                        });
-                                                      },
-                                                      value: gender,
-                                                    ),
-                                                  );
-                                                },
-                                              ),
-                                            );
-                                          } else {
-                                            dropdownWidget = const Center(
-                                              child: Text('Load configs'),
-                                            );
-                                          }
-
-                                          return AnimatedSwitcher(
-                                            duration: const Duration(
-                                              milliseconds: 200,
+                                    ),
+                                    SizedBox(
+                                      height: sy(7),
+                                    ),
+                                    BlocProvider<DropdownButtonBloc<UserRole>>(
+                                      create: (context) =>
+                                          DropdownButtonBloc<UserRole>(),
+                                      child: Builder(
+                                        builder: (context) {
+                                          return SizedBox(
+                                            height: sy(30),
+                                            width: context.width,
+                                            child:
+                                                UtanoDropdownButton<UserRole>(
+                                              title: 'User Role',
+                                              items: acceptableRoles,
+                                              onChanged: (UserRole? role) {
+                                                setState(() {
+                                                  userRole = role;
+                                                });
+                                              },
+                                              value: userRole,
                                             ),
-                                            child: dropdownWidget,
                                           );
                                         },
                                       ),
-                                    ],
-                                  ),
+                                    )
+                                  ],
                                 ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: sy(10),
-                            ),
-                            UtanoButton(
-                              onTap: _registerEmployee,
-                            ),
-                          ],
-                        );
-                      }
+                              ),
+                              SizedBox(
+                                width: sx(5),
+                              ),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Gender',
+                                      style: TextStyle(
+                                        color: UtanoColors.grey,
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: sy(12),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: sy(7),
+                                    ),
+                                    BlocBuilder<SystemConfigsBloc,
+                                        SystemConfigsState>(
+                                      builder: (context, state) {
+                                        late Widget dropdownWidget;
 
-                      return AnimatedSwitcher(
-                        duration: const Duration(milliseconds: 200),
-                        child: formWidget,
+                                        if (state is SystemConfigsLoading) {
+                                          dropdownWidget = const Center(
+                                            child: LoaderWidget(
+                                              color: UtanoColors.black,
+                                              radius: 7,
+                                            ),
+                                          );
+                                        } else if (state
+                                            is SystemConfigsError) {
+                                          dropdownWidget = const Center(
+                                            child: Text(
+                                              'Failed to load configs. Retry',
+                                            ),
+                                          );
+                                        } else if (state
+                                            is SystemConfigsLoaded) {
+                                          dropdownWidget = BlocProvider<
+                                              DropdownButtonBloc<Gender>>(
+                                            create: (context) =>
+                                                DropdownButtonBloc<Gender>(),
+                                            child: Builder(
+                                              builder: (context) {
+                                                return SizedBox(
+                                                  height: sy(30),
+                                                  width: context.width,
+                                                  child: UtanoDropdownButton<
+                                                      Gender>(
+                                                    title: 'Gender',
+                                                    items: state.genders,
+                                                    onChanged:
+                                                        (Gender? gender) {
+                                                      setState(() {
+                                                        this.gender = gender;
+                                                      });
+                                                    },
+                                                    value: gender,
+                                                  ),
+                                                );
+                                              },
+                                            ),
+                                          );
+                                        } else {
+                                          dropdownWidget = const Center(
+                                            child: Text('Load configs'),
+                                          );
+                                        }
+
+                                        return AnimatedSwitcher(
+                                          duration: const Duration(
+                                            milliseconds: 200,
+                                          ),
+                                          child: dropdownWidget,
+                                        );
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: sy(10),
+                          ),
+                          UtanoButton(
+                            onTap: _registerEmployee,
+                          ),
+                        ],
                       );
-                    },
-                  ),
+                    }
+
+                    return AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 200),
+                      child: formWidget,
+                    );
+                  },
                 ),
               ),
             ],
