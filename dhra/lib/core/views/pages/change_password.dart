@@ -33,10 +33,9 @@ class ChangePasswordPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return RelativeBuilder(
       builder: (context, height, width, sy, sx) {
-        return Container(
+        return SizedBox(
           height: context.height,
           width: context.width,
-          color: UtanoColors.white,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

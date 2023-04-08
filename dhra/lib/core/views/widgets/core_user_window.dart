@@ -15,6 +15,7 @@ import 'package:relative_scale/relative_scale.dart';
 import '../../../general/blocs/auth/auth_bloc.dart';
 import '../../../general/blocs/navigation/navigation_bloc.dart';
 import '../../../general/views/pages/landing.dart';
+import '../../configs/colors.dart';
 import 'core_side_bar.dart';
 import 'side_bar_tab_item.dart';
 
@@ -65,7 +66,7 @@ class CoreUserWindow extends StatelessWidget {
                         return Container(
                           height: context.height,
                           width: context.width,
-                          color: Colors.white,
+                          color: UtanoColors.background,
                           padding: EdgeInsets.symmetric(
                             horizontal: sx(20),
                             vertical: sy(40),

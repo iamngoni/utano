@@ -13,6 +13,7 @@ import 'package:dartz/dartz.dart';
 import '../../../../core/models/data/application_error.dart';
 import '../../../../core/models/data/employee.dart';
 import '../../../../core/models/data/health_institution.dart';
+import '../../data/system_stats.dart';
 
 abstract class SystemAdminRepository {
   Future<Either<ApplicationError, List<HealthInstitution>>>
@@ -33,4 +34,5 @@ abstract class SystemAdminRepository {
       listHealthInstitutionEmployees(
     String healthInstitutionId,
   );
+  Future<Either<ApplicationError, SystemStats>> getSystemStats();
 }

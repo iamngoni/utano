@@ -17,6 +17,7 @@ import '../../../../core/models/data/employee.dart';
 import '../../../../core/models/data/health_institution.dart';
 import '../../../../core/models/data/network_response.dart';
 import '../../../../core/utils/dio_error_to_application_error.dart';
+import '../../data/system_stats.dart';
 import '../abstract/system_admin_repository.dart';
 
 class DioSystemAdminRepository implements SystemAdminRepository {
@@ -132,6 +133,25 @@ class DioSystemAdminRepository implements SystemAdminRepository {
         networkResponse.data!['health_institution'] as Map<String, dynamic>,
       );
       return Right(healthInstitution);
+    } on DioError catch (e) {
+      return Left(dioErrorToApplicationError(e));
+    } catch (e, s) {
+      logger
+        ..e(e)
+        ..e(s);
+      return Left(ApplicationError.unknownError());
+    }
+  }
+
+  @override
+  Future<Either<ApplicationError, SystemStats>> getSystemStats() async {
+    try {
+      final Response<NetworkResponse> response =
+          await dio.get('/staff/system_statistics');
+      final NetworkResponse networkResponse = response.data!;
+      final SystemStats systemStats =
+          SystemStats.fromJson(networkResponse.data!);
+      return Right(systemStats);
     } on DioError catch (e) {
       return Left(dioErrorToApplicationError(e));
     } catch (e, s) {

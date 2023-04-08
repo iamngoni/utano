@@ -16,6 +16,9 @@ class UtanoColors {
   static const Color black = Color(0xFF1D1D1F);
   static const Color grey = Color(0xFF717075);
   static const Color blueGrey = Color(0xFFF9FBFC);
+  static const Color background = Color(0xFFEEF2F5);
+  static const Color sideBarIcon = Color(0xFFbbc7d3);
+  //#6e7984 sidebarText
   static const Color white = Color(0xFFFFFFFF);
   static const Color activeGrey = Color(0xFFF6F6F6);
   static const Color border = Color(0xFFD3D3D3);

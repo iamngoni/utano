@@ -13,7 +13,7 @@ import '../../configs/colors.dart';
 
 class LoaderWidget extends StatelessWidget {
   const LoaderWidget({
-    this.radius = 15,
+    this.radius = 7,
     this.color = UtanoColors.white,
     super.key,
   });

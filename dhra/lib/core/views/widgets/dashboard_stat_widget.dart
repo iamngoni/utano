@@ -30,7 +30,7 @@ class DashboardStatWidget extends StatelessWidget {
         return Container(
           padding: EdgeInsets.symmetric(
             horizontal: sx(7),
-            vertical: sy(10),
+            vertical: sy(15),
           ),
           decoration: BoxDecoration(
             color: Colors.white,
@@ -43,13 +43,13 @@ class DashboardStatWidget extends StatelessWidget {
                 color: UtanoColors.grey.withOpacity(0.1),
                 spreadRadius: 1,
                 blurRadius: 6,
-                offset: const Offset(1, 1),
+                offset: const Offset(0.5, 0.5),
               ),
               BoxShadow(
                 color: UtanoColors.grey.withOpacity(0.1),
                 spreadRadius: 1,
                 blurRadius: 1,
-                offset: const Offset(-1, -1),
+                offset: const Offset(-0.5, -0.5),
               ),
             ],
           ),
@@ -70,14 +70,14 @@ class DashboardStatWidget extends StatelessWidget {
                 width: sx(5),
               ),
               Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     title,
                     style: TextStyle(
                       color: UtanoColors.grey,
                       fontWeight: FontWeight.w400,
-                      fontSize: sy(8),
+                      fontSize: sy(9),
                     ),
                   ),
                   SizedBox(
@@ -88,7 +88,7 @@ class DashboardStatWidget extends StatelessWidget {
                     style: TextStyle(
                       color: UtanoColors.black,
                       fontWeight: FontWeight.w600,
-                      fontSize: sy(10),
+                      fontSize: sy(12),
                     ),
                   ),
                 ],
