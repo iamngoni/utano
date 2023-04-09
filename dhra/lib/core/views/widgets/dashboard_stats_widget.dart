@@ -30,7 +30,7 @@ class DashboardStatsWidget extends StatelessWidget {
                 Expanded(
                   child: DashboardStatWidget(
                     title: 'Patients',
-                    assetImage: const AssetImage('assets/icons/user-add.png'),
+                    assetImage: const AssetImage('assets/icons/desk.png'),
                     number: state is HealthInstitutionStatsLoaded
                         ? state.stats.patients.toStringAsFixed(0)
                         : 'n/a',

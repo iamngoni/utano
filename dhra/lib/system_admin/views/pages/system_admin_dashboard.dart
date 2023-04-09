@@ -10,8 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:handy_extensions/handy_extensions.dart';
 import 'package:relative_scale/relative_scale.dart';
 
-import '../../../core/views/widgets/dashboard_stats_widget.dart';
 import '../../../core/views/widgets/page_header.dart';
+import '../widgets/system _admin_dashboard_stats_widget.dart';
 
 class SystemAdminDashboardPage extends StatelessWidget {
   const SystemAdminDashboardPage({super.key});
@@ -32,7 +32,7 @@ class SystemAdminDashboardPage extends StatelessWidget {
               SizedBox(
                 height: sy(20),
               ),
-              const DashboardStatsWidget(),
+              const SystemAdminDashboardStatsWidget(),
             ],
           ),
         );

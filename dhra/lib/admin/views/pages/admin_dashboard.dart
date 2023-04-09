@@ -26,7 +26,7 @@ class AdminDashboardPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const PageHeader(
+              PageHeader(
                 title: 'Dashboard',
               ),
               SizedBox(

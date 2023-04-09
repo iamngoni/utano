@@ -18,6 +18,8 @@ import '../../../core/views/widgets/loader_widget.dart';
 import '../../../core/views/widgets/table_actions_row.dart';
 import '../../../core/views/widgets/table_body_item.dart';
 import '../../../core/views/widgets/table_header_title.dart';
+import '../../../general/blocs/navigation/navigation_bloc.dart';
+import '../../blocs/health_institution_employees/health_institution_employees_bloc.dart';
 import '../../blocs/health_institutions/health_institutions_bloc.dart';
 
 class HealthInstitutionsTable extends StatelessWidget {
@@ -135,19 +137,26 @@ class HealthInstitutionsTable extends StatelessWidget {
                                   TableBodyItem(e.phoneNumber),
                                   TableBodyItem(e.address),
                                   TableActionsRow(
-                                    actions: const [
+                                    actions: [
                                       TableAction(
                                         icon: CupertinoIcons.eye,
-                                        tooltipText: 'View',
+                                        tooltipText: 'View Employees',
                                         color: UtanoColors.active,
+                                        onTap: () {
+                                          context
+                                              .read<
+                                                  HealthInstitutionEmployeesBloc>()
+                                              .add(
+                                                ListHealthInstitutionEmployees(
+                                                  e,
+                                                ),
+                                              );
+                                          context
+                                              .read<NavigationBloc>()
+                                              .add(const Navigate(4));
+                                        },
                                       ),
-                                      TableAction(
-                                        icon: CupertinoIcons
-                                            .person_crop_circle_badge_plus,
-                                        tooltipText: 'Add Administrators',
-                                        color: UtanoColors.green,
-                                      ),
-                                      TableAction(
+                                      const TableAction(
                                         icon: CupertinoIcons.delete,
                                         tooltipText: 'Delete From System',
                                         color: UtanoColors.red,

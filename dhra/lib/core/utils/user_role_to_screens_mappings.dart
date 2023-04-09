@@ -15,6 +15,7 @@ import '../../nurse/views/pages/nurse_dashboard.dart';
 import '../../nurse/views/pages/nurse_patients.dart';
 import '../../nurse/views/pages/nurse_prescriptions.dart';
 import '../../system_admin/views/pages/system_admin_dashboard.dart';
+import '../../system_admin/views/pages/system_admin_health_institution_employees.dart';
 import '../../system_admin/views/pages/system_admin_health_institutions.dart';
 import '../../system_admin/views/pages/system_admin_health_institutions_admins.dart';
 import '../models/data/user_role.dart';
@@ -34,6 +35,8 @@ final Map<UserRole, List<Widget>> userRoleToScreensMappings = {
     const SystemAdminHealthInstitutionsPage(),
     const SystemAdminHealthInstitutionsAdminsPage(),
     ChangePasswordPage(),
+    // ====== Pages Not Displayed On The Sidebar
+    SystemAdminHealthInstitutionEmployeesPage(),
   ],
   UserRole.admin: [
     const AdminDashboardPage(),

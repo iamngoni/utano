@@ -41,25 +41,23 @@ class DashboardStatWidget extends StatelessWidget {
               vertical: sy(15),
             ),
             decoration: BoxDecoration(
-              color: Colors.white,
-              border: Border.all(
-                color: UtanoColors.border,
-              ),
-              borderRadius: BorderRadius.circular(10),
+              color: UtanoColors.white,
+              border: Border.all(color: UtanoColors.border.withOpacity(0.4)),
               boxShadow: [
                 BoxShadow(
-                  color: UtanoColors.grey.withOpacity(0.1),
+                  color: UtanoColors.grey.withOpacity(0.05),
                   spreadRadius: 1,
                   blurRadius: 6,
                   offset: const Offset(0.5, 0.5),
                 ),
                 BoxShadow(
-                  color: UtanoColors.grey.withOpacity(0.1),
+                  color: UtanoColors.grey.withOpacity(0.07),
                   spreadRadius: 1,
-                  blurRadius: 1,
+                  blurRadius: 6,
                   offset: const Offset(-0.5, -0.5),
                 ),
               ],
+              borderRadius: BorderRadius.circular(11),
             ),
             child: AnimatedSwitcher(
               duration: const Duration(milliseconds: 200),

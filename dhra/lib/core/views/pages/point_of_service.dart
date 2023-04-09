@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:handy_extensions/handy_extensions.dart';
 import 'package:relative_scale/relative_scale.dart';
 
-import '../../configs/configs.dart';
 import '../widgets/page_header.dart';
 
 class PointOfServicePage extends StatelessWidget {
@@ -26,7 +25,7 @@ class PointOfServicePage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const PageHeader(
+              PageHeader(
                 title: 'Point of Service',
               ),
               SizedBox(

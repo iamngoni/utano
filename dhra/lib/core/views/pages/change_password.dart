@@ -39,7 +39,7 @@ class ChangePasswordPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const PageHeader(
+              PageHeader(
                 title: 'Change Password',
               ),
               SizedBox(

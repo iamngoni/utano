@@ -6,7 +6,7 @@
 //  Copyright (c) 2023 ModestNerds, Co
 //
 
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:relative_scale/relative_scale.dart';
 
 import '../../configs/configs.dart';
@@ -14,10 +14,17 @@ import '../../configs/configs.dart';
 class PageHeader extends StatelessWidget {
   const PageHeader({
     required this.title,
+    this.canGoBack = false,
+    this.onGoBack,
     super.key,
-  });
+  }) : assert(
+          canGoBack == true ? onGoBack != null : true,
+          'onGoBack action is required!',
+        );
 
   final String title;
+  final bool canGoBack;
+  final VoidCallback? onGoBack;
 
   @override
   Widget build(BuildContext context) {
@@ -26,13 +33,33 @@ class PageHeader extends StatelessWidget {
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              title,
-              style: TextStyle(
-                color: UtanoColors.black,
-                fontWeight: FontWeight.w600,
-                fontSize: sy(20),
-              ),
+            Row(
+              children: [
+                if (canGoBack)
+                  Padding(
+                    padding: EdgeInsets.only(
+                      right: sx(7),
+                    ),
+                    child: GestureDetector(
+                      onTap: onGoBack,
+                      child: Icon(
+                        CupertinoIcons.arrow_left,
+                        color: UtanoColors.black,
+                        size: sy(20),
+                      ),
+                    ),
+                  )
+                else
+                  const SizedBox.shrink(),
+                Text(
+                  title,
+                  style: TextStyle(
+                    color: UtanoColors.black,
+                    fontWeight: FontWeight.w600,
+                    fontSize: sy(20),
+                  ),
+                ),
+              ],
             ),
             Image(
               image: const AssetImage('assets/images/logo-red-black.png'),

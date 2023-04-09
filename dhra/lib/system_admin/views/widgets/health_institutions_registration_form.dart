@@ -203,13 +203,20 @@ class _HealthInstitutionsRegistrationFormState
 
                                   if (state is SystemConfigsLoading) {
                                     dropdownWidget = const Center(
-                                        child: LoaderWidget(
-                                      color: UtanoColors.black,
-                                    ));
+                                      child: LoaderWidget(
+                                        color: UtanoColors.black,
+                                      ),
+                                    );
                                   } else if (state is SystemConfigsError) {
-                                    dropdownWidget = const Center(
-                                      child:
-                                          Text('Failed to load configs. Retry'),
+                                    dropdownWidget = Center(
+                                      child: GestureDetector(
+                                        onTap: () => context
+                                            .read<SystemConfigsBloc>()
+                                            .add(LoadSystemConfigs()),
+                                        child: const Text(
+                                          'Failed to load configs. Retry',
+                                        ),
+                                      ),
                                     );
                                   } else if (state is SystemConfigsLoaded) {
                                     dropdownWidget = BlocProvider<
@@ -237,8 +244,14 @@ class _HealthInstitutionsRegistrationFormState
                                       ),
                                     );
                                   } else {
-                                    dropdownWidget = const Center(
-                                        child: Text('Load configs'));
+                                    dropdownWidget = Center(
+                                      child: GestureDetector(
+                                        onTap: () => context
+                                            .read<SystemConfigsBloc>()
+                                            .add(LoadSystemConfigs()),
+                                        child: const Text('Load configs'),
+                                      ),
+                                    );
                                   }
 
                                   return AnimatedSwitcher(

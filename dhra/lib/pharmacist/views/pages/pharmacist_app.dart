@@ -8,8 +8,8 @@
 
 import 'package:flutter/material.dart';
 
-class PharmacistHomePage extends StatelessWidget {
-  const PharmacistHomePage({super.key});
+class PharmacistApp extends StatelessWidget {
+  const PharmacistApp({super.key});
 
   @override
   Widget build(BuildContext context) {

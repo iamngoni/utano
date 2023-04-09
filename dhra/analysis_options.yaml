@@ -20,3 +20,4 @@ linter:
     prefer_relative_imports: true
     always_use_package_imports: false
     avoid_setters_without_getters: false
+    avoid_bool_literals_in_conditional_expressions: false
