@@ -213,9 +213,11 @@ class HealthInstitutionAdminsView(APIView):
             return ApiResponse(num_status=500, bool_status=False)
 
 
-
 class SystemStatisticsView(APIView):
-    permission_classes = (IsAuthenticated, IsSystemAdmin,)
+    permission_classes = (
+        IsAuthenticated,
+        IsSystemAdmin,
+    )
 
     def get(self, request):
         try:

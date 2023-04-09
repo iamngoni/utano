@@ -98,6 +98,8 @@ class PatientCheckInView(APIView):
                         address=check_in.address,
                         mobile_number=check_in.mobile_number,
                         registered_at=request.user.employee.registered_at,
+                        height=check_in.height,
+                        weight=check_in.weight,
                     )
                     patient.save()
                     logger.success("patient profile successfully created")

@@ -23,5 +23,9 @@ urlpatterns = [
         HealthInstitutionEmployeesView.as_view(),
         name="Health Institution Employees View",
     ),
-    path("system_statistics", SystemStatisticsView.as_view(), name="System Statistics View",),
+    path(
+        "system_statistics",
+        SystemStatisticsView.as_view(),
+        name="System Statistics View",
+    ),
 ]
