@@ -183,7 +183,8 @@ class DioSystemAdminRepository implements SystemAdminRepository {
       );
       final NetworkResponse networkResponse = response.data!;
       final Employee admin = Employee.fromJson(
-          networkResponse.data!['admin'] as Map<String, dynamic>);
+        networkResponse.data!['admin'] as Map<String, dynamic>,
+      );
       return Right(admin);
     } on DioError catch (e) {
       return Left(dioErrorToApplicationError(e));

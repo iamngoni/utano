@@ -14,7 +14,7 @@ part 'stats.g.dart';
 @freezed
 class Stats with _$Stats {
   factory Stats({
-    required int patient,
+    required int patients,
     required int employees,
     required int rooms,
     required int doctors,

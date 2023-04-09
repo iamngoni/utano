@@ -7,12 +7,36 @@
 //
 
 import 'package:flutter/material.dart';
+import 'package:handy_extensions/handy_extensions.dart';
+import 'package:relative_scale/relative_scale.dart';
+
+import '../../../core/views/widgets/dashboard_stats_widget.dart';
+import '../../../core/views/widgets/page_header.dart';
 
 class AdminDashboardPage extends StatelessWidget {
   const AdminDashboardPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return RelativeBuilder(
+      builder: (context, height, width, sy, sx) {
+        return SizedBox(
+          height: context.height,
+          width: context.width,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const PageHeader(
+                title: 'Dashboard',
+              ),
+              SizedBox(
+                height: sy(20),
+              ),
+              const DashboardStatsWidget(),
+            ],
+          ),
+        );
+      },
+    );
   }
 }

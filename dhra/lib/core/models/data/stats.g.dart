@@ -7,7 +7,7 @@ part of 'stats.dart';
 // **************************************************************************
 
 _$_Stats _$$_StatsFromJson(Map<String, dynamic> json) => _$_Stats(
-      patient: json['patient'] as int,
+      patients: json['patients'] as int,
       employees: json['employees'] as int,
       rooms: json['rooms'] as int,
       doctors: json['doctors'] as int,
@@ -17,7 +17,7 @@ _$_Stats _$$_StatsFromJson(Map<String, dynamic> json) => _$_Stats(
     );
 
 Map<String, dynamic> _$$_StatsToJson(_$_Stats instance) => <String, dynamic>{
-      'patient': instance.patient,
+      'patients': instance.patients,
       'employees': instance.employees,
       'rooms': instance.rooms,
       'doctors': instance.doctors,

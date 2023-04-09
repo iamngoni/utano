@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:relative_scale/relative_scale.dart';
 
-import '../../../system_admin/blocs/system_stats/system_stats_bloc.dart';
+import '../../blocs/health_institution_stats/health_institution_stats_bloc.dart';
 import 'dashboard_stat_widget.dart';
 
 class DashboardStatsWidget extends StatelessWidget {
@@ -22,18 +22,19 @@ class DashboardStatsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return RelativeBuilder(
       builder: (context, height, width, sy, sx) {
-        return BlocBuilder<SystemStatsBloc, SystemStatsState>(
+        return BlocBuilder<HealthInstitutionStatsBloc,
+            HealthInstitutionStatsState>(
           builder: (context, state) {
             return Row(
               children: [
                 Expanded(
                   child: DashboardStatWidget(
-                    title: 'Health Institutions',
+                    title: 'Patients',
                     assetImage: const AssetImage('assets/icons/user-add.png'),
-                    number: state is SystemStatsLoaded
-                        ? state.stats.healthInstitutions.toStringAsFixed(0)
+                    number: state is HealthInstitutionStatsLoaded
+                        ? state.stats.patients.toStringAsFixed(0)
                         : 'n/a',
-                    isLoading: state is SystemStatsLoading,
+                    isLoading: state is HealthInstitutionStatsLoading,
                   ),
                 ),
                 SizedBox(
@@ -43,10 +44,10 @@ class DashboardStatsWidget extends StatelessWidget {
                   child: DashboardStatWidget(
                     title: 'Employees',
                     assetImage: const AssetImage('assets/icons/user-add.png'),
-                    number: state is SystemStatsLoaded
+                    number: state is HealthInstitutionStatsLoaded
                         ? state.stats.employees.toStringAsFixed(0)
                         : 'n/a',
-                    isLoading: state is SystemStatsLoading,
+                    isLoading: state is HealthInstitutionStatsLoading,
                   ),
                 ),
                 SizedBox(
@@ -54,12 +55,12 @@ class DashboardStatsWidget extends StatelessWidget {
                 ),
                 Expanded(
                   child: DashboardStatWidget(
-                    title: 'Patients',
+                    title: 'Doctors',
                     assetImage: const AssetImage('assets/icons/user-add.png'),
-                    number: state is SystemStatsLoaded
-                        ? state.stats.patients.toStringAsFixed(0)
+                    number: state is HealthInstitutionStatsLoaded
+                        ? state.stats.doctors.toStringAsFixed(0)
                         : 'n/a',
-                    isLoading: state is SystemStatsLoading,
+                    isLoading: state is HealthInstitutionStatsLoading,
                   ),
                 ),
                 SizedBox(
@@ -67,10 +68,25 @@ class DashboardStatsWidget extends StatelessWidget {
                 ),
                 Expanded(
                   child: DashboardStatWidget(
-                    title: 'To Be Decided',
+                    title: 'Nurses',
                     assetImage: const AssetImage('assets/icons/user-add.png'),
-                    number: 'n/a',
-                    isLoading: state is SystemStatsLoading,
+                    number: state is HealthInstitutionStatsLoaded
+                        ? state.stats.nurses.toStringAsFixed(0)
+                        : 'n/a',
+                    isLoading: state is HealthInstitutionStatsLoading,
+                  ),
+                ),
+                SizedBox(
+                  width: sx(3),
+                ),
+                Expanded(
+                  child: DashboardStatWidget(
+                    title: 'Rooms',
+                    assetImage: const AssetImage('assets/icons/user-add.png'),
+                    number: state is HealthInstitutionStatsLoaded
+                        ? state.stats.rooms.toStringAsFixed(0)
+                        : 'n/a',
+                    isLoading: state is HealthInstitutionStatsLoading,
                   ),
                 ),
               ],

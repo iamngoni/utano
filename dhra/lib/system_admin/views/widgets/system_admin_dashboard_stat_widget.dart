@@ -10,12 +10,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:relative_scale/relative_scale.dart';
 
-import '../../blocs/health_institution_stats/health_institution_stats_bloc.dart';
-import '../../configs/colors.dart';
-import 'loader_widget.dart';
+import '../../../core/configs/colors.dart';
+import '../../../core/views/widgets/loader_widget.dart';
+import '../../../system_admin/blocs/system_stats/system_stats_bloc.dart';
 
-class DashboardStatWidget extends StatelessWidget {
-  const DashboardStatWidget({
+class SystemAdminDashboardStatWidget extends StatelessWidget {
+  const SystemAdminDashboardStatWidget({
     required this.title,
     required this.assetImage,
     required this.number,
@@ -33,8 +33,7 @@ class DashboardStatWidget extends StatelessWidget {
     return RelativeBuilder(
       builder: (context, height, width, sy, sx) {
         return GestureDetector(
-          onTap: () =>
-              context.read<HealthInstitutionStatsBloc>().add(GetStatistics()),
+          onTap: () => context.read<SystemStatsBloc>().add(GetStatistics()),
           child: Container(
             padding: EdgeInsets.symmetric(
               horizontal: sx(7),
