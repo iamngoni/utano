@@ -208,7 +208,7 @@ class PatientCheckInStatisticsView(APIView):
                             {"day": now.replace(day=day), "count": 0}
                         )
 
-            return ApiResponse(data=patient_checkins)
+            return ApiResponse(data={"statistics": patient_checkins})
         except Exception as exc:
             logger.error(type(exc))
             return ApiResponse(num_status=500, bool_status=False)
