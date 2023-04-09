@@ -30,6 +30,7 @@ dependencies:
   jwt_decode: ^0.3.1
   localregex: ^4.0.5
   logger: ^1.1.0
+  lottie: ^2.3.2
   macos_ui: ^1.12.2
   path: ^1.8.1
   path_provider: ^2.0.11
@@ -55,6 +56,7 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
+    - assets/lottie/
 
   fonts:
     - family: Poppins

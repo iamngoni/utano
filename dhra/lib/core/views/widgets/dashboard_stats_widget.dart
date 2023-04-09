@@ -30,7 +30,7 @@ class DashboardStatsWidget extends StatelessWidget {
                 Expanded(
                   child: DashboardStatWidget(
                     title: 'Patients',
-                    assetImage: const AssetImage('assets/icons/desk.png'),
+                    assetImage: const AssetImage('assets/icons/database.png'),
                     number: state is HealthInstitutionStatsLoaded
                         ? state.stats.patients.toStringAsFixed(0)
                         : 'n/a',
@@ -43,7 +43,8 @@ class DashboardStatsWidget extends StatelessWidget {
                 Expanded(
                   child: DashboardStatWidget(
                     title: 'Employees',
-                    assetImage: const AssetImage('assets/icons/user-add.png'),
+                    assetImage:
+                        const AssetImage('assets/icons/people-roof.png'),
                     number: state is HealthInstitutionStatsLoaded
                         ? state.stats.employees.toStringAsFixed(0)
                         : 'n/a',
@@ -56,7 +57,8 @@ class DashboardStatsWidget extends StatelessWidget {
                 Expanded(
                   child: DashboardStatWidget(
                     title: 'Doctors',
-                    assetImage: const AssetImage('assets/icons/user-add.png'),
+                    assetImage:
+                        const AssetImage('assets/icons/user-doctor.png'),
                     number: state is HealthInstitutionStatsLoaded
                         ? state.stats.doctors.toStringAsFixed(0)
                         : 'n/a',
@@ -69,7 +71,8 @@ class DashboardStatsWidget extends StatelessWidget {
                 Expanded(
                   child: DashboardStatWidget(
                     title: 'Nurses',
-                    assetImage: const AssetImage('assets/icons/user-add.png'),
+                    assetImage:
+                        const AssetImage('assets/icons/stethoscope.png'),
                     number: state is HealthInstitutionStatsLoaded
                         ? state.stats.nurses.toStringAsFixed(0)
                         : 'n/a',
@@ -82,7 +85,8 @@ class DashboardStatsWidget extends StatelessWidget {
                 Expanded(
                   child: DashboardStatWidget(
                     title: 'Rooms',
-                    assetImage: const AssetImage('assets/icons/user-add.png'),
+                    assetImage:
+                        const AssetImage('assets/icons/person-booth.png'),
                     number: state is HealthInstitutionStatsLoaded
                         ? state.stats.rooms.toStringAsFixed(0)
                         : 'n/a',
