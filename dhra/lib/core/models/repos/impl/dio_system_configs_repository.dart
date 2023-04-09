@@ -55,7 +55,8 @@ class DioSystemConfigsRepository extends SystemConfigsRepository {
       final List<EmploymentStatus> statuses =
           (networkResponse.data!['statuses'] as List)
               .map<EmploymentStatus>(
-                  (i) => EmploymentStatus.fromJson(i as Map<String, dynamic>))
+                (i) => EmploymentStatus.fromJson(i as Map<String, dynamic>),
+              )
               .toList();
       return Right(statuses);
     } on DioError catch (e) {
@@ -98,7 +99,8 @@ class DioSystemConfigsRepository extends SystemConfigsRepository {
       final List<MaritalStatus> statuses =
           (networkResponse.data!['statuses'] as List)
               .map<MaritalStatus>(
-                  (i) => MaritalStatus.fromJson(i as Map<String, dynamic>))
+                (i) => MaritalStatus.fromJson(i as Map<String, dynamic>),
+              )
               .toList();
       return Right(statuses);
     } on DioError catch (e) {
@@ -142,7 +144,8 @@ class DioSystemConfigsRepository extends SystemConfigsRepository {
       final List<RelationshipType> types =
           (networkResponse.data!['types'] as List)
               .map<RelationshipType>(
-                  (i) => RelationshipType.fromJson(i as Map<String, dynamic>))
+                (i) => RelationshipType.fromJson(i as Map<String, dynamic>),
+              )
               .toList();
       return Right(types);
     } on DioError catch (e) {

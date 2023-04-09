@@ -12,6 +12,8 @@ import 'package:dio/dio.dart';
 import '../../../configs/logger.dart';
 import '../../../utils/dio_error_to_application_error.dart';
 import '../../data/application_error.dart';
+import '../../data/check_in_monthly_stats.dart';
+import '../../data/check_in_yearly_stats.dart';
 import '../../data/employee.dart';
 import '../../data/gender.dart';
 import '../../data/health_institution.dart';
@@ -105,6 +107,59 @@ class DioHealthInstitutionRepository extends HealthInstitutionRepository {
               )
               .toList();
       return Right(employees);
+    } on DioError catch (e) {
+      return Left(dioErrorToApplicationError(e));
+    } catch (e, s) {
+      logger
+        ..e(e)
+        ..e(s);
+      return Left(ApplicationError.unknownError());
+    }
+  }
+
+  @override
+  Future<Either<ApplicationError, List<CheckInMonthlyStats>>>
+      getMonthlyCheckInStats() async {
+    try {
+      final Response<NetworkResponse> response =
+          await dio.get('/health_institution/checkin_statistics?period=month');
+      final NetworkResponse networkResponse = response.data!;
+      final List<CheckInMonthlyStats> stats =
+          (networkResponse.data!['statistics'] as List)
+              .map(
+                (stat) =>
+                    CheckInMonthlyStats.fromJson(stat as Map<String, dynamic>),
+              )
+              .toList()
+            ..sort((a, b) => a.day.compareTo(b.day));
+      return Right(stats);
+    } on DioError catch (e) {
+      return Left(dioErrorToApplicationError(e));
+    } catch (e, s) {
+      logger
+        ..e(e)
+        ..e(s);
+      return Left(ApplicationError.unknownError());
+    }
+  }
+
+  @override
+  Future<Either<ApplicationError, List<CheckInYearlyStats>>>
+      getYearlyCheckInStats() async {
+    try {
+      final Response<NetworkResponse> response =
+          await dio.get('/health_institution/checkin_statistics?period=year');
+      final NetworkResponse networkResponse = response.data!;
+      final List<CheckInYearlyStats> stats =
+          (networkResponse.data!['statistics'] as List)
+              .map(
+                (stat) =>
+                    CheckInYearlyStats.fromJson(stat as Map<String, dynamic>),
+              )
+              .toList()
+            ..sort((a, b) => a.month.compareTo(b.month));
+
+      return Right(stats);
     } on DioError catch (e) {
       return Left(dioErrorToApplicationError(e));
     } catch (e, s) {

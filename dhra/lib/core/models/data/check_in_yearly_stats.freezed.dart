@@ -20,7 +20,7 @@ CheckInYearlyStats _$CheckInYearlyStatsFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$CheckInYearlyStats {
-  DateTime get day => throw _privateConstructorUsedError;
+  DateTime get month => throw _privateConstructorUsedError;
   int get count => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -35,7 +35,7 @@ abstract class $CheckInYearlyStatsCopyWith<$Res> {
           CheckInYearlyStats value, $Res Function(CheckInYearlyStats) then) =
       _$CheckInYearlyStatsCopyWithImpl<$Res, CheckInYearlyStats>;
   @useResult
-  $Res call({DateTime day, int count});
+  $Res call({DateTime month, int count});
 }
 
 /// @nodoc
@@ -51,13 +51,13 @@ class _$CheckInYearlyStatsCopyWithImpl<$Res, $Val extends CheckInYearlyStats>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? day = null,
+    Object? month = null,
     Object? count = null,
   }) {
     return _then(_value.copyWith(
-      day: null == day
-          ? _value.day
-          : day // ignore: cast_nullable_to_non_nullable
+      month: null == month
+          ? _value.month
+          : month // ignore: cast_nullable_to_non_nullable
               as DateTime,
       count: null == count
           ? _value.count
@@ -75,7 +75,7 @@ abstract class _$$_CheckInYearlyStatsCopyWith<$Res>
       __$$_CheckInYearlyStatsCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({DateTime day, int count});
+  $Res call({DateTime month, int count});
 }
 
 /// @nodoc
@@ -89,13 +89,13 @@ class __$$_CheckInYearlyStatsCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? day = null,
+    Object? month = null,
     Object? count = null,
   }) {
     return _then(_$_CheckInYearlyStats(
-      day: null == day
-          ? _value.day
-          : day // ignore: cast_nullable_to_non_nullable
+      month: null == month
+          ? _value.month
+          : month // ignore: cast_nullable_to_non_nullable
               as DateTime,
       count: null == count
           ? _value.count
@@ -108,19 +108,19 @@ class __$$_CheckInYearlyStatsCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_CheckInYearlyStats implements _CheckInYearlyStats {
-  _$_CheckInYearlyStats({required this.day, required this.count});
+  _$_CheckInYearlyStats({required this.month, required this.count});
 
   factory _$_CheckInYearlyStats.fromJson(Map<String, dynamic> json) =>
       _$$_CheckInYearlyStatsFromJson(json);
 
   @override
-  final DateTime day;
+  final DateTime month;
   @override
   final int count;
 
   @override
   String toString() {
-    return 'CheckInYearlyStats(day: $day, count: $count)';
+    return 'CheckInYearlyStats(month: $month, count: $count)';
   }
 
   @override
@@ -128,13 +128,13 @@ class _$_CheckInYearlyStats implements _CheckInYearlyStats {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_CheckInYearlyStats &&
-            (identical(other.day, day) || other.day == day) &&
+            (identical(other.month, month) || other.month == month) &&
             (identical(other.count, count) || other.count == count));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, day, count);
+  int get hashCode => Object.hash(runtimeType, month, count);
 
   @JsonKey(ignore: true)
   @override
@@ -153,14 +153,14 @@ class _$_CheckInYearlyStats implements _CheckInYearlyStats {
 
 abstract class _CheckInYearlyStats implements CheckInYearlyStats {
   factory _CheckInYearlyStats(
-      {required final DateTime day,
+      {required final DateTime month,
       required final int count}) = _$_CheckInYearlyStats;
 
   factory _CheckInYearlyStats.fromJson(Map<String, dynamic> json) =
       _$_CheckInYearlyStats.fromJson;
 
   @override
-  DateTime get day;
+  DateTime get month;
   @override
   int get count;
   @override

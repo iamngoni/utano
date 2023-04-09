@@ -9,6 +9,8 @@
 import 'package:dartz/dartz.dart';
 
 import '../../data/application_error.dart';
+import '../../data/check_in_monthly_stats.dart';
+import '../../data/check_in_yearly_stats.dart';
 import '../../data/employee.dart';
 import '../../data/gender.dart';
 import '../../data/health_institution.dart';
@@ -26,4 +28,8 @@ abstract class HealthInstitutionRepository {
   });
   Future<Either<ApplicationError, HealthInstitution>> getInstitutionDetails();
   Future<Either<ApplicationError, Stats>> getInstitutionStats();
+  Future<Either<ApplicationError, List<CheckInMonthlyStats>>>
+      getMonthlyCheckInStats();
+  Future<Either<ApplicationError, List<CheckInYearlyStats>>>
+      getYearlyCheckInStats();
 }
