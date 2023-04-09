@@ -1,5 +1,4 @@
 import calendar
-from sys import exc_info
 
 from django.db import transaction
 from django.db.models import Count
