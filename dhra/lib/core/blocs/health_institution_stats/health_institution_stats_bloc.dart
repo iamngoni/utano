@@ -1,6 +1,6 @@
-import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 import '../../configs/configs.dart';
 import '../../models/data/application_error.dart';
@@ -11,8 +11,8 @@ import '../../models/repos/abstract/health_institution_repository.dart';
 part 'health_institution_stats_event.dart';
 part 'health_institution_stats_state.dart';
 
-class HealthInstitutionStatsBloc
-    extends Bloc<HealthInstitutionStatsEvent, HealthInstitutionStatsState> {
+class HealthInstitutionStatsBloc extends HydratedBloc<
+    HealthInstitutionStatsEvent, HealthInstitutionStatsState> {
   HealthInstitutionStatsBloc({required this.repository})
       : super(const HealthInstitutionStatsInitial()) {
     on<HealthInstitutionStatsEvent>((event, emit) async {
@@ -43,6 +43,31 @@ class HealthInstitutionStatsBloc
         emit(HealthInstitutionStatsError(ApplicationError.unknownError()));
       }
     });
+  }
+
+  @override
+  HealthInstitutionStatsState? fromJson(Map<String, dynamic>? json) {
+    if (json != null) {
+      final HealthInstitution healthInstitution = HealthInstitution.fromJson(
+        json['health_institution'] as Map<String, dynamic>,
+      );
+      final Stats stats = Stats.fromJson(json['stats'] as Map<String, dynamic>);
+      return HealthInstitutionStatsLoaded(healthInstitution, stats);
+    }
+
+    return null;
+  }
+
+  @override
+  Map<String, dynamic>? toJson(HealthInstitutionStatsState state) {
+    if (state is HealthInstitutionStatsLoaded) {
+      return {
+        'stats': state.stats.toJson(),
+        'health_institution': state.healthInstitution.toJson(),
+      };
+    }
+
+    return null;
   }
 
   final HealthInstitutionRepository repository;
