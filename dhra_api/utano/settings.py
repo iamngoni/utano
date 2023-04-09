@@ -235,3 +235,5 @@ GRAPH_MODELS = {
     "all_applications": True,
     "group_models": True,
 }
+
+AES_SECRET_KEY = "exc2hKKN823rnSou"
