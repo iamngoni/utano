@@ -22,7 +22,7 @@ from api.views.health_institution.tasks import notify_employee_on_registration
 
 
 class HealthInstitutionDetailsView(APIView):
-    permission_classes = [IsAdmin]
+    permission_classes = [IsAuthenticated, IsEmployee]
 
     def get(self, request):
         try:
