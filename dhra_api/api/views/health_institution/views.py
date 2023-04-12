@@ -125,6 +125,7 @@ class HealthInstitutionStatsView(APIView):
     def get(self, request):
         try:
             health_institution = request.user.employee.registered_at
+            logger.info(health_institution)
 
             patients = health_institution.check_ins.filter(
                 status=CheckInStatus.CHECKED_IN
@@ -154,6 +155,8 @@ class HealthInstitutionStatsView(APIView):
                 "admins": admins,
             }
 
+            logger.info(statistics)
+
             return ApiResponse(data=statistics)
         except Exception as exc:
             logger.error(exc)
@@ -166,7 +169,9 @@ class PatientCheckInStatisticsView(APIView):
     def get(self, request):
         try:
             now = timezone.now()
+            logger.info(now)
             period = request.query_params.get("period")
+            logger.info(period)
             if period == "year":
                 patient_checkins = (
                     PatientCheckIn.objects.filter(
@@ -180,6 +185,7 @@ class PatientCheckInStatisticsView(APIView):
 
                 # change from queryset
                 patient_checkins = list(patient_checkins)
+                logger.info(patient_checkins)
 
                 # fill in missing months with zeros
                 for month in range(1, 13):
@@ -203,6 +209,7 @@ class PatientCheckInStatisticsView(APIView):
                 )
 
                 patient_checkins = list(patient_checkins)
+                logger.info(patient_checkins)
 
                 end = calendar.monthrange(now.year, now.month)[1]
                 for day in range(1, end):
@@ -216,5 +223,5 @@ class PatientCheckInStatisticsView(APIView):
 
             return ApiResponse(data={"statistics": patient_checkins})
         except Exception as exc:
-            logger.error(type(exc))
+            logger.error(exc)
             return ApiResponse(num_status=500, bool_status=False)
