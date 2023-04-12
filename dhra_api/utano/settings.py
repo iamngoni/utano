@@ -236,4 +236,4 @@ GRAPH_MODELS = {
     "group_models": True,
 }
 
-AES_SECRET_KEY = "exc2hKKN823rnSou"
+AES_SECRET_KEY = config("AES_SECRET")
