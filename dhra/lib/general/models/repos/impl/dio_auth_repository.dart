@@ -37,6 +37,7 @@ class DioAuthRepository implements AuthRepository {
       );
       return Right(authResponse);
     } on DioError catch (e) {
+      logger.e(e);
       return Left(dioErrorToApplicationError(e));
     } catch (e, s) {
       logger
@@ -64,8 +65,10 @@ class DioAuthRepository implements AuthRepository {
       return Right(authResponse);
     } on DioError catch (e) {
       return Left(dioErrorToApplicationError(e));
-    } catch (e) {
-      logger.error(e);
+    } catch (e, s) {
+      logger
+        ..e(e)
+        ..e(s);
       return Left(ApplicationError.unknownError());
     }
   }

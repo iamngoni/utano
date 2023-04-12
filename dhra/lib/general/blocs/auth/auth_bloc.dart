@@ -31,7 +31,10 @@ class AuthBloc extends HydratedBloc<AuthEvent, AuthState> {
           await di<SecureStorageService>()
               .saveToDisk('refresh_token', response.refreshToken);
         });
-      } catch (e) {
+      } catch (e, s) {
+        logger
+          ..e(e)
+          ..e(s);
         emit(AuthError(ApplicationError.unknownError()));
       }
     });

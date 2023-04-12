@@ -9,6 +9,8 @@
 import 'package:dio/dio.dart';
 
 import '../models/data/application_error.dart';
+import '../models/data/network_response.dart';
+import 'encryption.dart';
 
 ApplicationError dioErrorToApplicationError(DioError error) {
   late ApplicationError exception;
@@ -35,9 +37,28 @@ ApplicationError dioErrorToApplicationError(DioError error) {
       );
       break;
     case DioErrorType.response:
-      exception = ApplicationError(
-        "${error.response?.data['message']}",
-      );
+      if (error.response != null) {
+        final Map<String, dynamic>? decrypted =
+            decrypt(error.response!.data['payload'] as String);
+        if (decrypted == null) {
+          exception = ApplicationError(
+            'Sorry Utano is unable to communicate with the remote resources at moment',
+          );
+        } else {
+          final NetworkResponse networkResponse =
+              NetworkResponse.fromJson(decrypted);
+          exception = ApplicationError(
+            '${networkResponse.message}',
+          );
+        }
+      } else {
+        exception = ApplicationError(
+          'Sorry Utano is unable to communicate with the remote resources at '
+          'the moment, please check your internet connection 📡 and retry.',
+          title: 'Connection Error',
+        );
+      }
+
       break;
     case DioErrorType.other:
       exception = ApplicationError(
