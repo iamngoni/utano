@@ -169,7 +169,10 @@ class PatientCheckInStatisticsView(APIView):
             period = request.query_params.get("period")
             if period == "year":
                 patient_checkins = (
-                    PatientCheckIn.objects.filter(created_at__year=now.year)
+                    PatientCheckIn.objects.filter(
+                        created_at__year=now.year,
+                        health_institution=request.user.employee.registered_at,
+                    )
                     .annotate(month=TruncMonth("created_at"))
                     .values("month")
                     .annotate(count=Count("id"))
@@ -190,7 +193,10 @@ class PatientCheckInStatisticsView(APIView):
             else:
                 # group by day
                 patient_checkins = (
-                    PatientCheckIn.objects.filter(created_at__month=now.month)
+                    PatientCheckIn.objects.filter(
+                        created_at__month=now.month,
+                        health_institution=request.user.employee.registered_at,
+                    )
                     .annotate(day=TruncDay("created_at"))
                     .values("day")
                     .annotate(count=Count("id"))

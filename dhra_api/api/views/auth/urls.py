@@ -16,7 +16,7 @@ urlpatterns = [
         PatientPreregistrationView.as_view(),
         name="Patient Preregistration View",
     ),
-    path("signin", SignInView.as_view(), name="Sign In View"),
+    path("signin", SignInView.as_view(), name="sign-in"),
     path("refresh", RefreshAuthView.as_view(), name="Refresh Auth View"),
     path("destroy", DestroyTokenView.as_view(), name="Destroy Token View"),
     path("forgot_password", ForgotPasswordView.as_view(), name="Forgot Password View"),
