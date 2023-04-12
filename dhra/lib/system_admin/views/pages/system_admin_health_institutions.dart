@@ -14,9 +14,7 @@ import 'package:relative_scale/relative_scale.dart';
 import '../../../core/blocs/file_picker/file_picker_bloc.dart';
 import '../../../core/configs/configs.dart';
 import '../../../core/views/widgets/active_tab_indicator.dart';
-import '../../../core/views/widgets/loader_widget.dart';
 import '../../../core/views/widgets/page_header.dart';
-import '../../blocs/health_institutions/health_institutions_bloc.dart';
 import '../widgets/health_institutions_registration_form.dart';
 import '../widgets/health_institutions_table.dart';
 
@@ -44,10 +42,9 @@ class _SystemAdminHealthInstitutionsPageState
   Widget build(BuildContext context) {
     return RelativeBuilder(
       builder: (context, height, width, sy, sx) {
-        return Container(
+        return SizedBox(
           height: context.height,
           width: context.width,
-          color: UtanoColors.white,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -117,44 +114,16 @@ class _SystemAdminHealthInstitutionsPageState
                 height: sy(20),
               ),
               Expanded(
-                child: BlocBuilder<HealthInstitutionsBloc,
-                    HealthInstitutionsState>(
-                  builder: (context, state) {
-                    late Widget healthInstitutionsWidget;
-
-                    if (state is HealthInstitutionsError) {
-                      healthInstitutionsWidget = Center(
-                        child: Text(state.error.message),
-                      );
-                    } else if (state is HealthInstitutionsLoading) {
-                      healthInstitutionsWidget = const LoaderWidget(
-                        color: UtanoColors.black,
-                      );
-                    } else if (state is HealthInstitutionsLoaded) {
-                      healthInstitutionsWidget = PageView(
-                        physics: const NeverScrollableScrollPhysics(),
-                        controller: pageController,
-                        children: [
-                          HealthInstitutionsTable(
-                            healthInstitutions: state.healthInstitutions,
-                          ),
-                          BlocProvider(
-                            create: (context) => FilePickerBloc(),
-                            child: HealthInstitutionsRegistrationForm(),
-                          ),
-                        ],
-                      );
-                    } else {
-                      healthInstitutionsWidget = const LoaderWidget(
-                        color: UtanoColors.black,
-                      );
-                    }
-
-                    return AnimatedSwitcher(
-                      duration: const Duration(milliseconds: 200),
-                      child: healthInstitutionsWidget,
-                    );
-                  },
+                child: PageView(
+                  physics: const NeverScrollableScrollPhysics(),
+                  controller: pageController,
+                  children: [
+                    const HealthInstitutionsTable(),
+                    BlocProvider(
+                      create: (context) => FilePickerBloc(),
+                      child: const HealthInstitutionsRegistrationForm(),
+                    ),
+                  ],
                 ),
               ),
             ],

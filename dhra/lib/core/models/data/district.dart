@@ -17,13 +17,15 @@ part 'district.g.dart';
 class District with _$District {
   factory District({
     required String id,
-    @JsonKey(name: 'created_at') required DateTime createdAt,
-    @JsonKey(name: 'updated_at') required DateTime updatedAt,
-    @JsonKey(name: 'deleted_at') required DateTime? deletedAt,
     required String name,
     Province? province,
   }) = _District;
 
+  const District._();
+
   factory District.fromJson(Map<String, dynamic> json) =>
       _$DistrictFromJson(json);
+
+  @override
+  String toString() => name;
 }

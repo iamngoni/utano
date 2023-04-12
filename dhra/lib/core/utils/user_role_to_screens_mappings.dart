@@ -8,10 +8,14 @@
 
 import 'package:flutter/material.dart';
 
+import '../../admin/views/pages/admin_dashboard.dart';
+import '../../admin/views/pages/admin_employees_page.dart';
+import '../../admin/views/pages/admin_register_employee.dart';
 import '../../nurse/views/pages/nurse_dashboard.dart';
 import '../../nurse/views/pages/nurse_patients.dart';
 import '../../nurse/views/pages/nurse_prescriptions.dart';
 import '../../system_admin/views/pages/system_admin_dashboard.dart';
+import '../../system_admin/views/pages/system_admin_health_institution_employees.dart';
 import '../../system_admin/views/pages/system_admin_health_institutions.dart';
 import '../../system_admin/views/pages/system_admin_health_institutions_admins.dart';
 import '../models/data/user_role.dart';
@@ -21,15 +25,23 @@ import '../views/pages/point_of_service.dart';
 final Map<UserRole, List<Widget>> userRoleToScreensMappings = {
   UserRole.nurse: [
     const NurseDashboardPage(),
-    const PointOfServicePage(),
+    PointOfServicePage(),
     const NursePatientsPage(),
     const NursePrescriptionsPage(),
-    const ChangePasswordPage(),
+    ChangePasswordPage(),
   ],
   UserRole.systemAdmin: [
     const SystemAdminDashboardPage(),
     const SystemAdminHealthInstitutionsPage(),
     const SystemAdminHealthInstitutionsAdminsPage(),
-    const ChangePasswordPage(),
+    ChangePasswordPage(),
+    // ====== Pages Not Displayed On The Sidebar
+    SystemAdminHealthInstitutionEmployeesPage(),
+  ],
+  UserRole.admin: [
+    const AdminDashboardPage(),
+    const AdminEmployeesPage(),
+    const AdminRegisterEmployeePage(),
+    ChangePasswordPage(),
   ],
 };

@@ -20,7 +20,7 @@ Stats _$StatsFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Stats {
-  int get patient => throw _privateConstructorUsedError;
+  int get patients => throw _privateConstructorUsedError;
   int get employees => throw _privateConstructorUsedError;
   int get rooms => throw _privateConstructorUsedError;
   int get doctors => throw _privateConstructorUsedError;
@@ -40,7 +40,7 @@ abstract class $StatsCopyWith<$Res> {
       _$StatsCopyWithImpl<$Res, Stats>;
   @useResult
   $Res call(
-      {int patient,
+      {int patients,
       int employees,
       int rooms,
       int doctors,
@@ -62,7 +62,7 @@ class _$StatsCopyWithImpl<$Res, $Val extends Stats>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? patient = null,
+    Object? patients = null,
     Object? employees = null,
     Object? rooms = null,
     Object? doctors = null,
@@ -71,9 +71,9 @@ class _$StatsCopyWithImpl<$Res, $Val extends Stats>
     Object? admins = null,
   }) {
     return _then(_value.copyWith(
-      patient: null == patient
-          ? _value.patient
-          : patient // ignore: cast_nullable_to_non_nullable
+      patients: null == patients
+          ? _value.patients
+          : patients // ignore: cast_nullable_to_non_nullable
               as int,
       employees: null == employees
           ? _value.employees
@@ -110,7 +110,7 @@ abstract class _$$_StatsCopyWith<$Res> implements $StatsCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {int patient,
+      {int patients,
       int employees,
       int rooms,
       int doctors,
@@ -128,7 +128,7 @@ class __$$_StatsCopyWithImpl<$Res> extends _$StatsCopyWithImpl<$Res, _$_Stats>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? patient = null,
+    Object? patients = null,
     Object? employees = null,
     Object? rooms = null,
     Object? doctors = null,
@@ -137,9 +137,9 @@ class __$$_StatsCopyWithImpl<$Res> extends _$StatsCopyWithImpl<$Res, _$_Stats>
     Object? admins = null,
   }) {
     return _then(_$_Stats(
-      patient: null == patient
-          ? _value.patient
-          : patient // ignore: cast_nullable_to_non_nullable
+      patients: null == patients
+          ? _value.patients
+          : patients // ignore: cast_nullable_to_non_nullable
               as int,
       employees: null == employees
           ? _value.employees
@@ -173,7 +173,7 @@ class __$$_StatsCopyWithImpl<$Res> extends _$StatsCopyWithImpl<$Res, _$_Stats>
 @JsonSerializable()
 class _$_Stats implements _Stats {
   _$_Stats(
-      {required this.patient,
+      {required this.patients,
       required this.employees,
       required this.rooms,
       required this.doctors,
@@ -185,7 +185,7 @@ class _$_Stats implements _Stats {
       _$$_StatsFromJson(json);
 
   @override
-  final int patient;
+  final int patients;
   @override
   final int employees;
   @override
@@ -202,7 +202,7 @@ class _$_Stats implements _Stats {
 
   @override
   String toString() {
-    return 'Stats(patient: $patient, employees: $employees, rooms: $rooms, doctors: $doctors, nurses: $nurses, labTechnicians: $labTechnicians, admins: $admins)';
+    return 'Stats(patients: $patients, employees: $employees, rooms: $rooms, doctors: $doctors, nurses: $nurses, labTechnicians: $labTechnicians, admins: $admins)';
   }
 
   @override
@@ -210,7 +210,8 @@ class _$_Stats implements _Stats {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Stats &&
-            (identical(other.patient, patient) || other.patient == patient) &&
+            (identical(other.patients, patients) ||
+                other.patients == patients) &&
             (identical(other.employees, employees) ||
                 other.employees == employees) &&
             (identical(other.rooms, rooms) || other.rooms == rooms) &&
@@ -223,7 +224,7 @@ class _$_Stats implements _Stats {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, patient, employees, rooms,
+  int get hashCode => Object.hash(runtimeType, patients, employees, rooms,
       doctors, nurses, labTechnicians, admins);
 
   @JsonKey(ignore: true)
@@ -242,7 +243,7 @@ class _$_Stats implements _Stats {
 
 abstract class _Stats implements Stats {
   factory _Stats(
-      {required final int patient,
+      {required final int patients,
       required final int employees,
       required final int rooms,
       required final int doctors,
@@ -253,7 +254,7 @@ abstract class _Stats implements Stats {
   factory _Stats.fromJson(Map<String, dynamic> json) = _$_Stats.fromJson;
 
   @override
-  int get patient;
+  int get patients;
   @override
   int get employees;
   @override

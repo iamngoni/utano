@@ -28,7 +28,7 @@ class HealthInstitutionEmployeesPayloadSerializer(serializers.Serializer):
             UserRoles.NURSE,
             UserRoles.DOCTOR,
             UserRoles.LAB_TECHNICIAN,
-            UserRoles.HEALTH_INSTITUTION,
+            UserRoles.PHARMACIST,
         ]:
             raise serializers.ValidationError({"role": "Role not recognized"})
 

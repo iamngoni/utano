@@ -20,14 +20,14 @@ class Employee with _$Employee {
     required String id,
     @JsonKey(name: 'created_at') required DateTime createdAt,
     @JsonKey(name: 'updated_at') required DateTime updatedAt,
-    @JsonKey(name: 'deleted_at') DateTime? deletedAt,
-    @JsonKey(name: 'professional_title') String? professionalTitle,
-    String? bio,
     required List<String> tags,
     required List<String> qualifications,
     @JsonKey(name: 'registered_on') required DateTime registeredOn,
     required User user,
     @JsonKey(name: 'registered_at') required HealthInstitution registeredAt,
+    @JsonKey(name: 'deleted_at') DateTime? deletedAt,
+    @JsonKey(name: 'professional_title') String? professionalTitle,
+    String? bio,
   }) = _Employee;
 
   factory Employee.fromJson(Map<String, dynamic> json) =>

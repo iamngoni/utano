@@ -321,7 +321,7 @@ class ResetPasswordView(APIView):
 class UpdatePasswordView(APIView):
     parser_classes = (JSONParser,)
     renderer_classes = (JSONRenderer,)
-    authentication_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
     serializer_class = UpdatePasswordPayloadSerializer
 
     def put(self, request):
@@ -349,6 +349,8 @@ class UpdatePasswordView(APIView):
                 return ApiResponse(
                     num_status=400, bool_status=False, issues=payload.errors
                 )
+        except PasswordUsedException as exc:
+            return ApiResponse(num_status=500, bool_status=False, message=exc.__str__())
         except Exception as exc:
             logger.error(exc)
             return ApiResponse(num_status=500, bool_status=False)

@@ -40,6 +40,8 @@ class PatientCheckIn(SoftDeleteModel):
         blank=False,
         null=False,
     )
+    height = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
+    weight = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
 
     class Meta:
         verbose_name = "Patient Check-In"

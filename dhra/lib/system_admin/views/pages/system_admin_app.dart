@@ -14,6 +14,7 @@ import '../../../core/views/widgets/side_bar_tab_item.dart';
 import '../../../general/blocs/auth/auth_bloc.dart';
 import '../../../general/blocs/navigation/navigation_bloc.dart';
 import '../../blocs/health_institutions/health_institutions_bloc.dart';
+import '../../blocs/system_stats/system_stats_bloc.dart';
 
 class SystemAdminApp extends StatefulWidget {
   const SystemAdminApp({super.key});
@@ -27,6 +28,7 @@ class _SystemAdminAppState extends State<SystemAdminApp> {
   void initState() {
     super.initState();
     context.read<HealthInstitutionsBloc>().add(ListHealthInstitutions());
+    context.read<SystemStatsBloc>().add(GetStatistics());
   }
 
   @override

@@ -33,27 +33,30 @@ class PatientCheckInPayloadSerializer(serializers.Serializer):
     examination_notes = serializers.CharField(required=True)
     diagnosis_notes = serializers.CharField(required=True)
     treatment_notes = serializers.CharField(required=True)
+    height = serializers.DecimalField(required=False, max_digits=5, decimal_places=2)
+    weight = serializers.DecimalField(required=False, max_digits=5, decimal_places=2)
 
-    def validate(self, attrs):
-        if not attrs.get("date_of_birth") and not attrs.get("age"):
-            raise serializers.ValidationError(
-                {"date_of_birth": "Either date of birth or age is required"}
-            )
 
-        if not attrs.get("date_of_birth") and attrs.get("age"):
-            # approximate date of birth using provided age (current date - age)
-            days = 365.25 * attrs.get("age")
-            logger.info(days)
-            date_of_birth = timezone.now() - datetime.timedelta(days=days)
-            logger.info(f"generated date of birth: {date_of_birth}")
-            attrs["date_of_birth"] = date_of_birth.date()
-            del attrs["age"]
-            logger.success("date of birth generated successfully")
+def validate(self, attrs):
+    if not attrs.get("date_of_birth") and not attrs.get("age"):
+        raise serializers.ValidationError(
+            {"date_of_birth": "Either date of birth or age is required"}
+        )
 
-        if not attrs.get("gender") in Gender.get_list_of_options():
-            raise serializers.ValidationError({"gender": "Gender not recognized"})
+    if not attrs.get("date_of_birth") and attrs.get("age"):
+        # approximate date of birth using provided age (current date - age)
+        days = 365.25 * attrs.get("age")
+        logger.info(days)
+        date_of_birth = timezone.now() - datetime.timedelta(days=days)
+        logger.info(f"generated date of birth: {date_of_birth}")
+        attrs["date_of_birth"] = date_of_birth.date()
+        del attrs["age"]
+        logger.success("date of birth generated successfully")
 
-        return attrs
+    if not attrs.get("gender") in Gender.get_list_of_options():
+        raise serializers.ValidationError({"gender": "Gender not recognized"})
+
+    return attrs
 
 
 class PrescriptionItemPayloadSerializer(serializers.Serializer):

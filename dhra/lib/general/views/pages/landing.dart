@@ -1,9 +1,9 @@
 import 'dart:ui';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:handy_extensions/handy_extensions.dart';
+import 'package:lottie/lottie.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:relative_scale/relative_scale.dart';
 
@@ -70,10 +70,11 @@ class _LandingPageState extends State<LandingPage> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(
-                          CupertinoIcons.xmark_shield_fill,
-                          color: Colors.red,
-                          size: sy(100),
+                        Lottie.asset(
+                          'assets/lottie/error-2.json',
+                          height: sy(100),
+                          width: sy(100),
+                          fit: BoxFit.fill,
                         ),
                         SizedBox(
                           height: sy(10),
@@ -148,7 +149,7 @@ class _LandingPageState extends State<LandingPage> {
                     ),
                   );
                 } else if (state is AuthLoading) {
-                  authWidget = const LoaderWidget();
+                  authWidget = const Center(child: LoaderWidget());
                 } else {
                   authWidget = LoginForm(
                     usernameController: usernameController,

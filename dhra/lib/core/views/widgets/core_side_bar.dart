@@ -41,7 +41,7 @@ class CoreSideBar extends StatelessWidget {
               padding: EdgeInsets.symmetric(
                 horizontal: sx(7),
               ),
-              color: UtanoColors.blueGrey,
+              color: UtanoColors.white,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -84,7 +84,7 @@ class CoreSideBar extends StatelessWidget {
                               style: TextStyle(
                                 color: UtanoColors.grey,
                                 fontWeight: FontWeight.w400,
-                                fontSize: sy(8),
+                                fontSize: sy(10),
                               ),
                             ),
                           ],

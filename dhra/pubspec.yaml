@@ -12,8 +12,10 @@ dependencies:
   curl_logger_dio_interceptor: ^0.0.3
   dartz: ^0.10.1
   dio: ^4.0.6
+  encrypt: ^5.0.1
   equatable: ^2.0.3
   file_picker: ^5.2.7
+  fl_chart: ^0.61.0
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.1
@@ -25,9 +27,11 @@ dependencies:
   handy_extensions: ^0.0.6+1
   hydrated_bloc: ^9.1.0
   intl: ^0.17.0
+  json_annotation: ^4.8.0
   jwt_decode: ^0.3.1
   localregex: ^4.0.5
   logger: ^1.1.0
+  lottie: ^2.3.2
   macos_ui: ^1.12.2
   path: ^1.8.1
   path_provider: ^2.0.11
@@ -53,6 +57,7 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
+    - assets/lottie/
 
   fonts:
     - family: Poppins

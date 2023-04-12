@@ -14,7 +14,7 @@ part 'health_institution.freezed.dart';
 part 'health_institution.g.dart';
 
 @freezed
-class HealthInstitution<T> with _$HealthInstitution {
+class HealthInstitution with _$HealthInstitution {
   factory HealthInstitution({
     required String id,
     @JsonKey(name: 'created_at') required DateTime createdAt,
@@ -25,26 +25,14 @@ class HealthInstitution<T> with _$HealthInstitution {
     @JsonKey(name: 'phone_number') required String phoneNumber,
     required String email,
     required String logo,
-    @JsonKey(fromJson: districtFromJson, toJson: districtToJson)
-        required T district,
+    required District district,
   }) = _HealthInstitution;
+
+  const HealthInstitution._();
 
   factory HealthInstitution.fromJson(Map<String, dynamic> json) =>
       _$HealthInstitutionFromJson(json);
-}
 
-dynamic districtFromJson(dynamic value) {
-  if (value is Map<String, dynamic>) {
-    return District.fromJson(value);
-  } else {
-    return value;
-  }
-}
-
-dynamic districtToJson(dynamic value) {
-  if (value is District) {
-    return value.toJson();
-  } else {
-    return value;
-  }
+  @override
+  String toString() => name;
 }

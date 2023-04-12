@@ -37,6 +37,7 @@ class DioAuthRepository implements AuthRepository {
       );
       return Right(authResponse);
     } on DioError catch (e) {
+      logger.e(e);
       return Left(dioErrorToApplicationError(e));
     } catch (e, s) {
       logger
@@ -62,6 +63,33 @@ class DioAuthRepository implements AuthRepository {
         networkResponse.data!,
       );
       return Right(authResponse);
+    } on DioError catch (e) {
+      return Left(dioErrorToApplicationError(e));
+    } catch (e, s) {
+      logger
+        ..e(e)
+        ..e(s);
+      return Left(ApplicationError.unknownError());
+    }
+  }
+
+  @override
+  Future<Either<ApplicationError, void>> updatePassword({
+    required String oldPassword,
+    required String password,
+    required String passwordConfirmation,
+  }) async {
+    try {
+      final Response<NetworkResponse> response = await dio.put(
+        '/auth/update_password',
+        data: {
+          'old_password': oldPassword,
+          'password': password,
+          'password_confirmation': passwordConfirmation,
+        },
+      );
+      final NetworkResponse networkResponse = response.data!;
+      return const Right(null);
     } on DioError catch (e) {
       return Left(dioErrorToApplicationError(e));
     } catch (e) {

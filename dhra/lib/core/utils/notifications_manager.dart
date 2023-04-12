@@ -38,6 +38,7 @@ class _NotificationsManagerState extends State<NotificationsManager> {
       message,
       isError: isError,
     );
+    // TODO: play a sound
     setState(() {
       notifications.insert(0, notification);
     });
@@ -96,7 +97,7 @@ class _NotificationsManagerState extends State<NotificationsManager> {
             widget.child,
             Positioned(
               right: sx(5),
-              child: Container(
+              child: SizedBox(
                 width: sx(130),
                 height: context.height,
                 child: Column(
@@ -107,13 +108,11 @@ class _NotificationsManagerState extends State<NotificationsManager> {
                             vertical: sy(5),
                           ),
                           padding: EdgeInsets.symmetric(
-                            horizontal: sx(5),
-                            vertical: sy(10),
+                            horizontal: sx(7),
+                            vertical: sy(15),
                           ),
                           decoration: BoxDecoration(
-                            color: e.isError
-                                ? Colors.red.withOpacity(0.2)
-                                : Colors.green.withOpacity(0.2),
+                            color: e.isError ? Colors.red : Colors.green,
                             borderRadius: BorderRadius.circular(5),
                           ),
                           child: Column(

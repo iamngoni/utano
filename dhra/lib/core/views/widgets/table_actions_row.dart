@@ -40,19 +40,22 @@ class TableActionsRow extends StatelessWidget {
             child: Row(
               children: actions
                   .map(
-                    (e) => Container(
-                      padding: EdgeInsets.symmetric(
-                        vertical: sy(8.5),
-                      ),
-                      margin: EdgeInsets.only(
-                        right: sx(7),
-                      ),
-                      child: MacosTooltip(
-                        message: e.tooltipText,
-                        child: Icon(
-                          e.icon,
-                          color: e.color,
-                          size: sy(15),
+                    (e) => GestureDetector(
+                      onTap: e.onTap,
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                          vertical: sy(8.5),
+                        ),
+                        margin: EdgeInsets.only(
+                          right: sx(7),
+                        ),
+                        child: MacosTooltip(
+                          message: e.tooltipText,
+                          child: Icon(
+                            e.icon,
+                            color: e.color,
+                            size: sy(15),
+                          ),
                         ),
                       ),
                     ),

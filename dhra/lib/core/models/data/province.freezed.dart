@@ -21,12 +21,6 @@ Province _$ProvinceFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Province {
   String get id => throw _privateConstructorUsedError;
-  @JsonKey(name: 'created_at')
-  DateTime get createdAt => throw _privateConstructorUsedError;
-  @JsonKey(name: 'updated_at')
-  DateTime get updatedAt => throw _privateConstructorUsedError;
-  @JsonKey(name: 'deleted_at')
-  DateTime? get deletedAt => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -40,12 +34,7 @@ abstract class $ProvinceCopyWith<$Res> {
   factory $ProvinceCopyWith(Province value, $Res Function(Province) then) =
       _$ProvinceCopyWithImpl<$Res, Province>;
   @useResult
-  $Res call(
-      {String id,
-      @JsonKey(name: 'created_at') DateTime createdAt,
-      @JsonKey(name: 'updated_at') DateTime updatedAt,
-      @JsonKey(name: 'deleted_at') DateTime? deletedAt,
-      String name});
+  $Res call({String id, String name});
 }
 
 /// @nodoc
@@ -62,9 +51,6 @@ class _$ProvinceCopyWithImpl<$Res, $Val extends Province>
   @override
   $Res call({
     Object? id = null,
-    Object? createdAt = null,
-    Object? updatedAt = null,
-    Object? deletedAt = freezed,
     Object? name = null,
   }) {
     return _then(_value.copyWith(
@@ -72,18 +58,6 @@ class _$ProvinceCopyWithImpl<$Res, $Val extends Province>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      updatedAt: null == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      deletedAt: freezed == deletedAt
-          ? _value.deletedAt
-          : deletedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -99,12 +73,7 @@ abstract class _$$_ProvinceCopyWith<$Res> implements $ProvinceCopyWith<$Res> {
       __$$_ProvinceCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String id,
-      @JsonKey(name: 'created_at') DateTime createdAt,
-      @JsonKey(name: 'updated_at') DateTime updatedAt,
-      @JsonKey(name: 'deleted_at') DateTime? deletedAt,
-      String name});
+  $Res call({String id, String name});
 }
 
 /// @nodoc
@@ -119,9 +88,6 @@ class __$$_ProvinceCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? createdAt = null,
-    Object? updatedAt = null,
-    Object? deletedAt = freezed,
     Object? name = null,
   }) {
     return _then(_$_Province(
@@ -129,18 +95,6 @@ class __$$_ProvinceCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      updatedAt: null == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      deletedAt: freezed == deletedAt
-          ? _value.deletedAt
-          : deletedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -152,12 +106,7 @@ class __$$_ProvinceCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_Province implements _Province {
-  _$_Province(
-      {required this.id,
-      @JsonKey(name: 'created_at') required this.createdAt,
-      @JsonKey(name: 'updated_at') required this.updatedAt,
-      @JsonKey(name: 'deleted_at') required this.deletedAt,
-      required this.name});
+  _$_Province({required this.id, required this.name});
 
   factory _$_Province.fromJson(Map<String, dynamic> json) =>
       _$$_ProvinceFromJson(json);
@@ -165,20 +114,11 @@ class _$_Province implements _Province {
   @override
   final String id;
   @override
-  @JsonKey(name: 'created_at')
-  final DateTime createdAt;
-  @override
-  @JsonKey(name: 'updated_at')
-  final DateTime updatedAt;
-  @override
-  @JsonKey(name: 'deleted_at')
-  final DateTime? deletedAt;
-  @override
   final String name;
 
   @override
   String toString() {
-    return 'Province(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt, name: $name)';
+    return 'Province(id: $id, name: $name)';
   }
 
   @override
@@ -187,19 +127,12 @@ class _$_Province implements _Province {
         (other.runtimeType == runtimeType &&
             other is _$_Province &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt) &&
-            (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt) &&
-            (identical(other.deletedAt, deletedAt) ||
-                other.deletedAt == deletedAt) &&
             (identical(other.name, name) || other.name == name));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, createdAt, updatedAt, deletedAt, name);
+  int get hashCode => Object.hash(runtimeType, id, name);
 
   @JsonKey(ignore: true)
   @override
@@ -216,26 +149,13 @@ class _$_Province implements _Province {
 }
 
 abstract class _Province implements Province {
-  factory _Province(
-      {required final String id,
-      @JsonKey(name: 'created_at') required final DateTime createdAt,
-      @JsonKey(name: 'updated_at') required final DateTime updatedAt,
-      @JsonKey(name: 'deleted_at') required final DateTime? deletedAt,
-      required final String name}) = _$_Province;
+  factory _Province({required final String id, required final String name}) =
+      _$_Province;
 
   factory _Province.fromJson(Map<String, dynamic> json) = _$_Province.fromJson;
 
   @override
   String get id;
-  @override
-  @JsonKey(name: 'created_at')
-  DateTime get createdAt;
-  @override
-  @JsonKey(name: 'updated_at')
-  DateTime get updatedAt;
-  @override
-  @JsonKey(name: 'deleted_at')
-  DateTime? get deletedAt;
   @override
   String get name;
   @override

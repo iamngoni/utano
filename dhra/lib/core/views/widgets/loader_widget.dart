@@ -13,7 +13,7 @@ import '../../configs/colors.dart';
 
 class LoaderWidget extends StatelessWidget {
   const LoaderWidget({
-    this.radius = 15,
+    this.radius = 9,
     this.color = UtanoColors.white,
     super.key,
   });
@@ -25,11 +25,9 @@ class LoaderWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return RelativeBuilder(
       builder: (context, height, width, sy, sx) {
-        return Center(
-          child: CupertinoActivityIndicator(
-            radius: sy(radius),
-            color: color,
-          ),
+        return CupertinoActivityIndicator(
+          radius: sy(radius),
+          color: color,
         );
       },
     );

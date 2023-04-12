@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:handy_extensions/handy_extensions.dart';
 import 'package:relative_scale/relative_scale.dart';
 
-import '../../../core/configs/configs.dart';
 import '../../../core/views/widgets/page_header.dart';
 
 class NursePatientsPage extends StatelessWidget {
@@ -20,10 +19,9 @@ class NursePatientsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return RelativeBuilder(
       builder: (context, height, width, sy, sx) {
-        return Container(
+        return SizedBox(
           height: context.height,
           width: context.width,
-          color: UtanoColors.white,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
