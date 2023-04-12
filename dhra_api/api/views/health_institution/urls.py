@@ -6,6 +6,8 @@ from api.views.health_institution.views import (
 )
 from django.urls import path
 
+from api.views.pos.views import PatientsView
+
 urlpatterns = [
     path(
         "details",
@@ -27,4 +29,5 @@ urlpatterns = [
         PatientCheckInStatisticsView.as_view(),
         name="Patient CheckIn Statistics View",
     ),
+    path("patients", PatientsView.as_view(), name="Patients View"),
 ]

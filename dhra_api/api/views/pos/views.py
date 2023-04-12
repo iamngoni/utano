@@ -14,6 +14,7 @@ from api.views.auth.tasks import (
     send_verification_code_to_user,
     send_welcome_note_to_patient,
 )
+from api.views.health_institution.serializers.model import PatientModelSerializer
 from api.views.pos.serializers.model import (
     PatientCheckInModelSerializer,
     PrescriptionModelSerializer,
@@ -189,6 +190,24 @@ class PatientCheckInPrescriptionView(APIView):
                 return ApiResponse(
                     num_status=400, bool_status=False, issues=payload.errors
                 )
+        except Exception as exc:
+            logger.error(exc)
+            return ApiResponse(num_status=500, bool_status=False)
+
+
+class PatientsView(APIView):
+    permission_classes = (IsAuthenticated, IsEmployee)
+
+    def get(self, request):
+        try:
+            patients = Patient.objects.filter(
+                registered_at=request.user.employee.registered_at
+            )
+            return ApiResponse(
+                data={
+                    "patients": PatientModelSerializer(patients, many=True).data,
+                }
+            )
         except Exception as exc:
             logger.error(exc)
             return ApiResponse(num_status=500, bool_status=False)
