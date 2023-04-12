@@ -47,7 +47,7 @@ class _CheckInStatsChartState extends State<CheckInStatsChart> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Patient Check In Stats',
+                  'Patient Statistics',
                   style: TextStyle(
                     color: UtanoColors.black,
                     fontWeight: FontWeight.w500,
