@@ -33,6 +33,10 @@ mixin _$CheckIn {
   @JsonKey(name: 'mobile_number')
   String get mobileNumber => throw _privateConstructorUsedError;
   String get gender => throw _privateConstructorUsedError;
+  CheckInStatus get status => throw _privateConstructorUsedError;
+  @JsonKey(name: 'health_institution')
+  HealthInstitution get healthInstitution => throw _privateConstructorUsedError;
+  Patient get patient => throw _privateConstructorUsedError;
   double? get temperature => throw _privateConstructorUsedError;
   @JsonKey(name: 'systolic_blood_pressure')
   double? get systolicBloodPressure => throw _privateConstructorUsedError;
@@ -49,9 +53,6 @@ mixin _$CheckIn {
   String? get diagnosisNotes => throw _privateConstructorUsedError;
   @JsonKey(name: 'treatment_notes')
   String? get treatmentNotes => throw _privateConstructorUsedError;
-  CheckInStatus get status => throw _privateConstructorUsedError;
-  @JsonKey(name: 'health_institution')
-  HealthInstitution get healthInstitution => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -65,39 +66,28 @@ abstract class $CheckInCopyWith<$Res> {
   @useResult
   $Res call(
       {String id,
-      @JsonKey(name: 'created_at')
-          DateTime createdAt,
-      @JsonKey(name: 'first_name')
-          String firstName,
-      @JsonKey(name: 'last_name')
-          String lastName,
-      @JsonKey(name: 'date_of_birth')
-          DateTime dateOfBirth,
+      @JsonKey(name: 'created_at') DateTime createdAt,
+      @JsonKey(name: 'first_name') String firstName,
+      @JsonKey(name: 'last_name') String lastName,
+      @JsonKey(name: 'date_of_birth') DateTime dateOfBirth,
       String address,
-      @JsonKey(name: 'mobile_number')
-          String mobileNumber,
+      @JsonKey(name: 'mobile_number') String mobileNumber,
       String gender,
-      double? temperature,
-      @JsonKey(name: 'systolic_blood_pressure')
-          double? systolicBloodPressure,
-      @JsonKey(name: 'diastolic_blood_pressure')
-          double? diastolicBloodPressure,
-      double? pulse,
-      @JsonKey(name: 'respiratory_rate')
-          double? respiratoryRate,
-      @JsonKey(name: 'patient_notes')
-          String? patientNotes,
-      @JsonKey(name: 'examination_notes')
-          String? examinationNotes,
-      @JsonKey(name: 'diagnosis_notes')
-          String? diagnosisNotes,
-      @JsonKey(name: 'treatment_notes')
-          String? treatmentNotes,
       CheckInStatus status,
-      @JsonKey(name: 'health_institution')
-          HealthInstitution healthInstitution});
+      @JsonKey(name: 'health_institution') HealthInstitution healthInstitution,
+      Patient patient,
+      double? temperature,
+      @JsonKey(name: 'systolic_blood_pressure') double? systolicBloodPressure,
+      @JsonKey(name: 'diastolic_blood_pressure') double? diastolicBloodPressure,
+      double? pulse,
+      @JsonKey(name: 'respiratory_rate') double? respiratoryRate,
+      @JsonKey(name: 'patient_notes') String? patientNotes,
+      @JsonKey(name: 'examination_notes') String? examinationNotes,
+      @JsonKey(name: 'diagnosis_notes') String? diagnosisNotes,
+      @JsonKey(name: 'treatment_notes') String? treatmentNotes});
 
   $HealthInstitutionCopyWith<$Res> get healthInstitution;
+  $PatientCopyWith<$Res> get patient;
 }
 
 /// @nodoc
@@ -121,6 +111,9 @@ class _$CheckInCopyWithImpl<$Res, $Val extends CheckIn>
     Object? address = null,
     Object? mobileNumber = null,
     Object? gender = null,
+    Object? status = null,
+    Object? healthInstitution = null,
+    Object? patient = null,
     Object? temperature = freezed,
     Object? systolicBloodPressure = freezed,
     Object? diastolicBloodPressure = freezed,
@@ -130,8 +123,6 @@ class _$CheckInCopyWithImpl<$Res, $Val extends CheckIn>
     Object? examinationNotes = freezed,
     Object? diagnosisNotes = freezed,
     Object? treatmentNotes = freezed,
-    Object? status = null,
-    Object? healthInstitution = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -166,6 +157,18 @@ class _$CheckInCopyWithImpl<$Res, $Val extends CheckIn>
           ? _value.gender
           : gender // ignore: cast_nullable_to_non_nullable
               as String,
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as CheckInStatus,
+      healthInstitution: null == healthInstitution
+          ? _value.healthInstitution
+          : healthInstitution // ignore: cast_nullable_to_non_nullable
+              as HealthInstitution,
+      patient: null == patient
+          ? _value.patient
+          : patient // ignore: cast_nullable_to_non_nullable
+              as Patient,
       temperature: freezed == temperature
           ? _value.temperature
           : temperature // ignore: cast_nullable_to_non_nullable
@@ -202,14 +205,6 @@ class _$CheckInCopyWithImpl<$Res, $Val extends CheckIn>
           ? _value.treatmentNotes
           : treatmentNotes // ignore: cast_nullable_to_non_nullable
               as String?,
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as CheckInStatus,
-      healthInstitution: null == healthInstitution
-          ? _value.healthInstitution
-          : healthInstitution // ignore: cast_nullable_to_non_nullable
-              as HealthInstitution,
     ) as $Val);
   }
 
@@ -218,6 +213,14 @@ class _$CheckInCopyWithImpl<$Res, $Val extends CheckIn>
   $HealthInstitutionCopyWith<$Res> get healthInstitution {
     return $HealthInstitutionCopyWith<$Res>(_value.healthInstitution, (value) {
       return _then(_value.copyWith(healthInstitution: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $PatientCopyWith<$Res> get patient {
+    return $PatientCopyWith<$Res>(_value.patient, (value) {
+      return _then(_value.copyWith(patient: value) as $Val);
     });
   }
 }
@@ -231,40 +234,30 @@ abstract class _$$_CheckInCopyWith<$Res> implements $CheckInCopyWith<$Res> {
   @useResult
   $Res call(
       {String id,
-      @JsonKey(name: 'created_at')
-          DateTime createdAt,
-      @JsonKey(name: 'first_name')
-          String firstName,
-      @JsonKey(name: 'last_name')
-          String lastName,
-      @JsonKey(name: 'date_of_birth')
-          DateTime dateOfBirth,
+      @JsonKey(name: 'created_at') DateTime createdAt,
+      @JsonKey(name: 'first_name') String firstName,
+      @JsonKey(name: 'last_name') String lastName,
+      @JsonKey(name: 'date_of_birth') DateTime dateOfBirth,
       String address,
-      @JsonKey(name: 'mobile_number')
-          String mobileNumber,
+      @JsonKey(name: 'mobile_number') String mobileNumber,
       String gender,
-      double? temperature,
-      @JsonKey(name: 'systolic_blood_pressure')
-          double? systolicBloodPressure,
-      @JsonKey(name: 'diastolic_blood_pressure')
-          double? diastolicBloodPressure,
-      double? pulse,
-      @JsonKey(name: 'respiratory_rate')
-          double? respiratoryRate,
-      @JsonKey(name: 'patient_notes')
-          String? patientNotes,
-      @JsonKey(name: 'examination_notes')
-          String? examinationNotes,
-      @JsonKey(name: 'diagnosis_notes')
-          String? diagnosisNotes,
-      @JsonKey(name: 'treatment_notes')
-          String? treatmentNotes,
       CheckInStatus status,
-      @JsonKey(name: 'health_institution')
-          HealthInstitution healthInstitution});
+      @JsonKey(name: 'health_institution') HealthInstitution healthInstitution,
+      Patient patient,
+      double? temperature,
+      @JsonKey(name: 'systolic_blood_pressure') double? systolicBloodPressure,
+      @JsonKey(name: 'diastolic_blood_pressure') double? diastolicBloodPressure,
+      double? pulse,
+      @JsonKey(name: 'respiratory_rate') double? respiratoryRate,
+      @JsonKey(name: 'patient_notes') String? patientNotes,
+      @JsonKey(name: 'examination_notes') String? examinationNotes,
+      @JsonKey(name: 'diagnosis_notes') String? diagnosisNotes,
+      @JsonKey(name: 'treatment_notes') String? treatmentNotes});
 
   @override
   $HealthInstitutionCopyWith<$Res> get healthInstitution;
+  @override
+  $PatientCopyWith<$Res> get patient;
 }
 
 /// @nodoc
@@ -285,6 +278,9 @@ class __$$_CheckInCopyWithImpl<$Res>
     Object? address = null,
     Object? mobileNumber = null,
     Object? gender = null,
+    Object? status = null,
+    Object? healthInstitution = null,
+    Object? patient = null,
     Object? temperature = freezed,
     Object? systolicBloodPressure = freezed,
     Object? diastolicBloodPressure = freezed,
@@ -294,8 +290,6 @@ class __$$_CheckInCopyWithImpl<$Res>
     Object? examinationNotes = freezed,
     Object? diagnosisNotes = freezed,
     Object? treatmentNotes = freezed,
-    Object? status = null,
-    Object? healthInstitution = null,
   }) {
     return _then(_$_CheckIn(
       id: null == id
@@ -330,6 +324,18 @@ class __$$_CheckInCopyWithImpl<$Res>
           ? _value.gender
           : gender // ignore: cast_nullable_to_non_nullable
               as String,
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as CheckInStatus,
+      healthInstitution: null == healthInstitution
+          ? _value.healthInstitution
+          : healthInstitution // ignore: cast_nullable_to_non_nullable
+              as HealthInstitution,
+      patient: null == patient
+          ? _value.patient
+          : patient // ignore: cast_nullable_to_non_nullable
+              as Patient,
       temperature: freezed == temperature
           ? _value.temperature
           : temperature // ignore: cast_nullable_to_non_nullable
@@ -366,14 +372,6 @@ class __$$_CheckInCopyWithImpl<$Res>
           ? _value.treatmentNotes
           : treatmentNotes // ignore: cast_nullable_to_non_nullable
               as String?,
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as CheckInStatus,
-      healthInstitution: null == healthInstitution
-          ? _value.healthInstitution
-          : healthInstitution // ignore: cast_nullable_to_non_nullable
-              as HealthInstitution,
     ));
   }
 }
@@ -390,6 +388,9 @@ class _$_CheckIn extends _CheckIn {
       required this.address,
       @JsonKey(name: 'mobile_number') required this.mobileNumber,
       required this.gender,
+      required this.status,
+      @JsonKey(name: 'health_institution') required this.healthInstitution,
+      required this.patient,
       this.temperature,
       @JsonKey(name: 'systolic_blood_pressure') this.systolicBloodPressure,
       @JsonKey(name: 'diastolic_blood_pressure') this.diastolicBloodPressure,
@@ -398,9 +399,7 @@ class _$_CheckIn extends _CheckIn {
       @JsonKey(name: 'patient_notes') this.patientNotes,
       @JsonKey(name: 'examination_notes') this.examinationNotes,
       @JsonKey(name: 'diagnosis_notes') this.diagnosisNotes,
-      @JsonKey(name: 'treatment_notes') this.treatmentNotes,
-      required this.status,
-      @JsonKey(name: 'health_institution') required this.healthInstitution})
+      @JsonKey(name: 'treatment_notes') this.treatmentNotes})
       : super._();
 
   factory _$_CheckIn.fromJson(Map<String, dynamic> json) =>
@@ -428,6 +427,13 @@ class _$_CheckIn extends _CheckIn {
   @override
   final String gender;
   @override
+  final CheckInStatus status;
+  @override
+  @JsonKey(name: 'health_institution')
+  final HealthInstitution healthInstitution;
+  @override
+  final Patient patient;
+  @override
   final double? temperature;
   @override
   @JsonKey(name: 'systolic_blood_pressure')
@@ -452,15 +458,10 @@ class _$_CheckIn extends _CheckIn {
   @override
   @JsonKey(name: 'treatment_notes')
   final String? treatmentNotes;
-  @override
-  final CheckInStatus status;
-  @override
-  @JsonKey(name: 'health_institution')
-  final HealthInstitution healthInstitution;
 
   @override
   String toString() {
-    return 'CheckIn(id: $id, createdAt: $createdAt, firstName: $firstName, lastName: $lastName, dateOfBirth: $dateOfBirth, address: $address, mobileNumber: $mobileNumber, gender: $gender, temperature: $temperature, systolicBloodPressure: $systolicBloodPressure, diastolicBloodPressure: $diastolicBloodPressure, pulse: $pulse, respiratoryRate: $respiratoryRate, patientNotes: $patientNotes, examinationNotes: $examinationNotes, diagnosisNotes: $diagnosisNotes, treatmentNotes: $treatmentNotes, status: $status, healthInstitution: $healthInstitution)';
+    return 'CheckIn(id: $id, createdAt: $createdAt, firstName: $firstName, lastName: $lastName, dateOfBirth: $dateOfBirth, address: $address, mobileNumber: $mobileNumber, gender: $gender, status: $status, healthInstitution: $healthInstitution, patient: $patient, temperature: $temperature, systolicBloodPressure: $systolicBloodPressure, diastolicBloodPressure: $diastolicBloodPressure, pulse: $pulse, respiratoryRate: $respiratoryRate, patientNotes: $patientNotes, examinationNotes: $examinationNotes, diagnosisNotes: $diagnosisNotes, treatmentNotes: $treatmentNotes)';
   }
 
   @override
@@ -481,6 +482,10 @@ class _$_CheckIn extends _CheckIn {
             (identical(other.mobileNumber, mobileNumber) ||
                 other.mobileNumber == mobileNumber) &&
             (identical(other.gender, gender) || other.gender == gender) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.healthInstitution, healthInstitution) ||
+                other.healthInstitution == healthInstitution) &&
+            (identical(other.patient, patient) || other.patient == patient) &&
             (identical(other.temperature, temperature) ||
                 other.temperature == temperature) &&
             (identical(other.systolicBloodPressure, systolicBloodPressure) ||
@@ -497,10 +502,7 @@ class _$_CheckIn extends _CheckIn {
             (identical(other.diagnosisNotes, diagnosisNotes) ||
                 other.diagnosisNotes == diagnosisNotes) &&
             (identical(other.treatmentNotes, treatmentNotes) ||
-                other.treatmentNotes == treatmentNotes) &&
-            (identical(other.status, status) || other.status == status) &&
-            (identical(other.healthInstitution, healthInstitution) ||
-                other.healthInstitution == healthInstitution));
+                other.treatmentNotes == treatmentNotes));
   }
 
   @JsonKey(ignore: true)
@@ -515,6 +517,9 @@ class _$_CheckIn extends _CheckIn {
         address,
         mobileNumber,
         gender,
+        status,
+        healthInstitution,
+        patient,
         temperature,
         systolicBloodPressure,
         diastolicBloodPressure,
@@ -523,9 +528,7 @@ class _$_CheckIn extends _CheckIn {
         patientNotes,
         examinationNotes,
         diagnosisNotes,
-        treatmentNotes,
-        status,
-        healthInstitution
+        treatmentNotes
       ]);
 
   @JsonKey(ignore: true)
@@ -557,6 +560,10 @@ abstract class _CheckIn extends CheckIn {
       @JsonKey(name: 'mobile_number')
           required final String mobileNumber,
       required final String gender,
+      required final CheckInStatus status,
+      @JsonKey(name: 'health_institution')
+          required final HealthInstitution healthInstitution,
+      required final Patient patient,
       final double? temperature,
       @JsonKey(name: 'systolic_blood_pressure')
           final double? systolicBloodPressure,
@@ -572,10 +579,7 @@ abstract class _CheckIn extends CheckIn {
       @JsonKey(name: 'diagnosis_notes')
           final String? diagnosisNotes,
       @JsonKey(name: 'treatment_notes')
-          final String? treatmentNotes,
-      required final CheckInStatus status,
-      @JsonKey(name: 'health_institution')
-          required final HealthInstitution healthInstitution}) = _$_CheckIn;
+          final String? treatmentNotes}) = _$_CheckIn;
   const _CheckIn._() : super._();
 
   factory _CheckIn.fromJson(Map<String, dynamic> json) = _$_CheckIn.fromJson;
@@ -602,6 +606,13 @@ abstract class _CheckIn extends CheckIn {
   @override
   String get gender;
   @override
+  CheckInStatus get status;
+  @override
+  @JsonKey(name: 'health_institution')
+  HealthInstitution get healthInstitution;
+  @override
+  Patient get patient;
+  @override
   double? get temperature;
   @override
   @JsonKey(name: 'systolic_blood_pressure')
@@ -626,11 +637,6 @@ abstract class _CheckIn extends CheckIn {
   @override
   @JsonKey(name: 'treatment_notes')
   String? get treatmentNotes;
-  @override
-  CheckInStatus get status;
-  @override
-  @JsonKey(name: 'health_institution')
-  HealthInstitution get healthInstitution;
   @override
   @JsonKey(ignore: true)
   _$$_CheckInCopyWith<_$_CheckIn> get copyWith =>

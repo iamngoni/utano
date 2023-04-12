@@ -15,6 +15,10 @@ _$_CheckIn _$$_CheckInFromJson(Map<String, dynamic> json) => _$_CheckIn(
       address: json['address'] as String,
       mobileNumber: json['mobile_number'] as String,
       gender: json['gender'] as String,
+      status: $enumDecode(_$CheckInStatusEnumMap, json['status']),
+      healthInstitution: HealthInstitution.fromJson(
+          json['health_institution'] as Map<String, dynamic>),
+      patient: Patient.fromJson(json['patient'] as Map<String, dynamic>),
       temperature: (json['temperature'] as num?)?.toDouble(),
       systolicBloodPressure:
           (json['systolic_blood_pressure'] as num?)?.toDouble(),
@@ -26,9 +30,6 @@ _$_CheckIn _$$_CheckInFromJson(Map<String, dynamic> json) => _$_CheckIn(
       examinationNotes: json['examination_notes'] as String?,
       diagnosisNotes: json['diagnosis_notes'] as String?,
       treatmentNotes: json['treatment_notes'] as String?,
-      status: $enumDecode(_$CheckInStatusEnumMap, json['status']),
-      healthInstitution: HealthInstitution.fromJson(
-          json['health_institution'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$_CheckInToJson(_$_CheckIn instance) =>
@@ -41,6 +42,9 @@ Map<String, dynamic> _$$_CheckInToJson(_$_CheckIn instance) =>
       'address': instance.address,
       'mobile_number': instance.mobileNumber,
       'gender': instance.gender,
+      'status': _$CheckInStatusEnumMap[instance.status]!,
+      'health_institution': instance.healthInstitution,
+      'patient': instance.patient,
       'temperature': instance.temperature,
       'systolic_blood_pressure': instance.systolicBloodPressure,
       'diastolic_blood_pressure': instance.diastolicBloodPressure,
@@ -50,8 +54,6 @@ Map<String, dynamic> _$$_CheckInToJson(_$_CheckIn instance) =>
       'examination_notes': instance.examinationNotes,
       'diagnosis_notes': instance.diagnosisNotes,
       'treatment_notes': instance.treatmentNotes,
-      'status': _$CheckInStatusEnumMap[instance.status]!,
-      'health_institution': instance.healthInstitution,
     };
 
 const _$CheckInStatusEnumMap = {

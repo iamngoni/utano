@@ -25,7 +25,7 @@ import '../views/pages/point_of_service.dart';
 final Map<UserRole, List<Widget>> userRoleToScreensMappings = {
   UserRole.nurse: [
     const NurseDashboardPage(),
-    const PointOfServicePage(),
+    PointOfServicePage(),
     const NursePatientsPage(),
     const NursePrescriptionsPage(),
     ChangePasswordPage(),
