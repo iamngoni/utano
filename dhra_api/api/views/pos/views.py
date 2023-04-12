@@ -211,3 +211,19 @@ class PatientsView(APIView):
         except Exception as exc:
             logger.error(exc)
             return ApiResponse(num_status=500, bool_status=False)
+
+
+class PatientDetailsView(APIView):
+    def get(self, request, patient_id):
+        try:
+            patient = Patient.get_item_by_id(patient_id)
+
+            if patient is None:
+                return ApiResponse(
+                    num_status=404, bool_status=False, message="Patient not found"
+                )
+
+            return ApiResponse(data={"patient": PatientModelSerializer(patient).data})
+        except Exception as exc:
+            logger.error(exc)
+            return ApiResponse(num_status=500, bool_status=False)
