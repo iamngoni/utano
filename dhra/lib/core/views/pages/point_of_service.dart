@@ -10,14 +10,14 @@ import 'package:flutter/material.dart';
 import 'package:handy_extensions/handy_extensions.dart';
 import 'package:relative_scale/relative_scale.dart';
 
-import '../../models/data/gender.dart';
-import '../widgets/checkup_details_form.dart';
+import '../widgets/check_in_stage_1.dart';
+import '../widgets/check_in_stage_2.dart';
 import '../widgets/page_header.dart';
-import '../widgets/personal_information_form.dart';
-import '../widgets/utano_button.dart';
 
 class PointOfServicePage extends StatelessWidget {
   PointOfServicePage({super.key});
+
+  final PageController _pageController = PageController();
 
   // Personal Details
   final TextEditingController _firstNameController = TextEditingController();
@@ -57,12 +57,6 @@ class PointOfServicePage extends StatelessWidget {
   final TextEditingController _treatmentNotesController =
       TextEditingController();
 
-  Gender? _gender;
-
-  DateTime? _dateOfBirth;
-
-  int? _age;
-
   @override
   Widget build(BuildContext context) {
     return RelativeBuilder(
@@ -80,47 +74,32 @@ class PointOfServicePage extends StatelessWidget {
                 height: sy(20),
               ),
               Expanded(
-                child: Column(
+                child: PageView(
+                  controller: _pageController,
+                  physics: const NeverScrollableScrollPhysics(),
                   children: [
-                    Expanded(
-                      child: Row(
-                        children: [
-                          PersonalInformationForm(
-                            firstNameController: _firstNameController,
-                            lastNameController: _lastNameController,
-                            mobileNumberController: _mobileNumberController,
-                            addressController: _addressController,
-                            nationalIdNumberController:
-                                _nationalIdNumberController,
-                          ),
-                          SizedBox(
-                            width: sx(5),
-                          ),
-                          CheckupDetailsForm(
-                            temperatureController: _temperatureController,
-                            systolicBloodPressureController:
-                                _systolicBloodPressureController,
-                            diastolicBloodPressureController:
-                                _diastolicBloodPressureController,
-                            pulseController: _pulseController,
-                            respiratoryRateController:
-                                _respiratoryRateController,
-                          ),
-                        ],
-                      ),
+                    CheckInStage1(
+                      pageController: _pageController,
+                      firstNameController: _firstNameController,
+                      lastNameController: _lastNameController,
+                      mobileNumberController: _mobileNumberController,
+                      addressController: _addressController,
+                      nationalIdNumberController: _nationalIdNumberController,
+                      temperatureController: _temperatureController,
+                      systolicBloodPressureController:
+                          _systolicBloodPressureController,
+                      diastolicBloodPressureController:
+                          _diastolicBloodPressureController,
+                      pulseController: _pulseController,
+                      respiratoryRateController: _respiratoryRateController,
                     ),
-                    SizedBox(
-                      height: sy(10),
+                    CheckInStage2(
+                      patientNotesController: _patientNotesController,
+                      examinationNotesController: _examinationNotesController,
+                      diagnosisNotesController: _diagnosisNotesController,
+                      treatmentNotesController: _treatmentNotesController,
+                      pageController: _pageController,
                     ),
-                    Align(
-                      alignment: Alignment.bottomRight,
-                      child: SizedBox(
-                        width: sx(50),
-                        child: const UtanoButton(
-                          text: 'CONTINUE',
-                        ),
-                      ),
-                    )
                   ],
                 ),
               ),
