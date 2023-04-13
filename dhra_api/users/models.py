@@ -165,6 +165,10 @@ class Patient(SoftDeleteModel):
     def get_mobile_number(self):
         return f"0{self.mobile_number.national_number}"
 
+    @property
+    def last_check_in(self):
+        return None
+
 
 class Employee(SoftDeleteModel):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="employee")

@@ -3,10 +3,10 @@ from api.views.health_institution.views import (
     HealthInstitutionEmployeesView,
     HealthInstitutionStatsView,
     PatientCheckInStatisticsView,
+    PatientsView,
+    PatientDetailsView,
 )
 from django.urls import path
-
-from api.views.pos.views import PatientsView, PatientDetailsView
 
 urlpatterns = [
     path(

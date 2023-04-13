@@ -11,6 +11,7 @@ from rest_framework.views import APIView
 from api.views.health_institution.serializers.model import (
     HealthInstitutionModelSerializer,
     EmployeeModelSerializer,
+    PatientModelSerializer,
 )
 from api.views.health_institution.serializers.payload import (
     HealthInstitutionEmployeesPayloadSerializer,
@@ -23,7 +24,7 @@ from services.helpers.generate_random_password import generate_random_password
 from services.permissions.is_admin import IsAdmin
 from services.permissions.is_employee import IsEmployee
 from system.models import CheckInStatus
-from users.models import UserRoles, User, Employee
+from users.models import Patient, UserRoles, User, Employee
 
 
 class HealthInstitutionDetailsView(APIView):
@@ -222,6 +223,38 @@ class PatientCheckInStatisticsView(APIView):
                         )
 
             return ApiResponse(data={"statistics": patient_checkins})
+        except Exception as exc:
+            logger.error(exc)
+            return ApiResponse(num_status=500, bool_status=False)
+
+
+class PatientsView(APIView):
+    permission_classes = (IsAuthenticated, IsEmployee)
+
+    def get(self, request):
+        try:
+            patients = Patient.objects.select_related("user").all()
+            return ApiResponse(
+                data={
+                    "patients": PatientModelSerializer(patients, many=True).data,
+                }
+            )
+        except Exception as exc:
+            logger.error(exc)
+            return ApiResponse(num_status=500, bool_status=False)
+
+
+class PatientDetailsView(APIView):
+    def get(self, request, patient_id):
+        try:
+            patient = Patient.get_item_by_id(patient_id)
+
+            if patient is None:
+                return ApiResponse(
+                    num_status=404, bool_status=False, message="Patient not found"
+                )
+
+            return ApiResponse(data={"patient": PatientModelSerializer(patient).data})
         except Exception as exc:
             logger.error(exc)
             return ApiResponse(num_status=500, bool_status=False)
