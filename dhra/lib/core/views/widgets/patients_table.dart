@@ -124,13 +124,6 @@ class PatientsTable extends StatelessWidget {
                                       TableHeaderTitle(
                                         title: 'Marital\nStatus',
                                       ),
-                                      TableHeaderTitle(
-                                        title: 'Work\nStatus',
-                                      ),
-                                      TableHeaderTitle(
-                                        title: 'Place of\nBirth',
-                                      ),
-                                      TableHeaderTitle(title: 'Blood\nType'),
                                       TableHeaderTitle(title: 'Date of\nBirth'),
                                       TableHeaderTitle(
                                         title: '\nActions',
@@ -156,19 +149,15 @@ class PatientsTable extends StatelessWidget {
                                           e.maritalStatus ?? 'n/a',
                                         ),
                                         TableBodyItem(
-                                          e.employmentStatus ?? 'n/a',
-                                        ),
-                                        TableBodyItem(
-                                          e.placeOfBirth,
-                                        ),
-                                        TableBodyItem(
-                                          e.bloodType,
-                                        ),
-                                        TableBodyItem(
                                           '${e.dateOfBirth?.readableDate}',
                                         ),
                                         TableActionsRow(
                                           actions: const [
+                                            TableAction(
+                                              icon: CupertinoIcons.eye,
+                                              tooltipText: 'View Patient',
+                                              color: UtanoColors.active,
+                                            ),
                                             TableAction(
                                               icon: CupertinoIcons.pen,
                                               tooltipText: 'Edit Information',

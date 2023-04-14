@@ -7,10 +7,13 @@
 //
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:relative_scale/relative_scale.dart';
 
 import '../../configs/configs.dart';
+import '../../services/di.dart';
+import '../../services/notifications.dart';
 
 class TableBodyItem extends StatelessWidget {
   const TableBodyItem(
@@ -43,15 +46,24 @@ class TableBodyItem extends StatelessWidget {
               ),
               child: MacosTooltip(
                 message: text,
-                child: Text(
-                  text,
-                  style: TextStyle(
-                    color: textColor,
-                    fontWeight: bold ? FontWeight.w600 : FontWeight.w400,
-                    fontSize: sy(10),
+                child: GestureDetector(
+                  onTap: () async {
+                    await Clipboard.setData(ClipboardData(text: text));
+                    await di<NotificationsService>().showSuccesssNotification(
+                      title: 'Clipboard',
+                      message: '🎉 Copied to clipboard',
+                    );
+                  },
+                  child: Text(
+                    text,
+                    style: TextStyle(
+                      color: textColor,
+                      fontWeight: bold ? FontWeight.w600 : FontWeight.w400,
+                      fontSize: sy(9),
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
                 ),
               ),
             ),
