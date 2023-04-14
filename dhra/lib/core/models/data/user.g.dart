@@ -11,13 +11,10 @@ _$_User _$$_UserFromJson(Map<String, dynamic> json) => _$_User(
       lastLogin: json['last_login'] == null
           ? null
           : DateTime.parse(json['last_login'] as String),
-      isSuperuser: json['is_superuser'] as bool,
       firstName: json['first_name'] as String,
       lastName: json['last_name'] as String,
-      isStaff: json['is_staff'] as bool,
       dateJoined: json['date_joined'] as String,
       createdAt: json['created_at'] as String,
-      updatedAt: json['updated_at'] as String,
       isActive: json['is_active'] as bool,
       isVerified: json['is_verified'] as bool,
       username: json['username'] as String,
@@ -29,13 +26,10 @@ _$_User _$$_UserFromJson(Map<String, dynamic> json) => _$_User(
 Map<String, dynamic> _$$_UserToJson(_$_User instance) => <String, dynamic>{
       'id': instance.id,
       'last_login': instance.lastLogin?.toIso8601String(),
-      'is_superuser': instance.isSuperuser,
       'first_name': instance.firstName,
       'last_name': instance.lastName,
-      'is_staff': instance.isStaff,
       'date_joined': instance.dateJoined,
       'created_at': instance.createdAt,
-      'updated_at': instance.updatedAt,
       'is_active': instance.isActive,
       'is_verified': instance.isVerified,
       'username': instance.username,

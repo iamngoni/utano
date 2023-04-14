@@ -11,6 +11,7 @@ import 'package:handy_extensions/handy_extensions.dart';
 import 'package:relative_scale/relative_scale.dart';
 
 import '../../../core/views/widgets/page_header.dart';
+import '../../../core/views/widgets/patients_table.dart';
 
 class NursePatientsPage extends StatelessWidget {
   const NursePatientsPage({super.key});
@@ -30,6 +31,9 @@ class NursePatientsPage extends StatelessWidget {
               ),
               SizedBox(
                 height: sy(20),
+              ),
+              const Expanded(
+                child: PatientsTable(),
               ),
             ],
           ),

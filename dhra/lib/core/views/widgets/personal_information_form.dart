@@ -147,9 +147,16 @@ class _PersonalInformationFormState extends State<PersonalInformationForm> {
                             ),
                           );
                         } else if (state is SystemConfigsError) {
-                          dropdownWidget = const Center(
-                            child: Text(
-                              'Failed to load configs. Retry',
+                          dropdownWidget = Center(
+                            child: GestureDetector(
+                              onTap: () {
+                                context
+                                    .read<SystemConfigsBloc>()
+                                    .add(LoadSystemConfigs());
+                              },
+                              child: const Text(
+                                'Failed to load configs. Retry',
+                              ),
                             ),
                           );
                         } else if (state is SystemConfigsLoaded) {
@@ -176,8 +183,15 @@ class _PersonalInformationFormState extends State<PersonalInformationForm> {
                             ),
                           );
                         } else {
-                          dropdownWidget = const Center(
-                            child: Text('Load configs'),
+                          dropdownWidget = Center(
+                            child: GestureDetector(
+                              onTap: () {
+                                context
+                                    .read<SystemConfigsBloc>()
+                                    .add(LoadSystemConfigs());
+                              },
+                              child: const Text('Load configs'),
+                            ),
                           );
                         }
 

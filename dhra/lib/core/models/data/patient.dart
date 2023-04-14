@@ -34,8 +34,8 @@ class Patient with _$Patient {
     double? height,
     double? weight,
     @JsonKey(name: 'mobile_number') String? mobileNumber,
-    @JsonKey(name: 'marital_status') MaritalStatus? maritalStatus,
-    @JsonKey(name: 'employment_status') EmploymentStatus? employmentStatus,
+    @JsonKey(name: 'marital_status') String? maritalStatus,
+    @JsonKey(name: 'employment_status') String? employmentStatus,
     @JsonKey(name: 'national_id_number') String? nationalIdNumber,
     @JsonKey(name: 'date_of_birth') DateTime? dateOfBirth,
   }) = _Patient;

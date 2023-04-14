@@ -8,6 +8,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:handy_extensions/handy_extensions.dart';
+import 'package:lottie/lottie.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:relative_scale/relative_scale.dart';
 
@@ -35,11 +36,14 @@ class ExceptionWidget extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                '📵',
-                style: TextStyle(
-                  fontSize: sy(40),
-                ),
+              Lottie.asset(
+                'assets/lottie/error-2.json',
+                height: sy(50),
+                width: sy(50),
+                fit: BoxFit.fill,
+              ),
+              SizedBox(
+                height: sy(10),
               ),
               Text(
                 error.title,

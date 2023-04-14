@@ -18,6 +18,7 @@ import '../../data/employee.dart';
 import '../../data/gender.dart';
 import '../../data/health_institution.dart';
 import '../../data/network_response.dart';
+import '../../data/patient.dart';
 import '../../data/stats.dart';
 import '../../data/user_role.dart';
 import '../abstract/health_institution_repository.dart';
@@ -160,6 +161,47 @@ class DioHealthInstitutionRepository extends HealthInstitutionRepository {
             ..sort((a, b) => a.month.compareTo(b.month));
 
       return Right(stats);
+    } on DioError catch (e) {
+      return Left(dioErrorToApplicationError(e));
+    } catch (e, s) {
+      logger
+        ..e(e)
+        ..e(s);
+      return Left(ApplicationError.unknownError());
+    }
+  }
+
+  @override
+  Future<Either<ApplicationError, Patient>> getPatientDetails(String id) async {
+    try {
+      final Response<NetworkResponse> response =
+          await dio.get('/health_institution/patients/$id');
+      final NetworkResponse networkResponse = response.data!;
+      final Patient patient = Patient.fromJson(
+          networkResponse.data!['patient'] as Map<String, dynamic>);
+      return Right(patient);
+    } on DioError catch (e) {
+      return Left(dioErrorToApplicationError(e));
+    } catch (e, s) {
+      logger
+        ..e(e)
+        ..e(s);
+      return Left(ApplicationError.unknownError());
+    }
+  }
+
+  @override
+  Future<Either<ApplicationError, List<Patient>>> getPatients() async {
+    try {
+      final Response<NetworkResponse> response =
+          await dio.get('/health_institution/patients');
+      final NetworkResponse networkResponse = response.data!;
+      final List<Patient> patients = (networkResponse.data!['patients'] as List)
+          .map(
+            (patient) => Patient.fromJson(patient as Map<String, dynamic>),
+          )
+          .toList();
+      return Right(patients);
     } on DioError catch (e) {
       return Left(dioErrorToApplicationError(e));
     } catch (e, s) {

@@ -45,9 +45,9 @@ mixin _$Patient {
   @JsonKey(name: 'mobile_number')
   String? get mobileNumber => throw _privateConstructorUsedError;
   @JsonKey(name: 'marital_status')
-  MaritalStatus? get maritalStatus => throw _privateConstructorUsedError;
+  String? get maritalStatus => throw _privateConstructorUsedError;
   @JsonKey(name: 'employment_status')
-  EmploymentStatus? get employmentStatus => throw _privateConstructorUsedError;
+  String? get employmentStatus => throw _privateConstructorUsedError;
   @JsonKey(name: 'national_id_number')
   String? get nationalIdNumber => throw _privateConstructorUsedError;
   @JsonKey(name: 'date_of_birth')
@@ -79,15 +79,13 @@ abstract class $PatientCopyWith<$Res> {
       double? height,
       double? weight,
       @JsonKey(name: 'mobile_number') String? mobileNumber,
-      @JsonKey(name: 'marital_status') MaritalStatus? maritalStatus,
-      @JsonKey(name: 'employment_status') EmploymentStatus? employmentStatus,
+      @JsonKey(name: 'marital_status') String? maritalStatus,
+      @JsonKey(name: 'employment_status') String? employmentStatus,
       @JsonKey(name: 'national_id_number') String? nationalIdNumber,
       @JsonKey(name: 'date_of_birth') DateTime? dateOfBirth});
 
   $UserCopyWith<$Res> get user;
   $HealthInstitutionCopyWith<$Res> get registeredAt;
-  $MaritalStatusCopyWith<$Res>? get maritalStatus;
-  $EmploymentStatusCopyWith<$Res>? get employmentStatus;
 }
 
 /// @nodoc
@@ -187,11 +185,11 @@ class _$PatientCopyWithImpl<$Res, $Val extends Patient>
       maritalStatus: freezed == maritalStatus
           ? _value.maritalStatus
           : maritalStatus // ignore: cast_nullable_to_non_nullable
-              as MaritalStatus?,
+              as String?,
       employmentStatus: freezed == employmentStatus
           ? _value.employmentStatus
           : employmentStatus // ignore: cast_nullable_to_non_nullable
-              as EmploymentStatus?,
+              as String?,
       nationalIdNumber: freezed == nationalIdNumber
           ? _value.nationalIdNumber
           : nationalIdNumber // ignore: cast_nullable_to_non_nullable
@@ -216,30 +214,6 @@ class _$PatientCopyWithImpl<$Res, $Val extends Patient>
   $HealthInstitutionCopyWith<$Res> get registeredAt {
     return $HealthInstitutionCopyWith<$Res>(_value.registeredAt, (value) {
       return _then(_value.copyWith(registeredAt: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $MaritalStatusCopyWith<$Res>? get maritalStatus {
-    if (_value.maritalStatus == null) {
-      return null;
-    }
-
-    return $MaritalStatusCopyWith<$Res>(_value.maritalStatus!, (value) {
-      return _then(_value.copyWith(maritalStatus: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $EmploymentStatusCopyWith<$Res>? get employmentStatus {
-    if (_value.employmentStatus == null) {
-      return null;
-    }
-
-    return $EmploymentStatusCopyWith<$Res>(_value.employmentStatus!, (value) {
-      return _then(_value.copyWith(employmentStatus: value) as $Val);
     });
   }
 }
@@ -267,8 +241,8 @@ abstract class _$$_PatientCopyWith<$Res> implements $PatientCopyWith<$Res> {
       double? height,
       double? weight,
       @JsonKey(name: 'mobile_number') String? mobileNumber,
-      @JsonKey(name: 'marital_status') MaritalStatus? maritalStatus,
-      @JsonKey(name: 'employment_status') EmploymentStatus? employmentStatus,
+      @JsonKey(name: 'marital_status') String? maritalStatus,
+      @JsonKey(name: 'employment_status') String? employmentStatus,
       @JsonKey(name: 'national_id_number') String? nationalIdNumber,
       @JsonKey(name: 'date_of_birth') DateTime? dateOfBirth});
 
@@ -276,10 +250,6 @@ abstract class _$$_PatientCopyWith<$Res> implements $PatientCopyWith<$Res> {
   $UserCopyWith<$Res> get user;
   @override
   $HealthInstitutionCopyWith<$Res> get registeredAt;
-  @override
-  $MaritalStatusCopyWith<$Res>? get maritalStatus;
-  @override
-  $EmploymentStatusCopyWith<$Res>? get employmentStatus;
 }
 
 /// @nodoc
@@ -376,11 +346,11 @@ class __$$_PatientCopyWithImpl<$Res>
       maritalStatus: freezed == maritalStatus
           ? _value.maritalStatus
           : maritalStatus // ignore: cast_nullable_to_non_nullable
-              as MaritalStatus?,
+              as String?,
       employmentStatus: freezed == employmentStatus
           ? _value.employmentStatus
           : employmentStatus // ignore: cast_nullable_to_non_nullable
-              as EmploymentStatus?,
+              as String?,
       nationalIdNumber: freezed == nationalIdNumber
           ? _value.nationalIdNumber
           : nationalIdNumber // ignore: cast_nullable_to_non_nullable
@@ -461,10 +431,10 @@ class _$_Patient implements _Patient {
   final String? mobileNumber;
   @override
   @JsonKey(name: 'marital_status')
-  final MaritalStatus? maritalStatus;
+  final String? maritalStatus;
   @override
   @JsonKey(name: 'employment_status')
-  final EmploymentStatus? employmentStatus;
+  final String? employmentStatus;
   @override
   @JsonKey(name: 'national_id_number')
   final String? nationalIdNumber;
@@ -584,9 +554,9 @@ abstract class _Patient implements Patient {
       @JsonKey(name: 'mobile_number')
           final String? mobileNumber,
       @JsonKey(name: 'marital_status')
-          final MaritalStatus? maritalStatus,
+          final String? maritalStatus,
       @JsonKey(name: 'employment_status')
-          final EmploymentStatus? employmentStatus,
+          final String? employmentStatus,
       @JsonKey(name: 'national_id_number')
           final String? nationalIdNumber,
       @JsonKey(name: 'date_of_birth')
@@ -635,10 +605,10 @@ abstract class _Patient implements Patient {
   String? get mobileNumber;
   @override
   @JsonKey(name: 'marital_status')
-  MaritalStatus? get maritalStatus;
+  String? get maritalStatus;
   @override
   @JsonKey(name: 'employment_status')
-  EmploymentStatus? get employmentStatus;
+  String? get employmentStatus;
   @override
   @JsonKey(name: 'national_id_number')
   String? get nationalIdNumber;

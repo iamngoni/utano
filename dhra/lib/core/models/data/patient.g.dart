@@ -23,14 +23,8 @@ _$_Patient _$$_PatientFromJson(Map<String, dynamic> json) => _$_Patient(
       height: (json['height'] as num?)?.toDouble(),
       weight: (json['weight'] as num?)?.toDouble(),
       mobileNumber: json['mobile_number'] as String?,
-      maritalStatus: json['marital_status'] == null
-          ? null
-          : MaritalStatus.fromJson(
-              json['marital_status'] as Map<String, dynamic>),
-      employmentStatus: json['employment_status'] == null
-          ? null
-          : EmploymentStatus.fromJson(
-              json['employment_status'] as Map<String, dynamic>),
+      maritalStatus: json['marital_status'] as String?,
+      employmentStatus: json['employment_status'] as String?,
       nationalIdNumber: json['national_id_number'] as String?,
       dateOfBirth: json['date_of_birth'] == null
           ? null

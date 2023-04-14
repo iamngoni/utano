@@ -23,20 +23,14 @@ mixin _$User {
   String get id => throw _privateConstructorUsedError;
   @JsonKey(name: 'last_login')
   DateTime? get lastLogin => throw _privateConstructorUsedError;
-  @JsonKey(name: 'is_superuser')
-  bool get isSuperuser => throw _privateConstructorUsedError;
   @JsonKey(name: 'first_name')
   String get firstName => throw _privateConstructorUsedError;
   @JsonKey(name: 'last_name')
   String get lastName => throw _privateConstructorUsedError;
-  @JsonKey(name: 'is_staff')
-  bool get isStaff => throw _privateConstructorUsedError;
   @JsonKey(name: 'date_joined')
   String get dateJoined => throw _privateConstructorUsedError;
   @JsonKey(name: 'created_at')
   String get createdAt => throw _privateConstructorUsedError;
-  @JsonKey(name: 'updated_at')
-  String get updatedAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'is_active')
   bool get isActive => throw _privateConstructorUsedError;
   @JsonKey(name: 'is_verified')
@@ -62,20 +56,14 @@ abstract class $UserCopyWith<$Res> {
       {String id,
       @JsonKey(name: 'last_login')
           DateTime? lastLogin,
-      @JsonKey(name: 'is_superuser')
-          bool isSuperuser,
       @JsonKey(name: 'first_name')
           String firstName,
       @JsonKey(name: 'last_name')
           String lastName,
-      @JsonKey(name: 'is_staff')
-          bool isStaff,
       @JsonKey(name: 'date_joined')
           String dateJoined,
       @JsonKey(name: 'created_at')
           String createdAt,
-      @JsonKey(name: 'updated_at')
-          String updatedAt,
       @JsonKey(name: 'is_active')
           bool isActive,
       @JsonKey(name: 'is_verified')
@@ -103,13 +91,10 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
   $Res call({
     Object? id = null,
     Object? lastLogin = freezed,
-    Object? isSuperuser = null,
     Object? firstName = null,
     Object? lastName = null,
-    Object? isStaff = null,
     Object? dateJoined = null,
     Object? createdAt = null,
-    Object? updatedAt = null,
     Object? isActive = null,
     Object? isVerified = null,
     Object? username = null,
@@ -126,10 +111,6 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.lastLogin
           : lastLogin // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      isSuperuser: null == isSuperuser
-          ? _value.isSuperuser
-          : isSuperuser // ignore: cast_nullable_to_non_nullable
-              as bool,
       firstName: null == firstName
           ? _value.firstName
           : firstName // ignore: cast_nullable_to_non_nullable
@@ -138,10 +119,6 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
               as String,
-      isStaff: null == isStaff
-          ? _value.isStaff
-          : isStaff // ignore: cast_nullable_to_non_nullable
-              as bool,
       dateJoined: null == dateJoined
           ? _value.dateJoined
           : dateJoined // ignore: cast_nullable_to_non_nullable
@@ -149,10 +126,6 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as String,
-      updatedAt: null == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
               as String,
       isActive: null == isActive
           ? _value.isActive
@@ -192,20 +165,14 @@ abstract class _$$_UserCopyWith<$Res> implements $UserCopyWith<$Res> {
       {String id,
       @JsonKey(name: 'last_login')
           DateTime? lastLogin,
-      @JsonKey(name: 'is_superuser')
-          bool isSuperuser,
       @JsonKey(name: 'first_name')
           String firstName,
       @JsonKey(name: 'last_name')
           String lastName,
-      @JsonKey(name: 'is_staff')
-          bool isStaff,
       @JsonKey(name: 'date_joined')
           String dateJoined,
       @JsonKey(name: 'created_at')
           String createdAt,
-      @JsonKey(name: 'updated_at')
-          String updatedAt,
       @JsonKey(name: 'is_active')
           bool isActive,
       @JsonKey(name: 'is_verified')
@@ -229,13 +196,10 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
   $Res call({
     Object? id = null,
     Object? lastLogin = freezed,
-    Object? isSuperuser = null,
     Object? firstName = null,
     Object? lastName = null,
-    Object? isStaff = null,
     Object? dateJoined = null,
     Object? createdAt = null,
-    Object? updatedAt = null,
     Object? isActive = null,
     Object? isVerified = null,
     Object? username = null,
@@ -252,10 +216,6 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
           ? _value.lastLogin
           : lastLogin // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      isSuperuser: null == isSuperuser
-          ? _value.isSuperuser
-          : isSuperuser // ignore: cast_nullable_to_non_nullable
-              as bool,
       firstName: null == firstName
           ? _value.firstName
           : firstName // ignore: cast_nullable_to_non_nullable
@@ -264,10 +224,6 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
               as String,
-      isStaff: null == isStaff
-          ? _value.isStaff
-          : isStaff // ignore: cast_nullable_to_non_nullable
-              as bool,
       dateJoined: null == dateJoined
           ? _value.dateJoined
           : dateJoined // ignore: cast_nullable_to_non_nullable
@@ -275,10 +231,6 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as String,
-      updatedAt: null == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
               as String,
       isActive: null == isActive
           ? _value.isActive
@@ -315,20 +267,14 @@ class _$_User implements _User {
       {required this.id,
       @JsonKey(name: 'last_login')
           required this.lastLogin,
-      @JsonKey(name: 'is_superuser')
-          required this.isSuperuser,
       @JsonKey(name: 'first_name')
           required this.firstName,
       @JsonKey(name: 'last_name')
           required this.lastName,
-      @JsonKey(name: 'is_staff')
-          required this.isStaff,
       @JsonKey(name: 'date_joined')
           required this.dateJoined,
       @JsonKey(name: 'created_at')
           required this.createdAt,
-      @JsonKey(name: 'updated_at')
-          required this.updatedAt,
       @JsonKey(name: 'is_active')
           required this.isActive,
       @JsonKey(name: 'is_verified')
@@ -348,26 +294,17 @@ class _$_User implements _User {
   @JsonKey(name: 'last_login')
   final DateTime? lastLogin;
   @override
-  @JsonKey(name: 'is_superuser')
-  final bool isSuperuser;
-  @override
   @JsonKey(name: 'first_name')
   final String firstName;
   @override
   @JsonKey(name: 'last_name')
   final String lastName;
   @override
-  @JsonKey(name: 'is_staff')
-  final bool isStaff;
-  @override
   @JsonKey(name: 'date_joined')
   final String dateJoined;
   @override
   @JsonKey(name: 'created_at')
   final String createdAt;
-  @override
-  @JsonKey(name: 'updated_at')
-  final String updatedAt;
   @override
   @JsonKey(name: 'is_active')
   final bool isActive;
@@ -387,7 +324,7 @@ class _$_User implements _User {
 
   @override
   String toString() {
-    return 'User(id: $id, lastLogin: $lastLogin, isSuperuser: $isSuperuser, firstName: $firstName, lastName: $lastName, isStaff: $isStaff, dateJoined: $dateJoined, createdAt: $createdAt, updatedAt: $updatedAt, isActive: $isActive, isVerified: $isVerified, username: $username, role: $role, passwordUpdatedAt: $passwordUpdatedAt, receiveEmailNotifications: $receiveEmailNotifications)';
+    return 'User(id: $id, lastLogin: $lastLogin, firstName: $firstName, lastName: $lastName, dateJoined: $dateJoined, createdAt: $createdAt, isActive: $isActive, isVerified: $isVerified, username: $username, role: $role, passwordUpdatedAt: $passwordUpdatedAt, receiveEmailNotifications: $receiveEmailNotifications)';
   }
 
   @override
@@ -398,19 +335,14 @@ class _$_User implements _User {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.lastLogin, lastLogin) ||
                 other.lastLogin == lastLogin) &&
-            (identical(other.isSuperuser, isSuperuser) ||
-                other.isSuperuser == isSuperuser) &&
             (identical(other.firstName, firstName) ||
                 other.firstName == firstName) &&
             (identical(other.lastName, lastName) ||
                 other.lastName == lastName) &&
-            (identical(other.isStaff, isStaff) || other.isStaff == isStaff) &&
             (identical(other.dateJoined, dateJoined) ||
                 other.dateJoined == dateJoined) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
-            (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt) &&
             (identical(other.isActive, isActive) ||
                 other.isActive == isActive) &&
             (identical(other.isVerified, isVerified) ||
@@ -431,13 +363,10 @@ class _$_User implements _User {
       runtimeType,
       id,
       lastLogin,
-      isSuperuser,
       firstName,
       lastName,
-      isStaff,
       dateJoined,
       createdAt,
-      updatedAt,
       isActive,
       isVerified,
       username,
@@ -464,20 +393,14 @@ abstract class _User implements User {
       {required final String id,
       @JsonKey(name: 'last_login')
           required final DateTime? lastLogin,
-      @JsonKey(name: 'is_superuser')
-          required final bool isSuperuser,
       @JsonKey(name: 'first_name')
           required final String firstName,
       @JsonKey(name: 'last_name')
           required final String lastName,
-      @JsonKey(name: 'is_staff')
-          required final bool isStaff,
       @JsonKey(name: 'date_joined')
           required final String dateJoined,
       @JsonKey(name: 'created_at')
           required final String createdAt,
-      @JsonKey(name: 'updated_at')
-          required final String updatedAt,
       @JsonKey(name: 'is_active')
           required final bool isActive,
       @JsonKey(name: 'is_verified')
@@ -497,26 +420,17 @@ abstract class _User implements User {
   @JsonKey(name: 'last_login')
   DateTime? get lastLogin;
   @override
-  @JsonKey(name: 'is_superuser')
-  bool get isSuperuser;
-  @override
   @JsonKey(name: 'first_name')
   String get firstName;
   @override
   @JsonKey(name: 'last_name')
   String get lastName;
   @override
-  @JsonKey(name: 'is_staff')
-  bool get isStaff;
-  @override
   @JsonKey(name: 'date_joined')
   String get dateJoined;
   @override
   @JsonKey(name: 'created_at')
   String get createdAt;
-  @override
-  @JsonKey(name: 'updated_at')
-  String get updatedAt;
   @override
   @JsonKey(name: 'is_active')
   bool get isActive;
