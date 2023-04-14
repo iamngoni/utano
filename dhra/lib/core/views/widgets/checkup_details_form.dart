@@ -91,6 +91,13 @@ class _CheckupDetailsFormState extends State<CheckupDetailsForm> {
                   label: 'Temperature',
                   placeholder: '37',
                   keyboardType: TextInputType.number,
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Temperature is required';
+                    }
+
+                    return null;
+                  },
                 ),
                 SizedBox(
                   height: sy(10),
@@ -100,6 +107,13 @@ class _CheckupDetailsFormState extends State<CheckupDetailsForm> {
                   label: 'Systolic Blood Pressure',
                   placeholder: '120',
                   keyboardType: TextInputType.number,
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Systolic BP is required';
+                    }
+
+                    return null;
+                  },
                 ),
                 SizedBox(
                   height: sy(10),
@@ -109,6 +123,13 @@ class _CheckupDetailsFormState extends State<CheckupDetailsForm> {
                   label: 'Diastolic Blood Pressure',
                   placeholder: '80',
                   keyboardType: TextInputType.number,
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Diastolic BP is required';
+                    }
+
+                    return null;
+                  },
                 ),
                 SizedBox(
                   height: sy(10),
@@ -118,6 +139,13 @@ class _CheckupDetailsFormState extends State<CheckupDetailsForm> {
                   label: 'Pulse',
                   placeholder: '80',
                   keyboardType: TextInputType.number,
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Pulse is required';
+                    }
+
+                    return null;
+                  },
                 ),
                 SizedBox(
                   height: sy(10),
@@ -127,6 +155,13 @@ class _CheckupDetailsFormState extends State<CheckupDetailsForm> {
                   label: 'Respiratory Rate',
                   placeholder: '20',
                   keyboardType: TextInputType.number,
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Respiratory Rate is required';
+                    }
+
+                    return null;
+                  },
                 ),
               ],
             ),

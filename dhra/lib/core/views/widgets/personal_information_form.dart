@@ -9,6 +9,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:handy_extensions/handy_extensions.dart';
+import 'package:localregex/localregex.dart';
 import 'package:relative_scale/relative_scale.dart';
 
 import '../../blocs/dropdown_button/dropdown_button_bloc.dart';
@@ -100,6 +101,13 @@ class _PersonalInformationFormState extends State<PersonalInformationForm> {
                   label: 'Patient First Name',
                   placeholder: 'Ngonidzashe',
                   keyboardType: TextInputType.name,
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Name is required';
+                    }
+
+                    return null;
+                  },
                 ),
                 SizedBox(
                   height: sy(10),
@@ -109,6 +117,13 @@ class _PersonalInformationFormState extends State<PersonalInformationForm> {
                   label: 'Patient Last Name',
                   placeholder: 'Mangudya',
                   keyboardType: TextInputType.name,
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Surname is required';
+                    }
+
+                    return null;
+                  },
                 ),
                 SizedBox(
                   height: sy(10),
@@ -117,6 +132,17 @@ class _PersonalInformationFormState extends State<PersonalInformationForm> {
                   controller: widget._nationalIdNumberController,
                   label: 'National ID',
                   placeholder: 'National ID',
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return 'National ID is required';
+                    }
+
+                    if (!LocalRegex.isZimID(value)) {
+                      return 'National ID is invalid';
+                    }
+
+                    return null;
+                  },
                 ),
                 SizedBox(
                   height: sy(10),
@@ -213,6 +239,15 @@ class _PersonalInformationFormState extends State<PersonalInformationForm> {
                   label: 'Patient Mobile Number',
                   placeholder: '+263777213388',
                   keyboardType: TextInputType.phone,
+                  validator: (String? value) {
+                    if (value!.isNotEmpty) {
+                      if (!LocalRegex.isZimMobile(value)) {
+                        return 'Mobile number is invalid';
+                      }
+                    }
+
+                    return null;
+                  },
                 ),
                 SizedBox(
                   height: sy(10),
@@ -222,6 +257,7 @@ class _PersonalInformationFormState extends State<PersonalInformationForm> {
                   label: 'Patient Address',
                   placeholder: 'Add patient address here ...',
                   maxLines: 3,
+                  keyboardType: TextInputType.streetAddress,
                 ),
               ],
             ),

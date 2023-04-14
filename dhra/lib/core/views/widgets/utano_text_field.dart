@@ -12,13 +12,15 @@ import 'package:relative_scale/relative_scale.dart';
 
 import '../../configs/colors.dart';
 
-class UtanoTextField extends StatelessWidget {
+class UtanoTextField extends StatefulWidget {
   const UtanoTextField({
     required this.label,
     required this.placeholder,
     this.controller,
     this.maxLines = 1,
     this.keyboardType = TextInputType.text,
+    this.autovalidateMode = AutovalidateMode.onUserInteraction,
+    this.validator,
     super.key,
   });
 
@@ -27,6 +29,27 @@ class UtanoTextField extends StatelessWidget {
   final int maxLines;
   final String placeholder;
   final TextInputType keyboardType;
+  final AutovalidateMode autovalidateMode;
+  final String? Function(String?)? validator;
+
+  @override
+  State<UtanoTextField> createState() => _UtanoTextFieldState();
+}
+
+class _UtanoTextFieldState extends State<UtanoTextField> {
+  String? _errorText;
+
+  @override
+  void initState() {
+    super.initState();
+    widget.controller?.addListener(() {
+      if (widget.validator != null && widget.controller != null) {
+        setState(() {
+          _errorText = widget.validator!(widget.controller!.text);
+        });
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +59,7 @@ class UtanoTextField extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              label,
+              widget.label,
               style: TextStyle(
                 color: UtanoColors.grey,
                 fontWeight: FontWeight.w400,
@@ -51,9 +74,14 @@ class UtanoTextField extends StatelessWidget {
                 vertical: sy(10),
                 horizontal: sx(7),
               ),
-              controller: controller,
-              maxLines: maxLines,
-              placeholder: placeholder,
+              controller: widget.controller,
+              style: TextStyle(
+                color: UtanoColors.black,
+                fontWeight: FontWeight.w400,
+                fontSize: sy(12),
+              ),
+              maxLines: widget.maxLines,
+              placeholder: widget.placeholder,
               placeholderStyle: TextStyle(
                 color: UtanoColors.grey,
                 fontWeight: FontWeight.w400,
@@ -67,8 +95,22 @@ class UtanoTextField extends StatelessWidget {
                 ),
                 borderRadius: BorderRadius.circular(7),
               ),
-              keyboardType: keyboardType,
+              keyboardType: widget.keyboardType,
             ),
+            if (_errorText != null)
+              Padding(
+                padding: EdgeInsets.only(
+                  top: sy(5),
+                ),
+                child: Text(
+                  _errorText!,
+                  style: TextStyle(
+                    color: UtanoColors.red,
+                    fontWeight: FontWeight.w400,
+                    fontSize: sy(10),
+                  ),
+                ),
+              ),
           ],
         );
       },

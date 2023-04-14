@@ -91,6 +91,29 @@ class CheckInStage1 extends StatelessWidget {
                 width: sx(50),
                 child: UtanoButton(
                   onTap: () {
+                    // validate controllers
+                    for (var controller in [
+                      _firstNameController,
+                      _lastNameController,
+                      _mobileNumberController,
+                      _addressController,
+                      _nationalIdNumberController,
+                      _temperatureController,
+                      _systolicBloodPressureController,
+                      _diastolicBloodPressureController,
+                      _pulseController,
+                      _respiratoryRateController,
+                    ]) {
+                      if (controller.text.isEmpty) {
+                        controller
+                          ..text = ' '
+                          ..selection = TextSelection.fromPosition(
+                            TextPosition(offset: controller.text.length),
+                          );
+                        return;
+                      }
+                    }
+
                     _pageController.nextPage(
                       duration: const Duration(milliseconds: 500),
                       curve: Curves.easeIn,
