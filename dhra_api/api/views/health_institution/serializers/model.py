@@ -34,6 +34,8 @@ class UserModelSerializer(serializers.ModelSerializer):
             "role",
             "gender",
             "receive_email_notifications",
+            "created_at",
+            "password_updated_at",
         ]
 
 
@@ -41,7 +43,7 @@ class PatientModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Patient
         fields = "__all__"
-        depth = 2
+        depth = 3
 
     def to_representation(self, instance):
         patient = super(PatientModelSerializer, self).to_representation(instance)
