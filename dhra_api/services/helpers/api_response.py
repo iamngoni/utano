@@ -5,8 +5,6 @@ from django.http import HttpResponse
 from loguru import logger
 from rest_framework.utils.serializer_helpers import ReturnDict
 
-from services.helpers.encryption import encrypt
-
 
 class ApiResponse(HttpResponse):
     def __init__(
@@ -41,14 +39,14 @@ class ApiResponse(HttpResponse):
         }
 
         logger.info("Encrypting response")
-        payload = {
-            "payload": encrypt(
-                json.dumps(response, indent=4, sort_keys=True, default=str)
-            ),
-        }
-        logger.info(f"Response encrypted: {payload}")
+        # payload = {
+        #     "payload": encrypt(
+        #         json.dumps(response, indent=4, sort_keys=True, default=str)
+        #     ),
+        # }
+        logger.info(f"Response encrypted: {response}")
 
-        response_data = json.dumps(payload, cls=DjangoJSONEncoder, **{})
+        response_data = json.dumps(response, cls=DjangoJSONEncoder, **{})
         super().__init__(
             content=response_data, content_type="application/json", status=num_status
         )

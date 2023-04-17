@@ -1,10 +1,10 @@
-from loguru import logger
-from rest_framework.pagination import PageNumberPagination
-from rest_framework.response import Response
 from collections import OrderedDict
 
+from rest_framework.pagination import PageNumberPagination
+from rest_framework.response import Response
 
-class HekimaPagination(PageNumberPagination):
+
+class APIPagination(PageNumberPagination):
     page_size = 10
 
     def get_paginated_response(self, data):
