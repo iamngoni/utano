@@ -95,3 +95,11 @@ class CheckInStatus(EnumModel):
     ADMITTED = "ADMITTED", _("ADMITTED")
     DISMISSED = "DISMISSED", _("DISMISSED")
     CHECKED_IN = "CHECKED_IN", _("CHECKED_IN")
+
+
+class PaymentMethod(EnumModel):
+    CASH = "cash", _("Cash")
+    BOND = "bond", _("Bond")
+    SWIPE = "swipe", _("Swipe")
+    ECOCASH = "ecocash", _("EcoCash")
+    ONEMONEY = "onemoney", _("OneMoney")
