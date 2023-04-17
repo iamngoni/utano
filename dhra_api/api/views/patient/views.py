@@ -204,3 +204,17 @@ class PatientLabTestRequestDetailsView(APIView):
         except Exception as exc:
             logger.error(exc)
             return ApiResponse(num_status=500, bool_status=False)
+
+    def delete(self, request, test_request_id):
+        try:
+            test_request = TestRequest.get_item_by_id(test_request_id)
+            if test_request is None:
+                return ApiResponse(
+                    num_status=404, bool_status=False, message="Test request not found"
+                )
+
+            test_request.delete()
+            return ApiResponse(message="Request cancelled")
+        except Exception as exc:
+            logger.error(exc)
+            return ApiResponse(num_status=500, bool_status=False)

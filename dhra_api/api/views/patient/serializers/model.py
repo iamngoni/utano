@@ -53,6 +53,7 @@ class PatientTestRequestModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = TestRequest
         fields = [
+            "id",
             "tests",
             "request_notes",
             "lab_notes",
