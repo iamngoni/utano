@@ -8,6 +8,7 @@
 from phonenumber_field.serializerfields import PhoneNumberField
 from rest_framework import serializers
 
+from health_institution.models import HealthInstitution
 from system.models import RelationshipType
 
 
@@ -30,3 +31,15 @@ class EmergencyContactsPayloadSerializer(serializers.Serializer):
 class TestRequestPayloadSerializer(serializers.Serializer):
     tests = serializers.CharField(required=True)
     request_notes = serializers.CharField(required=True)
+    health_institution = serializers.CharField(required=True)
+
+    def validate(self, attrs):
+        health_institution = HealthInstitution.get_item_by_id(
+            attrs.get("health_institution")
+        )
+        if health_institution is None:
+            raise serializers.ValidationError(
+                {"health_institution": "Health institution not recognized"}
+            )
+
+        return attrs

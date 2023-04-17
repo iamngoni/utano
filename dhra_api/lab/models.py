@@ -22,6 +22,13 @@ class TestRequest(SoftDeleteModel):
         blank=False,
         null=False,
     )
+    health_institution = models.ForeignKey(
+        "health_institution.HealthInstitution",
+        related_name="test_requests",
+        on_delete=models.CASCADE,
+        blank=False,
+        null=False,
+    )
     scheduled_date = models.DateTimeField(blank=False, null=True)
 
     class Meta:

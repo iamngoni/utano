@@ -18,6 +18,7 @@ from api.views.patient.serializers.payload import (
     EmergencyContactsPayloadSerializer,
     TestRequestPayloadSerializer,
 )
+from health_institution.models import HealthInstitution
 from lab.models import TestRequest
 from patient.models import EmergencyContact
 from services.helpers.api_response import ApiResponse
@@ -157,10 +158,14 @@ class PatientLabTestRequestsView(APIView):
         try:
             payload = self.serializer_class(data=request.data)
             if payload.is_valid():
+                health_institution = HealthInstitution.get_item_by_id(
+                    payload.validated_data.get("health_institution")
+                )
                 test_request = TestRequest(
                     patient=request.user.patient,
                     tests=payload.validated_data.get("tests"),
                     request_notes=payload.validated_data.get("request_notes"),
+                    health_institution=health_institution,
                 )
                 test_request.save()
 
