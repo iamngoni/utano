@@ -6,7 +6,7 @@
 #  Copyright (c) 2023 ModestNerds, Co
 from rest_framework import serializers
 
-from pharmacy.models import ApprovedMedicine, Drug
+from pharmacy.models import ApprovedMedicine, Drug, DrugHistory
 
 
 class ApprovedMedicineModelSerializer(serializers.ModelSerializer):
@@ -15,7 +15,18 @@ class ApprovedMedicineModelSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class DrugHistoryModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DrugHistory
+        fields = "__all__"
+
+
 class DrugModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Drug
         fields = "__all__"
+
+    def to_representation(self, instance):
+        drug = super(DrugModelSerializer, self).to_representation(instance)
+        drug["history"] = DrugHistoryModelSerializer(instance.history, many=True).data
+        return drug

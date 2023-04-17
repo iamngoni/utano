@@ -75,7 +75,7 @@ class DrugsView(APIView):
 
     def get(self, request):
         try:
-            drugs = Drug.objects.all()
+            drugs = Drug.objects.prefetch_related("history").all()
             return ApiResponse(
                 data={"drugs": DrugModelSerializer(drugs, many=True).data}
             )
@@ -97,6 +97,11 @@ class DrugsView(APIView):
                     quantity=payload.validated_data.get("quantity"),
                 )
                 drug.save()
+
+                drug.history.create(
+                    description=f"Employee {request.user.employee.id} ({request.user.get_full_name()}) created"
+                    f" {drug.name} priced at ${drug.price} x {drug.quantity}"
+                )
 
                 return ApiResponse(data={"drug": DrugModelSerializer(drug).data})
             else:

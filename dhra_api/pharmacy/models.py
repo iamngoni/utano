@@ -31,6 +31,22 @@ class Drug(SoftDeleteModel):
         table_prefix = "drug"
 
 
+class DrugHistory(SoftDeleteModel):
+    drug = models.ForeignKey(
+        Drug,
+        related_name="history",
+        on_delete=models.DO_NOTHING,
+        blank=False,
+        null=False,
+    )
+    description = models.TextField(blank=True, null=True)
+
+    class Meta:
+        verbose_name = "Drug History"
+        verbose_name_plural = "Drugs History"
+        table_prefix = "dg_hist"
+
+
 class Order(SoftDeleteModel):
     prescription = models.ForeignKey(
         "pos.Prescription",
