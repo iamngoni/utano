@@ -6,17 +6,19 @@
 //  Copyright (c) 2023 ModestNerds, Co
 //
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:handy_extensions/handy_extensions.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:relative_scale/relative_scale.dart';
 
+import '../../../core/configs/colors.dart';
 import '../../../core/services/di.dart';
 import '../../../core/services/notifications.dart';
 import '../../blocs/auth/auth_bloc.dart';
 
-class LoginForm extends StatelessWidget {
+class LoginForm extends StatefulWidget {
   const LoginForm({
     required this.usernameController,
     required this.passwordController,
@@ -25,6 +27,15 @@ class LoginForm extends StatelessWidget {
 
   final TextEditingController usernameController;
   final TextEditingController passwordController;
+
+  @override
+  State<LoginForm> createState() => _LoginFormState();
+}
+
+class _LoginFormState extends State<LoginForm> {
+  bool _obscureText = true;
+
+  void _toggleObscureText() => setState(() => _obscureText = !_obscureText);
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +63,7 @@ class LoginForm extends StatelessWidget {
                     fontWeight: FontWeight.w400,
                     fontSize: sy(12),
                   ),
-                  controller: usernameController,
+                  controller: widget.usernameController,
                   placeholderStyle: TextStyle(
                     color: Colors.white.withOpacity(0.3),
                     fontWeight: FontWeight.w400,
@@ -80,7 +91,7 @@ class LoginForm extends StatelessWidget {
                     fontWeight: FontWeight.w400,
                     fontSize: sy(12),
                   ),
-                  controller: passwordController,
+                  controller: widget.passwordController,
                   placeholderStyle: TextStyle(
                     color: Colors.white.withOpacity(0.3),
                     fontWeight: FontWeight.w400,
@@ -94,6 +105,29 @@ class LoginForm extends StatelessWidget {
                     color: Colors.white.withOpacity(0.2),
                     borderRadius: BorderRadius.circular(10),
                   ),
+                  obscureText: _obscureText,
+                  suffix: Padding(
+                    padding: EdgeInsets.only(
+                      right: sx(5),
+                    ),
+                    child: GestureDetector(
+                      onTap: _toggleObscureText,
+                      child: AnimatedCrossFade(
+                        firstChild: const Icon(
+                          CupertinoIcons.eye,
+                          color: UtanoColors.white,
+                        ),
+                        secondChild: const Icon(
+                          CupertinoIcons.eye_slash_fill,
+                          color: UtanoColors.white,
+                        ),
+                        crossFadeState: _obscureText
+                            ? CrossFadeState.showFirst
+                            : CrossFadeState.showSecond,
+                        duration: const Duration(milliseconds: 200),
+                      ),
+                    ),
+                  ),
                 ),
               ),
               SizedBox(
@@ -104,7 +138,7 @@ class LoginForm extends StatelessWidget {
                 child: PushButton(
                   buttonSize: ButtonSize.large,
                   onPressed: () {
-                    if (usernameController.text.isEmpty) {
+                    if (widget.usernameController.text.isEmpty) {
                       di<NotificationsService>().showErrorNotification(
                         title: 'Missing field',
                         message: 'Username is required',
@@ -112,7 +146,7 @@ class LoginForm extends StatelessWidget {
                       return;
                     }
 
-                    if (passwordController.text.isEmpty) {
+                    if (widget.passwordController.text.isEmpty) {
                       di<NotificationsService>().showErrorNotification(
                         title: 'Missing field',
                         message: 'Password is required',
@@ -122,8 +156,8 @@ class LoginForm extends StatelessWidget {
 
                     context.read<AuthBloc>().add(
                           AuthLogin(
-                            email: usernameController.text,
-                            password: passwordController.text,
+                            email: widget.usernameController.text,
+                            password: widget.passwordController.text,
                           ),
                         );
                   },

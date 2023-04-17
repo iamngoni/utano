@@ -54,7 +54,7 @@ class TableActionsRow extends StatelessWidget {
                           child: Icon(
                             e.icon,
                             color: e.color,
-                            size: sy(15),
+                            size: sy(13),
                           ),
                         ),
                       ),

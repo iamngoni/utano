@@ -96,6 +96,10 @@ class _CheckupDetailsFormState extends State<CheckupDetailsForm> {
                       return 'Temperature is required';
                     }
 
+                    if (!value.isNumeric) {
+                      return 'Value has to be numeric';
+                    }
+
                     return null;
                   },
                 ),
@@ -110,6 +114,10 @@ class _CheckupDetailsFormState extends State<CheckupDetailsForm> {
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
                       return 'Systolic BP is required';
+                    }
+
+                    if (!value.isNumeric) {
+                      return 'Value has to be numeric';
                     }
 
                     return null;
@@ -128,6 +136,10 @@ class _CheckupDetailsFormState extends State<CheckupDetailsForm> {
                       return 'Diastolic BP is required';
                     }
 
+                    if (!value.isNumeric) {
+                      return 'Value has to be numeric';
+                    }
+
                     return null;
                   },
                 ),
@@ -144,6 +156,10 @@ class _CheckupDetailsFormState extends State<CheckupDetailsForm> {
                       return 'Pulse is required';
                     }
 
+                    if (!value.isNumeric) {
+                      return 'Value has to be numeric';
+                    }
+
                     return null;
                   },
                 ),
@@ -158,6 +174,10 @@ class _CheckupDetailsFormState extends State<CheckupDetailsForm> {
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
                       return 'Respiratory Rate is required';
+                    }
+
+                    if (!value.isNumeric) {
+                      return 'Value has to be numeric';
                     }
 
                     return null;

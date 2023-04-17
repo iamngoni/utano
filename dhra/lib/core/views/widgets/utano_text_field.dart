@@ -21,6 +21,7 @@ class UtanoTextField extends StatefulWidget {
     this.keyboardType = TextInputType.text,
     this.autovalidateMode = AutovalidateMode.onUserInteraction,
     this.validator,
+    this.obscureText = false,
     super.key,
   });
 
@@ -31,6 +32,7 @@ class UtanoTextField extends StatefulWidget {
   final TextInputType keyboardType;
   final AutovalidateMode autovalidateMode;
   final String? Function(String?)? validator;
+  final bool obscureText;
 
   @override
   State<UtanoTextField> createState() => _UtanoTextFieldState();
@@ -42,6 +44,7 @@ class _UtanoTextFieldState extends State<UtanoTextField> {
   @override
   void initState() {
     super.initState();
+
     widget.controller?.addListener(() {
       if (widget.validator != null && widget.controller != null) {
         setState(() {
@@ -75,6 +78,7 @@ class _UtanoTextFieldState extends State<UtanoTextField> {
                 horizontal: sx(7),
               ),
               controller: widget.controller,
+              obscureText: widget.obscureText,
               style: TextStyle(
                 color: UtanoColors.black,
                 fontWeight: FontWeight.w400,

@@ -7,8 +7,12 @@
 //
 
 import 'package:flutter/material.dart';
+import 'package:handy_extensions/handy_extensions.dart';
+import 'package:localregex/localregex.dart';
 import 'package:relative_scale/relative_scale.dart';
 
+import '../../services/di.dart';
+import '../../services/notifications.dart';
 import 'checkup_details_form.dart';
 import 'personal_information_form.dart';
 import 'utano_button.dart';
@@ -92,26 +96,56 @@ class CheckInStage1 extends StatelessWidget {
                 child: UtanoButton(
                   onTap: () {
                     // validate controllers
-                    for (var controller in [
+                    final bool emptyController = [
                       _firstNameController,
                       _lastNameController,
                       _mobileNumberController,
-                      _addressController,
                       _nationalIdNumberController,
                       _temperatureController,
                       _systolicBloodPressureController,
                       _diastolicBloodPressureController,
                       _pulseController,
                       _respiratoryRateController,
-                    ]) {
-                      if (controller.text.isEmpty) {
-                        controller
-                          ..text = ' '
-                          ..selection = TextSelection.fromPosition(
-                            TextPosition(offset: controller.text.length),
-                          );
-                        return;
-                      }
+                    ].any((controller) => controller.text.isEmpty);
+
+                    if (emptyController) {
+                      di<NotificationsService>().showErrorNotification(
+                        title: 'Missing fields',
+                        message: 'Fill all the required details!',
+                      );
+                      return;
+                    }
+
+                    if (!LocalRegex.isZimID(_nationalIdNumberController.text)) {
+                      di<NotificationsService>().showErrorNotification(
+                        title: 'Invalid Format',
+                        message: 'National ID is invalid',
+                      );
+                      return;
+                    }
+
+                    if (!LocalRegex.isZimMobile(_mobileNumberController.text)) {
+                      di<NotificationsService>().showErrorNotification(
+                        title: 'Invalid Format',
+                        message: 'Mobile is invalid',
+                      );
+                      return;
+                    }
+
+                    final bool notNumeric = [
+                      _temperatureController,
+                      _systolicBloodPressureController,
+                      _diastolicBloodPressureController,
+                      _pulseController,
+                      _respiratoryRateController,
+                    ].any((controller) => !controller.text.isNumeric);
+
+                    if (notNumeric) {
+                      di<NotificationsService>().showErrorNotification(
+                        title: 'Invalid Format',
+                        message: 'Use numeric figures for readings',
+                      );
+                      return;
                     }
 
                     _pageController.nextPage(
