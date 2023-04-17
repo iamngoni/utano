@@ -29,6 +29,7 @@ class Drug(SoftDeleteModel):
         verbose_name = "Drug"
         verbose_name_plural = "Drugs"
         table_prefix = "drug"
+        ordering = ("-updated_at",)
 
 
 class DrugHistory(SoftDeleteModel):
@@ -45,6 +46,7 @@ class DrugHistory(SoftDeleteModel):
         verbose_name = "Drug History"
         verbose_name_plural = "Drugs History"
         table_prefix = "dg_hist"
+        ordering = ("-updated_at",)
 
 
 class Order(SoftDeleteModel):

@@ -132,3 +132,36 @@ class DrugDetailsView(APIView):
         except Exception as exc:
             logger.error(exc)
             return ApiResponse(num_status=500, bool_status=False)
+
+    def put(self, request, drug_id):
+        try:
+            drug = Drug.get_item_by_id(drug_id)
+            if drug is None:
+                return ApiResponse(
+                    num_status=404, bool_status=False, message="Drug not found"
+                )
+
+            drug.price = (
+                request.data.get("price")
+                if (
+                    request.data.get("price") is not None
+                    and request.data.get("price") > 0
+                )
+                else drug.price
+            )
+            drug.quantity = drug.quantity + (
+                request.data.get("quantity")
+                if (request.data.get("quantity") is not None)
+                else 0
+            )
+            drug.save()
+
+            drug.history.create(
+                description=f"Employee {request.user.employee.id} ({request.user.get_full_name()}) updated {drug.name}"
+                f" to price ${drug.price} x {drug.quantity}"
+            )
+
+            return ApiResponse(data={"drug": DrugModelSerializer(drug).data})
+        except Exception as exc:
+            logger.error(exc)
+            return ApiResponse(num_status=500, bool_status=False)
