@@ -19,7 +19,6 @@ class UtanoTextField extends StatefulWidget {
     this.controller,
     this.maxLines = 1,
     this.keyboardType = TextInputType.text,
-    this.autovalidateMode = AutovalidateMode.onUserInteraction,
     this.validator,
     this.obscureText = false,
     super.key,
@@ -30,7 +29,6 @@ class UtanoTextField extends StatefulWidget {
   final int maxLines;
   final String placeholder;
   final TextInputType keyboardType;
-  final AutovalidateMode autovalidateMode;
   final String? Function(String?)? validator;
   final bool obscureText;
 
