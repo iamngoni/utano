@@ -7,6 +7,7 @@
 
 from rest_framework import serializers
 
+from health_institution.models import HealthInstitution
 from lab.models import TestRequest
 from patient.models import EmergencyContact
 from users.models import Patient, User
@@ -62,3 +63,16 @@ class PatientTestRequestModelSerializer(serializers.ModelSerializer):
             "created_at",
             "updated_at",
         ]
+
+    def to_representation(self, instance):
+        test_request = super(PatientTestRequestModelSerializer, self).to_representation(
+            instance
+        )
+        test_request["health_institution"] = instance.health_institution.name
+        return test_request
+
+
+class HealthInstitutionModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = HealthInstitution
+        fields = ["id", "name", "address", "phone_number", "logo", "email"]

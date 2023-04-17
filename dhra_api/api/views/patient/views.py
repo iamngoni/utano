@@ -13,6 +13,7 @@ from api.views.patient.serializers.model import (
     PatientModelSerializer,
     EmergencyContactModelSerializer,
     PatientTestRequestModelSerializer,
+    HealthInstitutionModelSerializer,
 )
 from api.views.patient.serializers.payload import (
     EmergencyContactsPayloadSerializer,
@@ -222,4 +223,25 @@ class PatientLabTestRequestDetailsView(APIView):
             return ApiResponse(message="Request cancelled")
         except Exception as exc:
             logger.error(exc)
+            return ApiResponse(num_status=500, bool_status=False)
+
+
+class HealthInstitutionsView(APIView):
+    permission_classes = (
+        IsAuthenticated,
+        IsPatient,
+    )
+
+    def get(self, request):
+        try:
+            health_institutions = HealthInstitution.objects.filter(is_active=True)
+            return ApiResponse(
+                data={
+                    "health_institutions": HealthInstitutionModelSerializer(
+                        health_institutions, many=True
+                    ).data
+                },
+            )
+        except Exception as exc:
+            logger.error(f"exception: {exc}")
             return ApiResponse(num_status=500, bool_status=False)
