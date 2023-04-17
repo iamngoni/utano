@@ -22,16 +22,28 @@ class RequestLoggerMiddleware(MiddlewareMixin):
     def process_request(self, request):
         try:
             # save request
-            req = ApiRequest(
-                method=request.method,
-                headers=str(request.headers),
-                path=request.path,
-            )
-            req.save()
 
-            request.id = req.id
-        except Exception:
-            logger.warning("Failed to log request, probably websocket request")
+            is_admin = request.path.split("/admin/")
+            if len(is_admin) > 1:
+                logger.warning("Admin dashboard request -> skipping")
+            else:
+                headers = dict(request.headers)
+
+                del headers["Authorization"]
+                del headers["Cookie"]
+
+                req = ApiRequest(
+                    method=request.method,
+                    headers=str(headers),
+                    path=request.path,
+                )
+                req.save()
+
+                request.id = req.id
+        except Exception as exc:
+            logger.warning(
+                f"{type(exc)}: Failed to log request, probably websocket request"
+            )
             pass
 
     def process_response(

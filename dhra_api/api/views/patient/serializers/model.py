@@ -7,6 +7,7 @@
 
 from rest_framework import serializers
 
+from lab.models import TestRequest
 from patient.models import EmergencyContact
 from users.models import Patient, User
 
@@ -46,3 +47,9 @@ class EmergencyContactModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = EmergencyContact
         fields = "__all__"
+
+
+class PatientTestRequestModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TestRequest
+        fields = ["tests", "request_notes", "lab_notes", "status", "scheduled_date"]

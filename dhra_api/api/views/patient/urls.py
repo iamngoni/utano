@@ -11,6 +11,8 @@ from api.views.patient.views import (
     PatientDetailsView,
     PatientEmergencyContactsView,
     PatientEmergencyContactDetailsView,
+    PatientLabTestRequestsView,
+    PatientLabTestRequestDetailsView,
 )
 
 urlpatterns = [
@@ -23,6 +25,16 @@ urlpatterns = [
     path(
         "emergency_contacts/<str:pk>",
         PatientEmergencyContactDetailsView.as_view(),
-        name="Patient Emergency Contact Details View",
+        name="patient-emergency-contact-details",
+    ),
+    path(
+        "test_requests",
+        PatientLabTestRequestsView.as_view(),
+        name="patient-lab-tests-requests",
+    ),
+    path(
+        "test_requests/<str:test_request_id>",
+        PatientLabTestRequestDetailsView.as_view(),
+        name="patient-lab-tests-request-details",
     ),
 ]

@@ -25,3 +25,8 @@ class EmergencyContactsPayloadSerializer(serializers.Serializer):
             )
 
         return attrs
+
+
+class TestRequestPayloadSerializer(serializers.Serializer):
+    tests = serializers.CharField(required=True)
+    request_notes = serializers.CharField(required=True)

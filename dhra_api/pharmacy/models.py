@@ -11,6 +11,7 @@ class ApprovedMedicine(SoftDeleteModel):
         verbose_name = "Approved Medicine"
         verbose_name_plural = "Approved Medicines"
         table_prefix = "medicine"
+        ordering = ("name",)
 
     def __str__(self):
         return self.name
@@ -29,7 +30,7 @@ class Drug(SoftDeleteModel):
         verbose_name = "Drug"
         verbose_name_plural = "Drugs"
         table_prefix = "drug"
-        ordering = ("-updated_at",)
+        ordering = ("name",)
 
 
 class DrugHistory(SoftDeleteModel):

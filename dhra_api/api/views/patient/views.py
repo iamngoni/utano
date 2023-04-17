@@ -12,8 +12,13 @@ from rest_framework.views import APIView
 from api.views.patient.serializers.model import (
     PatientModelSerializer,
     EmergencyContactModelSerializer,
+    PatientTestRequestModelSerializer,
 )
-from api.views.patient.serializers.payload import EmergencyContactsPayloadSerializer
+from api.views.patient.serializers.payload import (
+    EmergencyContactsPayloadSerializer,
+    TestRequestPayloadSerializer,
+)
+from lab.models import TestRequest
 from patient.models import EmergencyContact
 from services.helpers.api_response import ApiResponse
 from services.permissions.is_patient import IsPatient
@@ -122,6 +127,80 @@ class PatientEmergencyContactDetailsView(APIView):
             emergency_contact.delete()
 
             return ApiResponse()
+        except Exception as exc:
+            logger.error(exc)
+            return ApiResponse(num_status=500, bool_status=False)
+
+
+class PatientLabTestRequestsView(APIView):
+    permission_classes = (
+        IsAuthenticated,
+        IsPatient,
+    )
+    serializer_class = TestRequestPayloadSerializer
+
+    def get(self, request):
+        try:
+            test_requests = TestRequest.objects.filter(patient=request.user.patient)
+            return ApiResponse(
+                data={
+                    "test_requests": PatientTestRequestModelSerializer(
+                        test_requests, many=True
+                    ).data
+                }
+            )
+        except Exception as exc:
+            logger.error(exc)
+            return ApiResponse(num_status=500, bool_status=False)
+
+    def post(self, request):
+        try:
+            payload = self.serializer_class(data=request.data)
+            if payload.is_valid():
+                test_request = TestRequest(
+                    patient=request.user.patient,
+                    tests=payload.validated_data.get("tests"),
+                    request_notes=payload.validated_data.get("request_notes"),
+                )
+                test_request.save()
+
+                return ApiResponse(
+                    data={
+                        "test_request": PatientTestRequestModelSerializer(
+                            test_request
+                        ).data
+                    }
+                )
+            else:
+                logger.error(payload.errors)
+                return ApiResponse(
+                    num_status=400, bool_status=False, issues=payload.errors
+                )
+        except Exception as exc:
+            logger.error(exc)
+            return ApiResponse(num_status=500, bool_status=False)
+
+
+class PatientLabTestRequestDetailsView(APIView):
+    permission_classes = (
+        IsAuthenticated,
+        IsPatient,
+    )
+
+    def get(self, request, test_request_id):
+        try:
+            test_request = TestRequest.get_item_by_id(test_request_id)
+
+            if test_request is None:
+                return ApiResponse(
+                    num_status=404, bool_status=False, message="Test request not found"
+                )
+
+            return ApiResponse(
+                data={
+                    "test_request": PatientTestRequestModelSerializer(test_request).data
+                }
+            )
         except Exception as exc:
             logger.error(exc)
             return ApiResponse(num_status=500, bool_status=False)
