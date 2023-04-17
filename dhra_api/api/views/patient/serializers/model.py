@@ -52,4 +52,12 @@ class EmergencyContactModelSerializer(serializers.ModelSerializer):
 class PatientTestRequestModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = TestRequest
-        fields = ["tests", "request_notes", "lab_notes", "status", "scheduled_date"]
+        fields = [
+            "tests",
+            "request_notes",
+            "lab_notes",
+            "status",
+            "scheduled_date",
+            "created_at",
+            "updated_at",
+        ]
