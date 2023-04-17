@@ -14,6 +14,7 @@ from api.views.patient.serializers.model import (
     EmergencyContactModelSerializer,
     PatientTestRequestModelSerializer,
     HealthInstitutionModelSerializer,
+    PatientCheckInModelSerializer,
 )
 from api.views.patient.serializers.payload import (
     EmergencyContactsPayloadSerializer,
@@ -22,6 +23,7 @@ from api.views.patient.serializers.payload import (
 from health_institution.models import HealthInstitution
 from lab.models import TestRequest
 from patient.models import EmergencyContact
+from pos.models import PatientCheckIn
 from services.helpers.api_response import ApiResponse
 from services.permissions.is_patient import IsPatient
 
@@ -244,4 +246,62 @@ class HealthInstitutionsView(APIView):
             )
         except Exception as exc:
             logger.error(f"exception: {exc}")
+            return ApiResponse(num_status=500, bool_status=False)
+
+
+class PatientCheckInView(APIView):
+    permission_classes = (IsAuthenticated, IsPatient)
+
+    def get(self, request):
+        try:
+            patient = request.user.patient
+            checkins = PatientCheckIn.objects.all()
+
+            patient_checkins = []
+
+            for checkin in checkins:
+                if checkin.patient == patient:
+                    patient_checkins.append(checkin)
+
+            return ApiResponse(
+                data={
+                    "patient_checkins": PatientCheckInModelSerializer(
+                        patient_checkins, many=True
+                    ).data
+                }
+            )
+
+        except Exception as exc:
+            logger.error(exc)
+            return ApiResponse(num_status=500, bool_status=False)
+
+
+class PatientCheckInDetailsView(APIView):
+    permission_classes = (IsAuthenticated, IsPatient)
+
+    def get(self, request, check_in_id):
+        try:
+            patient = request.user.patient
+            checkin = PatientCheckIn.get_item_by_id(check_in_id)
+
+            if checkin is None:
+                return ApiResponse(
+                    num_status=404,
+                    bool_status=False,
+                    message="Patient check in not found",
+                )
+
+            if checkin.patient != patient:
+                return ApiResponse(
+                    num_status=400,
+                    bool_status=False,
+                    message="Patient not allowed to view record",
+                )
+
+            return ApiResponse(
+                data={"patient_checkin": PatientCheckInModelSerializer(checkin).data}
+            )
+
+        except Exception as exc:
+            logger.error(exc)
             return ApiResponse(num_status=500, bool_status=False)
