@@ -33,7 +33,7 @@ from services.helpers.generate_prescription_number import generate_prescription_
 from services.helpers.generate_random_password import generate_random_password
 from services.permissions.is_employee import IsEmployee
 from system.models import CheckInStatus
-from users.models import Patient, User
+from users.models import Patient, User, UserRoles
 from api.views.pos.tasks import send_prescription_to_patient
 
 
@@ -84,6 +84,7 @@ class PatientCheckInView(APIView):
                         username=username,
                         gender=check_in.gender,
                         email=email,
+                        role=UserRoles.PATIENT,
                     )
                     user.set_password(password)
                     user.save()
