@@ -20,6 +20,7 @@ class CheckInStage2 extends StatelessWidget {
     required TextEditingController diagnosisNotesController,
     required TextEditingController treatmentNotesController,
     required PageController pageController,
+    required this.onSubmit,
     super.key,
   })  : _patientNotesController = patientNotesController,
         _examinationNotesController = examinationNotesController,
@@ -32,6 +33,7 @@ class CheckInStage2 extends StatelessWidget {
   final TextEditingController _diagnosisNotesController;
   final TextEditingController _treatmentNotesController;
   final PageController _pageController;
+  final VoidCallback onSubmit;
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +76,8 @@ class CheckInStage2 extends StatelessWidget {
                 ),
                 SizedBox(
                   width: sx(50),
-                  child: const UtanoButton(
+                  child: UtanoButton(
+                    onTap: onSubmit,
                     text: 'CONTINUE',
                   ),
                 ),

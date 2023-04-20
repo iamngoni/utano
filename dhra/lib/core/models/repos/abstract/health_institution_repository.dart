@@ -9,6 +9,7 @@
 import 'package:dartz/dartz.dart';
 
 import '../../data/application_error.dart';
+import '../../data/check_in.dart';
 import '../../data/check_in_monthly_stats.dart';
 import '../../data/check_in_yearly_stats.dart';
 import '../../data/employee.dart';
@@ -50,4 +51,22 @@ abstract class HealthInstitutionRepository {
 
   /// Returns the patient details
   Future<Either<ApplicationError, Patient>> getPatientDetails(String id);
+
+  Future<Either<ApplicationError, CheckIn>> checkInPatient({
+    required String firstName,
+    required String lastName,
+    required String mobileNumber,
+    required String gender,
+    required double temperature,
+    required double systolicBloodPressure,
+    required double diastolicBloodPressure,
+    required double pulse,
+    required double respiratoryRate,
+    required String patientNotes,
+    required String examinationNotes,
+    required String diagnosisNotes,
+    required String treatmentNotes,
+    String? address,
+    int? age,
+  });
 }

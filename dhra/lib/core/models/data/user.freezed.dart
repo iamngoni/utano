@@ -28,9 +28,9 @@ mixin _$User {
   @JsonKey(name: 'last_name')
   String get lastName => throw _privateConstructorUsedError;
   @JsonKey(name: 'date_joined')
-  String get dateJoined => throw _privateConstructorUsedError;
+  DateTime? get dateJoined => throw _privateConstructorUsedError;
   @JsonKey(name: 'created_at')
-  String get createdAt => throw _privateConstructorUsedError;
+  DateTime? get createdAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'is_active')
   bool get isActive => throw _privateConstructorUsedError;
   @JsonKey(name: 'is_verified')
@@ -38,7 +38,7 @@ mixin _$User {
   String get username => throw _privateConstructorUsedError;
   UserRole get role => throw _privateConstructorUsedError;
   @JsonKey(name: 'password_updated_at')
-  String get passwordUpdatedAt => throw _privateConstructorUsedError;
+  DateTime? get passwordUpdatedAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'receive_email_notifications')
   bool get receiveEmailNotifications => throw _privateConstructorUsedError;
 
@@ -61,9 +61,9 @@ abstract class $UserCopyWith<$Res> {
       @JsonKey(name: 'last_name')
           String lastName,
       @JsonKey(name: 'date_joined')
-          String dateJoined,
+          DateTime? dateJoined,
       @JsonKey(name: 'created_at')
-          String createdAt,
+          DateTime? createdAt,
       @JsonKey(name: 'is_active')
           bool isActive,
       @JsonKey(name: 'is_verified')
@@ -71,7 +71,7 @@ abstract class $UserCopyWith<$Res> {
       String username,
       UserRole role,
       @JsonKey(name: 'password_updated_at')
-          String passwordUpdatedAt,
+          DateTime? passwordUpdatedAt,
       @JsonKey(name: 'receive_email_notifications')
           bool receiveEmailNotifications});
 }
@@ -93,13 +93,13 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
     Object? lastLogin = freezed,
     Object? firstName = null,
     Object? lastName = null,
-    Object? dateJoined = null,
-    Object? createdAt = null,
+    Object? dateJoined = freezed,
+    Object? createdAt = freezed,
     Object? isActive = null,
     Object? isVerified = null,
     Object? username = null,
     Object? role = null,
-    Object? passwordUpdatedAt = null,
+    Object? passwordUpdatedAt = freezed,
     Object? receiveEmailNotifications = null,
   }) {
     return _then(_value.copyWith(
@@ -119,14 +119,14 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
               as String,
-      dateJoined: null == dateJoined
+      dateJoined: freezed == dateJoined
           ? _value.dateJoined
           : dateJoined // ignore: cast_nullable_to_non_nullable
-              as String,
-      createdAt: null == createdAt
+              as DateTime?,
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as String,
+              as DateTime?,
       isActive: null == isActive
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
@@ -143,10 +143,10 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
               as UserRole,
-      passwordUpdatedAt: null == passwordUpdatedAt
+      passwordUpdatedAt: freezed == passwordUpdatedAt
           ? _value.passwordUpdatedAt
           : passwordUpdatedAt // ignore: cast_nullable_to_non_nullable
-              as String,
+              as DateTime?,
       receiveEmailNotifications: null == receiveEmailNotifications
           ? _value.receiveEmailNotifications
           : receiveEmailNotifications // ignore: cast_nullable_to_non_nullable
@@ -170,9 +170,9 @@ abstract class _$$_UserCopyWith<$Res> implements $UserCopyWith<$Res> {
       @JsonKey(name: 'last_name')
           String lastName,
       @JsonKey(name: 'date_joined')
-          String dateJoined,
+          DateTime? dateJoined,
       @JsonKey(name: 'created_at')
-          String createdAt,
+          DateTime? createdAt,
       @JsonKey(name: 'is_active')
           bool isActive,
       @JsonKey(name: 'is_verified')
@@ -180,7 +180,7 @@ abstract class _$$_UserCopyWith<$Res> implements $UserCopyWith<$Res> {
       String username,
       UserRole role,
       @JsonKey(name: 'password_updated_at')
-          String passwordUpdatedAt,
+          DateTime? passwordUpdatedAt,
       @JsonKey(name: 'receive_email_notifications')
           bool receiveEmailNotifications});
 }
@@ -198,13 +198,13 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
     Object? lastLogin = freezed,
     Object? firstName = null,
     Object? lastName = null,
-    Object? dateJoined = null,
-    Object? createdAt = null,
+    Object? dateJoined = freezed,
+    Object? createdAt = freezed,
     Object? isActive = null,
     Object? isVerified = null,
     Object? username = null,
     Object? role = null,
-    Object? passwordUpdatedAt = null,
+    Object? passwordUpdatedAt = freezed,
     Object? receiveEmailNotifications = null,
   }) {
     return _then(_$_User(
@@ -224,14 +224,14 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
               as String,
-      dateJoined: null == dateJoined
+      dateJoined: freezed == dateJoined
           ? _value.dateJoined
           : dateJoined // ignore: cast_nullable_to_non_nullable
-              as String,
-      createdAt: null == createdAt
+              as DateTime?,
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as String,
+              as DateTime?,
       isActive: null == isActive
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
@@ -248,10 +248,10 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
               as UserRole,
-      passwordUpdatedAt: null == passwordUpdatedAt
+      passwordUpdatedAt: freezed == passwordUpdatedAt
           ? _value.passwordUpdatedAt
           : passwordUpdatedAt // ignore: cast_nullable_to_non_nullable
-              as String,
+              as DateTime?,
       receiveEmailNotifications: null == receiveEmailNotifications
           ? _value.receiveEmailNotifications
           : receiveEmailNotifications // ignore: cast_nullable_to_non_nullable
@@ -301,10 +301,10 @@ class _$_User implements _User {
   final String lastName;
   @override
   @JsonKey(name: 'date_joined')
-  final String dateJoined;
+  final DateTime? dateJoined;
   @override
   @JsonKey(name: 'created_at')
-  final String createdAt;
+  final DateTime? createdAt;
   @override
   @JsonKey(name: 'is_active')
   final bool isActive;
@@ -317,7 +317,7 @@ class _$_User implements _User {
   final UserRole role;
   @override
   @JsonKey(name: 'password_updated_at')
-  final String passwordUpdatedAt;
+  final DateTime? passwordUpdatedAt;
   @override
   @JsonKey(name: 'receive_email_notifications')
   final bool receiveEmailNotifications;
@@ -398,9 +398,9 @@ abstract class _User implements User {
       @JsonKey(name: 'last_name')
           required final String lastName,
       @JsonKey(name: 'date_joined')
-          required final String dateJoined,
+          required final DateTime? dateJoined,
       @JsonKey(name: 'created_at')
-          required final String createdAt,
+          required final DateTime? createdAt,
       @JsonKey(name: 'is_active')
           required final bool isActive,
       @JsonKey(name: 'is_verified')
@@ -408,7 +408,7 @@ abstract class _User implements User {
       required final String username,
       required final UserRole role,
       @JsonKey(name: 'password_updated_at')
-          required final String passwordUpdatedAt,
+          required final DateTime? passwordUpdatedAt,
       @JsonKey(name: 'receive_email_notifications')
           required final bool receiveEmailNotifications}) = _$_User;
 
@@ -427,10 +427,10 @@ abstract class _User implements User {
   String get lastName;
   @override
   @JsonKey(name: 'date_joined')
-  String get dateJoined;
+  DateTime? get dateJoined;
   @override
   @JsonKey(name: 'created_at')
-  String get createdAt;
+  DateTime? get createdAt;
   @override
   @JsonKey(name: 'is_active')
   bool get isActive;
@@ -443,7 +443,7 @@ abstract class _User implements User {
   UserRole get role;
   @override
   @JsonKey(name: 'password_updated_at')
-  String get passwordUpdatedAt;
+  DateTime? get passwordUpdatedAt;
   @override
   @JsonKey(name: 'receive_email_notifications')
   bool get receiveEmailNotifications;

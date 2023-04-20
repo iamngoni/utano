@@ -17,25 +17,6 @@ part 'check_in.g.dart';
 
 @freezed
 class CheckIn with _$CheckIn {
-  // "id": "p-in_lQbtU3qCvWxjMl0O6sjJbSTEMRnFWE",
-  //             "created_at": "2023-03-08T01:11:14.085653+02:00",
-  //             "updated_at": "2023-03-08T01:12:23.373394+02:00",
-  //             "deleted_at": null,
-  //             "first_name": "Ngonidzashe",
-  //             "last_name": "Mangudya",
-  //             "date_of_birth": "1999-03-07",
-  //             "address": "136 Blakeway Drive, Belvedere",
-  //             "mobile_number": "+263777213388",
-  //             "gender": "MALE",
-  //             "temperature": 37.2,
-  //             "systolic_blood_pressure": 120,
-  //             "diastolic_blood_pressure": 80,
-  //             "pulse": 120,
-  //             "respiratory_rate": null,
-  //             "patient_notes": "Heavy migraines on the right side of the head",
-  //             "examination_notes": "Patient looks exhausted",
-  //             "diagnosis_notes": "Patient needs rest and to drink lots of water",
-  //             "treatment_notes": "Pain meds can be taken to reduce the pain",
   //             "status": "DISMISSED",
   //             "health_institution": "inst_AV3hQXm9tDBBgI6RUll6L62pY4UW4W"
   const factory CheckIn({

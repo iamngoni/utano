@@ -16,6 +16,7 @@ import '../../blocs/dropdown_button/dropdown_button_bloc.dart';
 import '../../blocs/system_configs/system_configs_bloc.dart';
 import '../../configs/colors.dart';
 import '../../models/data/gender.dart';
+import '../../utils/typedefs.dart';
 import 'loader_widget.dart';
 import 'utano_dropdown_button.dart';
 import 'utano_text_field.dart';
@@ -27,18 +28,24 @@ class PersonalInformationForm extends StatefulWidget {
     required TextEditingController mobileNumberController,
     required TextEditingController addressController,
     required TextEditingController nationalIdNumberController,
+    required Gender? gender,
+    required OnUpdateGender onUpdateGender,
     super.key,
   })  : _firstNameController = firstNameController,
         _lastNameController = lastNameController,
         _mobileNumberController = mobileNumberController,
         _addressController = addressController,
-        _nationalIdNumberController = nationalIdNumberController;
+        _nationalIdNumberController = nationalIdNumberController,
+        _gender = gender,
+        _onUpdateGender = onUpdateGender;
 
   final TextEditingController _firstNameController;
   final TextEditingController _lastNameController;
   final TextEditingController _mobileNumberController;
   final TextEditingController _addressController;
   final TextEditingController _nationalIdNumberController;
+  final Gender? _gender;
+  final OnUpdateGender _onUpdateGender;
 
   @override
   State<PersonalInformationForm> createState() =>
@@ -47,7 +54,6 @@ class PersonalInformationForm extends StatefulWidget {
 
 class _PersonalInformationFormState extends State<PersonalInformationForm> {
   final ScrollController _scrollController = ScrollController();
-  Gender? _gender;
 
   @override
   Widget build(BuildContext context) {
@@ -197,12 +203,8 @@ class _PersonalInformationFormState extends State<PersonalInformationForm> {
                                   child: UtanoDropdownButton<Gender>(
                                     title: 'Gender',
                                     items: state.genders,
-                                    onChanged: (Gender? gender) {
-                                      setState(() {
-                                        _gender = gender;
-                                      });
-                                    },
-                                    value: _gender,
+                                    onChanged: widget._onUpdateGender,
+                                    value: widget._gender,
                                   ),
                                 );
                               },

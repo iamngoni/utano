@@ -88,7 +88,7 @@ class _CheckupDetailsFormState extends State<CheckupDetailsForm> {
                 ),
                 UtanoTextField(
                   controller: widget._temperatureController,
-                  label: 'Temperature',
+                  label: 'Temperature (in Celsius)',
                   placeholder: '37',
                   keyboardType: TextInputType.number,
                   validator: (String? value) {

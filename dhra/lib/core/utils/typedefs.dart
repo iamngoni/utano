@@ -6,4 +6,8 @@
 //  Copyright (c) 2023 ModestNerds, Co
 //
 
+import '../models/data/gender.dart';
+
 typedef RSize = double Function(double);
+
+typedef OnUpdateGender = void Function(Gender? gender);

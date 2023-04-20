@@ -14,7 +14,7 @@ import 'package:relative_scale/relative_scale.dart';
 import '../../configs/colors.dart';
 
 class CheckInNotesForm extends StatelessWidget {
-  const CheckInNotesForm({
+  CheckInNotesForm({
     required TextEditingController patientNotesController,
     required TextEditingController examinationNotesController,
     required TextEditingController diagnosisNotesController,
@@ -26,6 +26,8 @@ class CheckInNotesForm extends StatelessWidget {
   final TextEditingController _patientNotesController;
   final TextEditingController _examinationNotesController;
   final TextEditingController _diagnosisNotesController;
+
+  final ScrollController _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -60,8 +62,8 @@ class CheckInNotesForm extends StatelessWidget {
               ],
               borderRadius: BorderRadius.circular(11),
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: ListView(
+              controller: _scrollController,
               children: [
                 Text(
                   'Notes',
@@ -79,6 +81,13 @@ class CheckInNotesForm extends StatelessWidget {
                   label: 'Patient Notes',
                   placeholder: 'What the patient is saying',
                   maxLines: 4,
+                  validator: (String? value) {
+                    if (value!.isEmpty) {
+                      return 'Add patient notes';
+                    }
+
+                    return null;
+                  },
                 ),
                 SizedBox(
                   height: sy(10),
@@ -88,6 +97,13 @@ class CheckInNotesForm extends StatelessWidget {
                   label: 'Examination Notes',
                   placeholder: "What you've observed during the examination",
                   maxLines: 3,
+                  validator: (String? value) {
+                    if (value!.isEmpty) {
+                      return 'Add own examination notes';
+                    }
+
+                    return null;
+                  },
                 ),
                 SizedBox(
                   height: sy(10),
@@ -97,6 +113,13 @@ class CheckInNotesForm extends StatelessWidget {
                   label: 'Diagnosis Notes',
                   placeholder: 'Possible Diagnosis and the reason why',
                   maxLines: 4,
+                  validator: (String? value) {
+                    if (value!.isEmpty) {
+                      return 'Add possible diagnosis here';
+                    }
+
+                    return null;
+                  },
                 ),
               ],
             ),

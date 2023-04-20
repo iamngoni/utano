@@ -11,8 +11,10 @@ import 'package:handy_extensions/handy_extensions.dart';
 import 'package:localregex/localregex.dart';
 import 'package:relative_scale/relative_scale.dart';
 
+import '../../models/data/gender.dart';
 import '../../services/di.dart';
 import '../../services/notifications.dart';
+import '../../utils/typedefs.dart';
 import 'checkup_details_form.dart';
 import 'personal_information_form.dart';
 import 'utano_button.dart';
@@ -30,6 +32,8 @@ class CheckInStage1 extends StatelessWidget {
     required TextEditingController diastolicBloodPressureController,
     required TextEditingController pulseController,
     required TextEditingController respiratoryRateController,
+    required OnUpdateGender onUpdateGender,
+    Gender? gender,
     super.key,
   })  : _firstNameController = firstNameController,
         _lastNameController = lastNameController,
@@ -41,6 +45,8 @@ class CheckInStage1 extends StatelessWidget {
         _diastolicBloodPressureController = diastolicBloodPressureController,
         _pulseController = pulseController,
         _respiratoryRateController = respiratoryRateController,
+        _gender = gender,
+        _onUpdateGender = onUpdateGender,
         _pageController = pageController;
 
   final PageController _pageController;
@@ -54,6 +60,8 @@ class CheckInStage1 extends StatelessWidget {
   final TextEditingController _diastolicBloodPressureController;
   final TextEditingController _pulseController;
   final TextEditingController _respiratoryRateController;
+  final Gender? _gender;
+  final OnUpdateGender _onUpdateGender;
 
   @override
   Widget build(BuildContext context) {
@@ -70,6 +78,8 @@ class CheckInStage1 extends StatelessWidget {
                     mobileNumberController: _mobileNumberController,
                     addressController: _addressController,
                     nationalIdNumberController: _nationalIdNumberController,
+                    gender: _gender,
+                    onUpdateGender: _onUpdateGender,
                   ),
                   SizedBox(
                     width: sx(5),
@@ -144,6 +154,14 @@ class CheckInStage1 extends StatelessWidget {
                       di<NotificationsService>().showErrorNotification(
                         title: 'Invalid Format',
                         message: 'Use numeric figures for readings',
+                      );
+                      return;
+                    }
+
+                    if (_gender == null) {
+                      di<NotificationsService>().showErrorNotification(
+                        title: 'Missing field',
+                        message: 'Select gender!',
                       );
                       return;
                     }

@@ -36,6 +36,15 @@ class CheckInStatsChart extends StatefulWidget {
 
 class _CheckInStatsChartState extends State<CheckInStatsChart> {
   CheckInStatsOption option = CheckInStatsOption.monthly;
+  late CheckInStatsBloc bloc;
+
+  @override
+  void initState() {
+    super.initState();
+    if (bloc.state is! CheckInStatsLoaded) {
+      bloc.add(const LoadCheckInStats());
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

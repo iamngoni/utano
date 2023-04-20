@@ -20,13 +20,13 @@ class User with _$User {
     @JsonKey(name: 'last_login') required DateTime? lastLogin,
     @JsonKey(name: 'first_name') required String firstName,
     @JsonKey(name: 'last_name') required String lastName,
-    @JsonKey(name: 'date_joined') required String dateJoined,
-    @JsonKey(name: 'created_at') required String createdAt,
+    @JsonKey(name: 'date_joined') required DateTime? dateJoined,
+    @JsonKey(name: 'created_at') required DateTime? createdAt,
     @JsonKey(name: 'is_active') required bool isActive,
     @JsonKey(name: 'is_verified') required bool isVerified,
     required String username,
     required UserRole role,
-    @JsonKey(name: 'password_updated_at') required String passwordUpdatedAt,
+    @JsonKey(name: 'password_updated_at') required DateTime? passwordUpdatedAt,
     @JsonKey(name: 'receive_email_notifications')
         required bool receiveEmailNotifications,
   }) = _User;

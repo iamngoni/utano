@@ -12,6 +12,7 @@ import 'package:dio/dio.dart';
 import '../../../configs/logger.dart';
 import '../../../utils/dio_error_to_application_error.dart';
 import '../../data/application_error.dart';
+import '../../data/check_in.dart';
 import '../../data/check_in_monthly_stats.dart';
 import '../../data/check_in_yearly_stats.dart';
 import '../../data/employee.dart';
@@ -178,7 +179,8 @@ class DioHealthInstitutionRepository extends HealthInstitutionRepository {
           await dio.get('/health_institution/patients/$id');
       final NetworkResponse networkResponse = response.data!;
       final Patient patient = Patient.fromJson(
-          networkResponse.data!['patient'] as Map<String, dynamic>);
+        networkResponse.data!['patient'] as Map<String, dynamic>,
+      );
       return Right(patient);
     } on DioError catch (e) {
       return Left(dioErrorToApplicationError(e));
@@ -202,6 +204,61 @@ class DioHealthInstitutionRepository extends HealthInstitutionRepository {
           )
           .toList();
       return Right(patients);
+    } on DioError catch (e) {
+      return Left(dioErrorToApplicationError(e));
+    } catch (e, s) {
+      logger
+        ..e(e)
+        ..e(s);
+      return Left(ApplicationError.unknownError());
+    }
+  }
+
+  @override
+  Future<Either<ApplicationError, CheckIn>> checkInPatient({
+    required String firstName,
+    required String lastName,
+    required String mobileNumber,
+    required String gender,
+    required double temperature,
+    required double systolicBloodPressure,
+    required double diastolicBloodPressure,
+    required double pulse,
+    required double respiratoryRate,
+    required String patientNotes,
+    required String examinationNotes,
+    required String diagnosisNotes,
+    required String treatmentNotes,
+    String? address,
+    int? age,
+  }) async {
+    try {
+      final Response<NetworkResponse> response = await dio.post(
+        '/pos/check-in',
+        data: {
+          'first_name': firstName,
+          'last_name': lastName,
+          'address': address,
+          'mobile_number': mobileNumber,
+          'gender': gender,
+          'age': age,
+          'temperature': temperature,
+          'systolic_blood_pressure': systolicBloodPressure,
+          'diastolic_blood_pressure': diastolicBloodPressure,
+          'pulse': pulse,
+          'respiratory_rate': respiratoryRate,
+          'patient_notes': patientNotes,
+          'examination_notes': examinationNotes,
+          'diagnosis_notes': diagnosisNotes,
+          'treatment_notes': treatmentNotes,
+        },
+      );
+
+      final NetworkResponse networkResponse = response.data!;
+      final CheckIn checkIn = CheckIn.fromJson(
+        networkResponse.data!['check_in'] as Map<String, dynamic>,
+      );
+      return Right(checkIn);
     } on DioError catch (e) {
       return Left(dioErrorToApplicationError(e));
     } catch (e, s) {

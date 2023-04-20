@@ -1,6 +1,7 @@
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
-from utano.model import SoftDeleteModel
+from utano.model import SoftDeleteModel, EnumModel
 
 
 class ApprovedMedicine(SoftDeleteModel):
@@ -17,6 +18,14 @@ class ApprovedMedicine(SoftDeleteModel):
         return self.name
 
 
+class DrugForm(EnumModel):
+    TABLET = "tablet", _("Tablet")
+    CAPSULE = "capsule", _("Capsule")
+    LIQUID = "liquid", _("Liquid")
+    PASTE = "paste", _("Paste")
+    OTHER = "other", _("Other")
+
+
 class Drug(SoftDeleteModel):
     name = models.CharField(max_length=255, blank=False, null=False, unique=True)
     description = models.TextField(blank=True, null=True)
@@ -24,6 +33,13 @@ class Drug(SoftDeleteModel):
         max_digits=10, decimal_places=2, blank=False, null=False
     )
     quantity = models.IntegerField(blank=False, null=False)
+    form = models.CharField(
+        max_length=255,
+        choices=DrugForm.choices,
+        default=DrugForm.TABLET,
+        blank=False,
+        null=False,
+    )
     is_active = models.BooleanField(default=True)
 
     class Meta:
