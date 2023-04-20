@@ -56,7 +56,7 @@ class PatientCheckInView(APIView):
 
                 # look for previous check ins  and set them as dismissed
                 previous_check_ins = PatientCheckIn.objects.filter(
-                    mobile_number=check_in.patient.mobile_number
+                    mobile_number=check_in.mobile_number
                 ).exclude(id=check_in.id)
 
                 for check_in in previous_check_ins:
