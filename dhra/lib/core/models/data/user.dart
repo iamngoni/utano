@@ -29,6 +29,7 @@ class User with _$User {
     @JsonKey(name: 'password_updated_at') required DateTime? passwordUpdatedAt,
     @JsonKey(name: 'receive_email_notifications')
         required bool receiveEmailNotifications,
+    required String? gender,
   }) = _User;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);

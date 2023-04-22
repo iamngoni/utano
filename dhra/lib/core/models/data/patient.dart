@@ -6,12 +6,10 @@
 //  Copyright (c) 2023 ModestNerds, Co
 //
 
-import 'package:dhra/core/models/data/user.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'employment_status.dart';
 import 'health_institution.dart';
-import 'marital_status.dart';
+import 'user.dart';
 
 part 'patient.freezed.dart';
 part 'patient.g.dart';
@@ -40,6 +38,12 @@ class Patient with _$Patient {
     @JsonKey(name: 'date_of_birth') DateTime? dateOfBirth,
   }) = _Patient;
 
+  const Patient._();
+
   factory Patient.fromJson(Map<String, dynamic> json) =>
       _$PatientFromJson(json);
+
+  int get age =>
+      (DateTime.now().difference(dateOfBirth ?? DateTime.now()).inDays / 365)
+          .floor();
 }

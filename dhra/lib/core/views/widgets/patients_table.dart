@@ -97,8 +97,9 @@ class PatientsTable extends StatelessWidget {
                     } else if (state is PatientsError) {
                       tableWidget = ExceptionWidget(
                         error: state.error,
-                        onRetry: () =>
-                            context.read<PatientsBloc>().add(ListPatients()),
+                        onRetry: () => context
+                            .read<PatientsBloc>()
+                            .add(const ListPatients()),
                       );
                     } else if (state is PatientsLoaded) {
                       tableWidget = SizedBox(

@@ -13,6 +13,7 @@ part 'drugs_state.dart';
 class DrugsBloc extends Bloc<DrugsEvent, DrugsState> {
   DrugsBloc({required this.repository}) : super(const DrugsInitial()) {
     on<ListDrugs>((event, emit) async {
+      emit(const DrugsLoading());
       try {
         final Either<ApplicationError, List<Drug>> response =
             await repository.listDrugs();

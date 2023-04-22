@@ -27,6 +27,7 @@ _$_User _$$_UserFromJson(Map<String, dynamic> json) => _$_User(
           ? null
           : DateTime.parse(json['password_updated_at'] as String),
       receiveEmailNotifications: json['receive_email_notifications'] as bool,
+      gender: json['gender'] as String?,
     );
 
 Map<String, dynamic> _$$_UserToJson(_$_User instance) {
@@ -52,6 +53,7 @@ Map<String, dynamic> _$$_UserToJson(_$_User instance) {
   writeNotNull(
       'password_updated_at', instance.passwordUpdatedAt?.toIso8601String());
   val['receive_email_notifications'] = instance.receiveEmailNotifications;
+  writeNotNull('gender', instance.gender);
   return val;
 }
 

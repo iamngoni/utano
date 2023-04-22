@@ -7,8 +7,8 @@
 //
 
 enum CheckInStatsOption {
-  monthly('MONTHLY'),
-  yearly('YEARLY');
+  monthly('This Month'),
+  yearly('This Year');
 
   const CheckInStatsOption(this.value);
   final String value;

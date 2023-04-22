@@ -41,6 +41,7 @@ mixin _$User {
   DateTime? get passwordUpdatedAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'receive_email_notifications')
   bool get receiveEmailNotifications => throw _privateConstructorUsedError;
+  String? get gender => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -73,7 +74,8 @@ abstract class $UserCopyWith<$Res> {
       @JsonKey(name: 'password_updated_at')
           DateTime? passwordUpdatedAt,
       @JsonKey(name: 'receive_email_notifications')
-          bool receiveEmailNotifications});
+          bool receiveEmailNotifications,
+      String? gender});
 }
 
 /// @nodoc
@@ -101,6 +103,7 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
     Object? role = null,
     Object? passwordUpdatedAt = freezed,
     Object? receiveEmailNotifications = null,
+    Object? gender = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -151,6 +154,10 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.receiveEmailNotifications
           : receiveEmailNotifications // ignore: cast_nullable_to_non_nullable
               as bool,
+      gender: freezed == gender
+          ? _value.gender
+          : gender // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -182,7 +189,8 @@ abstract class _$$_UserCopyWith<$Res> implements $UserCopyWith<$Res> {
       @JsonKey(name: 'password_updated_at')
           DateTime? passwordUpdatedAt,
       @JsonKey(name: 'receive_email_notifications')
-          bool receiveEmailNotifications});
+          bool receiveEmailNotifications,
+      String? gender});
 }
 
 /// @nodoc
@@ -206,6 +214,7 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
     Object? role = null,
     Object? passwordUpdatedAt = freezed,
     Object? receiveEmailNotifications = null,
+    Object? gender = freezed,
   }) {
     return _then(_$_User(
       id: null == id
@@ -256,6 +265,10 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
           ? _value.receiveEmailNotifications
           : receiveEmailNotifications // ignore: cast_nullable_to_non_nullable
               as bool,
+      gender: freezed == gender
+          ? _value.gender
+          : gender // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -284,7 +297,8 @@ class _$_User implements _User {
       @JsonKey(name: 'password_updated_at')
           required this.passwordUpdatedAt,
       @JsonKey(name: 'receive_email_notifications')
-          required this.receiveEmailNotifications});
+          required this.receiveEmailNotifications,
+      required this.gender});
 
   factory _$_User.fromJson(Map<String, dynamic> json) => _$$_UserFromJson(json);
 
@@ -321,10 +335,12 @@ class _$_User implements _User {
   @override
   @JsonKey(name: 'receive_email_notifications')
   final bool receiveEmailNotifications;
+  @override
+  final String? gender;
 
   @override
   String toString() {
-    return 'User(id: $id, lastLogin: $lastLogin, firstName: $firstName, lastName: $lastName, dateJoined: $dateJoined, createdAt: $createdAt, isActive: $isActive, isVerified: $isVerified, username: $username, role: $role, passwordUpdatedAt: $passwordUpdatedAt, receiveEmailNotifications: $receiveEmailNotifications)';
+    return 'User(id: $id, lastLogin: $lastLogin, firstName: $firstName, lastName: $lastName, dateJoined: $dateJoined, createdAt: $createdAt, isActive: $isActive, isVerified: $isVerified, username: $username, role: $role, passwordUpdatedAt: $passwordUpdatedAt, receiveEmailNotifications: $receiveEmailNotifications, gender: $gender)';
   }
 
   @override
@@ -354,7 +370,8 @@ class _$_User implements _User {
                 other.passwordUpdatedAt == passwordUpdatedAt) &&
             (identical(other.receiveEmailNotifications,
                     receiveEmailNotifications) ||
-                other.receiveEmailNotifications == receiveEmailNotifications));
+                other.receiveEmailNotifications == receiveEmailNotifications) &&
+            (identical(other.gender, gender) || other.gender == gender));
   }
 
   @JsonKey(ignore: true)
@@ -372,7 +389,8 @@ class _$_User implements _User {
       username,
       role,
       passwordUpdatedAt,
-      receiveEmailNotifications);
+      receiveEmailNotifications,
+      gender);
 
   @JsonKey(ignore: true)
   @override
@@ -410,7 +428,8 @@ abstract class _User implements User {
       @JsonKey(name: 'password_updated_at')
           required final DateTime? passwordUpdatedAt,
       @JsonKey(name: 'receive_email_notifications')
-          required final bool receiveEmailNotifications}) = _$_User;
+          required final bool receiveEmailNotifications,
+      required final String? gender}) = _$_User;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$_User.fromJson;
 
@@ -447,6 +466,8 @@ abstract class _User implements User {
   @override
   @JsonKey(name: 'receive_email_notifications')
   bool get receiveEmailNotifications;
+  @override
+  String? get gender;
   @override
   @JsonKey(ignore: true)
   _$$_UserCopyWith<_$_User> get copyWith => throw _privateConstructorUsedError;

@@ -122,7 +122,7 @@ class _CheckInStatsChartState extends State<CheckInStatsChart> {
                               ),
                             )
                             .toList(),
-                        isCurved: false,
+                        isCurved: true,
                         barWidth: 2,
                         isStrokeCapRound: true,
                         dotData: FlDotData(

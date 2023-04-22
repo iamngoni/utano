@@ -7,10 +7,14 @@
 //
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:handy_extensions/handy_extensions.dart';
 import 'package:relative_scale/relative_scale.dart';
 
+import '../../blocs/point_of_service/point_of_service_bloc.dart';
 import '../../configs/colors.dart';
+import 'point_of_service_prescription_point.dart';
+import 'utano_button.dart';
 
 class CheckInPrescriptionStage extends StatelessWidget {
   const CheckInPrescriptionStage({super.key});
@@ -23,6 +27,10 @@ class CheckInPrescriptionStage extends StatelessWidget {
           children: [
             Container(
               width: context.width,
+              padding: EdgeInsets.symmetric(
+                horizontal: sx(10),
+                vertical: sy(10),
+              ),
               decoration: BoxDecoration(
                 color: UtanoColors.white,
                 border: Border.all(
@@ -44,7 +52,63 @@ class CheckInPrescriptionStage extends StatelessWidget {
                 ],
                 borderRadius: BorderRadius.circular(11),
               ),
+              child: BlocBuilder<PointOfServiceBloc, PointOfServiceState>(
+                builder: (context, state) {
+                  if (state is PointOfServiceIdle) {
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Current Patient',
+                          style: TextStyle(
+                            color: UtanoColors.grey,
+                            fontWeight: FontWeight.w400,
+                            fontSize: sy(12),
+                          ),
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Text(
+                              '${state.patient?.user.firstName}'
+                              ' ${state.patient?.user.lastName}',
+                              style: TextStyle(
+                                color: UtanoColors.black,
+                                fontWeight: FontWeight.w500,
+                                fontSize: sy(12),
+                              ),
+                            ),
+                            Text(
+                              '${state.patient?.age} Years Old,'
+                              ' ${state.patient?.user.gender?.titleCase}',
+                              style: TextStyle(
+                                color: UtanoColors.grey,
+                                fontWeight: FontWeight.w400,
+                                fontSize: sy(12),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    );
+                  }
+
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Text('No patient information found. Reenter information'),
+                      UtanoButton(
+                        text: 'Go back',
+                      ),
+                    ],
+                  );
+                },
+              ),
             ),
+            SizedBox(
+              height: sy(15),
+            ),
+            const Expanded(child: PointOfServicePrescriptionPoint()),
           ],
         );
       },

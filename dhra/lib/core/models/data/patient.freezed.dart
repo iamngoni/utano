@@ -365,7 +365,7 @@ class __$$_PatientCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Patient implements _Patient {
+class _$_Patient extends _Patient {
   const _$_Patient(
       {required this.user,
       @JsonKey(name: 'medical_record_number') required this.medicalRecordNumber,
@@ -385,7 +385,8 @@ class _$_Patient implements _Patient {
       @JsonKey(name: 'marital_status') this.maritalStatus,
       @JsonKey(name: 'employment_status') this.employmentStatus,
       @JsonKey(name: 'national_id_number') this.nationalIdNumber,
-      @JsonKey(name: 'date_of_birth') this.dateOfBirth});
+      @JsonKey(name: 'date_of_birth') this.dateOfBirth})
+      : super._();
 
   factory _$_Patient.fromJson(Map<String, dynamic> json) =>
       _$$_PatientFromJson(json);
@@ -527,7 +528,7 @@ class _$_Patient implements _Patient {
   }
 }
 
-abstract class _Patient implements Patient {
+abstract class _Patient extends Patient {
   const factory _Patient(
       {required final User user,
       @JsonKey(name: 'medical_record_number')
@@ -561,6 +562,7 @@ abstract class _Patient implements Patient {
           final String? nationalIdNumber,
       @JsonKey(name: 'date_of_birth')
           final DateTime? dateOfBirth}) = _$_Patient;
+  const _Patient._() : super._();
 
   factory _Patient.fromJson(Map<String, dynamic> json) = _$_Patient.fromJson;
 
