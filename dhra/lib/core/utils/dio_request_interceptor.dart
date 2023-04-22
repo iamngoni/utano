@@ -10,6 +10,7 @@ import 'package:dio/dio.dart';
 import 'package:jwt_decode/jwt_decode.dart';
 
 import '../configs/configs.dart';
+import '../configs/storage_keys.dart';
 import '../models/data/auth_response.dart';
 import '../models/data/network_response.dart';
 import '../services/di.dart';
@@ -23,18 +24,19 @@ class DioRequestInterceptor extends Interceptor {
   ) async {
     try {
       String? accessToken =
-          await di<SecureStorageService>().getFromDisk('access_token');
+          await di<SecureStorageService>().getFromDisk(StorageKeys.accessToken);
       if (accessToken != null) {
         final bool isTokenExpired = Jwt.isExpired(accessToken);
         logger.info('isTokenExpired: $isTokenExpired');
 
         if (isTokenExpired) {
           logger.info('Clearing existing token');
-          await di<SecureStorageService>().removeFromDisk('access_token');
+          await di<SecureStorageService>()
+              .removeFromDisk(StorageKeys.accessToken);
           logger.info('Fetching new token');
           final dio = di<Dio>();
-          final String? refreshToken =
-              await di<SecureStorageService>().getFromDisk('refresh_token');
+          final String? refreshToken = await di<SecureStorageService>()
+              .getFromDisk(StorageKeys.refreshToken);
           final Response<NetworkResponse> response = await dio.post(
             '/auth/token/refresh',
             data: {
@@ -46,9 +48,9 @@ class DioRequestInterceptor extends Interceptor {
               AuthResponse.fromJson(networkResponse.data!);
           accessToken = authResponse.accessToken;
           await di<SecureStorageService>()
-              .saveToDisk('access_token', authResponse.accessToken);
+              .saveToDisk(StorageKeys.accessToken, authResponse.accessToken);
           await di<SecureStorageService>()
-              .saveToDisk('refresh_token', authResponse.refreshToken);
+              .saveToDisk(StorageKeys.refreshToken, authResponse.refreshToken);
         }
 
         options.headers.addAll({'Authorization': 'Bearer $accessToken'});

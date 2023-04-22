@@ -4,6 +4,7 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:jwt_decode/jwt_decode.dart';
 
 import '../../../core/configs/configs.dart';
+import '../../../core/configs/storage_keys.dart';
 import '../../../core/models/data/application_error.dart';
 import '../../../core/models/data/auth_response.dart';
 import '../../../core/services/di.dart';
@@ -27,9 +28,9 @@ class AuthBloc extends HydratedBloc<AuthEvent, AuthState> {
             (AuthResponse response) async {
           emit(Authenticated(response));
           await di<SecureStorageService>()
-              .saveToDisk('access_token', response.accessToken);
+              .saveToDisk(StorageKeys.accessToken, response.accessToken);
           await di<SecureStorageService>()
-              .saveToDisk('refresh_token', response.refreshToken);
+              .saveToDisk(StorageKeys.refreshToken, response.refreshToken);
         });
       } catch (e, s) {
         logger
