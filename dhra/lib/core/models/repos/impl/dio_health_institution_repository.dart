@@ -15,6 +15,7 @@ import '../../data/application_error.dart';
 import '../../data/check_in.dart';
 import '../../data/check_in_monthly_stats.dart';
 import '../../data/check_in_yearly_stats.dart';
+import '../../data/drug.dart';
 import '../../data/employee.dart';
 import '../../data/gender.dart';
 import '../../data/health_institution.dart';
@@ -231,27 +232,37 @@ class DioHealthInstitutionRepository extends HealthInstitutionRepository {
     required String treatmentNotes,
     String? address,
     int? age,
+    DateTime? dateOfBirth,
   }) async {
+    final Map<String, dynamic> checkInData = {
+      'first_name': firstName,
+      'last_name': lastName,
+      'address': address,
+      'mobile_number': mobileNumber,
+      'gender': gender,
+      'temperature': temperature,
+      'systolic_blood_pressure': systolicBloodPressure,
+      'diastolic_blood_pressure': diastolicBloodPressure,
+      'pulse': pulse,
+      'respiratory_rate': respiratoryRate,
+      'patient_notes': patientNotes,
+      'examination_notes': examinationNotes,
+      'diagnosis_notes': diagnosisNotes,
+      'treatment_notes': treatmentNotes,
+    };
+
+    if (dateOfBirth != null) {
+      // use YYYY-MM-DD format
+      checkInData['date_of_birth'] =
+          dateOfBirth.toIso8601String().split('T')[0];
+    } else {
+      checkInData['age'] = age;
+    }
+
     try {
       final Response<NetworkResponse> response = await dio.post(
         '/pos/check-in',
-        data: {
-          'first_name': firstName,
-          'last_name': lastName,
-          'address': address,
-          'mobile_number': mobileNumber,
-          'gender': gender,
-          'age': age,
-          'temperature': temperature,
-          'systolic_blood_pressure': systolicBloodPressure,
-          'diastolic_blood_pressure': diastolicBloodPressure,
-          'pulse': pulse,
-          'respiratory_rate': respiratoryRate,
-          'patient_notes': patientNotes,
-          'examination_notes': examinationNotes,
-          'diagnosis_notes': diagnosisNotes,
-          'treatment_notes': treatmentNotes,
-        },
+        data: checkInData,
       );
 
       final NetworkResponse networkResponse = response.data!;
@@ -259,6 +270,26 @@ class DioHealthInstitutionRepository extends HealthInstitutionRepository {
         networkResponse.data!['check_in'] as Map<String, dynamic>,
       );
       return Right(checkIn);
+    } on DioError catch (e) {
+      return Left(dioErrorToApplicationError(e));
+    } catch (e, s) {
+      logger
+        ..e(e)
+        ..e(s);
+      return Left(ApplicationError.unknownError());
+    }
+  }
+
+  @override
+  Future<Either<ApplicationError, List<Drug>>> listDrugs() async {
+    try {
+      final Response<NetworkResponse> response =
+          await dio.get('/pharmacy/drugs');
+      final NetworkResponse networkResponse = response.data!;
+      final List<Drug> drugs = (networkResponse.data!['drugs'] as List)
+          .map((drug) => Drug.fromJson(drug as Map<String, dynamic>))
+          .toList();
+      return Right(drugs);
     } on DioError catch (e) {
       return Left(dioErrorToApplicationError(e));
     } catch (e, s) {

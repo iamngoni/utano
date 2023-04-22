@@ -12,6 +12,7 @@ import '../../data/application_error.dart';
 import '../../data/check_in.dart';
 import '../../data/check_in_monthly_stats.dart';
 import '../../data/check_in_yearly_stats.dart';
+import '../../data/drug.dart';
 import '../../data/employee.dart';
 import '../../data/gender.dart';
 import '../../data/health_institution.dart';
@@ -68,5 +69,10 @@ abstract class HealthInstitutionRepository {
     required String treatmentNotes,
     String? address,
     int? age,
+    DateTime? dateOfBirth,
   });
+
+  /// List of drugs for health institution
+  /// Returns the list of [Drug]
+  Future<Either<ApplicationError, List<Drug>>> listDrugs();
 }

@@ -17,5 +17,5 @@ Map<String, dynamic> _$$_AuthResponseToJson(_$_AuthResponse instance) =>
     <String, dynamic>{
       'access_token': instance.accessToken,
       'refresh_token': instance.refreshToken,
-      'user': instance.user,
+      'user': instance.user.toJson(),
     };

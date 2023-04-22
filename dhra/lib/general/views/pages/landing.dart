@@ -7,7 +7,13 @@ import 'package:lottie/lottie.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:relative_scale/relative_scale.dart';
 
+import '../../../core/blocs/check_in_stats/check_in_stats_bloc.dart';
+import '../../../core/blocs/drugs/drugs_bloc.dart';
+import '../../../core/blocs/health_institution_stats/health_institution_stats_bloc.dart';
+import '../../../core/blocs/patients/patients_bloc.dart';
+import '../../../core/blocs/system_configs/system_configs_bloc.dart';
 import '../../../core/configs/configs.dart';
+import '../../../core/models/data/user_role.dart';
 import '../../../core/utils/user_role_to_page_mappings.dart';
 import '../../../core/utils/user_role_to_screens_mappings.dart';
 import '../../../core/views/widgets/loader_widget.dart';
@@ -50,6 +56,25 @@ class _LandingPageState extends State<LandingPage> {
               listener: (context, state) {
                 if (state is Authenticated) {
                   logger.i('Authenticated signal ...');
+
+                  if (![UserRole.systemAdmin, UserRole.patient]
+                      .contains(state.authResponse.user.role)) {
+                    logger.i('Loading system configs');
+                    context.read<SystemConfigsBloc>().add(LoadSystemConfigs());
+                    logger.i('Loading check in stats');
+                    context
+                        .read<CheckInStatsBloc>()
+                        .add(const LoadCheckInStats());
+                    logger.i('Loading health institution stats');
+                    context
+                        .read<HealthInstitutionStatsBloc>()
+                        .add(GetStatistics());
+                    logger.i('Loading drugs');
+                    context.read<DrugsBloc>().add(ListDrugs());
+                    logger.i('Loading patients');
+                    context.read<PatientsBloc>().add(const ListPatients());
+                  }
+
                   context.goToRefresh(
                     page: BlocProvider<NavigationBloc>(
                       create: (_) => NavigationBloc(

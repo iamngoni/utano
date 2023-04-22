@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:handy_extensions/handy_extensions.dart';
 import 'package:localregex/localregex.dart';
+import 'package:macos_ui/macos_ui.dart';
 import 'package:relative_scale/relative_scale.dart';
 
 import '../../blocs/dropdown_button/dropdown_button_bloc.dart';
@@ -28,24 +29,39 @@ class PersonalInformationForm extends StatefulWidget {
     required TextEditingController mobileNumberController,
     required TextEditingController addressController,
     required TextEditingController nationalIdNumberController,
+    required TextEditingController ageController,
+    required DateTime? dateOfBirth,
     required Gender? gender,
     required OnUpdateGender onUpdateGender,
+    required bool useAge,
+    required OnUpdateUseAge onUpdateUseAge,
+    required OnUpdateDateOfBirth onUpdateDateOfBirth,
     super.key,
   })  : _firstNameController = firstNameController,
         _lastNameController = lastNameController,
         _mobileNumberController = mobileNumberController,
         _addressController = addressController,
         _nationalIdNumberController = nationalIdNumberController,
+        _ageController = ageController,
         _gender = gender,
-        _onUpdateGender = onUpdateGender;
+        _onUpdateGender = onUpdateGender,
+        _useAge = useAge,
+        _onUpdateUseAge = onUpdateUseAge,
+        _onUpdateDateOfBirth = onUpdateDateOfBirth,
+        _dateOfBirth = dateOfBirth;
 
   final TextEditingController _firstNameController;
   final TextEditingController _lastNameController;
   final TextEditingController _mobileNumberController;
   final TextEditingController _addressController;
   final TextEditingController _nationalIdNumberController;
+  final TextEditingController _ageController;
+  final DateTime? _dateOfBirth;
   final Gender? _gender;
+  final bool _useAge;
   final OnUpdateGender _onUpdateGender;
+  final OnUpdateUseAge _onUpdateUseAge;
+  final OnUpdateDateOfBirth _onUpdateDateOfBirth;
 
   @override
   State<PersonalInformationForm> createState() =>
@@ -149,6 +165,89 @@ class _PersonalInformationFormState extends State<PersonalInformationForm> {
 
                     return null;
                   },
+                ),
+                SizedBox(
+                  height: sy(10),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Date of Birth / Age',
+                          style: TextStyle(
+                            color: UtanoColors.grey,
+                            fontWeight: FontWeight.w400,
+                            fontSize: sy(12),
+                          ),
+                        ),
+                        MacosSwitch(
+                          value: widget._useAge,
+                          onChanged: widget._onUpdateUseAge,
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: sy(7),
+                    ),
+                    if (widget._useAge == false)
+                      GestureDetector(
+                        onTap: () async {
+                          final DateTime? dateOfBirth = await showDatePicker(
+                            context: context,
+                            initialDate: widget._dateOfBirth ?? DateTime.now(),
+                            firstDate: DateTime.now()
+                                .subtract(const Duration(days: 365 * 100)),
+                            lastDate: DateTime.now(),
+                            currentDate: DateTime.now(),
+                          );
+                          if (dateOfBirth != null) {
+                            widget._onUpdateDateOfBirth(dateOfBirth);
+                          }
+                        },
+                        child: Container(
+                          width: context.width,
+                          padding: EdgeInsets.symmetric(
+                            vertical: sy(10),
+                          ),
+                          decoration: BoxDecoration(
+                            color: UtanoColors.white,
+                            border: Border.all(
+                              color: UtanoColors.border.withOpacity(0.5),
+                              width: 1.5,
+                            ),
+                            borderRadius: BorderRadius.circular(7),
+                          ),
+                          alignment: Alignment.center,
+                          child: Text(
+                            widget._dateOfBirth != null
+                                ? widget._dateOfBirth!.readableDate
+                                : DateTime.now().readableDate,
+                          ),
+                        ),
+                      )
+                    else
+                      UtanoTextField(
+                        label: 'How old is the patient?',
+                        placeholder: '18',
+                        controller: widget._ageController,
+                        keyboardType: TextInputType.number,
+                        validator: (String? value) {
+                          if (widget._useAge &&
+                              (value == null || value.isEmpty)) {
+                            return 'Age is required';
+                          }
+
+                          if (!value!.isNumeric) {
+                            return 'Age must be a number';
+                          }
+
+                          return null;
+                        },
+                      ),
+                  ],
                 ),
                 SizedBox(
                   height: sy(10),

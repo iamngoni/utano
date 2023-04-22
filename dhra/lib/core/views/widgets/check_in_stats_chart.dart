@@ -41,6 +41,7 @@ class _CheckInStatsChartState extends State<CheckInStatsChart> {
   @override
   void initState() {
     super.initState();
+    bloc = BlocProvider.of<CheckInStatsBloc>(context);
     if (bloc.state is! CheckInStatsLoaded) {
       bloc.add(const LoadCheckInStats());
     }

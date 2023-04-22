@@ -23,16 +23,25 @@ _$_HealthInstitution _$$_HealthInstitutionFromJson(Map<String, dynamic> json) =>
     );
 
 Map<String, dynamic> _$$_HealthInstitutionToJson(
-        _$_HealthInstitution instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'created_at': instance.createdAt.toIso8601String(),
-      'updated_at': instance.updatedAt.toIso8601String(),
-      'deleted_at': instance.deletedAt?.toIso8601String(),
-      'name': instance.name,
-      'address': instance.address,
-      'phone_number': instance.phoneNumber,
-      'email': instance.email,
-      'logo': instance.logo,
-      'district': instance.district,
-    };
+    _$_HealthInstitution instance) {
+  final val = <String, dynamic>{
+    'id': instance.id,
+    'created_at': instance.createdAt.toIso8601String(),
+    'updated_at': instance.updatedAt.toIso8601String(),
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('deleted_at', instance.deletedAt?.toIso8601String());
+  val['name'] = instance.name;
+  val['address'] = instance.address;
+  val['phone_number'] = instance.phoneNumber;
+  val['email'] = instance.email;
+  val['logo'] = instance.logo;
+  val['district'] = instance.district.toJson();
+  return val;
+}

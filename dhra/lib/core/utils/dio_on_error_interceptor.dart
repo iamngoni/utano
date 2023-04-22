@@ -23,7 +23,7 @@ class DioOnErrorInterceptor extends Interceptor {
       if (refreshToken != null) {
         final dio = di<Dio>();
         final Response<NetworkResponse> response = await dio.post(
-          '/auth/token/refresh',
+          '/auth/refresh',
           data: {
             'refresh_token': refreshToken,
           },

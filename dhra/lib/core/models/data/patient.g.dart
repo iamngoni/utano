@@ -31,25 +31,34 @@ _$_Patient _$$_PatientFromJson(Map<String, dynamic> json) => _$_Patient(
           : DateTime.parse(json['date_of_birth'] as String),
     );
 
-Map<String, dynamic> _$$_PatientToJson(_$_Patient instance) =>
-    <String, dynamic>{
-      'user': instance.user,
-      'medical_record_number': instance.medicalRecordNumber,
-      'place_of_birth': instance.placeOfBirth,
-      'address': instance.address,
-      'blood_type': instance.bloodType,
-      'fitzpatrick_skin_type': instance.fitzpatrickSkinType,
-      'wheelchair': instance.wheelchair,
-      'father_name': instance.fatherName,
-      'mother_name': instance.motherName,
-      'occupation': instance.occupation,
-      'registered_at': instance.registeredAt,
-      'registered_on': instance.registeredOn.toIso8601String(),
-      'height': instance.height,
-      'weight': instance.weight,
-      'mobile_number': instance.mobileNumber,
-      'marital_status': instance.maritalStatus,
-      'employment_status': instance.employmentStatus,
-      'national_id_number': instance.nationalIdNumber,
-      'date_of_birth': instance.dateOfBirth?.toIso8601String(),
-    };
+Map<String, dynamic> _$$_PatientToJson(_$_Patient instance) {
+  final val = <String, dynamic>{
+    'user': instance.user.toJson(),
+    'medical_record_number': instance.medicalRecordNumber,
+    'place_of_birth': instance.placeOfBirth,
+    'address': instance.address,
+    'blood_type': instance.bloodType,
+    'fitzpatrick_skin_type': instance.fitzpatrickSkinType,
+    'wheelchair': instance.wheelchair,
+    'father_name': instance.fatherName,
+    'mother_name': instance.motherName,
+    'occupation': instance.occupation,
+    'registered_at': instance.registeredAt.toJson(),
+    'registered_on': instance.registeredOn.toIso8601String(),
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('height', instance.height);
+  writeNotNull('weight', instance.weight);
+  writeNotNull('mobile_number', instance.mobileNumber);
+  writeNotNull('marital_status', instance.maritalStatus);
+  writeNotNull('employment_status', instance.employmentStatus);
+  writeNotNull('national_id_number', instance.nationalIdNumber);
+  writeNotNull('date_of_birth', instance.dateOfBirth?.toIso8601String());
+  return val;
+}

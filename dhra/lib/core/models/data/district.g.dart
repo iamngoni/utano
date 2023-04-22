@@ -14,9 +14,18 @@ _$_District _$$_DistrictFromJson(Map<String, dynamic> json) => _$_District(
           : Province.fromJson(json['province'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$_DistrictToJson(_$_District instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'name': instance.name,
-      'province': instance.province,
-    };
+Map<String, dynamic> _$$_DistrictToJson(_$_District instance) {
+  final val = <String, dynamic>{
+    'id': instance.id,
+    'name': instance.name,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('province', instance.province?.toJson());
+  return val;
+}

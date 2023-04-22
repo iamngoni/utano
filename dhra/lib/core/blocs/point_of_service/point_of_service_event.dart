@@ -21,6 +21,7 @@ class CheckInPatient extends PointOfServiceEvent {
     required this.treatmentNotes,
     this.address,
     this.age,
+    this.dateOfBirth,
   });
 
   final String firstName;
@@ -38,6 +39,7 @@ class CheckInPatient extends PointOfServiceEvent {
   final String treatmentNotes;
   final String? address;
   final int? age;
+  final DateTime? dateOfBirth;
 
   @override
   List<Object> get props => [];

@@ -57,6 +57,7 @@ class AuthBloc extends HydratedBloc<AuthEvent, AuthState> {
       logger.i('User authenticated using existing token');
       return Authenticated(authResponse);
     } catch (_) {
+      logger.e(_);
       return null;
     }
   }

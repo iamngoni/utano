@@ -37,6 +37,7 @@ class PointOfServiceBloc
         gender: event.gender,
         address: event.address,
         age: event.age,
+        dateOfBirth: event.dateOfBirth,
         temperature: event.temperature,
         systolicBloodPressure: event.systolicBloodPressure,
         diastolicBloodPressure: event.diastolicBloodPressure,

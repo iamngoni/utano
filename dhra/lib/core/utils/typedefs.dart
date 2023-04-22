@@ -11,3 +11,7 @@ import '../models/data/gender.dart';
 typedef RSize = double Function(double);
 
 typedef OnUpdateGender = void Function(Gender? gender);
+
+typedef OnUpdateUseAge = void Function(bool useAge);
+
+typedef OnUpdateDateOfBirth = void Function(DateTime? dateOfBirth);

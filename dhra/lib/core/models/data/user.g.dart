@@ -29,20 +29,31 @@ _$_User _$$_UserFromJson(Map<String, dynamic> json) => _$_User(
       receiveEmailNotifications: json['receive_email_notifications'] as bool,
     );
 
-Map<String, dynamic> _$$_UserToJson(_$_User instance) => <String, dynamic>{
-      'id': instance.id,
-      'last_login': instance.lastLogin?.toIso8601String(),
-      'first_name': instance.firstName,
-      'last_name': instance.lastName,
-      'date_joined': instance.dateJoined?.toIso8601String(),
-      'created_at': instance.createdAt?.toIso8601String(),
-      'is_active': instance.isActive,
-      'is_verified': instance.isVerified,
-      'username': instance.username,
-      'role': _$UserRoleEnumMap[instance.role]!,
-      'password_updated_at': instance.passwordUpdatedAt?.toIso8601String(),
-      'receive_email_notifications': instance.receiveEmailNotifications,
-    };
+Map<String, dynamic> _$$_UserToJson(_$_User instance) {
+  final val = <String, dynamic>{
+    'id': instance.id,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('last_login', instance.lastLogin?.toIso8601String());
+  val['first_name'] = instance.firstName;
+  val['last_name'] = instance.lastName;
+  writeNotNull('date_joined', instance.dateJoined?.toIso8601String());
+  writeNotNull('created_at', instance.createdAt?.toIso8601String());
+  val['is_active'] = instance.isActive;
+  val['is_verified'] = instance.isVerified;
+  val['username'] = instance.username;
+  val['role'] = _$UserRoleEnumMap[instance.role]!;
+  writeNotNull(
+      'password_updated_at', instance.passwordUpdatedAt?.toIso8601String());
+  val['receive_email_notifications'] = instance.receiveEmailNotifications;
+  return val;
+}
 
 const _$UserRoleEnumMap = {
   UserRole.patient: 'PATIENT',

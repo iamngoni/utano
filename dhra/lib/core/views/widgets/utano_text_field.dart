@@ -42,7 +42,6 @@ class _UtanoTextFieldState extends State<UtanoTextField> {
   @override
   void initState() {
     super.initState();
-
     widget.controller?.addListener(() {
       if (widget.validator != null && widget.controller != null) {
         setState(() {

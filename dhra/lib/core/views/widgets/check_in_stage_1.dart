@@ -32,8 +32,13 @@ class CheckInStage1 extends StatelessWidget {
     required TextEditingController diastolicBloodPressureController,
     required TextEditingController pulseController,
     required TextEditingController respiratoryRateController,
+    required TextEditingController ageController,
     required OnUpdateGender onUpdateGender,
-    Gender? gender,
+    required OnUpdateUseAge onUpdateUseAge,
+    required OnUpdateDateOfBirth onUpdateDateOfBirth,
+    required bool useAge,
+    required Gender? gender,
+    required DateTime? dateOfBirth,
     super.key,
   })  : _firstNameController = firstNameController,
         _lastNameController = lastNameController,
@@ -45,9 +50,14 @@ class CheckInStage1 extends StatelessWidget {
         _diastolicBloodPressureController = diastolicBloodPressureController,
         _pulseController = pulseController,
         _respiratoryRateController = respiratoryRateController,
+        _ageController = ageController,
         _gender = gender,
+        _useAge = useAge,
+        _dateOfBirth = dateOfBirth,
+        _onUpdateUseAge = onUpdateUseAge,
         _onUpdateGender = onUpdateGender,
-        _pageController = pageController;
+        _pageController = pageController,
+        _onUpdateDateOfBirth = onUpdateDateOfBirth;
 
   final PageController _pageController;
   final TextEditingController _firstNameController;
@@ -60,8 +70,13 @@ class CheckInStage1 extends StatelessWidget {
   final TextEditingController _diastolicBloodPressureController;
   final TextEditingController _pulseController;
   final TextEditingController _respiratoryRateController;
+  final TextEditingController _ageController;
   final Gender? _gender;
+  final bool _useAge;
+  final DateTime? _dateOfBirth;
   final OnUpdateGender _onUpdateGender;
+  final OnUpdateUseAge _onUpdateUseAge;
+  final OnUpdateDateOfBirth _onUpdateDateOfBirth;
 
   @override
   Widget build(BuildContext context) {
@@ -78,8 +93,13 @@ class CheckInStage1 extends StatelessWidget {
                     mobileNumberController: _mobileNumberController,
                     addressController: _addressController,
                     nationalIdNumberController: _nationalIdNumberController,
+                    ageController: _ageController,
                     gender: _gender,
                     onUpdateGender: _onUpdateGender,
+                    useAge: _useAge,
+                    onUpdateUseAge: _onUpdateUseAge,
+                    dateOfBirth: _dateOfBirth,
+                    onUpdateDateOfBirth: _onUpdateDateOfBirth,
                   ),
                   SizedBox(
                     width: sx(5),

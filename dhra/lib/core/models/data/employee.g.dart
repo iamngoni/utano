@@ -25,17 +25,26 @@ _$_Employee _$$_EmployeeFromJson(Map<String, dynamic> json) => _$_Employee(
       bio: json['bio'] as String?,
     );
 
-Map<String, dynamic> _$$_EmployeeToJson(_$_Employee instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'created_at': instance.createdAt.toIso8601String(),
-      'updated_at': instance.updatedAt.toIso8601String(),
-      'tags': instance.tags,
-      'qualifications': instance.qualifications,
-      'registered_on': instance.registeredOn.toIso8601String(),
-      'user': instance.user,
-      'registered_at': instance.registeredAt,
-      'deleted_at': instance.deletedAt?.toIso8601String(),
-      'professional_title': instance.professionalTitle,
-      'bio': instance.bio,
-    };
+Map<String, dynamic> _$$_EmployeeToJson(_$_Employee instance) {
+  final val = <String, dynamic>{
+    'id': instance.id,
+    'created_at': instance.createdAt.toIso8601String(),
+    'updated_at': instance.updatedAt.toIso8601String(),
+    'tags': instance.tags,
+    'qualifications': instance.qualifications,
+    'registered_on': instance.registeredOn.toIso8601String(),
+    'user': instance.user.toJson(),
+    'registered_at': instance.registeredAt.toJson(),
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('deleted_at', instance.deletedAt?.toIso8601String());
+  writeNotNull('professional_title', instance.professionalTitle);
+  writeNotNull('bio', instance.bio);
+  return val;
+}

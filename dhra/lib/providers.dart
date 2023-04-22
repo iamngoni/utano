@@ -13,6 +13,7 @@ import 'admin/blocs/employee_registration/employee_registration_bloc.dart';
 import 'admin/blocs/employees/employees_bloc.dart';
 import 'core/blocs/change_password/change_password_bloc.dart';
 import 'core/blocs/check_in_stats/check_in_stats_bloc.dart';
+import 'core/blocs/drugs/drugs_bloc.dart';
 import 'core/blocs/health_institution_stats/health_institution_stats_bloc.dart';
 import 'core/blocs/patients/patients_bloc.dart';
 import 'core/blocs/point_of_service/point_of_service_bloc.dart';
@@ -95,6 +96,11 @@ List<BlocProvider> providers = [
   ),
   BlocProvider<PointOfServiceBloc>(
     create: (_) => PointOfServiceBloc(
+      repository: DioHealthInstitutionRepository(dio),
+    ),
+  ),
+  BlocProvider<DrugsBloc>(
+    create: (_) => DrugsBloc(
       repository: DioHealthInstitutionRepository(dio),
     ),
   ),

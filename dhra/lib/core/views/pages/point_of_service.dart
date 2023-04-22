@@ -9,6 +9,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:handy_extensions/handy_extensions.dart';
+import 'package:macos_ui/macos_ui.dart';
 import 'package:relative_scale/relative_scale.dart';
 
 import '../../blocs/point_of_service/point_of_service_bloc.dart';
@@ -16,11 +17,13 @@ import '../../configs/colors.dart';
 import '../../models/data/gender.dart';
 import '../../services/di.dart';
 import '../../services/notifications.dart';
+import '../widgets/check_in_prescription_stage.dart';
 import '../widgets/check_in_stage_1.dart';
 import '../widgets/check_in_stage_2.dart';
 import '../widgets/exception_widget.dart';
 import '../widgets/loader_widget.dart';
 import '../widgets/page_header.dart';
+import '../widgets/utano_button.dart';
 
 class PointOfServicePage extends StatefulWidget {
   const PointOfServicePage({super.key});
@@ -70,10 +73,22 @@ class _PointOfServicePageState extends State<PointOfServicePage> {
   final TextEditingController _treatmentNotesController =
       TextEditingController();
 
+  final TextEditingController _ageController = TextEditingController();
+
   Gender? _gender;
+  bool _useAge = false;
+  DateTime? _dateOfBirth;
 
   void _updateGender(Gender? gender) => setState(() {
         _gender = gender;
+      });
+
+  void _updateUseAge(bool useAge) => setState(() {
+        _useAge = useAge;
+      });
+
+  void _updateDateOfBirth(DateTime? dateOfBirth) => setState(() {
+        _dateOfBirth = dateOfBirth;
       });
 
   void _checkInPatient() {
@@ -84,10 +99,8 @@ class _PointOfServicePageState extends State<PointOfServicePage> {
             mobileNumber: _mobileNumberController.text,
             gender: 'MALE',
             address: _addressController.text,
-            // todo: fix here by adding a datetime picker
-            age:
-                (DateTime(1998, 10, 13).difference(DateTime.now()).inDays / 365)
-                    .floor(),
+            age: _useAge ? int.parse(_ageController.text) : null,
+            dateOfBirth: _useAge ? null : _dateOfBirth,
             temperature: double.parse(_temperatureController.text),
             systolicBloodPressure:
                 double.parse(_systolicBloodPressureController.text),
@@ -101,6 +114,33 @@ class _PointOfServicePageState extends State<PointOfServicePage> {
             treatmentNotes: _treatmentNotesController.text,
           ),
         );
+  }
+
+  void _clearControllersAndFormFields() {
+    _firstNameController.clear();
+    _lastNameController.clear();
+    _mobileNumberController.clear();
+    _addressController.clear();
+    _nationalIdNumberController.clear();
+    _temperatureController.clear();
+    _systolicBloodPressureController.clear();
+    _diastolicBloodPressureController.clear();
+    _pulseController.clear();
+    _respiratoryRateController.clear();
+    _patientNotesController.clear();
+    _examinationNotesController.clear();
+    _diagnosisNotesController.clear();
+    _treatmentNotesController.clear();
+    _ageController.clear();
+    _gender = null;
+    _useAge = false;
+    _dateOfBirth = null;
+
+    _pageController.animateToPage(
+      0,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
   }
 
   @override
@@ -128,6 +168,43 @@ class _PointOfServicePageState extends State<PointOfServicePage> {
                           title: 'Record saved',
                           message: 'Record for ${state.patient?.user.firstName}'
                               ' saved!',
+                        );
+
+                        showMacosAlertDialog<void>(
+                          context: context,
+                          builder: (_) => MacosAlertDialog(
+                            appIcon: const FlutterLogo(
+                              size: 56,
+                            ),
+                            title: const Text('Prescription'),
+                            message: const Text(
+                              'Will the patient be requiring a prescription',
+                            ),
+                            primaryButton: UtanoButton(
+                              text: 'Yes',
+                              onTap: () {
+                                context.goBack();
+                                _pageController.animateToPage(
+                                  2,
+                                  duration: const Duration(milliseconds: 500),
+                                  curve: Curves.easeIn,
+                                );
+                              },
+                            ),
+                            secondaryButton: UtanoButton(
+                              text: 'Complete Session',
+                              onTap: () {
+                                context.goBack();
+                                di<NotificationsService>()
+                                    .showSuccesssNotification(
+                                  title: 'Session complete',
+                                  message: 'Records Saved!',
+                                );
+                                // clear all controllers
+                                _clearControllersAndFormFields();
+                              },
+                            ),
+                          ),
                         );
                       }
                     }
@@ -171,7 +248,12 @@ class _PointOfServicePageState extends State<PointOfServicePage> {
                           pulseController: _pulseController,
                           respiratoryRateController: _respiratoryRateController,
                           gender: _gender,
+                          useAge: _useAge,
+                          dateOfBirth: _dateOfBirth,
+                          ageController: _ageController,
                           onUpdateGender: _updateGender,
+                          onUpdateUseAge: _updateUseAge,
+                          onUpdateDateOfBirth: _updateDateOfBirth,
                         ),
                         CheckInStage2(
                           patientNotesController: _patientNotesController,
@@ -182,6 +264,7 @@ class _PointOfServicePageState extends State<PointOfServicePage> {
                           pageController: _pageController,
                           onSubmit: _checkInPatient,
                         ),
+                        const CheckInPrescriptionStage(),
                       ],
                     );
                   },
