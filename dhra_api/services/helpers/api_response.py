@@ -37,7 +37,7 @@ class ApiResponse(HttpResponse):
             "data": data,
             "issues": issues,
             "version": 1.0,
-            "versioned_by": "ModestNerds, Co",
+            "versioned_by": "Ngonidzashe Mangudya (H180202M)",
         }
 
         logger.info("Encrypting response")

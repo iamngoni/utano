@@ -29,4 +29,5 @@ class DrugModelSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         drug = super(DrugModelSerializer, self).to_representation(instance)
         drug["history"] = DrugHistoryModelSerializer(instance.history, many=True).data
+        del drug["health_institution"]
         return drug

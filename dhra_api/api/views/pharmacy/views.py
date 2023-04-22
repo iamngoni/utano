@@ -75,7 +75,9 @@ class DrugsView(APIView):
 
     def get(self, request):
         try:
-            drugs = Drug.objects.prefetch_related("history").all()
+            drugs = Drug.objects.filter(
+                health_institution=request.user.employee.registered_at
+            ).prefetch_related("history")
             return ApiResponse(
                 data={"drugs": DrugModelSerializer(drugs, many=True).data}
             )

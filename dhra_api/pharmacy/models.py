@@ -40,6 +40,13 @@ class Drug(SoftDeleteModel):
         blank=False,
         null=False,
     )
+    health_institution = models.ForeignKey(
+        "health_institution.HealthInstitution",
+        related_name="drugs",
+        on_delete=models.CASCADE,
+        blank=False,
+        null=False,
+    )
     is_active = models.BooleanField(default=True)
 
     class Meta:
