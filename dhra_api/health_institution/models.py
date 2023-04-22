@@ -24,6 +24,9 @@ class HealthInstitution(SoftDeleteModel):
         verbose_name_plural = "Health Institutions"
         table_prefix = "inst"
 
+    def __str__(self):
+        return self.name
+
 
 class HealthInstitutionRoom(SoftDeleteModel):
     health_institution = models.ForeignKey(
@@ -39,3 +42,6 @@ class HealthInstitutionRoom(SoftDeleteModel):
         verbose_name = "Room"
         verbose_name_plural = "Rooms"
         table_prefix = "room"
+
+    def __str__(self):
+        return f"{self.room_number} - {self.health_institution.name}"

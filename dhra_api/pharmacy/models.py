@@ -55,6 +55,9 @@ class Drug(SoftDeleteModel):
         table_prefix = "drug"
         ordering = ("name",)
 
+    def __str__(self):
+        return self.name
+
 
 class DrugHistory(SoftDeleteModel):
     drug = models.ForeignKey(
@@ -71,6 +74,9 @@ class DrugHistory(SoftDeleteModel):
         verbose_name_plural = "Drugs History"
         table_prefix = "dg_hist"
         ordering = ("-updated_at",)
+
+    def __str__(self):
+        return self.drug.name
 
 
 class Order(SoftDeleteModel):

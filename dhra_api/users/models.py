@@ -57,7 +57,7 @@ class User(SoftDeleteModel, AbstractUser):
     objects = UserManager()
 
     def __str__(self):
-        return f"{self.first_name} {self.last_name}"
+        return self.get_full_name()
 
     class Meta:
         ordering = ["-updated_at"]
@@ -161,6 +161,9 @@ class Patient(SoftDeleteModel):
         verbose_name_plural = "Patients"
         table_prefix = "pt"
 
+    def __str__(self):
+        return f"{self.user.get_full_name()}"
+
     @property
     def get_mobile_number(self):
         return f"0{self.mobile_number.national_number}"
@@ -192,4 +195,4 @@ class Employee(SoftDeleteModel):
         table_prefix = "employee"
 
     def __str__(self):
-        return f"{self.user.first_name} {self.user.last_name}"
+        return self.user.get_full_name()

@@ -26,6 +26,9 @@ class EmergencyContact(SoftDeleteModel):
         verbose_name_plural = "Emergency Contacts"
         table_prefix = "emc"
 
+    def __str__(self):
+        return f"{self.first_name} {self.last_name}"
+
 
 class Insurance(SoftDeleteModel):
     patient = models.ForeignKey(
@@ -41,6 +44,9 @@ class Insurance(SoftDeleteModel):
         verbose_name_plural = "Insurances"
         table_prefix = "ins"
 
+    def __str__(self):
+        return self.patient.__str__()
+
 
 class Allergy(SoftDeleteModel):
     patient = models.ForeignKey(
@@ -55,3 +61,6 @@ class Allergy(SoftDeleteModel):
         verbose_name = "Allergy"
         verbose_name_plural = "Allergies"
         table_prefix = "allergy"
+
+    def __str__(self):
+        return self.patient.__str__()

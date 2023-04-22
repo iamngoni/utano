@@ -37,6 +37,9 @@ class TestRequest(SoftDeleteModel):
         table_prefix = "test_req"
         ordering = ("-updated_at",)
 
+    def __str__(self):
+        return f"{self.patient.__str__()} - {self.id}"
+
 
 class TestDefinition(SoftDeleteModel):
     name = models.CharField(max_length=255, blank=False, null=False)

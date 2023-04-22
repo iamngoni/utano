@@ -11,7 +11,7 @@ class BlacklistToken(SoftDeleteModel):
     class Meta:
         verbose_name = "BlacklistToken"
         verbose_name_plural = "BlacklistTokens"
-        table_prefix = "tk"
+        table_prefix = "token"
 
     def __str__(self):
         return f"{self.id}"
