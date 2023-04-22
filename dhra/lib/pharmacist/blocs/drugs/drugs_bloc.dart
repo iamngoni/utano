@@ -2,10 +2,10 @@ import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 
-import '../../configs/configs.dart';
-import '../../models/data/application_error.dart';
+import '../../../core/configs/logger.dart';
+import '../../../core/models/data/application_error.dart';
+import '../../../core/models/repos/abstract/health_institution_repository.dart';
 import '../../models/data/drug.dart';
-import '../../models/repos/abstract/health_institution_repository.dart';
 
 part 'drugs_event.dart';
 part 'drugs_state.dart';

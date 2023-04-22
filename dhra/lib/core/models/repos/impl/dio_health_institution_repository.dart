@@ -9,13 +9,14 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 
+import '../../../../pharmacist/models/data/drug.dart';
 import '../../../configs/logger.dart';
 import '../../../utils/dio_error_to_application_error.dart';
 import '../../data/application_error.dart';
+import '../../data/approved_medicine.dart';
 import '../../data/check_in.dart';
 import '../../data/check_in_monthly_stats.dart';
 import '../../data/check_in_yearly_stats.dart';
-import '../../data/drug.dart';
 import '../../data/employee.dart';
 import '../../data/gender.dart';
 import '../../data/health_institution.dart';
@@ -290,6 +291,31 @@ class DioHealthInstitutionRepository extends HealthInstitutionRepository {
           .map((drug) => Drug.fromJson(drug as Map<String, dynamic>))
           .toList();
       return Right(drugs);
+    } on DioError catch (e) {
+      return Left(dioErrorToApplicationError(e));
+    } catch (e, s) {
+      logger
+        ..e(e)
+        ..e(s);
+      return Left(ApplicationError.unknownError());
+    }
+  }
+
+  @override
+  Future<Either<ApplicationError, List<ApprovedMedicine>>>
+      listApprovedMedicines() async {
+    try {
+      final Response<NetworkResponse> response =
+          await dio.get('/pharmacy/approved_medicines');
+      final NetworkResponse networkResponse = response.data!;
+      final List<ApprovedMedicine> approvedMedicines =
+          (networkResponse.data!['approved_medicines'] as List)
+              .map(
+                (medicine) =>
+                    ApprovedMedicine.fromJson(medicine as Map<String, dynamic>),
+              )
+              .toList();
+      return Right(approvedMedicines);
     } on DioError catch (e) {
       return Left(dioErrorToApplicationError(e));
     } catch (e, s) {

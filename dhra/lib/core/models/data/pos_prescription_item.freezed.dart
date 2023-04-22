@@ -20,7 +20,7 @@ PosPrescriptionItem _$PosPrescriptionItemFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$PosPrescriptionItem {
-  Drug get drug => throw _privateConstructorUsedError;
+  ApprovedMedicine get medicine => throw _privateConstructorUsedError;
   int get count => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -35,9 +35,9 @@ abstract class $PosPrescriptionItemCopyWith<$Res> {
           PosPrescriptionItem value, $Res Function(PosPrescriptionItem) then) =
       _$PosPrescriptionItemCopyWithImpl<$Res, PosPrescriptionItem>;
   @useResult
-  $Res call({Drug drug, int count});
+  $Res call({ApprovedMedicine medicine, int count});
 
-  $DrugCopyWith<$Res> get drug;
+  $ApprovedMedicineCopyWith<$Res> get medicine;
 }
 
 /// @nodoc
@@ -53,14 +53,14 @@ class _$PosPrescriptionItemCopyWithImpl<$Res, $Val extends PosPrescriptionItem>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? drug = null,
+    Object? medicine = null,
     Object? count = null,
   }) {
     return _then(_value.copyWith(
-      drug: null == drug
-          ? _value.drug
-          : drug // ignore: cast_nullable_to_non_nullable
-              as Drug,
+      medicine: null == medicine
+          ? _value.medicine
+          : medicine // ignore: cast_nullable_to_non_nullable
+              as ApprovedMedicine,
       count: null == count
           ? _value.count
           : count // ignore: cast_nullable_to_non_nullable
@@ -70,9 +70,9 @@ class _$PosPrescriptionItemCopyWithImpl<$Res, $Val extends PosPrescriptionItem>
 
   @override
   @pragma('vm:prefer-inline')
-  $DrugCopyWith<$Res> get drug {
-    return $DrugCopyWith<$Res>(_value.drug, (value) {
-      return _then(_value.copyWith(drug: value) as $Val);
+  $ApprovedMedicineCopyWith<$Res> get medicine {
+    return $ApprovedMedicineCopyWith<$Res>(_value.medicine, (value) {
+      return _then(_value.copyWith(medicine: value) as $Val);
     });
   }
 }
@@ -85,10 +85,10 @@ abstract class _$$_PosPrescriptionItemCopyWith<$Res>
       __$$_PosPrescriptionItemCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({Drug drug, int count});
+  $Res call({ApprovedMedicine medicine, int count});
 
   @override
-  $DrugCopyWith<$Res> get drug;
+  $ApprovedMedicineCopyWith<$Res> get medicine;
 }
 
 /// @nodoc
@@ -102,14 +102,14 @@ class __$$_PosPrescriptionItemCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? drug = null,
+    Object? medicine = null,
     Object? count = null,
   }) {
     return _then(_$_PosPrescriptionItem(
-      drug: null == drug
-          ? _value.drug
-          : drug // ignore: cast_nullable_to_non_nullable
-              as Drug,
+      medicine: null == medicine
+          ? _value.medicine
+          : medicine // ignore: cast_nullable_to_non_nullable
+              as ApprovedMedicine,
       count: null == count
           ? _value.count
           : count // ignore: cast_nullable_to_non_nullable
@@ -121,20 +121,20 @@ class __$$_PosPrescriptionItemCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_PosPrescriptionItem extends _PosPrescriptionItem {
-  const _$_PosPrescriptionItem({required this.drug, required this.count})
+  const _$_PosPrescriptionItem({required this.medicine, required this.count})
       : super._();
 
   factory _$_PosPrescriptionItem.fromJson(Map<String, dynamic> json) =>
       _$$_PosPrescriptionItemFromJson(json);
 
   @override
-  final Drug drug;
+  final ApprovedMedicine medicine;
   @override
   final int count;
 
   @override
   String toString() {
-    return 'PosPrescriptionItem(drug: $drug, count: $count)';
+    return 'PosPrescriptionItem(medicine: $medicine, count: $count)';
   }
 
   @override
@@ -142,13 +142,14 @@ class _$_PosPrescriptionItem extends _PosPrescriptionItem {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_PosPrescriptionItem &&
-            (identical(other.drug, drug) || other.drug == drug) &&
+            (identical(other.medicine, medicine) ||
+                other.medicine == medicine) &&
             (identical(other.count, count) || other.count == count));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, drug, count);
+  int get hashCode => Object.hash(runtimeType, medicine, count);
 
   @JsonKey(ignore: true)
   @override
@@ -167,7 +168,7 @@ class _$_PosPrescriptionItem extends _PosPrescriptionItem {
 
 abstract class _PosPrescriptionItem extends PosPrescriptionItem {
   const factory _PosPrescriptionItem(
-      {required final Drug drug,
+      {required final ApprovedMedicine medicine,
       required final int count}) = _$_PosPrescriptionItem;
   const _PosPrescriptionItem._() : super._();
 
@@ -175,7 +176,7 @@ abstract class _PosPrescriptionItem extends PosPrescriptionItem {
       _$_PosPrescriptionItem.fromJson;
 
   @override
-  Drug get drug;
+  ApprovedMedicine get medicine;
   @override
   int get count;
   @override

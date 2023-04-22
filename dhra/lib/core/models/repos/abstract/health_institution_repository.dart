@@ -8,11 +8,12 @@
 
 import 'package:dartz/dartz.dart';
 
+import '../../../../pharmacist/models/data/drug.dart';
 import '../../data/application_error.dart';
+import '../../data/approved_medicine.dart';
 import '../../data/check_in.dart';
 import '../../data/check_in_monthly_stats.dart';
 import '../../data/check_in_yearly_stats.dart';
-import '../../data/drug.dart';
 import '../../data/employee.dart';
 import '../../data/gender.dart';
 import '../../data/health_institution.dart';
@@ -75,4 +76,9 @@ abstract class HealthInstitutionRepository {
   /// List of drugs for health institution
   /// Returns the list of [Drug]
   Future<Either<ApplicationError, List<Drug>>> listDrugs();
+
+  /// List of medicines
+  /// Returns the list of [ApprovedMedicine]
+  Future<Either<ApplicationError, List<ApprovedMedicine>>>
+      listApprovedMedicines();
 }

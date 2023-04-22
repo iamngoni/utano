@@ -11,9 +11,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'admin/blocs/employee_registration/employee_registration_bloc.dart';
 import 'admin/blocs/employees/employees_bloc.dart';
+import 'core/blocs/approved_medicine/approved_medicines_bloc.dart';
 import 'core/blocs/change_password/change_password_bloc.dart';
 import 'core/blocs/check_in_stats/check_in_stats_bloc.dart';
-import 'core/blocs/drugs/drugs_bloc.dart';
 import 'core/blocs/health_institution_stats/health_institution_stats_bloc.dart';
 import 'core/blocs/patients/patients_bloc.dart';
 import 'core/blocs/point_of_service/point_of_service_bloc.dart';
@@ -23,6 +23,7 @@ import 'core/models/repos/impl/dio_system_configs_repository.dart';
 import 'core/services/di.dart';
 import 'general/blocs/auth/auth_bloc.dart';
 import 'general/models/repos/impl/dio_auth_repository.dart';
+import 'pharmacist/blocs/drugs/drugs_bloc.dart';
 import 'system_admin/blocs/admin_registration/admin_registration_bloc.dart';
 import 'system_admin/blocs/health_institution_employees/health_institution_employees_bloc.dart';
 import 'system_admin/blocs/health_institutions/health_institutions_bloc.dart';
@@ -96,6 +97,11 @@ List<BlocProvider> providers = [
   ),
   BlocProvider<PointOfServiceBloc>(
     create: (_) => PointOfServiceBloc(
+      repository: DioHealthInstitutionRepository(dio),
+    ),
+  ),
+  BlocProvider<ApprovedMedicinesBloc>(
+    create: (_) => ApprovedMedicinesBloc(
       repository: DioHealthInstitutionRepository(dio),
     ),
   ),

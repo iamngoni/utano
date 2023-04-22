@@ -7,8 +7,8 @@ import 'package:lottie/lottie.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:relative_scale/relative_scale.dart';
 
+import '../../../core/blocs/approved_medicine/approved_medicines_bloc.dart';
 import '../../../core/blocs/check_in_stats/check_in_stats_bloc.dart';
-import '../../../core/blocs/drugs/drugs_bloc.dart';
 import '../../../core/blocs/health_institution_stats/health_institution_stats_bloc.dart';
 import '../../../core/blocs/patients/patients_bloc.dart';
 import '../../../core/blocs/system_configs/system_configs_bloc.dart';
@@ -70,7 +70,9 @@ class _LandingPageState extends State<LandingPage> {
                         .read<HealthInstitutionStatsBloc>()
                         .add(GetStatistics());
                     logger.i('Loading drugs');
-                    context.read<DrugsBloc>().add(ListDrugs());
+                    context
+                        .read<ApprovedMedicinesBloc>()
+                        .add(ListApprovedMedicines());
                     logger.i('Loading patients');
                     context.read<PatientsBloc>().add(const ListPatients());
                   }

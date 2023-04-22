@@ -30,6 +30,7 @@ class UtanoButton extends StatelessWidget {
           child: Container(
             padding: EdgeInsets.symmetric(
               vertical: sy(10),
+              horizontal: sx(10),
             ),
             alignment: Alignment.center,
             decoration: BoxDecoration(

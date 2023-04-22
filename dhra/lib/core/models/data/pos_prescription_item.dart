@@ -8,7 +8,7 @@
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'drug.dart';
+import 'approved_medicine.dart';
 
 part 'pos_prescription_item.freezed.dart';
 part 'pos_prescription_item.g.dart';
@@ -16,7 +16,7 @@ part 'pos_prescription_item.g.dart';
 @freezed
 class PosPrescriptionItem with _$PosPrescriptionItem {
   const factory PosPrescriptionItem({
-    required Drug drug,
+    required ApprovedMedicine medicine,
     required int count,
   }) = _PosPrescriptionItem;
 

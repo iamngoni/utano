@@ -13,12 +13,10 @@ import 'package:lottie/lottie.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:relative_scale/relative_scale.dart';
 
-import '../../blocs/drugs/drugs_bloc.dart';
+import '../../blocs/approved_medicine/approved_medicines_bloc.dart';
 import '../../configs/colors.dart';
-import '../../models/data/drug.dart';
+import '../../models/data/approved_medicine.dart';
 import '../../models/data/pos_prescription_item.dart';
-import '../../services/di.dart';
-import '../../services/notifications.dart';
 import 'exception_widget.dart';
 import 'loader_widget.dart';
 import 'utano_button.dart';
@@ -40,56 +38,50 @@ class _PointOfServicePrescriptionPointState
   final ScrollController _scrollController = ScrollController();
   final List<PosPrescriptionItem> _prescribedDrugs = [];
 
-  bool _filter(Drug drug) {
+  bool _filter(ApprovedMedicine medicine) {
     final String query = _searchController.text.toLowerCase();
     final bool queryMatchesCorrectly = query.isNotEmpty
-        ? drug.name.toLowerCase().contains(query) ||
-            drug.description.toLowerCase().contains(query)
+        ? medicine.name.toLowerCase().contains(query) ||
+            medicine.description.toLowerCase().contains(query)
         : true;
     final bool hasDrugBeenPrescribedAlready =
-        _prescribedDrugs.any((d) => d.drug == drug);
+        _prescribedDrugs.any((d) => d.medicine == medicine);
 
     return hasDrugBeenPrescribedAlready ? false : queryMatchesCorrectly;
   }
 
-  void _prescribeMedication(Drug drug) {
+  void _prescribeMedication(ApprovedMedicine medicine) {
     setState(() {
-      _prescribedDrugs.insert(0, PosPrescriptionItem(drug: drug, count: 1));
+      _prescribedDrugs.insert(
+          0, PosPrescriptionItem(medicine: medicine, count: 1));
     });
   }
 
-  void _removePrescribedMedication(Drug drug) {
+  void _removePrescribedMedication(ApprovedMedicine medicine) {
     setState(() {
-      _prescribedDrugs.removeWhere((e) => e.drug == drug);
+      _prescribedDrugs.removeWhere((e) => e.medicine == medicine);
     });
   }
 
-  void _incrementMedicationCount(Drug drug) {
+  void _incrementMedicationCount(ApprovedMedicine medicine) {
     final PosPrescriptionItem? posPrescriptionItem =
-        _prescribedDrugs.firstWhereOrNull((d) => d.drug == drug);
+        _prescribedDrugs.firstWhereOrNull((d) => d.medicine == medicine);
     if (posPrescriptionItem != null) {
-      if (posPrescriptionItem.count < drug.quantity) {
-        final PosPrescriptionItem posPrescriptionItem0 =
-            posPrescriptionItem.copyWith(count: posPrescriptionItem.count + 1);
-        setState(() {
-          _prescribedDrugs[_prescribedDrugs.indexOf(posPrescriptionItem)] =
-              posPrescriptionItem0;
-        });
-      } else {
-        di<NotificationsService>().showErrorNotification(
-          title: 'Limit reached',
-          message: 'Cannot go above available quantity',
-        );
-      }
+      final PosPrescriptionItem posPrescriptionItem0 =
+          posPrescriptionItem.copyWith(count: posPrescriptionItem.count + 1);
+      setState(() {
+        _prescribedDrugs[_prescribedDrugs.indexOf(posPrescriptionItem)] =
+            posPrescriptionItem0;
+      });
     }
   }
 
-  void _decrementMedicationCount(Drug drug) {
+  void _decrementMedicationCount(ApprovedMedicine medicine) {
     final PosPrescriptionItem? posPrescriptionItem =
-        _prescribedDrugs.firstWhereOrNull((d) => d.drug == drug);
+        _prescribedDrugs.firstWhereOrNull((d) => d.medicine == medicine);
     if (posPrescriptionItem != null) {
       if (posPrescriptionItem.count == 1) {
-        _removePrescribedMedication(drug);
+        _removePrescribedMedication(medicine);
       } else {
         final PosPrescriptionItem posPrescriptionItem0 =
             posPrescriptionItem.copyWith(count: posPrescriptionItem.count - 1);
@@ -101,7 +93,7 @@ class _PointOfServicePrescriptionPointState
     }
   }
 
-  void _manuallyEditMedicationCount(int count, Drug drug) {
+  void _manuallyEditMedicationCount(int count, ApprovedMedicine medicine) {
     // TODO(iamngoni): handle this man
   }
 
@@ -140,18 +132,18 @@ class _PointOfServicePrescriptionPointState
             ],
             borderRadius: BorderRadius.circular(11),
           ),
-          child: BlocBuilder<DrugsBloc, DrugsState>(
+          child: BlocBuilder<ApprovedMedicinesBloc, ApprovedMedicinesState>(
             builder: (context, state) {
               late Widget child;
-              if (state is DrugsLoading) {
+              if (state is ApprovedMedicinesLoading) {
                 child = const Center(
                   child: LoaderWidget(
                     color: UtanoColors.black,
                   ),
                 );
-              } else if (state is DrugsError) {
+              } else if (state is ApprovedMedicinesError) {
                 child = ExceptionWidget(error: state.error);
-              } else if (state is DrugsLoaded) {
+              } else if (state is ApprovedMedicinesLoaded) {
                 child = Row(
                   children: [
                     Container(
@@ -175,7 +167,7 @@ class _PointOfServicePrescriptionPointState
                             children: [
                               Expanded(
                                 child: Text(
-                                  'Available Items',
+                                  'Approved Medicines & Items',
                                   style: TextStyle(
                                     color: UtanoColors.black,
                                     fontWeight: FontWeight.w500,
@@ -184,8 +176,9 @@ class _PointOfServicePrescriptionPointState
                                 ),
                               ),
                               GestureDetector(
-                                onTap: () =>
-                                    context.read<DrugsBloc>().add(ListDrugs()),
+                                onTap: () => context
+                                    .read<ApprovedMedicinesBloc>()
+                                    .add(ListApprovedMedicines()),
                                 child: Icon(
                                   CupertinoIcons.refresh_thick,
                                   color: UtanoColors.grey,
@@ -205,7 +198,7 @@ class _PointOfServicePrescriptionPointState
                           Expanded(
                             child: ListView(
                               controller: _scrollController,
-                              children: state.drugs
+                              children: state.medicines
                                   .where(_filter)
                                   .map(
                                     (e) => Container(
@@ -214,7 +207,7 @@ class _PointOfServicePrescriptionPointState
                                         vertical: sy(5),
                                       ),
                                       decoration: BoxDecoration(
-                                        color: state.drugs
+                                        color: state.medicines
                                                 .where(_filter)
                                                 .toList()
                                                 .indexOf(e)
@@ -233,40 +226,13 @@ class _PointOfServicePrescriptionPointState
                                             fontSize: sy(12),
                                           ),
                                         ),
-                                        subtitle: Row(
-                                          children: [
-                                            Expanded(
-                                              child: Text(
-                                                e.description,
-                                                style: TextStyle(
-                                                  color: UtanoColors.grey,
-                                                  fontWeight: FontWeight.w400,
-                                                  fontSize: sy(10),
-                                                ),
-                                              ),
-                                            ),
-                                            Container(
-                                              padding: EdgeInsets.symmetric(
-                                                horizontal: sx(2),
-                                                vertical: sy(1.5),
-                                              ),
-                                              decoration: BoxDecoration(
-                                                color: e.quantity > 25
-                                                    ? UtanoColors.active
-                                                    : UtanoColors.red,
-                                                borderRadius:
-                                                    BorderRadius.circular(7),
-                                              ),
-                                              child: Text(
-                                                '${e.quantity}',
-                                                style: TextStyle(
-                                                  color: UtanoColors.white,
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: sy(10),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
+                                        subtitle: Text(
+                                          e.description,
+                                          style: TextStyle(
+                                            color: UtanoColors.grey,
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: sy(10),
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -319,7 +285,7 @@ class _PointOfServicePrescriptionPointState
                                             children: [
                                               Expanded(
                                                 child: Text(
-                                                  '${_prescribedDrugs.indexOf(e) + 1}. ${e.drug.name}',
+                                                  '${_prescribedDrugs.indexOf(e) + 1}. ${e.medicine.name}',
                                                 ),
                                               ),
                                               SizedBox(
@@ -339,7 +305,7 @@ class _PointOfServicePrescriptionPointState
                                                       if (value.isNumeric) {
                                                         _manuallyEditMedicationCount(
                                                           int.parse(value),
-                                                          e.drug,
+                                                          e.medicine,
                                                         );
                                                       }
                                                     }
@@ -356,7 +322,7 @@ class _PointOfServicePrescriptionPointState
                                                   GestureDetector(
                                                     onTap: () =>
                                                         _decrementMedicationCount(
-                                                      e.drug,
+                                                      e.medicine,
                                                     ),
                                                     child: Container(
                                                       height: sy(20),
@@ -382,7 +348,7 @@ class _PointOfServicePrescriptionPointState
                                                   GestureDetector(
                                                     onTap: () =>
                                                         _incrementMedicationCount(
-                                                            e.drug),
+                                                            e.medicine),
                                                     child: Container(
                                                       height: sy(20),
                                                       width: sy(20),
@@ -429,6 +395,14 @@ class _PointOfServicePrescriptionPointState
                                       ],
                                     ),
                             ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                UtanoButton(
+                                  text: 'Continue',
+                                ),
+                              ],
+                            ),
                           ],
                         ),
                       ),
@@ -438,9 +412,9 @@ class _PointOfServicePrescriptionPointState
               } else {
                 child = Center(
                   child: UtanoButton(
-                    text: 'Load Drugs',
-                    onTap: () => context.read<DrugsBloc>().add(
-                          ListDrugs(),
+                    text: 'Load Approved Medicines',
+                    onTap: () => context.read<ApprovedMedicinesBloc>().add(
+                          ListApprovedMedicines(),
                         ),
                   ),
                 );
