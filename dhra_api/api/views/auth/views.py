@@ -1,4 +1,13 @@
+import jwt
+from decouple import config
+from django.contrib.auth import authenticate
 from django.db import transaction
+from django.utils import timezone
+from loguru import logger
+from rest_framework.parsers import JSONParser
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.renderers import JSONRenderer
+from rest_framework.views import APIView
 
 from api.views.auth.serializers.model import UserModelSerializer
 from api.views.auth.serializers.payload import (
@@ -10,16 +19,13 @@ from api.views.auth.serializers.payload import (
     PreregistrationPayloadSerializer,
     AccountVerificationPayloadSerializer,
 )
-from rest_framework.parsers import JSONParser
-from rest_framework.renderers import JSONRenderer
-from rest_framework.views import APIView
-from django.contrib.auth import authenticate
-from loguru import logger
-import jwt
-from decouple import config
-from django.utils import timezone
-
-from auth0.models import BlacklistToken
+from api.views.auth.tasks import (
+    notify_user_about_login_activity,
+    send_verification_code_to_user,
+    send_password_reset_otp,
+    notify_user_that_their_password_has_been_updated,
+    send_welcome_note_to_patient,
+)
 from services.exceptions.passwords import PasswordUsedException
 from services.helpers.api_response import ApiResponse
 from services.helpers.create_username import create_username
@@ -29,15 +35,7 @@ from services.helpers.generate_medical_record_number import (
 from services.helpers.get_client_details import get_client_details
 from services.helpers.redis_client import redis_client
 from services.jwt_service import generate_jwt_payload
-from api.views.auth.tasks import (
-    notify_user_about_login_activity,
-    send_verification_code_to_user,
-    send_password_reset_otp,
-    notify_user_that_their_password_has_been_updated,
-    send_welcome_note_to_patient,
-)
 from users.models import User, UserRoles, Patient
-from rest_framework.permissions import IsAuthenticated
 
 
 class SignInView(APIView):
@@ -143,13 +141,35 @@ class RefreshAuthView(APIView):
                 user = User.get_item_by_id(pk=user_id)
 
                 if user is not None:
-
                     # destroy old token
                     authorization_header = request.headers.get("Authorization")
                     token = authorization_header.split(" ")[1]
 
-                    blacklist = BlacklistToken(token=token)
-                    blacklist.save()
+                    blacklisted_tokens = redis_client.get("destroyed_tokens")
+                    if blacklisted_tokens is not None:
+                        logger.info("got destroyed tokens")
+                        blacklisted_tokens = blacklisted_tokens.decode("utf-8")
+                        blacklisted_tokens = blacklisted_tokens.split(",")
+                        logger.info(
+                            f"destroyed token array length: {len(blacklisted_tokens)}"
+                        )
+                        if not (token in blacklisted_tokens):
+                            logger.info("token hasn't been destroyed")
+                            blacklisted_tokens.append(token)
+                            redis_client.set(
+                                name="destroyed_tokens",
+                                value=",".join(blacklisted_tokens),
+                            )
+                            logger.success("token destroyed")
+                        else:
+                            logger.error("token was destroyed already")
+                    else:
+                        logger.info("no tokens destroyed yet")
+                        blacklisted_tokens = [token]
+                        redis_client.set(
+                            name="destroyed_tokens", value=",".join(blacklisted_tokens)
+                        )
+                        logger.success("token destroyed")
 
                     jwt_payload = generate_jwt_payload(user=user)
                     access_token = jwt.encode(
