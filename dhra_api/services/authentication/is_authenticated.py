@@ -1,13 +1,13 @@
 import jwt
+from decouple import config
 from django.utils.translation import gettext_lazy as _
 from jwt import ExpiredSignatureError, DecodeError
 from loguru import logger
 from rest_framework import exceptions
 from rest_framework.authentication import BaseAuthentication
 
-from auth0.models import BlacklistToken
+from services.helpers.redis_client import redis_client
 from users.models import User
-from decouple import config
 
 
 class IsAPIAuthenticated(BaseAuthentication):
@@ -48,14 +48,14 @@ class IsAPIAuthenticated(BaseAuthentication):
             msg = _("WHO ARE YOU? LETS TALK LIKE ADULTS.")
             raise exceptions.AuthenticationFailed(msg)
 
-        # Check if token is blacklisted / destroyed
-        try:
-            token_in_blacklist = BlacklistToken.objects.get(token=token)
-            if token_in_blacklist is not None:
+        blacklisted_tokens = redis_client.get("destroyed_tokens")
+        if blacklisted_tokens is not None:
+            blacklisted_tokens = blacklisted_tokens.decode("utf-8")
+            blacklisted_tokens = blacklisted_tokens.split(",")
+
+            if token in blacklisted_tokens:
                 msg = _("Invalid Token [User logged out already]")
                 raise exceptions.AuthenticationFailed(msg)
-        except BlacklistToken.DoesNotExist:
-            pass
 
         try:
             # Decode token

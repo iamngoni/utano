@@ -200,7 +200,6 @@ class DestroyTokenView(APIView):
             token = authorization_header.split(" ")[1]
 
             blacklisted_tokens = redis_client.get("destroyed_tokens")
-            logger.info(blacklisted_tokens)
             if blacklisted_tokens is not None:
                 logger.info("got destroyed tokens")
                 blacklisted_tokens = blacklisted_tokens.decode("utf-8")
