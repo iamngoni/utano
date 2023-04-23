@@ -9,15 +9,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:handy_extensions/handy_extensions.dart';
-import 'package:lottie/lottie.dart';
-import 'package:macos_ui/macos_ui.dart';
 import 'package:relative_scale/relative_scale.dart';
 
 import '../../blocs/approved_medicine/approved_medicines_bloc.dart';
 import '../../configs/colors.dart';
 import '../../models/data/approved_medicine.dart';
 import '../../models/data/pos_prescription_item.dart';
-import 'utano_button.dart';
+import 'approved_medicine_tile.dart';
+import 'pos_prescribed_items_area.dart';
 import 'utano_text_field.dart';
 
 class PointOfServicePrescriptionPointApprovedMedicinesLoadedWidget
@@ -100,7 +99,20 @@ class _PointOfServicePrescriptionPointApprovedMedicinesLoadedWidgetState
   }
 
   void _manuallyEditMedicationCount(int count, ApprovedMedicine medicine) {
-    // TODO(iamngoni): handle this man
+    final PosPrescriptionItem? posPrescriptionItem =
+        _prescribedDrugs.firstWhereOrNull((d) => d.medicine == medicine);
+    if (posPrescriptionItem != null) {
+      if (count == 0) {
+        _removePrescribedMedication(medicine);
+      } else {
+        final PosPrescriptionItem posPrescriptionItem0 =
+            posPrescriptionItem.copyWith(count: count);
+        setState(() {
+          _prescribedDrugs[_prescribedDrugs.indexOf(posPrescriptionItem)] =
+              posPrescriptionItem0;
+        });
+      }
+    }
   }
 
   @override
@@ -169,200 +181,31 @@ class _PointOfServicePrescriptionPointApprovedMedicinesLoadedWidgetState
                   Expanded(
                     child: ListView(
                       controller: _scrollController,
-                      children: widget.medicines
-                          .where(_filter)
-                          .map(
-                            (e) => Container(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: sx(5),
-                                vertical: sy(5),
-                              ),
-                              decoration: BoxDecoration(
-                                color: widget.medicines
-                                        .where(_filter)
-                                        .toList()
-                                        .indexOf(e)
-                                        .isEven
-                                    ? UtanoColors.background
-                                    : UtanoColors.white,
-                              ),
-                              child: MacosListTile(
-                                onClick: () => _prescribeMedication(e),
-                                leading: const Text('💊'),
-                                title: Text(
-                                  e.name.headingCase,
-                                  style: TextStyle(
-                                    color: UtanoColors.black,
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: sy(12),
-                                  ),
-                                ),
-                                subtitle: Text(
-                                  e.description,
-                                  style: TextStyle(
-                                    color: UtanoColors.grey,
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: sy(10),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          )
-                          .toList(),
+                      children:
+                          widget.medicines.where(_filter).map<Widget>((e) {
+                        return ApprovedMedicineTile(
+                          medicine: e,
+                          color: widget.medicines
+                                  .where(_filter)
+                                  .toList()
+                                  .indexOf(e)
+                                  .isEven
+                              ? UtanoColors.background
+                              : UtanoColors.white,
+                          prescribeMedication: _prescribeMedication,
+                        );
+                      }).toList(),
                     ),
                   ),
                 ],
               ),
             ),
             Expanded(
-              child: Container(
-                height: context.height,
-                width: context.width,
-                padding: EdgeInsets.symmetric(
-                  horizontal: sx(10),
-                  vertical: sy(10),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Prescribed Items',
-                      style: TextStyle(
-                        color: UtanoColors.black,
-                        fontWeight: FontWeight.w500,
-                        fontSize: sy(12),
-                      ),
-                    ),
-                    SizedBox(
-                      height: sy(10),
-                    ),
-                    Expanded(
-                      child: _prescribedDrugs.isNotEmpty
-                          ? ListView(
-                              children: _prescribedDrugs.map((e) {
-                                return Container(
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: sx(10),
-                                    vertical: sy(10),
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: _prescribedDrugs.indexOf(e).isEven
-                                        ? UtanoColors.background
-                                        : UtanoColors.white,
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      Expanded(
-                                        child: Text(
-                                          e.medicine.name,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: sx(10),
-                                      ),
-                                      Container(
-                                        width: sx(20),
-                                        height: sy(30),
-                                        alignment: Alignment.center,
-                                        child: MacosTextField(
-                                          controller: TextEditingController(
-                                            text: e.count.toString(),
-                                          ),
-                                          onChanged: (String? value) {
-                                            if (value!.isNotEmpty) {
-                                              if (value.isNumeric) {
-                                                _manuallyEditMedicationCount(
-                                                  int.parse(value),
-                                                  e.medicine,
-                                                );
-                                              }
-                                            }
-                                          },
-                                          keyboardType: TextInputType.number,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: sx(10),
-                                      ),
-                                      Row(
-                                        children: [
-                                          GestureDetector(
-                                            onTap: () =>
-                                                _decrementMedicationCount(
-                                              e.medicine,
-                                            ),
-                                            child: Container(
-                                              height: sy(20),
-                                              width: sy(20),
-                                              alignment: Alignment.center,
-                                              decoration: const BoxDecoration(
-                                                color: UtanoColors.red,
-                                              ),
-                                              child: Text(
-                                                '-',
-                                                style: TextStyle(
-                                                  color: UtanoColors.white,
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: sy(15),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          GestureDetector(
-                                            onTap: () =>
-                                                _incrementMedicationCount(
-                                              e.medicine,
-                                            ),
-                                            child: Container(
-                                              height: sy(20),
-                                              width: sy(20),
-                                              alignment: Alignment.center,
-                                              decoration: const BoxDecoration(
-                                                color: UtanoColors.active,
-                                              ),
-                                              child: Text(
-                                                '+',
-                                                style: TextStyle(
-                                                  color: UtanoColors.white,
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: sy(15),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              }).toList(),
-                            )
-                          : Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Center(
-                                  child: Lottie.asset(
-                                    'assets/lottie/nothing.json',
-                                    height: sy(150),
-                                  ),
-                                ),
-                                const Text(
-                                  'No items have been prescribed yet',
-                                  textAlign: TextAlign.center,
-                                ),
-                              ],
-                            ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: const [
-                        UtanoButton(
-                          text: 'CONTINUE',
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+              child: PosPrescribedItemsArea(
+                prescribedItems: _prescribedDrugs,
+                incrementMedicationQuantity: _incrementMedicationCount,
+                decrementMedicationQuantity: _decrementMedicationCount,
+                onManuallyEditMedicationCount: _manuallyEditMedicationCount,
               ),
             ),
           ],
