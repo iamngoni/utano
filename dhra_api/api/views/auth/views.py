@@ -159,6 +159,7 @@ class RefreshAuthView(APIView):
                             redis_client.set(
                                 name="destroyed_tokens",
                                 value=",".join(blacklisted_tokens),
+                                ex=86400,
                             )
                             logger.success("token destroyed")
                         else:
@@ -167,7 +168,9 @@ class RefreshAuthView(APIView):
                         logger.info("no tokens destroyed yet")
                         blacklisted_tokens = [token]
                         redis_client.set(
-                            name="destroyed_tokens", value=",".join(blacklisted_tokens)
+                            name="destroyed_tokens",
+                            value=",".join(blacklisted_tokens),
+                            ex=86400,
                         )
                         logger.success("token destroyed")
 
@@ -229,7 +232,9 @@ class DestroyTokenView(APIView):
                     logger.info("token hasn't been destroyed")
                     blacklisted_tokens.append(token)
                     redis_client.set(
-                        name="destroyed_tokens", value=",".join(blacklisted_tokens)
+                        name="destroyed_tokens",
+                        value=",".join(blacklisted_tokens),
+                        ex=86400,
                     )
                     logger.success("token destroyed")
                 else:
@@ -238,7 +243,9 @@ class DestroyTokenView(APIView):
                 logger.info("no tokens destroyed yet")
                 blacklisted_tokens = [token]
                 redis_client.set(
-                    name="destroyed_tokens", value=",".join(blacklisted_tokens)
+                    name="destroyed_tokens",
+                    value=",".join(blacklisted_tokens),
+                    ex=86400,
                 )
                 logger.success("token destroyed")
 
