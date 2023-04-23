@@ -27,6 +27,7 @@ from services.helpers.generate_medical_record_number import (
     generate_medical_record_number,
 )
 from services.helpers.get_client_details import get_client_details
+from services.helpers.redis_client import redis_client
 from services.jwt_service import generate_jwt_payload
 from api.views.auth.tasks import (
     notify_user_about_login_activity,
@@ -106,8 +107,8 @@ class SignInView(APIView):
                     bool_status=False,
                     issues=payload.errors,
                 )
-        except Exception as e:
-            logger.error(f" {e}")
+        except Exception as exc:
+            logger.error(exc)
             return ApiResponse(num_status=500, bool_status=False)
 
 
@@ -198,8 +199,29 @@ class DestroyTokenView(APIView):
             authorization_header = request.headers.get("Authorization")
             token = authorization_header.split(" ")[1]
 
-            blacklist = BlacklistToken(token=token)
-            blacklist.save()
+            blacklisted_tokens = redis_client.get("destroyed_tokens")
+            logger.info(blacklisted_tokens)
+            if blacklisted_tokens is not None:
+                logger.info("got destroyed tokens")
+                blacklisted_tokens = blacklisted_tokens.decode("utf-8")
+                blacklisted_tokens = blacklisted_tokens.split(",")
+                logger.info(f"destroyed token array length: {len(blacklisted_tokens)}")
+                if not (token in blacklisted_tokens):
+                    logger.info("token hasn't been destroyed")
+                    blacklisted_tokens.append(token)
+                    redis_client.set(
+                        name="destroyed_tokens", value=",".join(blacklisted_tokens)
+                    )
+                    logger.success("token destroyed")
+                else:
+                    logger.error("token was destroyed already")
+            else:
+                logger.info("no tokens destroyed yet")
+                blacklisted_tokens = [token]
+                redis_client.set(
+                    name="destroyed_tokens", value=",".join(blacklisted_tokens)
+                )
+                logger.success("token destroyed")
 
             return ApiResponse()
         except Exception as exc:
