@@ -29,7 +29,7 @@ class PatientCheckIn(SoftDeleteModel):
     status = models.CharField(
         max_length=20,
         choices=CheckInStatus.choices,
-        default=CheckInStatus.CHECKED_IN,
+        default=CheckInStatus.DISMISSED,
         blank=False,
         null=False,
     )
