@@ -8,12 +8,14 @@
 from rest_framework.permissions import BasePermission
 
 from users.models import UserRoles
+from loguru import logger
 
 
 class IsEmployee(BasePermission):
     message = "You must be an employee to access this resource."
 
     def has_permission(self, request, view):
+        logger.info(request.user.role)
         return request.user.role in [
             UserRoles.DOCTOR,
             UserRoles.ADMIN,
