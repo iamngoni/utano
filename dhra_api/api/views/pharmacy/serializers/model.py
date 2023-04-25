@@ -6,7 +6,7 @@
 #  Copyright (c) 2023 ModestNerds, Co
 from rest_framework import serializers
 
-from pharmacy.models import ApprovedMedicine, Drug, DrugHistory
+from pharmacy.models import ApprovedMedicine, Drug, DrugHistory, Dispense, DispenseItem
 
 
 class ApprovedMedicineModelSerializer(serializers.ModelSerializer):
@@ -31,3 +31,28 @@ class DrugModelSerializer(serializers.ModelSerializer):
         drug["history"] = DrugHistoryModelSerializer(instance.history, many=True).data
         del drug["health_institution"]
         return drug
+
+
+class DispenseModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Dispense
+        fields = "__all__"
+
+    def to_representation(self, instance):
+        dispense = super(DispenseModelSerializer, self).to_representation(instance)
+        dispense["items"] = DispenseItemModelSerializer(instance.items, many=True).data
+        dispense["total_cost"] = instance.cost
+        return dispense
+
+
+class DispenseItemModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DispenseItem
+        fields = ["drug", "quantity"]
+
+    def to_representation(self, instance):
+        dispense_item = super(DispenseItemModelSerializer, self).to_representation(
+            instance
+        )
+        dispense_item["drug"] = instance.drug.name
+        return dispense_item

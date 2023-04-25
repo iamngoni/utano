@@ -7,6 +7,10 @@ from utano.model import SoftDeleteModel, EnumModel
 class ApprovedMedicine(SoftDeleteModel):
     name = models.CharField(max_length=255, unique=True)
     description = models.TextField()
+    indication = models.TextField(blank=True, null=False)
+    contraindication = models.TextField(blank=True, null=False)
+    dosage = models.TextField(blank=True, null=False)
+    interactions = models.TextField(blank=True, null=False)
 
     class Meta:
         verbose_name = "Approved Medicine"
@@ -58,6 +62,10 @@ class Drug(SoftDeleteModel):
     def __str__(self):
         return self.name
 
+    @property
+    def medicine(self):
+        return ApprovedMedicine.objects.filter(name=self.name).first()
+
 
 class DrugHistory(SoftDeleteModel):
     drug = models.ForeignKey(
@@ -92,3 +100,63 @@ class Order(SoftDeleteModel):
         verbose_name = "Order"
         verbose_name_plural = "Orders"
         table_prefix = "order"
+
+
+class Dispense(SoftDeleteModel):
+    prescription = models.ForeignKey(
+        "pos.Prescription",
+        related_name="dispenses",
+        on_delete=models.CASCADE,
+        blank=False,
+        null=True,
+    )
+    order = models.ForeignKey(
+        Order,
+        related_name="dispenses",
+        on_delete=models.CASCADE,
+        blank=False,
+        null=True,
+    )
+
+    class Meta:
+        verbose_name = "Dispense"
+        verbose_name_plural = "Dispenses"
+        table_prefix = "dispense"
+
+    @property
+    def total_cost(self):
+        total_cost = 0
+        for item in self.items.all():
+            total_cost += item.cost
+
+        return total_cost
+
+
+class DispenseItem(SoftDeleteModel):
+    dispense = models.ForeignKey(
+        Dispense,
+        related_name="items",
+        on_delete=models.CASCADE,
+        blank=False,
+        null=False,
+    )
+    drug = models.ForeignKey(
+        Drug,
+        related_name="dispenses",
+        on_delete=models.CASCADE,
+        blank=False,
+        null=False,
+    )
+    quantity = models.IntegerField(blank=False, null=False)
+
+    class Meta:
+        verbose_name = "Dispense Item"
+        verbose_name_plural = "Dispense Items"
+        table_prefix = "dispense_item"
+
+    def __str__(self):
+        return self.drug.name
+
+    @property
+    def cost(self):
+        return self.drug.price * self.quantity

@@ -12,6 +12,8 @@ from api.views.pharmacy.views import (
     ApprovedMedicineDetailsView,
     DrugsView,
     DrugDetailsView,
+    ProcessPrescriptionView,
+    PatientDetailsView,
 )
 
 urlpatterns = [
@@ -27,4 +29,14 @@ urlpatterns = [
     ),
     path("drugs", DrugsView.as_view(), name="drugs"),
     path("drugs/<str:drug_id>", DrugDetailsView.as_view(), name="drug-details"),
+    path(
+        "patients/<str:patient_id>",
+        PatientDetailsView.as_view(),
+        name="patient-details",
+    ),
+    path(
+        "process_prescription",
+        ProcessPrescriptionView.as_view(),
+        name="process-prescription",
+    ),
 ]

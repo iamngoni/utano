@@ -95,6 +95,10 @@ class Prescription(SoftDeleteModel):
         verbose_name_plural = "Prescriptions"
         table_prefix = "pres"
 
+    @property
+    def processed_count(self):
+        return self.dispenses.count()
+
 
 class PrescriptionItem(SoftDeleteModel):
     prescription = models.ForeignKey(

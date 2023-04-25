@@ -5,18 +5,26 @@
 #  Created by Ngonidzashe Mangudya on 17/4/2023.
 #  Copyright (c) 2023 ModestNerds, Co
 
+from django.db import transaction
 from loguru import logger
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 
+from api.views.health_institution.serializers.model import PatientModelSerializer
 from api.views.pharmacy.serializers.model import (
     ApprovedMedicineModelSerializer,
     DrugModelSerializer,
+    DispenseModelSerializer,
 )
-from api.views.pharmacy.serializers.payload import DrugPayloadSerializer
-from pharmacy.models import ApprovedMedicine, Drug
+from api.views.pharmacy.serializers.payload import (
+    DrugPayloadSerializer,
+    ProcessPrescriptionSerializer,
+)
+from pharmacy.models import ApprovedMedicine, Drug, Dispense, DispenseItem
+from pos.models import Prescription
 from services.helpers.api_response import ApiResponse
 from services.permissions.is_employee import IsEmployee
+from users.models import Patient
 
 
 class ApprovedMedicinesView(APIView):
@@ -164,6 +172,88 @@ class DrugDetailsView(APIView):
             )
 
             return ApiResponse(data={"drug": DrugModelSerializer(drug).data})
+        except Exception as exc:
+            logger.error(exc)
+            return ApiResponse(num_status=500, bool_status=False)
+
+
+class PatientDetailsView(APIView):
+    permission_classes = (IsAuthenticated, IsEmployee)
+
+    def get(self, request, patient_id):
+        try:
+            patient = Patient.get_item_by_id(patient_id)
+            if patient is None:
+                return ApiResponse(
+                    num_status=404, bool_status=False, message="Patient not found"
+                )
+
+            return ApiResponse(data={"patient": PatientModelSerializer(patient).data})
+        except Exception as exc:
+            logger.error(exc)
+            return ApiResponse(num_status=500, bool_status=False)
+
+
+class ProcessPrescriptionView(APIView):
+    permission_classes = (IsAuthenticated, IsEmployee)
+    serializer_class = ProcessPrescriptionSerializer
+
+    @transaction.atomic()
+    def post(self, request):
+        try:
+            payload = self.serializer_class(data=request.data)
+            if payload.is_valid():
+                prescription = Prescription.get_item_by_id(
+                    payload.validated_data.get("prescription_id")
+                )
+                if prescription is None:
+                    return ApiResponse(
+                        num_status=404,
+                        bool_status=False,
+                        message="Prescription not found",
+                    )
+
+                dispense = Dispense(
+                    prescription=prescription,
+                )
+                dispense.save()
+
+                for prescription_item in payload.validated_data.get("items"):
+                    # drug_id, quantity
+                    drug = Drug.get_item_by_id(prescription_item.get("drug_id"))
+                    if drug is None:
+                        return ApiResponse(
+                            num_status=404,
+                            bool_status=False,
+                            message=f"Drug with id {prescription_item.get('drug_id')} not found",
+                        )
+
+                    if drug.quantity < prescription_item.get("quantity"):
+                        return ApiResponse(
+                            num_status=400,
+                            bool_status=False,
+                            message=f"Drug with id {prescription_item.get('drug_id')} has insufficient quantity",
+                        )
+
+                    drug.quantity = drug.quantity - prescription_item.get("quantity")
+                    drug.save()
+
+                    # create dispense items
+                    dispense_item = DispenseItem(
+                        dispense=dispense,
+                        drug=drug,
+                        quantity=prescription_item.get("quantity"),
+                    )
+                    dispense_item.save()
+
+                return ApiResponse(
+                    data={"dispense": DispenseModelSerializer(dispense).data}
+                )
+            else:
+                logger.error(payload.errors)
+                return ApiResponse(
+                    num_status=400, bool_status=False, issues=payload.errors
+                )
         except Exception as exc:
             logger.error(exc)
             return ApiResponse(num_status=500, bool_status=False)
