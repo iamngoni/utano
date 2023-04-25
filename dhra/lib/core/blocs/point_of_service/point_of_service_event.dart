@@ -45,6 +45,18 @@ class CheckInPatient extends PointOfServiceEvent {
   List<Object> get props => [];
 }
 
+class PrescribeMedication extends PointOfServiceEvent {
+  const PrescribeMedication({
+    required this.prescriptionItems,
+    required this.checkIn,
+  });
+  final List<PosPrescriptionItem> prescriptionItems;
+  final CheckIn checkIn;
+
+  @override
+  List<Object> get props => [prescriptionItems, checkIn];
+}
+
 class ResetToIdle extends PointOfServiceEvent {
   const ResetToIdle();
   @override

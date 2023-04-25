@@ -5,11 +5,12 @@ abstract class PointOfServiceState extends Equatable {
 }
 
 class PointOfServiceIdle extends PointOfServiceState {
-  const PointOfServiceIdle({this.patient});
+  const PointOfServiceIdle({this.checkIn, this.prescription});
 
-  final Patient? patient;
+  final CheckIn? checkIn;
+  final Prescription? prescription;
   @override
-  List<Object?> get props => [patient];
+  List<Object?> get props => [checkIn];
 }
 
 class PointOfServiceLoading extends PointOfServiceState {

@@ -22,6 +22,8 @@ import '../../data/gender.dart';
 import '../../data/health_institution.dart';
 import '../../data/network_response.dart';
 import '../../data/patient.dart';
+import '../../data/pos_prescription_item.dart';
+import '../../data/prescription.dart';
 import '../../data/stats.dart';
 import '../../data/user_role.dart';
 import '../abstract/health_institution_repository.dart';
@@ -316,6 +318,46 @@ class DioHealthInstitutionRepository extends HealthInstitutionRepository {
               )
               .toList();
       return Right(approvedMedicines);
+    } on DioError catch (e) {
+      return Left(dioErrorToApplicationError(e));
+    } catch (e, s) {
+      logger
+        ..e(e)
+        ..e(s);
+      return Left(ApplicationError.unknownError());
+    }
+  }
+
+  @override
+  Future<Either<ApplicationError, Prescription>> prescribeMedicationToPatient({
+    required CheckIn checkIn,
+    required List<PosPrescriptionItem> prescriptionItems,
+  }) async {
+    final Map<String, dynamic> prescriptionData = {
+      'prescription_items': prescriptionItems
+          .map(
+            (e) => {
+              'medicine': e.medicine.id,
+              'frequency': 3,
+              'quantity': e.count,
+              // TODO(iamngoni): fix this section
+              'instructions': 'Eat this'
+            },
+          )
+          .toList(),
+    };
+
+    try {
+      final Response<NetworkResponse> response = await dio.post(
+        '/pos/check-in/${checkIn.id}',
+        data: prescriptionData,
+      );
+
+      final NetworkResponse networkResponse = response.data!;
+      final Prescription prescription = Prescription.fromJson(
+        networkResponse.data!['prescription'] as Map<String, dynamic>,
+      );
+      return Right(prescription);
     } on DioError catch (e) {
       return Left(dioErrorToApplicationError(e));
     } catch (e, s) {

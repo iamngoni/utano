@@ -18,6 +18,8 @@ import '../../data/employee.dart';
 import '../../data/gender.dart';
 import '../../data/health_institution.dart';
 import '../../data/patient.dart';
+import '../../data/pos_prescription_item.dart';
+import '../../data/prescription.dart';
 import '../../data/stats.dart';
 import '../../data/user_role.dart';
 
@@ -81,4 +83,11 @@ abstract class HealthInstitutionRepository {
   /// Returns the list of [ApprovedMedicine]
   Future<Either<ApplicationError, List<ApprovedMedicine>>>
       listApprovedMedicines();
+
+  /// Prescribe medication for patient checkin
+  /// Returns [Prescription] if all goes well
+  Future<Either<ApplicationError, Prescription>> prescribeMedicationToPatient({
+    required CheckIn checkIn,
+    required List<PosPrescriptionItem> prescriptionItems,
+  });
 }

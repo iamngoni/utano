@@ -70,8 +70,8 @@ class CheckInPrescriptionStage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Text(
-                              '${state.patient?.user.firstName}'
-                              ' ${state.patient?.user.lastName}',
+                              '${state.checkIn?.patient.user.firstName}'
+                              ' ${state.checkIn?.patient.user.lastName}',
                               style: TextStyle(
                                 color: UtanoColors.black,
                                 fontWeight: FontWeight.w500,
@@ -79,8 +79,8 @@ class CheckInPrescriptionStage extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              '${state.patient?.age} Years Old,'
-                              ' ${state.patient?.user.gender?.titleCase}',
+                              '${state.checkIn?.patient.age} Years Old,'
+                              ' ${state.checkIn?.patient.user.gender?.titleCase}',
                               style: TextStyle(
                                 color: UtanoColors.grey,
                                 fontWeight: FontWeight.w400,

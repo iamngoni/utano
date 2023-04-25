@@ -5,7 +5,8 @@ import 'package:equatable/equatable.dart';
 import '../../configs/configs.dart';
 import '../../models/data/application_error.dart';
 import '../../models/data/check_in.dart';
-import '../../models/data/patient.dart';
+import '../../models/data/pos_prescription_item.dart';
+import '../../models/data/prescription.dart';
 import '../../models/repos/abstract/health_institution_repository.dart';
 
 part 'point_of_service_event.dart';
@@ -17,6 +18,7 @@ class PointOfServiceBloc
       : super(const PointOfServiceIdle()) {
     on<ResetToIdle>(_resetToIdle);
     on<CheckInPatient>(_checkInPatient);
+    on<PrescribeMedication>(_prescribeMedication);
   }
 
   void _resetToIdle(ResetToIdle event, Emitter<PointOfServiceState> emit) {
@@ -52,8 +54,33 @@ class PointOfServiceBloc
         (l) => emit(PointOfServiceError(l)),
         (r) => emit(
           PointOfServiceIdle(
-            patient: r.patient,
+            checkIn: r,
           ),
+        ),
+      );
+    } catch (e, s) {
+      logger
+        ..e(e)
+        ..e(s);
+      emit(PointOfServiceError(ApplicationError.unknownError()));
+    }
+  }
+
+  Future<void> _prescribeMedication(
+    PrescribeMedication event,
+    Emitter<PointOfServiceState> emit,
+  ) async {
+    emit(const PointOfServiceLoading());
+    try {
+      final Either<ApplicationError, Prescription> response =
+          await repository.prescribeMedicationToPatient(
+        checkIn: event.checkIn,
+        prescriptionItems: event.prescriptionItems,
+      );
+      response.fold(
+        (l) => emit(PointOfServiceError(l)),
+        (r) => emit(
+          PointOfServiceIdle(prescription: r),
         ),
       );
     } catch (e, s) {

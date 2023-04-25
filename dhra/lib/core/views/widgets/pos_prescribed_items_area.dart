@@ -7,13 +7,17 @@
 //
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:handy_extensions/handy_extensions.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:relative_scale/relative_scale.dart';
 
+import '../../blocs/point_of_service/point_of_service_bloc.dart';
 import '../../configs/colors.dart';
 import '../../models/data/approved_medicine.dart';
 import '../../models/data/pos_prescription_item.dart';
+import '../../services/di.dart';
+import '../../services/notifications.dart';
 import 'no_items_prescribed_widget.dart';
 import 'utano_button.dart';
 
@@ -160,9 +164,27 @@ class PosPrescribedItemsArea extends StatelessWidget {
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
-                children: const [
+                children: [
                   UtanoButton(
                     text: 'CONTINUE',
+                    onTap: () {
+                      if (prescribedItems.isNotEmpty) {
+                        context.read<PointOfServiceBloc>().add(
+                              PrescribeMedication(
+                                prescriptionItems: prescribedItems,
+                                checkIn: (context
+                                        .read<PointOfServiceBloc>()
+                                        .state as PointOfServiceIdle)
+                                    .checkIn!,
+                              ),
+                            );
+                      } else {
+                        di<NotificationsService>().showErrorNotification(
+                          title: 'Missing items',
+                          message: 'Missing prescription items',
+                        );
+                      }
+                    },
                   ),
                 ],
               ),

@@ -163,10 +163,11 @@ class _PointOfServicePageState extends State<PointOfServicePage> {
                 child: BlocConsumer<PointOfServiceBloc, PointOfServiceState>(
                   listener: (context, state) {
                     if (state is PointOfServiceIdle) {
-                      if (state.patient != null) {
+                      if (state.checkIn != null) {
                         di<NotificationsService>().showSuccesssNotification(
                           title: 'Record saved',
-                          message: 'Record for ${state.patient?.user.firstName}'
+                          message:
+                              'Record for ${state.checkIn?.patient.user.firstName}'
                               ' saved!',
                         );
 
@@ -202,6 +203,49 @@ class _PointOfServicePageState extends State<PointOfServicePage> {
                                 );
                                 // clear all controllers
                                 _clearControllersAndFormFields();
+                              },
+                            ),
+                          ),
+                        );
+                      }
+
+                      if (state.prescription != null) {
+                        di<NotificationsService>().showSuccesssNotification(
+                          title: 'Prescription recorded',
+                          message: 'Prescription saved',
+                        );
+
+                        showMacosAlertDialog<void>(
+                          context: context,
+                          builder: (_) => MacosAlertDialog(
+                            appIcon: const FlutterLogo(
+                              size: 56,
+                            ),
+                            title: const Text('Print Prescription'),
+                            message: const Text(
+                              'Do you need to print the prescription',
+                            ),
+                            primaryButton: UtanoButton(
+                              text: 'Yes',
+                              onTap: () {
+                                // TODO(iamngoni): print prescription
+                                context.goBack();
+                              },
+                            ),
+                            secondaryButton: UtanoButton(
+                              text: 'No',
+                              onTap: () {
+                                context.goBack();
+                                di<NotificationsService>()
+                                    .showSuccesssNotification(
+                                  title: 'Session complete',
+                                  message: 'Records Saved!',
+                                );
+                                // clear all controllers
+                                _clearControllersAndFormFields();
+                                context
+                                    .read<PointOfServiceBloc>()
+                                    .add(const ResetToIdle());
                               },
                             ),
                           ),
