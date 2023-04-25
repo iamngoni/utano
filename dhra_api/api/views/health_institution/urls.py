@@ -5,6 +5,8 @@ from api.views.health_institution.views import (
     PatientCheckInStatisticsView,
     PatientsView,
     PatientDetailsView,
+    PrescriptionsView,
+    PrescriptionDetailsView,
 )
 from django.urls import path
 
@@ -34,5 +36,11 @@ urlpatterns = [
         "patients/<str:patient_id>",
         PatientDetailsView.as_view(),
         name="Patient Details View",
+    ),
+    path("prescriptions", PrescriptionsView.as_view(), name="prescriptions"),
+    path(
+        "prescriptions/<str:prescription_number>",
+        PrescriptionDetailsView.as_view(),
+        name="prescription-details",
     ),
 ]

@@ -1,7 +1,7 @@
 import calendar
 
 from django.db import transaction
-from django.db.models import Count
+from django.db.models import Count, Q
 from django.db.models.functions import TruncMonth, TruncDay
 from django.utils import timezone
 from loguru import logger
@@ -17,7 +17,8 @@ from api.views.health_institution.serializers.payload import (
     HealthInstitutionEmployeesPayloadSerializer,
 )
 from api.views.health_institution.tasks import notify_employee_on_registration
-from pos.models import PatientCheckIn
+from api.views.pos.serializers.model import PrescriptionModelSerializer
+from pos.models import PatientCheckIn, Prescription
 from services.helpers.api_response import ApiResponse
 from services.helpers.create_username import create_username
 from services.helpers.generate_random_password import generate_random_password
@@ -255,6 +256,53 @@ class PatientDetailsView(APIView):
                 )
 
             return ApiResponse(data={"patient": PatientModelSerializer(patient).data})
+        except Exception as exc:
+            logger.error(exc)
+            return ApiResponse(num_status=500, bool_status=False)
+
+
+class PrescriptionsView(APIView):
+    permission_classes = (IsAuthenticated, IsEmployee)
+
+    def get(self, request):
+        try:
+            prescriptions = Prescription.objects.filter(
+                prepared_at=request.user.employee.registered_at
+            )
+            return ApiResponse(
+                data={
+                    "prescriptions": PrescriptionModelSerializer(
+                        prescriptions, many=True
+                    ).data
+                }
+            )
+        except Exception as exc:
+            logger.error(exc)
+            return ApiResponse(num_status=500, bool_status=False)
+
+
+class PrescriptionDetailsView(APIView):
+    permission_classes = (IsAuthenticated, IsEmployee)
+
+    def get(self, request, prescription_number: str):
+        try:
+            prescription = Prescription.objects.filter(
+                Q(prescription_number=prescription_number.upper())
+                | Q(prescription_number=prescription_number.lower())
+            )
+
+            if prescription.exists():
+                return ApiResponse(
+                    data={
+                        "prescription": PrescriptionModelSerializer(
+                            prescription.first()
+                        ).data
+                    }
+                )
+
+            return ApiResponse(
+                num_status=404, bool_status=False, message="Prescription not found"
+            )
         except Exception as exc:
             logger.error(exc)
             return ApiResponse(num_status=500, bool_status=False)
