@@ -7,6 +7,7 @@ import '../../../core/configs/configs.dart';
 import '../../../core/configs/storage_keys.dart';
 import '../../../core/models/data/application_error.dart';
 import '../../../core/models/data/auth_response.dart';
+import '../../../core/models/data/user_role.dart';
 import '../../../core/services/di.dart';
 import '../../../core/services/secure_storage.dart';
 import '../../models/repos/abstract/auth_repository.dart';
@@ -26,6 +27,17 @@ class AuthBloc extends HydratedBloc<AuthEvent, AuthState> {
         );
         response.fold((ApplicationError error) => emit(AuthError(error)),
             (AuthResponse response) async {
+          if (![
+            UserRole.pharmacist,
+            UserRole.nurse,
+            UserRole.labTechnician,
+            UserRole.admin,
+            UserRole.systemAdmin,
+            UserRole.doctor
+          ].contains(response.user.role)) {
+            emit(AuthError(ApplicationError('Invalid user role.')));
+            return;
+          }
           emit(Authenticated(response));
           await di<SecureStorageService>()
               .saveToDisk(StorageKeys.accessToken, response.accessToken);

@@ -15,24 +15,45 @@ import '../../../core/configs/colors.dart';
 import '../../../core/models/data/employee.dart';
 import '../../../core/models/data/user_role.dart';
 import '../../../core/models/utils/table_action.dart';
+import '../../../core/utils/constants.dart';
 import '../../../core/views/widgets/exception_widget.dart';
 import '../../../core/views/widgets/loader_widget.dart';
 import '../../../core/views/widgets/table_actions_row.dart';
 import '../../../core/views/widgets/table_body_item.dart';
 import '../../../core/views/widgets/table_header_title.dart';
+import '../../../core/views/widgets/utano_text_field.dart';
 import '../../blocs/employees/employees_bloc.dart';
 
-class EmployeesTable extends StatelessWidget {
+class EmployeesTable extends StatefulWidget {
   const EmployeesTable({this.role, super.key});
 
   final UserRole? role;
 
+  @override
+  State<EmployeesTable> createState() => _EmployeesTableState();
+}
+
+class _EmployeesTableState extends State<EmployeesTable> {
+  final TextEditingController searchController = TextEditingController();
   bool passesRole(Employee employee) {
-    if (role != null) {
-      return employee.user.role == role;
+    if (widget.role != null) {
+      return employee.user.role == widget.role &&
+          '${employee.user.firstName} ${employee.user.lastName}'
+              .toLowerCase()
+              .contains(searchController.text.toLowerCase());
     } else {
-      return true;
+      return '${employee.user.firstName} ${employee.user.lastName}'
+          .toLowerCase()
+          .contains(searchController.text.toLowerCase());
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    searchController.addListener(() {
+      setState(() {});
+    });
   }
 
   @override
@@ -71,7 +92,7 @@ class EmployeesTable extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    role != null ? role!.name.titleCase : 'All',
+                    widget.role != null ? widget.role!.name.titleCase : 'All',
                     style: TextStyle(
                       color: UtanoColors.black,
                       fontWeight: FontWeight.w500,
@@ -89,8 +110,13 @@ class EmployeesTable extends StatelessWidget {
                   ),
                 ],
               ),
+              UtanoTextField(
+                label: '',
+                placeholder: 'Search',
+                controller: searchController,
+              ),
               SizedBox(
-                height: sy(20),
+                height: sy(10),
               ),
               Expanded(
                 child: BlocBuilder<EmployeesBloc, EmployeesState>(
@@ -113,72 +139,76 @@ class EmployeesTable extends StatelessWidget {
                         height: context.height,
                         width: context.width,
                         child: state.employees.where(passesRole).isNotEmpty
-                            ? Table(
-                                children: [
-                                  const TableRow(
-                                    children: [
-                                      TableHeaderTitle(
-                                        title: 'Full Name',
-                                      ),
-                                      TableHeaderTitle(
-                                        title: 'Professional Title',
-                                      ),
-                                      TableHeaderTitle(
-                                        title: 'Role',
-                                      ),
-                                      TableHeaderTitle(
-                                        title: 'Institution',
-                                      ),
-                                      TableHeaderTitle(
-                                        title: 'Province',
-                                      ),
-                                      TableHeaderTitle(
-                                        title: 'District',
-                                      ),
-                                      TableHeaderTitle(
-                                        title: 'Actions',
-                                      ),
-                                    ],
-                                  ),
-                                  ...state.employees.where(passesRole).map(
-                                        (e) => TableRow(
-                                          children: [
-                                            TableBodyItem(
-                                              '${e.user.firstName} ${e.user.lastName}',
-                                            ),
-                                            TableBodyItem(
-                                              e.professionalTitle ?? 'n/a',
-                                            ),
-                                            TableBodyItem(
-                                              e.user.role.name.titleCase,
-                                            ),
-                                            TableBodyItem(e.registeredAt.name),
-                                            TableBodyItem(
-                                              '${e.registeredAt.district.province?.name}',
-                                            ),
-                                            TableBodyItem(
-                                              e.registeredAt.district.name,
-                                            ),
-                                            TableActionsRow(
-                                              actions: const [
-                                                TableAction(
-                                                  icon: CupertinoIcons.pen,
-                                                  tooltipText:
-                                                      'Edit Information',
-                                                  color: UtanoColors.green,
-                                                ),
-                                                TableAction(
-                                                  icon: CupertinoIcons.delete,
-                                                  tooltipText:
-                                                      'Delete From System',
-                                                  color: UtanoColors.red,
-                                                ),
-                                              ],
-                                            ),
-                                          ],
+                            ? SingleChildScrollView(
+                                child: Table(
+                                  border: tableBorder,
+                                  children: [
+                                    const TableRow(
+                                      children: [
+                                        TableHeaderTitle(
+                                          title: 'Full Name',
                                         ),
-                                      ),
-                                ],
+                                        TableHeaderTitle(
+                                          title: 'Professional Title',
+                                        ),
+                                        TableHeaderTitle(
+                                          title: 'Role',
+                                        ),
+                                        TableHeaderTitle(
+                                          title: 'Institution',
+                                        ),
+                                        TableHeaderTitle(
+                                          title: 'Province',
+                                        ),
+                                        TableHeaderTitle(
+                                          title: 'District',
+                                        ),
+                                        TableHeaderTitle(
+                                          title: 'Actions',
+                                        ),
+                                      ],
+                                    ),
+                                    ...state.employees.where(passesRole).map(
+                                          (e) => TableRow(
+                                            children: [
+                                              TableBodyItem(
+                                                '${e.user.firstName} ${e.user.lastName}',
+                                              ),
+                                              TableBodyItem(
+                                                e.professionalTitle ?? 'n/a',
+                                              ),
+                                              TableBodyItem(
+                                                e.user.role.name.titleCase,
+                                              ),
+                                              TableBodyItem(
+                                                  e.registeredAt.name),
+                                              TableBodyItem(
+                                                '${e.registeredAt.district.province?.name}',
+                                              ),
+                                              TableBodyItem(
+                                                e.registeredAt.district.name,
+                                              ),
+                                              TableActionsRow(
+                                                actions: const [
+                                                  TableAction(
+                                                    icon: CupertinoIcons.pen,
+                                                    tooltipText:
+                                                        'Edit Information',
+                                                    color: UtanoColors.green,
+                                                  ),
+                                                  TableAction(
+                                                    icon: CupertinoIcons.delete,
+                                                    tooltipText:
+                                                        'Delete From System',
+                                                    color: UtanoColors.red,
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                  ],
+                                ),
                               )
                             : Center(
                                 child: Text(
