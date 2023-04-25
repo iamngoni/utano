@@ -23,6 +23,8 @@ mixin _$Prescription {
   String get id => throw _privateConstructorUsedError;
   String get notes => throw _privateConstructorUsedError;
   String get patient => throw _privateConstructorUsedError;
+  @JsonKey(name: 'prescription_number')
+  String get prescriptionNumber => throw _privateConstructorUsedError;
   @JsonKey(name: 'prepared_at')
   String get preparedAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'prepared_by')
@@ -31,6 +33,8 @@ mixin _$Prescription {
   String get checkIn => throw _privateConstructorUsedError;
   @JsonKey(name: 'created_at')
   DateTime get createdAt => throw _privateConstructorUsedError;
+  List<PrescriptionItem> get prescriptionItems =>
+      throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -48,10 +52,12 @@ abstract class $PrescriptionCopyWith<$Res> {
       {String id,
       String notes,
       String patient,
+      @JsonKey(name: 'prescription_number') String prescriptionNumber,
       @JsonKey(name: 'prepared_at') String preparedAt,
       @JsonKey(name: 'prepared_by') String preparedBy,
       @JsonKey(name: 'check_in') String checkIn,
-      @JsonKey(name: 'created_at') DateTime createdAt});
+      @JsonKey(name: 'created_at') DateTime createdAt,
+      List<PrescriptionItem> prescriptionItems});
 }
 
 /// @nodoc
@@ -70,10 +76,12 @@ class _$PrescriptionCopyWithImpl<$Res, $Val extends Prescription>
     Object? id = null,
     Object? notes = null,
     Object? patient = null,
+    Object? prescriptionNumber = null,
     Object? preparedAt = null,
     Object? preparedBy = null,
     Object? checkIn = null,
     Object? createdAt = null,
+    Object? prescriptionItems = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -87,6 +95,10 @@ class _$PrescriptionCopyWithImpl<$Res, $Val extends Prescription>
       patient: null == patient
           ? _value.patient
           : patient // ignore: cast_nullable_to_non_nullable
+              as String,
+      prescriptionNumber: null == prescriptionNumber
+          ? _value.prescriptionNumber
+          : prescriptionNumber // ignore: cast_nullable_to_non_nullable
               as String,
       preparedAt: null == preparedAt
           ? _value.preparedAt
@@ -104,6 +116,10 @@ class _$PrescriptionCopyWithImpl<$Res, $Val extends Prescription>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      prescriptionItems: null == prescriptionItems
+          ? _value.prescriptionItems
+          : prescriptionItems // ignore: cast_nullable_to_non_nullable
+              as List<PrescriptionItem>,
     ) as $Val);
   }
 }
@@ -120,10 +136,12 @@ abstract class _$$_PrescriptionCopyWith<$Res>
       {String id,
       String notes,
       String patient,
+      @JsonKey(name: 'prescription_number') String prescriptionNumber,
       @JsonKey(name: 'prepared_at') String preparedAt,
       @JsonKey(name: 'prepared_by') String preparedBy,
       @JsonKey(name: 'check_in') String checkIn,
-      @JsonKey(name: 'created_at') DateTime createdAt});
+      @JsonKey(name: 'created_at') DateTime createdAt,
+      List<PrescriptionItem> prescriptionItems});
 }
 
 /// @nodoc
@@ -140,10 +158,12 @@ class __$$_PrescriptionCopyWithImpl<$Res>
     Object? id = null,
     Object? notes = null,
     Object? patient = null,
+    Object? prescriptionNumber = null,
     Object? preparedAt = null,
     Object? preparedBy = null,
     Object? checkIn = null,
     Object? createdAt = null,
+    Object? prescriptionItems = null,
   }) {
     return _then(_$_Prescription(
       id: null == id
@@ -157,6 +177,10 @@ class __$$_PrescriptionCopyWithImpl<$Res>
       patient: null == patient
           ? _value.patient
           : patient // ignore: cast_nullable_to_non_nullable
+              as String,
+      prescriptionNumber: null == prescriptionNumber
+          ? _value.prescriptionNumber
+          : prescriptionNumber // ignore: cast_nullable_to_non_nullable
               as String,
       preparedAt: null == preparedAt
           ? _value.preparedAt
@@ -174,6 +198,10 @@ class __$$_PrescriptionCopyWithImpl<$Res>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      prescriptionItems: null == prescriptionItems
+          ? _value._prescriptionItems
+          : prescriptionItems // ignore: cast_nullable_to_non_nullable
+              as List<PrescriptionItem>,
     ));
   }
 }
@@ -185,11 +213,14 @@ class _$_Prescription extends _Prescription {
       {required this.id,
       required this.notes,
       required this.patient,
+      @JsonKey(name: 'prescription_number') required this.prescriptionNumber,
       @JsonKey(name: 'prepared_at') required this.preparedAt,
       @JsonKey(name: 'prepared_by') required this.preparedBy,
       @JsonKey(name: 'check_in') required this.checkIn,
-      @JsonKey(name: 'created_at') required this.createdAt})
-      : super._();
+      @JsonKey(name: 'created_at') required this.createdAt,
+      required final List<PrescriptionItem> prescriptionItems})
+      : _prescriptionItems = prescriptionItems,
+        super._();
 
   factory _$_Prescription.fromJson(Map<String, dynamic> json) =>
       _$$_PrescriptionFromJson(json);
@@ -200,6 +231,9 @@ class _$_Prescription extends _Prescription {
   final String notes;
   @override
   final String patient;
+  @override
+  @JsonKey(name: 'prescription_number')
+  final String prescriptionNumber;
   @override
   @JsonKey(name: 'prepared_at')
   final String preparedAt;
@@ -212,10 +246,18 @@ class _$_Prescription extends _Prescription {
   @override
   @JsonKey(name: 'created_at')
   final DateTime createdAt;
+  final List<PrescriptionItem> _prescriptionItems;
+  @override
+  List<PrescriptionItem> get prescriptionItems {
+    if (_prescriptionItems is EqualUnmodifiableListView)
+      return _prescriptionItems;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_prescriptionItems);
+  }
 
   @override
   String toString() {
-    return 'Prescription(id: $id, notes: $notes, patient: $patient, preparedAt: $preparedAt, preparedBy: $preparedBy, checkIn: $checkIn, createdAt: $createdAt)';
+    return 'Prescription(id: $id, notes: $notes, patient: $patient, prescriptionNumber: $prescriptionNumber, preparedAt: $preparedAt, preparedBy: $preparedBy, checkIn: $checkIn, createdAt: $createdAt, prescriptionItems: $prescriptionItems)';
   }
 
   @override
@@ -226,19 +268,32 @@ class _$_Prescription extends _Prescription {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.notes, notes) || other.notes == notes) &&
             (identical(other.patient, patient) || other.patient == patient) &&
+            (identical(other.prescriptionNumber, prescriptionNumber) ||
+                other.prescriptionNumber == prescriptionNumber) &&
             (identical(other.preparedAt, preparedAt) ||
                 other.preparedAt == preparedAt) &&
             (identical(other.preparedBy, preparedBy) ||
                 other.preparedBy == preparedBy) &&
             (identical(other.checkIn, checkIn) || other.checkIn == checkIn) &&
             (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt));
+                other.createdAt == createdAt) &&
+            const DeepCollectionEquality()
+                .equals(other._prescriptionItems, _prescriptionItems));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, notes, patient, preparedAt,
-      preparedBy, checkIn, createdAt);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      notes,
+      patient,
+      prescriptionNumber,
+      preparedAt,
+      preparedBy,
+      checkIn,
+      createdAt,
+      const DeepCollectionEquality().hash(_prescriptionItems));
 
   @JsonKey(ignore: true)
   @override
@@ -259,10 +314,17 @@ abstract class _Prescription extends Prescription {
           {required final String id,
           required final String notes,
           required final String patient,
-          @JsonKey(name: 'prepared_at') required final String preparedAt,
-          @JsonKey(name: 'prepared_by') required final String preparedBy,
-          @JsonKey(name: 'check_in') required final String checkIn,
-          @JsonKey(name: 'created_at') required final DateTime createdAt}) =
+          @JsonKey(name: 'prescription_number')
+              required final String prescriptionNumber,
+          @JsonKey(name: 'prepared_at')
+              required final String preparedAt,
+          @JsonKey(name: 'prepared_by')
+              required final String preparedBy,
+          @JsonKey(name: 'check_in')
+              required final String checkIn,
+          @JsonKey(name: 'created_at')
+              required final DateTime createdAt,
+          required final List<PrescriptionItem> prescriptionItems}) =
       _$_Prescription;
   const _Prescription._() : super._();
 
@@ -276,6 +338,9 @@ abstract class _Prescription extends Prescription {
   @override
   String get patient;
   @override
+  @JsonKey(name: 'prescription_number')
+  String get prescriptionNumber;
+  @override
   @JsonKey(name: 'prepared_at')
   String get preparedAt;
   @override
@@ -287,6 +352,8 @@ abstract class _Prescription extends Prescription {
   @override
   @JsonKey(name: 'created_at')
   DateTime get createdAt;
+  @override
+  List<PrescriptionItem> get prescriptionItems;
   @override
   @JsonKey(ignore: true)
   _$$_PrescriptionCopyWith<_$_Prescription> get copyWith =>

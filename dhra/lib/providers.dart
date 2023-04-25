@@ -17,6 +17,7 @@ import 'core/blocs/check_in_stats/check_in_stats_bloc.dart';
 import 'core/blocs/health_institution_stats/health_institution_stats_bloc.dart';
 import 'core/blocs/patients/patients_bloc.dart';
 import 'core/blocs/point_of_service/point_of_service_bloc.dart';
+import 'core/blocs/prescriptions/prescriptions_bloc.dart';
 import 'core/blocs/system_configs/system_configs_bloc.dart';
 import 'core/models/repos/impl/dio_health_institution_repository.dart';
 import 'core/models/repos/impl/dio_system_configs_repository.dart';
@@ -102,6 +103,11 @@ List<BlocProvider> providers = [
   ),
   BlocProvider<ApprovedMedicinesBloc>(
     create: (_) => ApprovedMedicinesBloc(
+      repository: DioHealthInstitutionRepository(dio),
+    ),
+  ),
+  BlocProvider<PrescriptionsBloc>(
+    create: (_) => PrescriptionsBloc(
       repository: DioHealthInstitutionRepository(dio),
     ),
   ),

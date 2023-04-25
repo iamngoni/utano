@@ -8,6 +8,8 @@
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import 'prescription_item.dart';
+
 part 'prescription.freezed.dart';
 part 'prescription.g.dart';
 
@@ -17,10 +19,12 @@ class Prescription with _$Prescription {
     required String id,
     required String notes,
     required String patient,
+    @JsonKey(name: 'prescription_number') required String prescriptionNumber,
     @JsonKey(name: 'prepared_at') required String preparedAt,
     @JsonKey(name: 'prepared_by') required String preparedBy,
     @JsonKey(name: 'check_in') required String checkIn,
     @JsonKey(name: 'created_at') required DateTime createdAt,
+    required List<PrescriptionItem> prescriptionItems,
   }) = _Prescription;
 
   const Prescription._();
