@@ -40,13 +40,11 @@ class ApiResponse(HttpResponse):
             "versioned_by": "Ngonidzashe Mangudya (H180202M)",
         }
 
-        logger.info("Encrypting response")
         payload = {
             "payload": encrypt(
                 json.dumps(response, indent=4, sort_keys=True, default=str)
             ),
         }
-        logger.info(f"Response encrypted: {payload}")
 
         response_data = json.dumps(payload, cls=DjangoJSONEncoder, **{})
         super().__init__(
