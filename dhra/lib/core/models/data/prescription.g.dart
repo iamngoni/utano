@@ -16,7 +16,7 @@ _$_Prescription _$$_PrescriptionFromJson(Map<String, dynamic> json) =>
       preparedBy: json['prepared_by'] as String,
       checkIn: json['check_in'] as String,
       createdAt: DateTime.parse(json['created_at'] as String),
-      prescriptionItems: (json['prescriptionItems'] as List<dynamic>)
+      prescriptionItems: (json['prescription_items'] as List<dynamic>)
           .map((e) => PrescriptionItem.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
@@ -31,6 +31,6 @@ Map<String, dynamic> _$$_PrescriptionToJson(_$_Prescription instance) =>
       'prepared_by': instance.preparedBy,
       'check_in': instance.checkIn,
       'created_at': instance.createdAt.toIso8601String(),
-      'prescriptionItems':
+      'prescription_items':
           instance.prescriptionItems.map((e) => e.toJson()).toList(),
     };

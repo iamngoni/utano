@@ -24,28 +24,19 @@ class TableHeaderTitle extends StatelessWidget {
     return RelativeBuilder(
       builder: (context, height, width, sy, sx) {
         return TableCell(
-          child: Container(
-            // margin: EdgeInsets.only(
-            //   bottom: sy(5),
-            // ),
-            decoration: const BoxDecoration(
-              border: Border(
-                bottom: BorderSide(
-                  color: UtanoColors.border,
-                ),
-              ),
+          child: Padding(
+            padding: EdgeInsets.only(
+              bottom: sy(10),
+              top: sy(10),
+              right: sx(5),
+              left: sx(5),
             ),
-            child: Padding(
-              padding: EdgeInsets.only(
-                bottom: sy(10),
-              ),
-              child: Text(
-                title,
-                style: TextStyle(
-                  color: UtanoColors.grey,
-                  fontWeight: FontWeight.w400,
-                  fontSize: sy(10),
-                ),
+            child: Text(
+              title,
+              style: TextStyle(
+                color: UtanoColors.grey,
+                fontWeight: FontWeight.w400,
+                fontSize: sy(10),
               ),
             ),
           ),

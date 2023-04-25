@@ -18,6 +18,7 @@ import 'package:relative_scale/relative_scale.dart';
 import '../../blocs/prescriptions/prescriptions_bloc.dart';
 import '../../configs/colors.dart';
 import '../../models/utils/table_action.dart';
+import '../../utils/constants.dart';
 import 'exception_widget.dart';
 import 'loader_widget.dart';
 
@@ -106,6 +107,7 @@ class PrescriptionsTable extends StatelessWidget {
                         width: context.width,
                         child: state.prescriptions.isNotEmpty
                             ? Table(
+                                border: tableBorder,
                                 children: [
                                   const TableRow(
                                     children: [
@@ -135,8 +137,12 @@ class PrescriptionsTable extends StatelessWidget {
                                         TableBodyItem(
                                           e.patient,
                                         ),
-                                        const TableBodyItem(
-                                          '',
+                                        TableBodyItem(
+                                          '${e.prescriptionItems.map(
+                                            (i) =>
+                                                '${i.medicine} - ${i.quantity}'
+                                                ' @ ${i.frequency}/d\n',
+                                          )}',
                                         ),
                                         TableBodyItem(
                                           e.createdAt.readableDateTime,

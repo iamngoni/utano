@@ -24,7 +24,8 @@ class Prescription with _$Prescription {
     @JsonKey(name: 'prepared_by') required String preparedBy,
     @JsonKey(name: 'check_in') required String checkIn,
     @JsonKey(name: 'created_at') required DateTime createdAt,
-    required List<PrescriptionItem> prescriptionItems,
+    @JsonKey(name: 'prescription_items')
+        required List<PrescriptionItem> prescriptionItems,
   }) = _Prescription;
 
   const Prescription._();

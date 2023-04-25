@@ -32,37 +32,27 @@ class TableBodyItem extends StatelessWidget {
     return RelativeBuilder(
       builder: (context, height, width, sy, sx) {
         return TableCell(
-          child: Container(
-            decoration: BoxDecoration(
-              border: Border(
-                bottom: BorderSide(
-                  color: UtanoColors.border.withOpacity(0.3),
-                ),
-              ),
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              vertical: sy(10),
+              horizontal: sx(5),
             ),
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                vertical: sy(10),
-              ),
-              child: MacosTooltip(
-                message: text,
-                child: GestureDetector(
-                  onTap: () async {
-                    await Clipboard.setData(ClipboardData(text: text));
-                    await di<NotificationsService>().showSuccesssNotification(
-                      title: 'Clipboard',
-                      message: '🎉 Copied to clipboard',
-                    );
-                  },
-                  child: Text(
-                    text,
-                    style: TextStyle(
-                      color: textColor,
-                      fontWeight: bold ? FontWeight.w600 : FontWeight.w400,
-                      fontSize: sy(9),
-                    ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
+            child: MacosTooltip(
+              message: text,
+              child: GestureDetector(
+                onTap: () async {
+                  await Clipboard.setData(ClipboardData(text: text));
+                  await di<NotificationsService>().showSuccesssNotification(
+                    title: 'Clipboard',
+                    message: '🎉 Copied to clipboard',
+                  );
+                },
+                child: Text(
+                  text,
+                  style: TextStyle(
+                    color: textColor,
+                    fontWeight: bold ? FontWeight.w600 : FontWeight.w400,
+                    fontSize: sy(9),
                   ),
                 ),
               ),

@@ -33,6 +33,7 @@ mixin _$Prescription {
   String get checkIn => throw _privateConstructorUsedError;
   @JsonKey(name: 'created_at')
   DateTime get createdAt => throw _privateConstructorUsedError;
+  @JsonKey(name: 'prescription_items')
   List<PrescriptionItem> get prescriptionItems =>
       throw _privateConstructorUsedError;
 
@@ -52,12 +53,18 @@ abstract class $PrescriptionCopyWith<$Res> {
       {String id,
       String notes,
       String patient,
-      @JsonKey(name: 'prescription_number') String prescriptionNumber,
-      @JsonKey(name: 'prepared_at') String preparedAt,
-      @JsonKey(name: 'prepared_by') String preparedBy,
-      @JsonKey(name: 'check_in') String checkIn,
-      @JsonKey(name: 'created_at') DateTime createdAt,
-      List<PrescriptionItem> prescriptionItems});
+      @JsonKey(name: 'prescription_number')
+          String prescriptionNumber,
+      @JsonKey(name: 'prepared_at')
+          String preparedAt,
+      @JsonKey(name: 'prepared_by')
+          String preparedBy,
+      @JsonKey(name: 'check_in')
+          String checkIn,
+      @JsonKey(name: 'created_at')
+          DateTime createdAt,
+      @JsonKey(name: 'prescription_items')
+          List<PrescriptionItem> prescriptionItems});
 }
 
 /// @nodoc
@@ -136,12 +143,18 @@ abstract class _$$_PrescriptionCopyWith<$Res>
       {String id,
       String notes,
       String patient,
-      @JsonKey(name: 'prescription_number') String prescriptionNumber,
-      @JsonKey(name: 'prepared_at') String preparedAt,
-      @JsonKey(name: 'prepared_by') String preparedBy,
-      @JsonKey(name: 'check_in') String checkIn,
-      @JsonKey(name: 'created_at') DateTime createdAt,
-      List<PrescriptionItem> prescriptionItems});
+      @JsonKey(name: 'prescription_number')
+          String prescriptionNumber,
+      @JsonKey(name: 'prepared_at')
+          String preparedAt,
+      @JsonKey(name: 'prepared_by')
+          String preparedBy,
+      @JsonKey(name: 'check_in')
+          String checkIn,
+      @JsonKey(name: 'created_at')
+          DateTime createdAt,
+      @JsonKey(name: 'prescription_items')
+          List<PrescriptionItem> prescriptionItems});
 }
 
 /// @nodoc
@@ -213,12 +226,18 @@ class _$_Prescription extends _Prescription {
       {required this.id,
       required this.notes,
       required this.patient,
-      @JsonKey(name: 'prescription_number') required this.prescriptionNumber,
-      @JsonKey(name: 'prepared_at') required this.preparedAt,
-      @JsonKey(name: 'prepared_by') required this.preparedBy,
-      @JsonKey(name: 'check_in') required this.checkIn,
-      @JsonKey(name: 'created_at') required this.createdAt,
-      required final List<PrescriptionItem> prescriptionItems})
+      @JsonKey(name: 'prescription_number')
+          required this.prescriptionNumber,
+      @JsonKey(name: 'prepared_at')
+          required this.preparedAt,
+      @JsonKey(name: 'prepared_by')
+          required this.preparedBy,
+      @JsonKey(name: 'check_in')
+          required this.checkIn,
+      @JsonKey(name: 'created_at')
+          required this.createdAt,
+      @JsonKey(name: 'prescription_items')
+          required final List<PrescriptionItem> prescriptionItems})
       : _prescriptionItems = prescriptionItems,
         super._();
 
@@ -248,6 +267,7 @@ class _$_Prescription extends _Prescription {
   final DateTime createdAt;
   final List<PrescriptionItem> _prescriptionItems;
   @override
+  @JsonKey(name: 'prescription_items')
   List<PrescriptionItem> get prescriptionItems {
     if (_prescriptionItems is EqualUnmodifiableListView)
       return _prescriptionItems;
@@ -324,7 +344,8 @@ abstract class _Prescription extends Prescription {
               required final String checkIn,
           @JsonKey(name: 'created_at')
               required final DateTime createdAt,
-          required final List<PrescriptionItem> prescriptionItems}) =
+          @JsonKey(name: 'prescription_items')
+              required final List<PrescriptionItem> prescriptionItems}) =
       _$_Prescription;
   const _Prescription._() : super._();
 
@@ -353,6 +374,7 @@ abstract class _Prescription extends Prescription {
   @JsonKey(name: 'created_at')
   DateTime get createdAt;
   @override
+  @JsonKey(name: 'prescription_items')
   List<PrescriptionItem> get prescriptionItems;
   @override
   @JsonKey(ignore: true)

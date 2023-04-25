@@ -15,6 +15,7 @@ import 'package:relative_scale/relative_scale.dart';
 import '../../blocs/patients/patients_bloc.dart';
 import '../../configs/colors.dart';
 import '../../models/utils/table_action.dart';
+import '../../utils/constants.dart';
 import 'exception_widget.dart';
 import 'loader_widget.dart';
 import 'table_actions_row.dart';
@@ -106,75 +107,81 @@ class PatientsTable extends StatelessWidget {
                         height: context.height,
                         width: context.width,
                         child: state.patients.isNotEmpty
-                            ? Table(
-                                children: [
-                                  const TableRow(
-                                    children: [
-                                      TableHeaderTitle(
-                                        title: 'Record\n#',
-                                      ),
-                                      TableHeaderTitle(
-                                        title: 'Full\nName',
-                                      ),
-                                      TableHeaderTitle(
-                                        title: 'Mobile\nNumber',
-                                      ),
-                                      TableHeaderTitle(
-                                        title: 'National\nID',
-                                      ),
-                                      TableHeaderTitle(
-                                        title: 'Marital\nStatus',
-                                      ),
-                                      TableHeaderTitle(title: 'Date of\nBirth'),
-                                      TableHeaderTitle(
-                                        title: '\nActions',
-                                      ),
-                                    ],
-                                  ),
-                                  ...state.patients.map(
-                                    (e) => TableRow(
+                            ? SingleChildScrollView(
+                                child: Table(
+                                  border: tableBorder,
+                                  children: [
+                                    const TableRow(
                                       children: [
-                                        TableBodyItem(
-                                          e.medicalRecordNumber,
+                                        TableHeaderTitle(
+                                          title: 'Record #',
                                         ),
-                                        TableBodyItem(
-                                          '${e.user.firstName} ${e.user.lastName}',
+                                        TableHeaderTitle(
+                                          title: 'Full Name',
                                         ),
-                                        TableBodyItem(
-                                          e.mobileNumber ?? 'n/a',
+                                        TableHeaderTitle(
+                                          title: 'Mobile Number',
                                         ),
-                                        TableBodyItem(
-                                          e.nationalIdNumber ?? 'n/a',
+                                        TableHeaderTitle(
+                                          title: 'National ID',
                                         ),
-                                        TableBodyItem(
-                                          e.maritalStatus ?? 'n/a',
+                                        TableHeaderTitle(
+                                          title: 'Marital Status',
                                         ),
-                                        TableBodyItem(
-                                          '${e.dateOfBirth?.readableDate}',
+                                        TableHeaderTitle(
+                                          title: 'Date of Birth',
                                         ),
-                                        TableActionsRow(
-                                          actions: const [
-                                            TableAction(
-                                              icon: CupertinoIcons.eye,
-                                              tooltipText: 'View Patient',
-                                              color: UtanoColors.active,
-                                            ),
-                                            TableAction(
-                                              icon: CupertinoIcons.pen,
-                                              tooltipText: 'Edit Information',
-                                              color: UtanoColors.green,
-                                            ),
-                                            TableAction(
-                                              icon: CupertinoIcons.delete,
-                                              tooltipText: 'Delete From System',
-                                              color: UtanoColors.red,
-                                            ),
-                                          ],
+                                        TableHeaderTitle(
+                                          title: 'Actions',
                                         ),
                                       ],
                                     ),
-                                  ),
-                                ],
+                                    ...state.patients.map(
+                                      (e) => TableRow(
+                                        children: [
+                                          TableBodyItem(
+                                            e.medicalRecordNumber,
+                                          ),
+                                          TableBodyItem(
+                                            '${e.user.firstName} ${e.user.lastName}',
+                                          ),
+                                          TableBodyItem(
+                                            e.mobileNumber ?? 'n/a',
+                                          ),
+                                          TableBodyItem(
+                                            e.nationalIdNumber ?? 'n/a',
+                                          ),
+                                          TableBodyItem(
+                                            e.maritalStatus ?? 'n/a',
+                                          ),
+                                          TableBodyItem(
+                                            '${e.dateOfBirth?.readableDate}',
+                                          ),
+                                          TableActionsRow(
+                                            actions: const [
+                                              TableAction(
+                                                icon: CupertinoIcons.eye,
+                                                tooltipText: 'View Patient',
+                                                color: UtanoColors.active,
+                                              ),
+                                              TableAction(
+                                                icon: CupertinoIcons.pen,
+                                                tooltipText: 'Edit Information',
+                                                color: UtanoColors.green,
+                                              ),
+                                              TableAction(
+                                                icon: CupertinoIcons.delete,
+                                                tooltipText:
+                                                    'Delete From System',
+                                                color: UtanoColors.red,
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               )
                             : Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
