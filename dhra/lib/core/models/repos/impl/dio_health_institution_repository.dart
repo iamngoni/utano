@@ -368,5 +368,52 @@ class DioHealthInstitutionRepository extends HealthInstitutionRepository {
     }
   }
 
+  @override
+  Future<Either<ApplicationError, List<Prescription>>>
+      listPrescriptions() async {
+    try {
+      final Response<NetworkResponse> response =
+          await dio.get('/health_institution/prescriptions');
+      final NetworkResponse networkResponse = response.data!;
+      final List<Prescription> prescriptions =
+          (networkResponse.data!['prescriptions'] as List)
+              .map(
+                (prescription) =>
+                    Prescription.fromJson(prescription as Map<String, dynamic>),
+              )
+              .toList();
+      return Right(prescriptions);
+    } on DioError catch (e) {
+      return Left(dioErrorToApplicationError(e));
+    } catch (e, s) {
+      logger
+        ..e(e)
+        ..e(s);
+      return Left(ApplicationError.unknownError());
+    }
+  }
+
+  @override
+  Future<Either<ApplicationError, Prescription>> getPrescription(
+    String prescriptionNumber,
+  ) async {
+    try {
+      final Response<NetworkResponse> response = await dio
+          .get('/health_institution/prescriptions/$prescriptionNumber');
+      final NetworkResponse networkResponse = response.data!;
+      final Prescription prescription = Prescription.fromJson(
+        networkResponse.data!['prescription'] as Map<String, dynamic>,
+      );
+      return Right(prescription);
+    } on DioError catch (e) {
+      return Left(dioErrorToApplicationError(e));
+    } catch (e, s) {
+      logger
+        ..e(e)
+        ..e(s);
+      return Left(ApplicationError.unknownError());
+    }
+  }
+
   final Dio dio;
 }

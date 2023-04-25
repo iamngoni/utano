@@ -90,4 +90,14 @@ abstract class HealthInstitutionRepository {
     required CheckIn checkIn,
     required List<PosPrescriptionItem> prescriptionItems,
   });
+
+  /// List of prescriptions from that health institution
+  /// Returns list of [Prescription]
+  Future<Either<ApplicationError, List<Prescription>>> listPrescriptions();
+
+  /// Get a specific prescription using the prescription number
+  /// Returns [Prescription]
+  Future<Either<ApplicationError, Prescription>> getPrescription(
+    String prescriptionNumber,
+  );
 }
