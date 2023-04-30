@@ -421,10 +421,7 @@ class _SystemAdminHealthInstitutionsAdminsPageState
                       );
                     }
 
-                    return AnimatedSwitcher(
-                      duration: const Duration(milliseconds: 200),
-                      child: formWidget,
-                    );
+                    return formWidget;
                   },
                 ),
               ),

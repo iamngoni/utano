@@ -58,16 +58,19 @@ class _UtanoTextFieldState extends State<UtanoTextField> {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              widget.label,
-              style: TextStyle(
-                color: UtanoColors.grey,
-                fontWeight: FontWeight.w400,
-                fontSize: sy(12),
-              ),
-            ),
+            if (widget.label.isNotEmpty)
+              Text(
+                widget.label,
+                style: TextStyle(
+                  color: UtanoColors.grey,
+                  fontWeight: FontWeight.w400,
+                  fontSize: sy(12),
+                ),
+              )
+            else
+              const SizedBox.shrink(),
             SizedBox(
-              height: sy(3),
+              height: widget.label.isNotEmpty ? sy(3) : 0,
             ),
             MacosTextField(
               padding: EdgeInsets.symmetric(

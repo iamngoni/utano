@@ -13,6 +13,7 @@ import 'package:relative_scale/relative_scale.dart';
 
 import '../../../core/configs/colors.dart';
 import '../../../core/models/utils/table_action.dart';
+import '../../../core/utils/constants.dart';
 import '../../../core/views/widgets/exception_widget.dart';
 import '../../../core/views/widgets/loader_widget.dart';
 import '../../../core/views/widgets/table_actions_row.dart';
@@ -108,6 +109,7 @@ class HealthInstitutionsTable extends StatelessWidget {
                         height: context.height,
                         width: context.width,
                         child: Table(
+                          border: tableBorder,
                           children: [
                             const TableRow(
                               children: [
@@ -177,10 +179,7 @@ class HealthInstitutionsTable extends StatelessWidget {
                       );
                     }
 
-                    return AnimatedSwitcher(
-                      duration: const Duration(milliseconds: 200),
-                      child: healthInstitutionsTableWidget,
-                    );
+                    return healthInstitutionsTableWidget;
                   },
                 ),
               ),

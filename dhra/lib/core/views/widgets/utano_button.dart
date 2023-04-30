@@ -15,11 +15,13 @@ class UtanoButton extends StatelessWidget {
   const UtanoButton({
     this.text = 'SUBMIT',
     this.onTap,
+    this.buttonColor,
     super.key,
   });
 
   final String text;
   final VoidCallback? onTap;
+  final Color? buttonColor;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +35,7 @@ class UtanoButton extends StatelessWidget {
             ),
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              color: UtanoColors.active,
+              color: buttonColor ?? UtanoColors.active,
               borderRadius: BorderRadius.circular(7),
             ),
             child: Text(

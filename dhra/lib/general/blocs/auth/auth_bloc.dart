@@ -53,6 +53,8 @@ class AuthBloc extends HydratedBloc<AuthEvent, AuthState> {
     });
     on<AuthLogout>((event, emit) async {
       await di<SecureStorageService>().clearDisk();
+      // clear hydrated bloc
+      await clear();
       emit(UnAuthenticated());
     });
   }

@@ -70,10 +70,7 @@ class SystemAdminHealthInstitutionEmployeesPage extends StatelessWidget {
                       child = const NoHealthInstitutionSelectedWidget();
                     }
 
-                    return AnimatedSwitcher(
-                      duration: const Duration(milliseconds: 200),
-                      child: child,
-                    );
+                    return child;
                   },
                 ),
               ),

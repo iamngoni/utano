@@ -11,6 +11,7 @@ import '../../../core/blocs/approved_medicine/approved_medicines_bloc.dart';
 import '../../../core/blocs/check_in_stats/check_in_stats_bloc.dart';
 import '../../../core/blocs/health_institution_stats/health_institution_stats_bloc.dart';
 import '../../../core/blocs/patients/patients_bloc.dart';
+import '../../../core/blocs/prescriptions/prescriptions_bloc.dart';
 import '../../../core/blocs/system_configs/system_configs_bloc.dart';
 import '../../../core/configs/configs.dart';
 import '../../../core/models/data/user_role.dart';
@@ -75,6 +76,7 @@ class _LandingPageState extends State<LandingPage> {
                         .add(ListApprovedMedicines());
                     logger.i('Loading patients');
                     context.read<PatientsBloc>().add(const ListPatients());
+                    context.read<PrescriptionsBloc>().add(ListPrescriptions());
                   }
 
                   context.goToRefresh(
@@ -192,10 +194,7 @@ class _LandingPageState extends State<LandingPage> {
                         color: Colors.black.withOpacity(0.7),
                       ),
                     ),
-                    AnimatedSwitcher(
-                      duration: const Duration(milliseconds: 200),
-                      child: authWidget,
-                    ),
+                    authWidget,
                   ],
                 );
               },

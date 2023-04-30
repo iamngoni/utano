@@ -226,10 +226,7 @@ class _EmployeesTableState extends State<EmployeesTable> {
                       tableWidget = const SizedBox.shrink();
                     }
 
-                    return AnimatedSwitcher(
-                      duration: const Duration(milliseconds: 200),
-                      child: tableWidget,
-                    );
+                    return tableWidget;
                   },
                 ),
               ),

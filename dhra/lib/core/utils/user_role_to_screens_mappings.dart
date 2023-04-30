@@ -14,6 +14,10 @@ import '../../admin/views/pages/admin_register_employee.dart';
 import '../../nurse/views/pages/nurse_dashboard.dart';
 import '../../nurse/views/pages/nurse_patients.dart';
 import '../../nurse/views/pages/nurse_prescriptions.dart';
+import '../../pharmacist/views/pages/pharmacist_dashboard.dart';
+import '../../pharmacist/views/pages/pharmacist_dispensary.dart';
+import '../../pharmacist/views/pages/pharmacist_patients.dart';
+import '../../pharmacist/views/pages/pharmacist_prescriptions.dart';
 import '../../system_admin/views/pages/system_admin_dashboard.dart';
 import '../../system_admin/views/pages/system_admin_health_institution_employees.dart';
 import '../../system_admin/views/pages/system_admin_health_institutions.dart';
@@ -25,7 +29,7 @@ import '../views/pages/point_of_service.dart';
 final Map<UserRole, List<Widget>> userRoleToScreensMappings = {
   UserRole.nurse: [
     const NurseDashboardPage(),
-    PointOfServicePage(),
+    const PointOfServicePage(),
     const NursePatientsPage(),
     const NursePrescriptionsPage(),
     ChangePasswordPage(),
@@ -36,12 +40,19 @@ final Map<UserRole, List<Widget>> userRoleToScreensMappings = {
     const SystemAdminHealthInstitutionsAdminsPage(),
     ChangePasswordPage(),
     // ====== Pages Not Displayed On The Sidebar
-    SystemAdminHealthInstitutionEmployeesPage(),
+    const SystemAdminHealthInstitutionEmployeesPage(),
   ],
   UserRole.admin: [
     const AdminDashboardPage(),
     const AdminEmployeesPage(),
     const AdminRegisterEmployeePage(),
+    ChangePasswordPage(),
+  ],
+  UserRole.pharmacist: [
+    const PharmacistDashboardPage(),
+    const PharmacistPatientsPage(),
+    const PharmacistPrescriptionsPage(),
+    const PharmacistDispensaryPage(),
     ChangePasswordPage(),
   ],
 };

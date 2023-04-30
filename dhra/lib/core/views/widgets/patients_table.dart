@@ -210,10 +210,7 @@ class PatientsTable extends StatelessWidget {
                       tableWidget = const SizedBox.shrink();
                     }
 
-                    return AnimatedSwitcher(
-                      duration: const Duration(milliseconds: 200),
-                      child: tableWidget,
-                    );
+                    return tableWidget;
                   },
                 ),
               ),

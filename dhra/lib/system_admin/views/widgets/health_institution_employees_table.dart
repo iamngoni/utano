@@ -15,6 +15,7 @@ import '../../../core/configs/colors.dart';
 import '../../../core/models/data/employee.dart';
 import '../../../core/models/data/health_institution.dart';
 import '../../../core/models/utils/table_action.dart';
+import '../../../core/utils/constants.dart';
 import '../../../core/views/widgets/table_actions_row.dart';
 import '../../../core/views/widgets/table_body_item.dart';
 import '../../../core/views/widgets/table_header_title.dart';
@@ -89,6 +90,7 @@ class HealthInstitutionEmployeesTable extends StatelessWidget {
               Expanded(
                 child: employees.isNotEmpty
                     ? Table(
+                        border: tableBorder,
                         children: [
                           const TableRow(
                             children: [

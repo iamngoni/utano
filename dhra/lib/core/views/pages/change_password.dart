@@ -39,7 +39,7 @@ class ChangePasswordPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              PageHeader(
+              const PageHeader(
                 title: 'Change Password',
               ),
               SizedBox(
@@ -133,6 +133,7 @@ class ChangePasswordPage extends StatelessWidget {
                             controller: _oldPasswordController,
                             label: 'Current Password',
                             placeholder: '********',
+                            obscureText: true,
                           ),
                           SizedBox(
                             height: sy(10),
@@ -141,6 +142,7 @@ class ChangePasswordPage extends StatelessWidget {
                             controller: _passwordController,
                             label: 'New Password',
                             placeholder: '********',
+                            obscureText: true,
                           ),
                           SizedBox(
                             height: sy(10),
@@ -149,6 +151,7 @@ class ChangePasswordPage extends StatelessWidget {
                             controller: _passwordConfirmationController,
                             label: 'Confirm Your New Password',
                             placeholder: '********',
+                            obscureText: true,
                           ),
                           SizedBox(
                             height: sy(10),
@@ -209,10 +212,7 @@ class ChangePasswordPage extends StatelessWidget {
                       );
                     }
 
-                    return AnimatedSwitcher(
-                      duration: const Duration(milliseconds: 200),
-                      child: passwordForm,
-                    );
+                    return passwordForm;
                   },
                 ),
               ),
