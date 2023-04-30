@@ -8,16 +8,18 @@
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../core/models/data/model.dart';
+
 part 'drug.freezed.dart';
 part 'drug.g.dart';
 
 @freezed
-class Drug with _$Drug {
+class Drug with _$Drug implements Model {
   const factory Drug({
     required String id,
     required String name,
     required String description,
-    required String price,
+    required double price,
     required int quantity,
     @JsonKey(name: 'is_active') required bool isActive,
   }) = _Drug;

@@ -106,10 +106,7 @@ class NurseDashboardPage extends StatelessWidget {
                         );
                       }
 
-                      return AnimatedSwitcher(
-                        duration: const Duration(milliseconds: 200),
-                        child: child,
-                      );
+                      return child;
                     },
                   ),
                 ),

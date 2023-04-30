@@ -18,6 +18,7 @@ import '../../../core/models/data/user_role.dart';
 import '../../../core/utils/user_role_to_page_mappings.dart';
 import '../../../core/utils/user_role_to_screens_mappings.dart';
 import '../../../core/views/widgets/loader_widget.dart';
+import '../../../pharmacist/blocs/drugs/drugs_bloc.dart';
 import '../../blocs/auth/auth_bloc.dart';
 import '../../blocs/navigation/navigation_bloc.dart';
 import '../widgets/login_form.dart';
@@ -77,6 +78,7 @@ class _LandingPageState extends State<LandingPage> {
                     logger.i('Loading patients');
                     context.read<PatientsBloc>().add(const ListPatients());
                     context.read<PrescriptionsBloc>().add(ListPrescriptions());
+                    context.read<DrugsBloc>().add(ListDrugs());
                   }
 
                   context.goToRefresh(

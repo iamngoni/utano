@@ -126,10 +126,7 @@ class _NoHealthInstitutionSelectedWidgetState
                             const Center(child: Text('Load configs'));
                       }
 
-                      return AnimatedSwitcher(
-                        duration: const Duration(milliseconds: 200),
-                        child: dropdownWidget,
-                      );
+                      return dropdownWidget;
                     },
                   ),
                   SizedBox(

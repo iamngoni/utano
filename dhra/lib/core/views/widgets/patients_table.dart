@@ -143,10 +143,10 @@ class PatientsTable extends StatelessWidget {
                                             e.medicalRecordNumber,
                                           ),
                                           TableBodyItem(
-                                            '${e.user.firstName} ${e.user.lastName}',
+                                            '${e.user.firstName} ${e.user.lastName}'
+                                                .headingCase,
                                           ),
-                                          TableBodyItem(
-                                            e.mobileNumber ?? 'n/a',
+                                          TableBodyItem(e.mobileNumber ?? 'n/a',
                                           ),
                                           TableBodyItem(
                                             e.nationalIdNumber ?? 'n/a',

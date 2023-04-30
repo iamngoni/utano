@@ -8,13 +8,14 @@
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import 'model.dart';
 import 'prescription_item.dart';
 
 part 'prescription.freezed.dart';
 part 'prescription.g.dart';
 
 @freezed
-class Prescription with _$Prescription {
+class Prescription with _$Prescription implements Model {
   const factory Prescription({
     required String id,
     required String notes,

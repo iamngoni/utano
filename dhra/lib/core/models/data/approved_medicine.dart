@@ -8,11 +8,13 @@
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import 'model.dart';
+
 part 'approved_medicine.freezed.dart';
 part 'approved_medicine.g.dart';
 
 @freezed
-class ApprovedMedicine with _$ApprovedMedicine {
+class ApprovedMedicine with _$ApprovedMedicine implements Model {
   const factory ApprovedMedicine({
     required String id,
     required String name,

@@ -1,8 +1,8 @@
 //
-//  prescriptions_table
+//  drugs_table
 //  dhra
 //
-//  Created by Ngonidzashe Mangudya on 25/4/2023.
+//  Created by Ngonidzashe Mangudya on 30/4/2023.
 //  Copyright (c) 2023 ModestNerds, Co
 //
 
@@ -12,18 +12,15 @@ import 'package:handy_extensions/handy_extensions.dart';
 import 'package:lottie/lottie.dart';
 import 'package:relative_scale/relative_scale.dart';
 
-import '../../blocs/prescriptions/prescriptions_bloc.dart';
+import '../../../pharmacist/blocs/drugs/drugs_bloc.dart';
 import '../../configs/colors.dart';
 import '../../models/utils/table_action.dart';
-import '../../utils/constants.dart';
 import 'exception_widget.dart';
 import 'loader_widget.dart';
-import 'table_actions_row.dart';
-import 'table_body_item.dart';
-import 'table_header_title.dart';
+import 'utano_table.dart';
 
-class PrescriptionsTable extends StatelessWidget {
-  const PrescriptionsTable({super.key});
+class DrugsTable extends StatelessWidget {
+  const DrugsTable({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +59,7 @@ class PrescriptionsTable extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Prescriptions',
+                    'Available Medicine',
                     style: TextStyle(
                       color: UtanoColors.black,
                       fontWeight: FontWeight.w500,
@@ -70,9 +67,7 @@ class PrescriptionsTable extends StatelessWidget {
                     ),
                   ),
                   GestureDetector(
-                    onTap: () => context
-                        .read<PrescriptionsBloc>()
-                        .add(ListPrescriptions()),
+                    onTap: () => context.read<DrugsBloc>().add(ListDrugs()),
                     child: Icon(
                       CupertinoIcons.refresh_thick,
                       color: UtanoColors.grey,
@@ -85,81 +80,46 @@ class PrescriptionsTable extends StatelessWidget {
                 height: sy(20),
               ),
               Expanded(
-                child: BlocBuilder<PrescriptionsBloc, PrescriptionsState>(
+                child: BlocBuilder<DrugsBloc, DrugsState>(
                   builder: (context, state) {
                     late Widget tableWidget;
-                    if (state is PrescriptionsLoading) {
+                    if (state is DrugsLoading) {
                       tableWidget = const Center(
                         child: LoaderWidget(
                           color: UtanoColors.black,
                         ),
                       );
-                    } else if (state is PrescriptionsError) {
+                    } else if (state is DrugsError) {
                       tableWidget = ExceptionWidget(
                         error: state.error,
-                        onRetry: () => context
-                            .read<PrescriptionsBloc>()
-                            .add(ListPrescriptions()),
+                        onRetry: () =>
+                            context.read<DrugsBloc>().add(ListDrugs()),
                       );
-                    } else if (state is PrescriptionsLoaded) {
+                    } else if (state is DrugsLoaded) {
                       tableWidget = SizedBox(
                         height: context.height,
                         width: context.width,
-                        child: state.prescriptions.isNotEmpty
+                        child: state.drugs.isNotEmpty
                             ? SingleChildScrollView(
-                                child: Table(
-                                  border: tableBorder,
-                                  children: [
-                                    const TableRow(
-                                      children: [
-                                        TableHeaderTitle(
-                                          title: 'Prescription #',
-                                        ),
-                                        TableHeaderTitle(
-                                          title: 'Patient',
-                                        ),
-                                        TableHeaderTitle(
-                                          title: 'Items',
-                                        ),
-                                        TableHeaderTitle(
-                                          title: 'Date',
-                                        ),
-                                        TableHeaderTitle(
-                                          title: 'Actions',
-                                        ),
-                                      ],
-                                    ),
-                                    ...state.prescriptions.map(
-                                      (e) => TableRow(
-                                        children: [
-                                          TableBodyItem(
-                                            e.prescriptionNumber,
-                                          ),
-                                          TableBodyItem(
-                                            e.patient,
-                                          ),
-                                          TableBodyItem(
-                                            '${e.prescriptionItems.map(
-                                              (i) =>
-                                                  '${i.medicine} - ${i.quantity}'
-                                                  ' @ ${i.frequency}/d\n',
-                                            )}',
-                                          ),
-                                          TableBodyItem(
-                                            e.createdAt.readableDateTime,
-                                          ),
-                                          TableActionsRow(
-                                            actions: const [
-                                              TableAction(
-                                                icon: CupertinoIcons.eye,
-                                                tooltipText:
-                                                    'View Prescription',
-                                                color: UtanoColors.active,
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
+                                child: UtanoTable(
+                                  items: state.drugs,
+                                  modelFields: const [
+                                    'name',
+                                    'description',
+                                    'price',
+                                    'quantity'
+                                  ],
+                                  titles: const [
+                                    'Name',
+                                    'Description',
+                                    r'Unit Price ($)',
+                                    'Quantity'
+                                  ],
+                                  actions: const [
+                                    TableAction(
+                                      icon: CupertinoIcons.pen,
+                                      tooltipText: 'Edit Drug',
+                                      color: UtanoColors.green,
                                     ),
                                   ],
                                 ),
@@ -177,7 +137,7 @@ class PrescriptionsTable extends StatelessWidget {
                                     height: sy(10),
                                   ),
                                   Text(
-                                    'No Prescriptions Found',
+                                    'No drugs Found',
                                     style: TextStyle(
                                       color: UtanoColors.black,
                                       fontWeight: FontWeight.w500,

@@ -10,7 +10,7 @@ _$_Drug _$$_DrugFromJson(Map<String, dynamic> json) => _$_Drug(
       id: json['id'] as String,
       name: json['name'] as String,
       description: json['description'] as String,
-      price: json['price'] as String,
+      price: (json['price'] as num).toDouble(),
       quantity: json['quantity'] as int,
       isActive: json['is_active'] as bool,
     );

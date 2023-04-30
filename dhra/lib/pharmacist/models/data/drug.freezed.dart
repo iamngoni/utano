@@ -23,7 +23,7 @@ mixin _$Drug {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
-  String get price => throw _privateConstructorUsedError;
+  double get price => throw _privateConstructorUsedError;
   int get quantity => throw _privateConstructorUsedError;
   @JsonKey(name: 'is_active')
   bool get isActive => throw _privateConstructorUsedError;
@@ -42,7 +42,7 @@ abstract class $DrugCopyWith<$Res> {
       {String id,
       String name,
       String description,
-      String price,
+      double price,
       int quantity,
       @JsonKey(name: 'is_active') bool isActive});
 }
@@ -83,7 +83,7 @@ class _$DrugCopyWithImpl<$Res, $Val extends Drug>
       price: null == price
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
-              as String,
+              as double,
       quantity: null == quantity
           ? _value.quantity
           : quantity // ignore: cast_nullable_to_non_nullable
@@ -106,7 +106,7 @@ abstract class _$$_DrugCopyWith<$Res> implements $DrugCopyWith<$Res> {
       {String id,
       String name,
       String description,
-      String price,
+      double price,
       int quantity,
       @JsonKey(name: 'is_active') bool isActive});
 }
@@ -143,7 +143,7 @@ class __$$_DrugCopyWithImpl<$Res> extends _$DrugCopyWithImpl<$Res, _$_Drug>
       price: null == price
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
-              as String,
+              as double,
       quantity: null == quantity
           ? _value.quantity
           : quantity // ignore: cast_nullable_to_non_nullable
@@ -176,7 +176,7 @@ class _$_Drug implements _Drug {
   @override
   final String description;
   @override
-  final String price;
+  final double price;
   @override
   final int quantity;
   @override
@@ -228,7 +228,7 @@ abstract class _Drug implements Drug {
       {required final String id,
       required final String name,
       required final String description,
-      required final String price,
+      required final double price,
       required final int quantity,
       @JsonKey(name: 'is_active') required final bool isActive}) = _$_Drug;
 
@@ -241,7 +241,7 @@ abstract class _Drug implements Drug {
   @override
   String get description;
   @override
-  String get price;
+  double get price;
   @override
   int get quantity;
   @override

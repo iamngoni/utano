@@ -254,10 +254,7 @@ class _HealthInstitutionsRegistrationFormState
                                     );
                                   }
 
-                                  return AnimatedSwitcher(
-                                    duration: const Duration(milliseconds: 200),
-                                    child: dropdownWidget,
-                                  );
+                                  return dropdownWidget;
                                 },
                               ),
                             ],
@@ -366,10 +363,7 @@ class _HealthInstitutionsRegistrationFormState
                 );
               }
 
-              return AnimatedSwitcher(
-                duration: const Duration(milliseconds: 200),
-                child: formChild,
-              );
+              return formChild;
             },
           ),
         );

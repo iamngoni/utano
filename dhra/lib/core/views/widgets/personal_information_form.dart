@@ -322,12 +322,7 @@ class _PersonalInformationFormState extends State<PersonalInformationForm> {
                           );
                         }
 
-                        return AnimatedSwitcher(
-                          duration: const Duration(
-                            milliseconds: 200,
-                          ),
-                          child: dropdownWidget,
-                        );
+                        return dropdownWidget;
                       },
                     ),
                   ],

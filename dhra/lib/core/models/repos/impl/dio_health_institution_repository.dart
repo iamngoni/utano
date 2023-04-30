@@ -9,6 +9,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 
+import '../../../../pharmacist/models/data/dispense_drug.dart';
 import '../../../../pharmacist/models/data/drug.dart';
 import '../../../configs/logger.dart';
 import '../../../utils/dio_error_to_application_error.dart';
@@ -17,6 +18,7 @@ import '../../data/approved_medicine.dart';
 import '../../data/check_in.dart';
 import '../../data/check_in_monthly_stats.dart';
 import '../../data/check_in_yearly_stats.dart';
+import '../../data/dispense.dart';
 import '../../data/employee.dart';
 import '../../data/gender.dart';
 import '../../data/health_institution.dart';
@@ -405,6 +407,43 @@ class DioHealthInstitutionRepository extends HealthInstitutionRepository {
         networkResponse.data!['prescription'] as Map<String, dynamic>,
       );
       return Right(prescription);
+    } on DioError catch (e) {
+      return Left(dioErrorToApplicationError(e));
+    } catch (e, s) {
+      logger
+        ..e(e)
+        ..e(s);
+      return Left(ApplicationError.unknownError());
+    }
+  }
+
+  @override
+  Future<Either<ApplicationError, Dispense>> processPrescription(
+    Prescription prescription,
+    List<DispenseDrug> dispensedDrugs,
+  ) async {
+    try {
+      final Map<String, dynamic> data = {
+        'prescription_id': prescription.id,
+        'items': dispensedDrugs
+            .map(
+              (e) => {
+                'drug_id': e.drug.id,
+                'quantity': e.quantity,
+              },
+            )
+            .toList(),
+      };
+      final Response<NetworkResponse> response = await dio.post(
+        '/pharmacy/process_prescription',
+        data: data,
+      );
+
+      final NetworkResponse networkResponse = response.data!;
+      final Dispense dispense = Dispense.fromJson(
+        networkResponse.data!['dispense'] as Map<String, dynamic>,
+      );
+      return Right(dispense);
     } on DioError catch (e) {
       return Left(dioErrorToApplicationError(e));
     } catch (e, s) {

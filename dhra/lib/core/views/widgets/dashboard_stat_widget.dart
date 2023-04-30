@@ -59,62 +59,59 @@ class DashboardStatWidget extends StatelessWidget {
               ],
               borderRadius: BorderRadius.circular(11),
             ),
-            child: AnimatedSwitcher(
-              duration: const Duration(milliseconds: 200),
-              child: !isLoading
-                  ? Row(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            color: UtanoColors.inactive.withOpacity(0.2),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: ImageIcon(
-                            assetImage,
-                            color: UtanoColors.black,
-                          ),
+            child: !isLoading
+                ? Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: UtanoColors.inactive.withOpacity(0.2),
+                          borderRadius: BorderRadius.circular(10),
                         ),
-                        SizedBox(
-                          width: sx(5),
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              title,
-                              style: TextStyle(
-                                color: UtanoColors.grey,
-                                fontWeight: FontWeight.w400,
-                                fontSize: sy(9),
-                              ),
-                            ),
-                            SizedBox(
-                              height: sy(3),
-                            ),
-                            Text(
-                              number,
-                              style: TextStyle(
-                                color: UtanoColors.black,
-                                fontWeight: FontWeight.w600,
-                                fontSize: sy(12),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    )
-                  : Center(
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                          vertical: sy(13),
-                        ),
-                        child: const LoaderWidget(
+                        child: ImageIcon(
+                          assetImage,
                           color: UtanoColors.black,
                         ),
                       ),
+                      SizedBox(
+                        width: sx(5),
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            title,
+                            style: TextStyle(
+                              color: UtanoColors.grey,
+                              fontWeight: FontWeight.w400,
+                              fontSize: sy(9),
+                            ),
+                          ),
+                          SizedBox(
+                            height: sy(3),
+                          ),
+                          Text(
+                            number,
+                            style: TextStyle(
+                              color: UtanoColors.black,
+                              fontWeight: FontWeight.w600,
+                              fontSize: sy(12),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  )
+                : Center(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                        vertical: sy(13),
+                      ),
+                      child: const LoaderWidget(
+                        color: UtanoColors.black,
+                      ),
                     ),
-            ),
+                  ),
           ),
         );
       },

@@ -58,14 +58,30 @@ class PharmacistApp extends StatelessWidget {
                     const Navigate(3),
                   ),
             ),
+            SideBarTabItem(
+              title: 'Approved Medicine',
+              imageIcon: const AssetImage('assets/icons/book-check.png'),
+              isActive: state.index == 4,
+              onTap: () => context.read<NavigationBloc>().add(
+                    const Navigate(4),
+                  ),
+            ),
+            SideBarTabItem(
+              title: 'Available Medicine',
+              imageIcon: const AssetImage('assets/icons/widget.png'),
+              isActive: state.index == 5,
+              onTap: () => context.read<NavigationBloc>().add(
+                    const Navigate(5),
+                  ),
+            ),
           ],
           sideBarBottomTabItems: [
             SideBarTabItem(
               title: 'Change Password',
               imageIcon: const AssetImage('assets/icons/lock.png'),
-              isActive: state.index == 4,
+              isActive: state.index == 6,
               onTap: () => context.read<NavigationBloc>().add(
-                    const Navigate(4),
+                    const Navigate(6),
                   ),
             ),
             SideBarTabItem(

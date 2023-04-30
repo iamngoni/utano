@@ -355,12 +355,7 @@ class _AdminRegisterEmployeePageState extends State<AdminRegisterEmployeePage> {
                                           );
                                         }
 
-                                        return AnimatedSwitcher(
-                                          duration: const Duration(
-                                            milliseconds: 200,
-                                          ),
-                                          child: dropdownWidget,
-                                        );
+                                        return dropdownWidget;
                                       },
                                     ),
                                   ],

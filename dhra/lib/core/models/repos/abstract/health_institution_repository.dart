@@ -8,12 +8,14 @@
 
 import 'package:dartz/dartz.dart';
 
+import '../../../../pharmacist/models/data/dispense_drug.dart';
 import '../../../../pharmacist/models/data/drug.dart';
 import '../../data/application_error.dart';
 import '../../data/approved_medicine.dart';
 import '../../data/check_in.dart';
 import '../../data/check_in_monthly_stats.dart';
 import '../../data/check_in_yearly_stats.dart';
+import '../../data/dispense.dart';
 import '../../data/employee.dart';
 import '../../data/gender.dart';
 import '../../data/health_institution.dart';
@@ -99,5 +101,12 @@ abstract class HealthInstitutionRepository {
   /// Returns [Prescription]
   Future<Either<ApplicationError, Prescription>> getPrescription(
     String prescriptionNumber,
+  );
+
+  /// Process prescription
+  /// Returns [Dispense]
+  Future<Either<ApplicationError, Dispense>> processPrescription(
+    Prescription prescription,
+    List<DispenseDrug> dispensedDrugs,
   );
 }

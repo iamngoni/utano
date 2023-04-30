@@ -102,10 +102,7 @@ class FilePickerButton extends StatelessWidget {
                     ],
                   );
                 }
-                return AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 200),
-                  child: buttonWidget,
-                );
+                return buttonWidget;
               },
             ),
           ),
