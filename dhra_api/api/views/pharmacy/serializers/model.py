@@ -41,7 +41,8 @@ class DispenseModelSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         dispense = super(DispenseModelSerializer, self).to_representation(instance)
         dispense["items"] = DispenseItemModelSerializer(instance.items, many=True).data
-        dispense["total_cost"] = instance.cost
+        dispense["total_cost"] = instance.total_cost
+        dispense["total_rtgs_cost"] = instance.total_rtgs_cost
         return dispense
 
 

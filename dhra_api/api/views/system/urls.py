@@ -16,6 +16,7 @@ from api.views.system.views import (
     MaritalStatusView,
     EmploymentStatusView,
     RelationshipTypeView,
+    PaymentMethodsView,
 )
 
 urlpatterns = [
@@ -35,4 +36,5 @@ urlpatterns = [
         RelationshipTypeView.as_view(),
         name="Relationship Type View",
     ),
+    path("payment_methods", PaymentMethodsView.as_view(), name="Payment Method View"),
 ]

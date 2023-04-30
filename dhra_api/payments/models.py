@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 from system.models import PaymentMethod, SystemStatus
 from utano.model import SoftDeleteModel
@@ -22,6 +23,9 @@ class Payment(SoftDeleteModel):
     payment_option_info_4 = models.TextField(max_length=10000, blank=True, null=True)
     payment_option_info_5 = models.TextField(max_length=10000, blank=True, null=True)
     payment_link = models.URLField(blank=True, null=True)
+    patient_name = models.CharField(max_length=255, blank=True, null=True)
+    patient_phone = models.CharField(max_length=255, blank=True, null=True)
+    patient_email = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
         verbose_name = "Payment"
@@ -30,3 +34,10 @@ class Payment(SoftDeleteModel):
 
     def __str__(self):
         return f"{self.payment_method} - ${self.amount} - ${self.rtgs_amount}"
+
+    def time_elapsed(self):
+        """
+        @summary: Returns the time elapsed since the payment was created
+        @return: time elapsed in minutes
+        """
+        return (timezone.now() - self.created_at).total_seconds() / 60

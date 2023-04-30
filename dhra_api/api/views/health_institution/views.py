@@ -229,6 +229,28 @@ class PatientCheckInStatisticsView(APIView):
             return ApiResponse(num_status=500, bool_status=False)
 
 
+class PatientCheckInGenderStatisticsView(APIView):
+    permission_classes = (IsAuthenticated, IsEmployee)
+
+    def get(self, request):
+        """
+        get patient checkin statistics split by gender i.e. the respone
+        should be in the following format:
+        {
+            "male": 23,
+            "female": 23
+        }
+        """
+        try:
+            checkins = PatientCheckIn.objects.annotate(gender=Count("gender")).values(
+                "gender"
+            )
+            return ApiResponse(data={"statistics": checkins})
+        except Exception as exc:
+            logger.error(exc)
+            return ApiResponse(num_status=500, bool_status=False)
+
+
 class PatientsView(APIView):
     permission_classes = (IsAuthenticated, IsEmployee)
 

@@ -30,7 +30,11 @@ class DrugPayloadSerializer(serializers.Serializer):
                 {"approved_medicine": "Please choose from approved medicines"}
             )
 
-        drugs = Drug.objects.filter(name=approved_medicine.name).exists()
+        health_institution = self.context.get("health_institution")
+
+        drugs = Drug.objects.filter(
+            name=approved_medicine.name, health_institution=health_institution
+        ).exists()
         if drugs:
             raise serializers.ValidationError(
                 {"approved_medicine": "Drug already exists in system"}
@@ -53,7 +57,9 @@ class ProcessPrescriptionItemSerializer(serializers.Serializer):
 class ProcessPrescriptionSerializer(serializers.Serializer):
     prescription_id = serializers.CharField(required=True)
     items = serializers.ListField(
-        child=ProcessPrescriptionItemSerializer(), required=True
+        child=ProcessPrescriptionItemSerializer(),
+        required=True,
+        min_length=1,
     )
 
     def validate(self, attrs):

@@ -1,3 +1,4 @@
+from decouple import config
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -31,7 +32,7 @@ class DrugForm(EnumModel):
 
 
 class Drug(SoftDeleteModel):
-    name = models.CharField(max_length=255, blank=False, null=False, unique=True)
+    name = models.CharField(max_length=255, blank=False, null=False)
     description = models.TextField(blank=True, null=True)
     price = models.DecimalField(
         max_digits=10, decimal_places=2, blank=False, null=False
@@ -87,21 +88,6 @@ class DrugHistory(SoftDeleteModel):
         return self.drug.name
 
 
-class Order(SoftDeleteModel):
-    prescription = models.ForeignKey(
-        "pos.Prescription",
-        related_name="orders",
-        on_delete=models.CASCADE,
-        blank=False,
-        null=False,
-    )
-
-    class Meta:
-        verbose_name = "Order"
-        verbose_name_plural = "Orders"
-        table_prefix = "order"
-
-
 class Dispense(SoftDeleteModel):
     prescription = models.ForeignKey(
         "pos.Prescription",
@@ -110,8 +96,8 @@ class Dispense(SoftDeleteModel):
         blank=False,
         null=True,
     )
-    order = models.ForeignKey(
-        Order,
+    payment = models.ForeignKey(
+        "payments.Payment",
         related_name="dispenses",
         on_delete=models.CASCADE,
         blank=False,
@@ -124,12 +110,16 @@ class Dispense(SoftDeleteModel):
         table_prefix = "dispense"
 
     @property
-    def total_cost(self):
+    def total_cost(self) -> float:
         total_cost = 0
         for item in self.items.all():
             total_cost += item.cost
 
-        return total_cost
+        return float(total_cost)
+
+    @property
+    def total_rtgs_cost(self) -> float:
+        return float(self.total_cost) * config("RTGS_RATE", cast=float, default=1)
 
 
 class DispenseItem(SoftDeleteModel):

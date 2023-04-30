@@ -23,6 +23,7 @@ from system.models import (
     MaritalStatus,
     EmploymentStatus,
     RelationshipType,
+    PaymentMethod,
 )
 
 
@@ -111,6 +112,16 @@ class RelationshipTypeView(APIView):
         try:
             types = RelationshipType.get_mapped_list_of_choices()
             return ApiResponse(data={"types": types})
+        except Exception as exc:
+            logger.error(exc)
+            return ApiResponse(num_status=500, bool_status=False)
+
+
+class PaymentMethodsView(APIView):
+    def get(self, request):
+        try:
+            methods = PaymentMethod.get_mapped_list_of_choices()
+            return ApiResponse(data={"methods": methods})
         except Exception as exc:
             logger.error(exc)
             return ApiResponse(num_status=500, bool_status=False)

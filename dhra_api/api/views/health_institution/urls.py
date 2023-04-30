@@ -2,6 +2,7 @@ from api.views.health_institution.views import (
     HealthInstitutionDetailsView,
     HealthInstitutionEmployeesView,
     HealthInstitutionStatsView,
+    PatientCheckInGenderStatisticsView,
     PatientCheckInStatisticsView,
     PatientsView,
     PatientDetailsView,
@@ -25,6 +26,11 @@ urlpatterns = [
         "statistics",
         HealthInstitutionStatsView.as_view(),
         name="Health Institution Stats View",
+    ),
+    path(
+        "gender_statistics",
+        PatientCheckInGenderStatisticsView.as_view(),
+        name="checkin-gender-statistics",
     ),
     path(
         "checkin_statistics",

@@ -95,7 +95,10 @@ class DrugsView(APIView):
 
     def post(self, request):
         try:
-            payload = self.serializer_class(data=request.data)
+            payload = self.serializer_class(
+                data=request.data,
+                context={"health_institution": request.user.employee.registered_at},
+            )
             if payload.is_valid():
                 approved_medicine = ApprovedMedicine.get_item_by_id(
                     payload.validated_data.get("approved_medicine")
@@ -105,6 +108,7 @@ class DrugsView(APIView):
                     description=approved_medicine.description,
                     price=payload.validated_data.get("price"),
                     quantity=payload.validated_data.get("quantity"),
+                    health_institution=request.user.employee.registered_at,
                 )
                 drug.save()
 
@@ -177,6 +181,23 @@ class DrugDetailsView(APIView):
             return ApiResponse(num_status=500, bool_status=False)
 
 
+class PatientsView(APIView):
+    permission_classes = (IsAuthenticated, IsEmployee)
+
+    def get(self, request):
+        try:
+            patients = Patient.objects.filter(
+                registered_at=request.user.employee.registered_at
+            )
+
+            return ApiResponse(
+                data={"patient": PatientModelSerializer(patients, many=True).data}
+            )
+        except Exception as exc:
+            logger.error(exc)
+            return ApiResponse(num_status=500, bool_status=False)
+
+
 class PatientDetailsView(APIView):
     permission_classes = (IsAuthenticated, IsEmployee)
 
@@ -198,62 +219,63 @@ class ProcessPrescriptionView(APIView):
     permission_classes = (IsAuthenticated, IsEmployee)
     serializer_class = ProcessPrescriptionSerializer
 
-    @transaction.atomic()
+    @transaction.atomic
     def post(self, request):
-        try:
-            payload = self.serializer_class(data=request.data)
-            if payload.is_valid():
-                prescription = Prescription.get_item_by_id(
-                    payload.validated_data.get("prescription_id")
+        payload = self.serializer_class(data=request.data)
+        if payload.is_valid():
+            logger.info("prescription is valid")
+            prescription = Prescription.get_item_by_id(
+                payload.validated_data.get("prescription_id")
+            )
+            if prescription is None:
+                return ApiResponse(
+                    num_status=404,
+                    bool_status=False,
+                    message="Prescription not found",
                 )
-                if prescription is None:
+
+            logger.info("prescription fond")
+
+            dispense = Dispense(
+                prescription=prescription,
+            )
+            logger.info("dispense instance saved")
+
+            dispense.save()
+
+            for prescription_item in payload.validated_data.get("items"):
+                # drug_id, quantity
+                drug = Drug.get_item_by_id(prescription_item.get("drug_id"))
+                if drug is None:
                     return ApiResponse(
                         num_status=404,
                         bool_status=False,
-                        message="Prescription not found",
+                        message=f"Drug with id {prescription_item.get('drug_id')} not found",
                     )
 
-                dispense = Dispense(
-                    prescription=prescription,
-                )
-                dispense.save()
-
-                for prescription_item in payload.validated_data.get("items"):
-                    # drug_id, quantity
-                    drug = Drug.get_item_by_id(prescription_item.get("drug_id"))
-                    if drug is None:
-                        return ApiResponse(
-                            num_status=404,
-                            bool_status=False,
-                            message=f"Drug with id {prescription_item.get('drug_id')} not found",
-                        )
-
-                    if drug.quantity < prescription_item.get("quantity"):
-                        return ApiResponse(
-                            num_status=400,
-                            bool_status=False,
-                            message=f"Drug with id {prescription_item.get('drug_id')} has insufficient quantity",
-                        )
-
-                    drug.quantity = drug.quantity - prescription_item.get("quantity")
-                    drug.save()
-
-                    # create dispense items
-                    dispense_item = DispenseItem(
-                        dispense=dispense,
-                        drug=drug,
-                        quantity=prescription_item.get("quantity"),
+                if drug.quantity < prescription_item.get("quantity"):
+                    return ApiResponse(
+                        num_status=400,
+                        bool_status=False,
+                        message=f"Drug with id {prescription_item.get('drug_id')} has insufficient quantity",
                     )
-                    dispense_item.save()
 
-                return ApiResponse(
-                    data={"dispense": DispenseModelSerializer(dispense).data}
+                logger.info(f"processing {drug.name}")
+                drug.quantity = drug.quantity - prescription_item.get("quantity")
+                drug.save()
+
+                # create dispense items
+                dispense_item = DispenseItem(
+                    dispense=dispense,
+                    drug=drug,
+                    quantity=prescription_item.get("quantity"),
                 )
-            else:
-                logger.error(payload.errors)
-                return ApiResponse(
-                    num_status=400, bool_status=False, issues=payload.errors
-                )
-        except Exception as exc:
-            logger.error(exc)
-            return ApiResponse(num_status=500, bool_status=False)
+                dispense_item.save()
+                logger.info(f"dispense item for {drug.name} saved successfully")
+
+            return ApiResponse(
+                data={"dispense": DispenseModelSerializer(dispense).data}
+            )
+        else:
+            logger.error(payload.errors)
+            return ApiResponse(num_status=400, bool_status=False, issues=payload.errors)

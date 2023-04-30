@@ -22,4 +22,5 @@ class IsEmployee(BasePermission):
             UserRoles.NURSE,
             UserRoles.LAB_TECHNICIAN,
             UserRoles.HEALTH_INSTITUTION,
+            UserRoles.PHARMACIST,
         ]
