@@ -4,6 +4,7 @@ from django.db import transaction
 from django.db.models import Count, Q
 from django.db.models.functions import TruncMonth, TruncDay
 from django.utils import timezone
+from datetime import datetime
 from loguru import logger
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
@@ -26,6 +27,7 @@ from services.permissions.is_admin import IsAdmin
 from services.permissions.is_employee import IsEmployee
 from system.models import CheckInStatus
 from users.models import Patient, UserRoles, User, Employee
+from services.helpers.end_of_month import end_of_month
 
 
 class HealthInstitutionDetailsView(APIView):
@@ -196,7 +198,12 @@ class PatientCheckInStatisticsView(APIView):
                         for patient_checkin in patient_checkins
                     ):
                         patient_checkins.append(
-                            {"month": now.replace(month=month), "count": 0}
+                            {
+                                "month": datetime(
+                                    year=now.year, month=month, day=end_of_month[month]
+                                ),
+                                "count": 0,
+                            }
                         )
             else:
                 # group by day
