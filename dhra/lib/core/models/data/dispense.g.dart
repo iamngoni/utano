@@ -9,7 +9,9 @@ part of 'dispense.dart';
 _$_Dispense _$$_DispenseFromJson(Map<String, dynamic> json) => _$_Dispense(
       id: json['id'] as String,
       prescription: json['prescription'] as String,
-      payment: json['payment'],
+      payment: json['payment'] == null
+          ? null
+          : Payment.fromJson(json['payment'] as Map<String, dynamic>),
       items: (json['items'] as List<dynamic>)
           .map((e) => DispenseItem.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -29,7 +31,7 @@ Map<String, dynamic> _$$_DispenseToJson(_$_Dispense instance) {
     }
   }
 
-  writeNotNull('payment', instance.payment);
+  writeNotNull('payment', instance.payment?.toJson());
   val['items'] = instance.items.map((e) => e.toJson()).toList();
   val['total_cost'] = instance.totalCost;
   val['total_rtgs_cost'] = instance.totalRtgsCost;

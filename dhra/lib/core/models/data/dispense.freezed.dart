@@ -22,7 +22,7 @@ Dispense _$DispenseFromJson(Map<String, dynamic> json) {
 mixin _$Dispense {
   String get id => throw _privateConstructorUsedError;
   String get prescription => throw _privateConstructorUsedError;
-  dynamic get payment => throw _privateConstructorUsedError;
+  Payment? get payment => throw _privateConstructorUsedError;
   List<DispenseItem> get items => throw _privateConstructorUsedError;
   @JsonKey(name: 'total_cost')
   double get totalCost => throw _privateConstructorUsedError;
@@ -43,10 +43,12 @@ abstract class $DispenseCopyWith<$Res> {
   $Res call(
       {String id,
       String prescription,
-      dynamic payment,
+      Payment? payment,
       List<DispenseItem> items,
       @JsonKey(name: 'total_cost') double totalCost,
       @JsonKey(name: 'total_rtgs_cost') double totalRtgsCost});
+
+  $PaymentCopyWith<$Res>? get payment;
 }
 
 /// @nodoc
@@ -81,7 +83,7 @@ class _$DispenseCopyWithImpl<$Res, $Val extends Dispense>
       payment: freezed == payment
           ? _value.payment
           : payment // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+              as Payment?,
       items: null == items
           ? _value.items
           : items // ignore: cast_nullable_to_non_nullable
@@ -96,6 +98,18 @@ class _$DispenseCopyWithImpl<$Res, $Val extends Dispense>
               as double,
     ) as $Val);
   }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $PaymentCopyWith<$Res>? get payment {
+    if (_value.payment == null) {
+      return null;
+    }
+
+    return $PaymentCopyWith<$Res>(_value.payment!, (value) {
+      return _then(_value.copyWith(payment: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -108,10 +122,13 @@ abstract class _$$_DispenseCopyWith<$Res> implements $DispenseCopyWith<$Res> {
   $Res call(
       {String id,
       String prescription,
-      dynamic payment,
+      Payment? payment,
       List<DispenseItem> items,
       @JsonKey(name: 'total_cost') double totalCost,
       @JsonKey(name: 'total_rtgs_cost') double totalRtgsCost});
+
+  @override
+  $PaymentCopyWith<$Res>? get payment;
 }
 
 /// @nodoc
@@ -144,7 +161,7 @@ class __$$_DispenseCopyWithImpl<$Res>
       payment: freezed == payment
           ? _value.payment
           : payment // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+              as Payment?,
       items: null == items
           ? _value._items
           : items // ignore: cast_nullable_to_non_nullable
@@ -182,7 +199,7 @@ class _$_Dispense extends _Dispense {
   @override
   final String prescription;
   @override
-  final dynamic payment;
+  final Payment? payment;
   final List<DispenseItem> _items;
   @override
   List<DispenseItem> get items {
@@ -211,7 +228,7 @@ class _$_Dispense extends _Dispense {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.prescription, prescription) ||
                 other.prescription == prescription) &&
-            const DeepCollectionEquality().equals(other.payment, payment) &&
+            (identical(other.payment, payment) || other.payment == payment) &&
             const DeepCollectionEquality().equals(other._items, _items) &&
             (identical(other.totalCost, totalCost) ||
                 other.totalCost == totalCost) &&
@@ -221,14 +238,8 @@ class _$_Dispense extends _Dispense {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      prescription,
-      const DeepCollectionEquality().hash(payment),
-      const DeepCollectionEquality().hash(_items),
-      totalCost,
-      totalRtgsCost);
+  int get hashCode => Object.hash(runtimeType, id, prescription, payment,
+      const DeepCollectionEquality().hash(_items), totalCost, totalRtgsCost);
 
   @JsonKey(ignore: true)
   @override
@@ -248,7 +259,7 @@ abstract class _Dispense extends Dispense {
   const factory _Dispense(
       {required final String id,
       required final String prescription,
-      required final dynamic payment,
+      required final Payment? payment,
       required final List<DispenseItem> items,
       @JsonKey(name: 'total_cost')
           required final double totalCost,
@@ -263,7 +274,7 @@ abstract class _Dispense extends Dispense {
   @override
   String get prescription;
   @override
-  dynamic get payment;
+  Payment? get payment;
   @override
   List<DispenseItem> get items;
   @override

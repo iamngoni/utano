@@ -35,6 +35,7 @@ dependencies:
   macos_ui: ^1.12.2
   path: ^1.8.1
   path_provider: ^2.0.11
+  paynow: ^2.1.2
   permission_handler: ^10.0.0
   pretty_dio_logger: ^1.2.0-beta-1
   relative_scale: ^2.0.0

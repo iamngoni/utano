@@ -14,6 +14,7 @@ import '../../admin/views/pages/admin_register_employee.dart';
 import '../../nurse/views/pages/nurse_dashboard.dart';
 import '../../nurse/views/pages/nurse_patients.dart';
 import '../../nurse/views/pages/nurse_prescriptions.dart';
+import '../../pharmacist/views/pages/dispensary_paynow_payment_check.dart';
 import '../../pharmacist/views/pages/pharmacist_approved_medicines.dart';
 import '../../pharmacist/views/pages/pharmacist_dashboard.dart';
 import '../../pharmacist/views/pages/pharmacist_dispensary.dart';
@@ -59,6 +60,7 @@ final Map<UserRole, List<Widget>> userRoleToScreensMappings = {
     const PharmacistApprovedMedicinesPage(),
     const PharmacistDrugsPage(),
     ChangePasswordPage(),
-    PharmacistDispensaryPaymentPage(),
+    const PharmacistDispensaryPaymentPage(),
+    DispensaryPaynowPaymentCheckPage(),
   ],
 };

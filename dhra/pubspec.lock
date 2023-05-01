@@ -461,6 +461,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.2.3"
+  http:
+    dependency: transitive
+    description:
+      name: http
+      sha256: "6aa2946395183537c8b880962d935877325d6a09a2867c3970c05c0fed6ac482"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.13.5"
   http_multi_server:
     dependency: transitive
     description:
@@ -693,6 +701,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.3"
+  paynow:
+    dependency: "direct main"
+    description:
+      name: paynow
+      sha256: "13d97a908def6800c1f79d43ea8f86629797c85d838eeff79b78940ed394b66e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.2"
   permission_handler:
     dependency: "direct main"
     description:

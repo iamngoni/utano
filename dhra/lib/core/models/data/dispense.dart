@@ -9,6 +9,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'dispense_item.dart';
+import 'payment.dart';
 
 part 'dispense.freezed.dart';
 part 'dispense.g.dart';
@@ -18,7 +19,7 @@ class Dispense with _$Dispense {
   const factory Dispense({
     required String id,
     required String prescription,
-    required dynamic payment,
+    required Payment? payment,
     required List<DispenseItem> items,
     @JsonKey(name: 'total_cost') required double totalCost,
     @JsonKey(name: 'total_rtgs_cost') required double totalRtgsCost,

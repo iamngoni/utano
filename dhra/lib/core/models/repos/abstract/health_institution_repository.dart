@@ -20,6 +20,8 @@ import '../../data/employee.dart';
 import '../../data/gender.dart';
 import '../../data/health_institution.dart';
 import '../../data/patient.dart';
+import '../../data/payment.dart';
+import '../../data/payment_method.dart';
 import '../../data/pos_prescription_item.dart';
 import '../../data/prescription.dart';
 import '../../data/stats.dart';
@@ -108,5 +110,13 @@ abstract class HealthInstitutionRepository {
   Future<Either<ApplicationError, Dispense>> processPrescription(
     Prescription prescription,
     List<DispenseDrug> dispensedDrugs,
+  );
+
+  /// Pay for dispensary items
+  /// Returns [Payment]
+  Future<Either<ApplicationError, Payment>> dispensaryPayment(
+    Dispense dispense,
+    PaymentMethod paymentMethod,
+    String? mobileNumber,
   );
 }

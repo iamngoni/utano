@@ -8,6 +8,7 @@
 
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:localregex/localregex.dart';
 
 import '../../../../pharmacist/models/data/dispense_drug.dart';
 import '../../../../pharmacist/models/data/drug.dart';
@@ -24,6 +25,8 @@ import '../../data/gender.dart';
 import '../../data/health_institution.dart';
 import '../../data/network_response.dart';
 import '../../data/patient.dart';
+import '../../data/payment.dart';
+import '../../data/payment_method.dart';
 import '../../data/pos_prescription_item.dart';
 import '../../data/prescription.dart';
 import '../../data/stats.dart';
@@ -444,6 +447,48 @@ class DioHealthInstitutionRepository extends HealthInstitutionRepository {
         networkResponse.data!['dispense'] as Map<String, dynamic>,
       );
       return Right(dispense);
+    } on DioError catch (e) {
+      return Left(dioErrorToApplicationError(e));
+    } catch (e, s) {
+      logger
+        ..e(e)
+        ..e(s);
+      return Left(ApplicationError.unknownError());
+    }
+  }
+
+  @override
+  Future<Either<ApplicationError, Payment>> dispensaryPayment(
+    Dispense dispense,
+    PaymentMethod paymentMethod,
+    String? mobileNumber,
+  ) async {
+    try {
+      final Map<String, dynamic> data = {
+        'dispense': dispense.id,
+        'payment_method': paymentMethod.name.toLowerCase(),
+      };
+
+      if ([PaymentMethod.ecocash, PaymentMethod.onemoney]
+          .contains(paymentMethod)) {
+        if (mobileNumber == null) {
+          return Left(ApplicationError('Specify payment mobile number'));
+        }
+
+        data['phone'] =
+            mobileNumber.formatNumber(formatType: FormatType.regular);
+      }
+
+      final Response<NetworkResponse> response = await dio.post(
+        '/payments/dispensary',
+        data: data,
+      );
+
+      final NetworkResponse networkResponse = response.data!;
+      final Payment payment = Payment.fromJson(
+        networkResponse.data!['payment'] as Map<String, dynamic>,
+      );
+      return Right(payment);
     } on DioError catch (e) {
       return Left(dioErrorToApplicationError(e));
     } catch (e, s) {

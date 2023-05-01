@@ -25,6 +25,7 @@ import 'core/services/di.dart';
 import 'general/blocs/auth/auth_bloc.dart';
 import 'general/models/repos/impl/dio_auth_repository.dart';
 import 'pharmacist/blocs/dispensary/dispensary_bloc.dart';
+import 'pharmacist/blocs/dispensary_payment/dispensary_payment_bloc.dart';
 import 'pharmacist/blocs/drugs/drugs_bloc.dart';
 import 'system_admin/blocs/admin_registration/admin_registration_bloc.dart';
 import 'system_admin/blocs/health_institution_employees/health_institution_employees_bloc.dart';
@@ -119,6 +120,11 @@ List<BlocProvider> providers = [
   ),
   BlocProvider<DispensaryBloc>(
     create: (_) => DispensaryBloc(
+      repository: DioHealthInstitutionRepository(dio),
+    ),
+  ),
+  BlocProvider<DispensaryPaymentBloc>(
+    create: (_) => DispensaryPaymentBloc(
       repository: DioHealthInstitutionRepository(dio),
     ),
   ),
