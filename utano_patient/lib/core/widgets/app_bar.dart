@@ -21,13 +21,13 @@ AppBar buildAppBar(
       decoration: const BoxDecoration(
         border: Border(
           bottom: BorderSide(
-            color: AppColors.background,
+            color: UtanoColors.background,
           ),
         ),
       ),
     ),
     iconTheme: const IconThemeData(
-      color: AppColors.background,
+      color: UtanoColors.background,
     ),
     actions: actions,
   );

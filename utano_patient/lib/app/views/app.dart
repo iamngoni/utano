@@ -19,7 +19,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      color: AppColors.background,
+      color: UtanoColors.background,
       theme: AppTheme().lightTheme,
       darkTheme: AppTheme().darkTheme,
       themeMode: ThemeMode.light,
@@ -45,7 +45,7 @@ class App extends StatelessWidget {
             displayedWidget = const DeviceOfflinePage();
           } else {
             displayedWidget = Container(
-              color: AppColors.background,
+              color: UtanoColors.background,
               height: context.height,
               width: context.width,
               alignment: Alignment.center,

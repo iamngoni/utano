@@ -8,4 +8,10 @@
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-List<BlocProvider> providers = [];
+import 'app/blocs/connectivity/connectivity_bloc.dart';
+
+List<BlocProvider> providers = [
+  BlocProvider<ConnectivityBloc>(
+    create: (_) => ConnectivityBloc(),
+  ),
+];

@@ -20,7 +20,7 @@ class AppBarTitle extends StatelessWidget {
           children: [
             Image(
               image: const AssetImage('assets/images/custom-logo-text.png'),
-              color: AppColors.background,
+              color: UtanoColors.background,
               height: sy(20),
             ),
             if (title.isNull)

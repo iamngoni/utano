@@ -6,7 +6,7 @@ import '../configs/colors.dart';
 class LoaderWidget extends StatelessWidget {
   const LoaderWidget({
     super.key,
-    this.color = AppColors.light,
+    this.color = UtanoColors.light,
     this.radius = 11,
   });
 

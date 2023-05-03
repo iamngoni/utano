@@ -8,7 +8,7 @@ class ButtonWidget extends StatelessWidget {
   const ButtonWidget({
     super.key,
     this.color = Colors.white,
-    this.textColor = AppColors.background,
+    this.textColor = UtanoColors.background,
     this.onTap,
     this.verticalPadding = 13,
     required this.text,

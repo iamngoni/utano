@@ -14,7 +14,7 @@ class DeviceOfflinePage extends StatelessWidget {
     return RelativeBuilder(
       builder: (context, height, width, sy, sx) {
         return Scaffold(
-          backgroundColor: AppColors.background,
+          backgroundColor: UtanoColors.background,
           body: SafeArea(
             child: Container(
               height: height,

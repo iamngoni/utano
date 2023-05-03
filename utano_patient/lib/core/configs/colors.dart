@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class AppColors {
+class UtanoColors {
   static const Color primary = Color(0xFF3366FF);
   static const Color secondary = Color(0xFFF5F5F5);
   static const Color darkSecondary = Color(0xFF2D2D2D);

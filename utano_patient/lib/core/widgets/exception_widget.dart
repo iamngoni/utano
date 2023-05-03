@@ -11,9 +11,9 @@ class ExceptionWidget extends StatefulWidget {
     super.key,
     required this.exception,
     this.onRetry,
-    this.titleColor = AppColors.light,
-    this.buttonTextColor = AppColors.background,
-    this.buttonColor = AppColors.light,
+    this.titleColor = UtanoColors.light,
+    this.buttonTextColor = UtanoColors.background,
+    this.buttonColor = UtanoColors.light,
   });
 
   final VoidCallback? onRetry;

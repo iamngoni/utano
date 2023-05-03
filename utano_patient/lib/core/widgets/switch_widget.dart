@@ -28,7 +28,7 @@ class SwitchWidget extends StatelessWidget {
                   height: sy(22),
                   width: sx(90),
                   decoration: BoxDecoration(
-                    color: AppColors.background,
+                    color: UtanoColors.background,
                     borderRadius: BorderRadius.circular(23),
                   ),
                 ),
