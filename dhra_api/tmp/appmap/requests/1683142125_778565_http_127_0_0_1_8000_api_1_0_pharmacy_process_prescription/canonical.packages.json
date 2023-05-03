@@ -1,7 +1,0 @@
-[
-  "Crypto/Cipher/_mode_ecb",
-  "api/views/pharmacy/serializers/model",
-  "api/views/pharmacy/serializers/payload",
-  "api/views/pharmacy/views",
-  "utano/model"
-]

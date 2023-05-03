@@ -15,11 +15,15 @@ class UtanoButton extends StatelessWidget {
   const UtanoButton({
     required this.text,
     this.onTap,
+    this.color = UtanoColors.light,
+    this.textColor = UtanoColors.dark,
     super.key,
   });
 
   final String text;
   final VoidCallback? onTap;
+  final Color color;
+  final Color textColor;
 
   @override
   Widget build(BuildContext context) {
@@ -33,13 +37,13 @@ class UtanoButton extends StatelessWidget {
             vertical: sy(12),
           ),
           decoration: BoxDecoration(
-            color: UtanoColors.light,
+            color: color,
             borderRadius: BorderRadius.circular(10),
           ),
           child: Text(
             text,
             style: TextStyle(
-              color: UtanoColors.dark,
+              color: textColor,
               fontWeight: FontWeight.w500,
               fontSize: sy(9),
             ),

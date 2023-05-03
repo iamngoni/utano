@@ -1,7 +1,0 @@
-[
-  {
-    "route": "GET /admin/",
-    "parameters": "()",
-    "status": 200
-  }
-]

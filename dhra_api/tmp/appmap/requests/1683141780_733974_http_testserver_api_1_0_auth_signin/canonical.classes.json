@@ -1,6 +1,0 @@
-[
-  "Crypto/Cipher/_mode_ecb/EcbMode",
-  "api/views/auth/views/SignInView",
-  "django/contrib/auth",
-  "rq/queue/Queue"
-]
