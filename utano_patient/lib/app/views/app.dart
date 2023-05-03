@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:handy_extensions/handy_extensions.dart';
 
+import '../../auth/views/pages/utano_landing.dart';
 import '../../core/configs/colors.dart';
 import '../../core/configs/theme.dart';
 import '../../core/functions/dismiss_keyboard.dart';
@@ -39,7 +40,7 @@ class App extends StatelessWidget {
           late Widget displayedWidget;
 
           if (state is ConnectivityConnected) {
-            displayedWidget = const HekimaLandingPage();
+            displayedWidget = const UtanoLandingPage();
           } else if (state is ConnectivityDisconnected) {
             displayedWidget = const DeviceOfflinePage();
           } else {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:relative_scale/relative_scale.dart';
 
+import '../../app/blocs/connectivity/connectivity_bloc.dart';
 import '../configs/colors.dart';
 import 'button_widget.dart';
 
