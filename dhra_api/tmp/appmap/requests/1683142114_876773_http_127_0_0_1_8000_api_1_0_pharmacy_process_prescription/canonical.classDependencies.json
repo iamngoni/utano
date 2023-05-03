@@ -1,0 +1,26 @@
+[
+  {
+    "caller": "HTTP server requests->POST /api/1.0/pharmacy/process_prescription",
+    "callee": "Crypto/Cipher"
+  },
+  {
+    "caller": "HTTP server requests->POST /api/1.0/pharmacy/process_prescription",
+    "callee": "utano/model"
+  },
+  {
+    "caller": "utano/model",
+    "callee": "Database->INSERT INTO \"system_apirequest\" (\"id\", \"created_at\", \"updated_at\", \"deleted_at\", \"method\", \"path\", \"headers\") VALUES ('req_yICITG8YTDiTa3FGDkCYT4FSAJgkVlt', '2023-05-03T19:28:34.760357+00:00'::timestamptz, '2023-05-03T19:28:34.760375+00:00'::timestamptz, NULL, 'POST', '/api/1.0/pharmacy/process_prescription', '{''Content-Length'': ''194'', ''Content-Type'': ''application/json'', ''User-Agent'': ''PostmanRuntime/7.32.2'', ''Accept'': ''*/*'', ''Postman-Token'': ''c52c97a7-c77d-4c57-9a53-e26ab840704a'', ''Host'': ''127.0.0.1:8000'', ''Accept-Encoding'': ''gzip, deflate, br'', ''Connection'': ''keep-alive''}')"
+  },
+  {
+    "caller": "utano/model",
+    "callee": "Database->SELECT 1 AS \"a\" FROM \"system_apirequest\" WHERE (\"system_apirequest\".\"deleted_at\" IS NULL AND \"system_apirequest\".\"id\" = 'req_yICITG8YTDiTa3FGDkCYT4FSAJgkVlt') LIMIT 1"
+  },
+  {
+    "caller": "utano/model",
+    "callee": "Database->SELECT \"system_apirequest\".\"id\", \"system_apirequest\".\"created_at\", \"system_apirequest\".\"updated_at\", \"system_apirequest\".\"deleted_at\", \"system_apirequest\".\"method\", \"system_apirequest\".\"path\", \"system_apirequest\".\"headers\" FROM \"system_apirequest\" WHERE \"system_apirequest\".\"deleted_at\" IS NULL LIMIT 21"
+  },
+  {
+    "caller": "utano/model",
+    "callee": "Database->UPDATE \"system_apirequest\" SET \"created_at\" = NULL, \"updated_at\" = '2023-05-03T19:28:34.758647+00:00'::timestamptz, \"deleted_at\" = NULL, \"method\" = 'POST', \"path\" = '/api/1.0/pharmacy/process_prescription', \"headers\" = '{''Content-Length'': ''194'', ''Content-Type'': ''application/json'', ''User-Agent'': ''PostmanRuntime/7.32.2'', ''Accept'': ''*/*'', ''Postman-Token'': ''c52c97a7-c77d-4c57-9a53-e26ab840704a'', ''Host'': ''127.0.0.1:8000'', ''Accept-Encoding'': ''gzip, deflate, br'', ''Connection'': ''keep-alive''}' WHERE \"system_apirequest\".\"id\" = 'req_yICITG8YTDiTa3FGDkCYT4FSAJgkVlt'"
+  }
+]

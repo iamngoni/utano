@@ -1,0 +1,23 @@
+[
+  {
+    "type": "http",
+    "name": "HTTP server requests",
+    "children": [
+      {
+        "type": "route",
+        "name": "GET /"
+      }
+    ]
+  },
+  {
+    "type": "class",
+    "name": "<templates>/UnknownSource",
+    "children": [
+      {
+        "type": "function",
+        "name": "render",
+        "static": false
+      }
+    ]
+  }
+]

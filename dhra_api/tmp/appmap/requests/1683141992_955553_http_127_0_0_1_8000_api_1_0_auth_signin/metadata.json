@@ -1,0 +1,31 @@
+{
+  "language": {
+    "name": "python",
+    "engine": "CPython",
+    "version": "3.10.7"
+  },
+  "client": {
+    "name": "appmap",
+    "url": "https://github.com/applandinc/appmap-python"
+  },
+  "git": {
+    "repository": "git@github.com:iamngoni/utano.git",
+    "branch": "development",
+    "commit": "02e7ed6ce8c91afe333bcdd482a6927c3845927c",
+    "status": [
+      "?? appmap.yml",
+      "?? tmp/"
+    ]
+  },
+  "frameworks": [
+    {
+      "name": "Django",
+      "version": "4.1.3"
+    }
+  ],
+  "name": "POST /api/1.0/auth/signin (200) - 21:26:32.955",
+  "timestamp": 1683141992.955553,
+  "recorder": {
+    "name": "record_requests"
+  }
+}

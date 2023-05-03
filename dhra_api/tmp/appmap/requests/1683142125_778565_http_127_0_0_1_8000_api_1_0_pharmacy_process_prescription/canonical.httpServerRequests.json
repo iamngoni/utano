@@ -1,0 +1,7 @@
+[
+  {
+    "route": "POST /api/1.0/pharmacy/process_prescription",
+    "parameters": "(prescription_id,items)",
+    "status": 200
+  }
+]

@@ -1,0 +1,22 @@
+[
+  {
+    "caller": "HTTP server requests",
+    "callee": "api"
+  },
+  {
+    "caller": "api",
+    "callee": "Crypto"
+  },
+  {
+    "caller": "api",
+    "callee": "django"
+  },
+  {
+    "caller": "api",
+    "callee": "rq"
+  },
+  {
+    "caller": "django",
+    "callee": "Database"
+  }
+]

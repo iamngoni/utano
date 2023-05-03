@@ -1,0 +1,10 @@
+[
+  "pharmacy_approvedmedicine",
+  "pharmacy_dispense",
+  "pharmacy_dispenseitem",
+  "pharmacy_drug",
+  "pos_prescription",
+  "pos_prescriptionitem",
+  "system_apirequest",
+  "users_user"
+]

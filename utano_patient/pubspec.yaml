@@ -34,6 +34,7 @@ dependencies:
   json_annotation: ^4.6.0
   jwt_decode: ^0.3.1
   localregex: ^4.0.5
+  lottie: ^2.3.2
   modal_bottom_sheet: ^2.1.0
   money_formatter:
   path: ^1.8.1

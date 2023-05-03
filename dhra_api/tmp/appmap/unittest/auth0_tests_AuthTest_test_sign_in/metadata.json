@@ -1,0 +1,33 @@
+{
+  "language": {
+    "name": "python",
+    "engine": "CPython",
+    "version": "3.10.7"
+  },
+  "client": {
+    "name": "appmap",
+    "url": "https://github.com/applandinc/appmap-python"
+  },
+  "git": {
+    "repository": "git@github.com:iamngoni/utano.git",
+    "branch": "development",
+    "commit": "02e7ed6ce8c91afe333bcdd482a6927c3845927c",
+    "status": [
+      "?? appmap.yml"
+    ]
+  },
+  "feature_group": "Auth test",
+  "recording": {
+    "defined_class": "auth0.tests.AuthTest",
+    "method_id": "test_sign_in",
+    "source_location": "auth0/tests.py:21"
+  },
+  "name": "Auth test sign in",
+  "feature": "Sign in",
+  "app": "utano",
+  "recorder": {
+    "name": "unittest",
+    "type": "tests"
+  },
+  "test_status": "succeeded"
+}

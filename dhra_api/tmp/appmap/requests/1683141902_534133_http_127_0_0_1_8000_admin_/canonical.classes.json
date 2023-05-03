@@ -1,0 +1,7 @@
+[
+  "<templates>/EnvLibPython310SitePackagesDjangoContribAdminTemplatesAdminApp_ListHtml",
+  "<templates>/EnvLibPython310SitePackagesDjangoContribAdminTemplatesAdminIndexHtml",
+  "django/contrib/admin/options/BaseModelAdmin",
+  "django/contrib/auth/backends/ModelBackend",
+  "django/contrib/auth/models/PermissionsMixin"
+]

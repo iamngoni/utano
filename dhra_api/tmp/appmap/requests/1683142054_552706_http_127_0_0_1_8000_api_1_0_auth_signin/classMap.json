@@ -1,0 +1,149 @@
+[
+  {
+    "name": "api",
+    "type": "package",
+    "children": [
+      {
+        "name": "views",
+        "type": "package",
+        "children": [
+          {
+            "name": "auth",
+            "type": "package",
+            "children": [
+              {
+                "name": "views",
+                "type": "package",
+                "children": [
+                  {
+                    "name": "SignInView",
+                    "type": "class",
+                    "children": [
+                      {
+                        "name": "post",
+                        "type": "function",
+                        "static": false,
+                        "location": "api/views/auth/views.py:47"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "django",
+    "type": "package",
+    "children": [
+      {
+        "name": "contrib",
+        "type": "package",
+        "children": [
+          {
+            "name": "auth",
+            "type": "class",
+            "children": [
+              {
+                "name": "authenticate",
+                "type": "function",
+                "labels": [
+                  "security.authentication"
+                ],
+                "static": true,
+                "location": "env/lib/python3.10/site-packages/django/contrib/auth/__init__.py:63"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "rq",
+    "type": "package",
+    "children": [
+      {
+        "name": "queue",
+        "type": "package",
+        "children": [
+          {
+            "name": "Queue",
+            "type": "class",
+            "children": [
+              {
+                "name": "create_job",
+                "type": "function",
+                "labels": [
+                  "job.create"
+                ],
+                "static": false,
+                "location": "env/lib/python3.10/site-packages/rq/queue.py:295"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Crypto",
+    "type": "package",
+    "children": [
+      {
+        "name": "Cipher",
+        "type": "package",
+        "children": [
+          {
+            "name": "_mode_ecb",
+            "type": "package",
+            "children": [
+              {
+                "name": "EcbMode",
+                "type": "class",
+                "children": [
+                  {
+                    "name": "encrypt",
+                    "type": "function",
+                    "labels": [
+                      "crypto.encrypt"
+                    ],
+                    "static": false,
+                    "location": "env/lib/python3.10/site-packages/Crypto/Cipher/_mode_ecb.py:94"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "http",
+    "name": "HTTP server requests",
+    "children": [
+      {
+        "type": "route",
+        "name": "POST /api/1.0/auth/signin"
+      }
+    ]
+  },
+  {
+    "type": "database",
+    "name": "Database",
+    "children": [
+      {
+        "type": "query",
+        "name": "SELECT \"users_user\".\"password\", \"users_user\".\"last_login\", \"users_user\".\"is_superuser\", \"users_user\".\"first_name\", \"users_user\".\"last_name\", \"users_user\".\"is_staff\", \"users_user\".\"date_joined\", \"users_user\".\"id\", \"users_user\".\"created_at\", \"users_user\".\"updated_at\", \"users_user\".\"deleted_at\", \"users_user\".\"email\", \"users_user\".\"is_active\", \"users_user\".\"is_verified\", \"users_user\".\"username\", \"users_user\".\"role\", \"users_user\".\"gender\", \"users_user\".\"password_history\", \"users_user\".\"password_updated_at\", \"users_user\".\"receive_email_notifications\", \"users_user\".\"one_time_pin\", \"users_user\".\"one_time_pin_generated_at\", \"users_user\".\"device_token\" FROM \"users_user\" WHERE (UPPER(\"users_user\".\"username\"::text) = UPPER('nicole@modestnerd.co') OR UPPER(\"users_user\".\"email\"::text) = UPPER('nicole@modestnerd.co')) ORDER BY \"users_user\".\"updated_at\" DESC LIMIT 21"
+      },
+      {
+        "type": "query",
+        "name": "SELECT \"users_user\".\"password\", \"users_user\".\"last_login\", \"users_user\".\"is_superuser\", \"users_user\".\"first_name\", \"users_user\".\"last_name\", \"users_user\".\"is_staff\", \"users_user\".\"date_joined\", \"users_user\".\"id\", \"users_user\".\"created_at\", \"users_user\".\"updated_at\", \"users_user\".\"deleted_at\", \"users_user\".\"email\", \"users_user\".\"is_active\", \"users_user\".\"is_verified\", \"users_user\".\"username\", \"users_user\".\"role\", \"users_user\".\"gender\", \"users_user\".\"password_history\", \"users_user\".\"password_updated_at\", \"users_user\".\"receive_email_notifications\", \"users_user\".\"one_time_pin\", \"users_user\".\"one_time_pin_generated_at\", \"users_user\".\"device_token\" FROM \"users_user\" WHERE (UPPER(\"users_user\".\"username\"::text) = UPPER('nicole@modestnerd.co') OR UPPER(\"users_user\".\"email\"::text) = UPPER('nicole@modestnerd.co')) ORDER BY \"users_user\".\"updated_at\" DESC"
+      }
+    ]
+  }
+]

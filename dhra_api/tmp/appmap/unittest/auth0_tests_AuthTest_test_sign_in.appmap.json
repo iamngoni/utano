@@ -1,0 +1,732 @@
+{
+  "events": [
+    {
+      "static": false,
+      "receiver": {
+        "kind": "req",
+        "object_id": 4483665152,
+        "value": "<auth0.tests.AuthTest testMethod=test_sign_in>",
+        "name": "self",
+        "class": "auth0.tests.AuthTest"
+      },
+      "id": 1,
+      "event": "call",
+      "thread_id": 1,
+      "defined_class": "auth0.tests.AuthTest",
+      "method_id": "test_sign_in",
+      "path": "auth0/tests.py",
+      "lineno": 21
+    },
+    {
+      "http_server_request": {
+        "request_method": "POST",
+        "protocol": "HTTP/1.1",
+        "path_info": "/api/1.0/auth/signin",
+        "normalized_path_info": "/api/1.0/auth/signin",
+        "mime_type": "application/json",
+        "headers": {
+          "Cookie": "",
+          "Content-Length": "56",
+          "Content-Type": "application/json"
+        }
+      },
+      "message": [
+        {
+          "object_id": 4574249088,
+          "value": "'imngonii@gmail.com'",
+          "name": "username",
+          "class": "builtins.str"
+        },
+        {
+          "object_id": 4484515120,
+          "value": "'123456@Me'",
+          "name": "password",
+          "class": "builtins.str"
+        }
+      ],
+      "id": 2,
+      "event": "call",
+      "thread_id": 1
+    },
+    {
+      "static": false,
+      "receiver": {
+        "kind": "req",
+        "object_id": 4491925760,
+        "value": "<api.views.auth.views.SignInView object at 0x10bbd5900>",
+        "name": "self",
+        "class": "api.views.auth.views.SignInView"
+      },
+      "parameters": [
+        {
+          "kind": "req",
+          "object_id": 4491930608,
+          "value": "<rest_framework.request.Request: POST '/api/1.0/auth/signin'>",
+          "name": "request",
+          "class": "rest_framework.request.Request"
+        }
+      ],
+      "id": 3,
+      "event": "call",
+      "thread_id": 1,
+      "defined_class": "api.views.auth.views.SignInView",
+      "method_id": "post",
+      "path": "api/views/auth/views.py",
+      "lineno": 47
+    },
+    {
+      "static": true,
+      "parameters": [
+        {
+          "kind": "opt",
+          "object_id": 4438177472,
+          "value": "None",
+          "name": "request",
+          "class": "builtins.NoneType"
+        },
+        {
+          "kind": "keyrest",
+          "object_id": 4574165632,
+          "value": "{'username': 'imngonii@gmail.com', 'password': '123456@Me'}",
+          "name": "credentials",
+          "class": "builtins.dict",
+          "properties": [
+            {
+              "name": "username",
+              "class": "builtins.str"
+            },
+            {
+              "name": "password",
+              "class": "builtins.str"
+            }
+          ],
+          "size": 2
+        }
+      ],
+      "id": 4,
+      "event": "call",
+      "thread_id": 1,
+      "defined_class": "django.contrib.auth",
+      "method_id": "authenticate",
+      "path": "env/lib/python3.10/site-packages/django/contrib/auth/__init__.py",
+      "lineno": 63
+    },
+    {
+      "sql_query": {
+        "sql": "SELECT \"users_user\".\"password\", \"users_user\".\"last_login\", \"users_user\".\"is_superuser\", \"users_user\".\"first_name\", \"users_user\".\"last_name\", \"users_user\".\"is_staff\", \"users_user\".\"date_joined\", \"users_user\".\"id\", \"users_user\".\"created_at\", \"users_user\".\"updated_at\", \"users_user\".\"deleted_at\", \"users_user\".\"email\", \"users_user\".\"is_active\", \"users_user\".\"is_verified\", \"users_user\".\"username\", \"users_user\".\"role\", \"users_user\".\"gender\", \"users_user\".\"password_history\", \"users_user\".\"password_updated_at\", \"users_user\".\"receive_email_notifications\", \"users_user\".\"one_time_pin\", \"users_user\".\"one_time_pin_generated_at\", \"users_user\".\"device_token\" FROM \"users_user\" WHERE (UPPER(\"users_user\".\"username\"::text) = UPPER('imngonii@gmail.com') OR UPPER(\"users_user\".\"email\"::text) = UPPER('imngonii@gmail.com')) ORDER BY \"users_user\".\"updated_at\" DESC LIMIT 21",
+        "database_type": "postgresql",
+        "server_version": "14.0.5"
+      },
+      "id": 5,
+      "event": "call",
+      "thread_id": 1
+    },
+    {
+      "parent_id": 5,
+      "elapsed": 0.002245211013359949,
+      "id": 6,
+      "event": "return",
+      "thread_id": 1
+    },
+    {
+      "sql_query": {
+        "sql": "SELECT \"users_user\".\"password\", \"users_user\".\"last_login\", \"users_user\".\"is_superuser\", \"users_user\".\"first_name\", \"users_user\".\"last_name\", \"users_user\".\"is_staff\", \"users_user\".\"date_joined\", \"users_user\".\"id\", \"users_user\".\"created_at\", \"users_user\".\"updated_at\", \"users_user\".\"deleted_at\", \"users_user\".\"email\", \"users_user\".\"is_active\", \"users_user\".\"is_verified\", \"users_user\".\"username\", \"users_user\".\"role\", \"users_user\".\"gender\", \"users_user\".\"password_history\", \"users_user\".\"password_updated_at\", \"users_user\".\"receive_email_notifications\", \"users_user\".\"one_time_pin\", \"users_user\".\"one_time_pin_generated_at\", \"users_user\".\"device_token\" FROM \"users_user\" WHERE (UPPER(\"users_user\".\"username\"::text) = UPPER('imngonii@gmail.com') OR UPPER(\"users_user\".\"email\"::text) = UPPER('imngonii@gmail.com')) ORDER BY \"users_user\".\"updated_at\" DESC",
+        "database_type": "postgresql",
+        "server_version": "14.0.5"
+      },
+      "id": 7,
+      "event": "call",
+      "thread_id": 1
+    },
+    {
+      "parent_id": 7,
+      "elapsed": 0.00038677098928019404,
+      "id": 8,
+      "event": "return",
+      "thread_id": 1
+    },
+    {
+      "return_value": {
+        "object_id": 4491919904,
+        "value": "<User: Ngonidzashe Mangudya>",
+        "class": "users.models.User"
+      },
+      "parent_id": 4,
+      "elapsed": 0.2653470039367676,
+      "id": 9,
+      "event": "return",
+      "thread_id": 1
+    },
+    {
+      "static": false,
+      "receiver": {
+        "kind": "req",
+        "object_id": 4494235376,
+        "value": "DjangoRQ('auth')",
+        "name": "self",
+        "class": "django_rq.queues.DjangoRQ"
+      },
+      "parameters": [
+        {
+          "kind": "req",
+          "object_id": 4494224416,
+          "value": "<function notify_user_about_login_activity at 0x10be06c20>",
+          "name": "func",
+          "class": "builtins.function"
+        },
+        {
+          "kind": "opt",
+          "object_id": 4492158272,
+          "value": "(<User: Ngonidzashe Mangudya>, OrderedDict([('ip', '127.0.0.1'), ('remote_host', None), ('user_agent', 'Other - Other - Other()')]))",
+          "name": "args",
+          "class": "builtins.tuple"
+        },
+        {
+          "kind": "opt",
+          "object_id": 4487149312,
+          "value": "{}",
+          "name": "kwargs",
+          "class": "builtins.dict",
+          "size": 0
+        },
+        {
+          "kind": "opt",
+          "object_id": 4438177472,
+          "value": "None",
+          "name": "timeout",
+          "class": "builtins.NoneType"
+        },
+        {
+          "kind": "opt",
+          "object_id": 4460169808,
+          "value": "500",
+          "name": "result_ttl",
+          "class": "builtins.int"
+        },
+        {
+          "kind": "opt",
+          "object_id": 4438177472,
+          "value": "None",
+          "name": "ttl",
+          "class": "builtins.NoneType"
+        },
+        {
+          "kind": "opt",
+          "object_id": 4438177472,
+          "value": "None",
+          "name": "failure_ttl",
+          "class": "builtins.NoneType"
+        },
+        {
+          "kind": "opt",
+          "object_id": 4438177472,
+          "value": "None",
+          "name": "description",
+          "class": "builtins.NoneType"
+        },
+        {
+          "kind": "opt",
+          "object_id": 4438177472,
+          "value": "None",
+          "name": "depends_on",
+          "class": "builtins.NoneType"
+        },
+        {
+          "kind": "opt",
+          "object_id": 4438177472,
+          "value": "None",
+          "name": "job_id",
+          "class": "builtins.NoneType"
+        },
+        {
+          "kind": "opt",
+          "object_id": 4438177472,
+          "value": "None",
+          "name": "meta",
+          "class": "builtins.NoneType"
+        },
+        {
+          "kind": "opt",
+          "object_id": 4459999440,
+          "value": "<JobStatus.QUEUED: 'queued'>",
+          "name": "status",
+          "class": "rq.job.JobStatus"
+        },
+        {
+          "kind": "opt",
+          "object_id": 4438177472,
+          "value": "None",
+          "name": "retry",
+          "class": "builtins.NoneType"
+        },
+        {
+          "kind": "key",
+          "object_id": 4438177472,
+          "value": "None",
+          "name": "on_success",
+          "class": "builtins.NoneType"
+        },
+        {
+          "kind": "key",
+          "object_id": 4438177472,
+          "value": "None",
+          "name": "on_failure",
+          "class": "builtins.NoneType"
+        }
+      ],
+      "id": 10,
+      "event": "call",
+      "thread_id": 1,
+      "defined_class": "rq.queue.Queue",
+      "method_id": "create_job",
+      "path": "env/lib/python3.10/site-packages/rq/queue.py",
+      "lineno": 295
+    },
+    {
+      "return_value": {
+        "object_id": 4491920048,
+        "value": "Job(None, enqueued_at=None)",
+        "class": "rq.job.Job"
+      },
+      "parent_id": 10,
+      "elapsed": 0.00012111663818359375,
+      "id": 11,
+      "event": "return",
+      "thread_id": 1
+    },
+    {
+      "static": false,
+      "receiver": {
+        "kind": "req",
+        "object_id": 4486730448,
+        "value": "DjangoRQ('auth')",
+        "name": "self",
+        "class": "django_rq.queues.DjangoRQ"
+      },
+      "parameters": [
+        {
+          "kind": "req",
+          "object_id": 4492026944,
+          "value": "<function send_verification_code_to_user at 0x10bbee440>",
+          "name": "func",
+          "class": "builtins.function"
+        },
+        {
+          "kind": "opt",
+          "object_id": 4491929840,
+          "value": "(<django.contrib.auth.models.AnonymousUser object at 0x10bbd6980>,)",
+          "name": "args",
+          "class": "builtins.tuple"
+        },
+        {
+          "kind": "opt",
+          "object_id": 4574457344,
+          "value": "{}",
+          "name": "kwargs",
+          "class": "builtins.dict",
+          "size": 0
+        },
+        {
+          "kind": "opt",
+          "object_id": 4438177472,
+          "value": "None",
+          "name": "timeout",
+          "class": "builtins.NoneType"
+        },
+        {
+          "kind": "opt",
+          "object_id": 4460169808,
+          "value": "500",
+          "name": "result_ttl",
+          "class": "builtins.int"
+        },
+        {
+          "kind": "opt",
+          "object_id": 4438177472,
+          "value": "None",
+          "name": "ttl",
+          "class": "builtins.NoneType"
+        },
+        {
+          "kind": "opt",
+          "object_id": 4438177472,
+          "value": "None",
+          "name": "failure_ttl",
+          "class": "builtins.NoneType"
+        },
+        {
+          "kind": "opt",
+          "object_id": 4438177472,
+          "value": "None",
+          "name": "description",
+          "class": "builtins.NoneType"
+        },
+        {
+          "kind": "opt",
+          "object_id": 4438177472,
+          "value": "None",
+          "name": "depends_on",
+          "class": "builtins.NoneType"
+        },
+        {
+          "kind": "opt",
+          "object_id": 4438177472,
+          "value": "None",
+          "name": "job_id",
+          "class": "builtins.NoneType"
+        },
+        {
+          "kind": "opt",
+          "object_id": 4438177472,
+          "value": "None",
+          "name": "meta",
+          "class": "builtins.NoneType"
+        },
+        {
+          "kind": "opt",
+          "object_id": 4459999440,
+          "value": "<JobStatus.QUEUED: 'queued'>",
+          "name": "status",
+          "class": "rq.job.JobStatus"
+        },
+        {
+          "kind": "opt",
+          "object_id": 4438177472,
+          "value": "None",
+          "name": "retry",
+          "class": "builtins.NoneType"
+        },
+        {
+          "kind": "key",
+          "object_id": 4438177472,
+          "value": "None",
+          "name": "on_success",
+          "class": "builtins.NoneType"
+        },
+        {
+          "kind": "key",
+          "object_id": 4438177472,
+          "value": "None",
+          "name": "on_failure",
+          "class": "builtins.NoneType"
+        }
+      ],
+      "id": 12,
+      "event": "call",
+      "thread_id": 1,
+      "defined_class": "rq.queue.Queue",
+      "method_id": "create_job",
+      "path": "env/lib/python3.10/site-packages/rq/queue.py",
+      "lineno": 295
+    },
+    {
+      "return_value": {
+        "object_id": 4491919472,
+        "value": "Job(None, enqueued_at=None)",
+        "class": "rq.job.Job"
+      },
+      "parent_id": 12,
+      "elapsed": 0.00009393692016601562,
+      "id": 13,
+      "event": "return",
+      "thread_id": 1
+    },
+    {
+      "static": false,
+      "receiver": {
+        "kind": "req",
+        "object_id": 4492481328,
+        "value": "<Crypto.Cipher._mode_ecb.EcbMode object at 0x10bc5d330>",
+        "name": "self",
+        "class": "Crypto.Cipher._mode_ecb.EcbMode"
+      },
+      "parameters": [
+        {
+          "kind": "req",
+          "object_id": 140518180291584,
+          "value": "b'{\\n    \"data\": {\\n        \"access_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiYWNjZXNzIiwiaWQiOiJ1c2VyX2VGZllVOEFldkxtdmU5cUZWZnA1Y0VWY25yRkVoUCIsImlhdCI6MTY4MzE0MTc4MCwiZXhwIjoxNjgzMjI4MTgwLCJpc3MiOiJOZ29uaWR6YXNoZSBNYW5ndWR5YSAoSDE4MDIwMk0pIn0.Oqj6y6YCTBK54b9dpjbplKN0xJxV9_sPWQCCfdi4L38\",\\n        \"refresh_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoicmVmcmVzaCIsImlkIjoidXNlcl9lRmZZVThBZXZMbXZlOXFGVmZwNWNFVmNuckZFaFAiLCJpYXQiOjE2ODMxNDE3ODAsImV4cCI6MTY4NTczMzc4MCwiaXNzIjoiTmdvbmlkemFzaGUgTWFuZ3VkeWEgKEgxODAyMDJNKSJ9.yhSoZB4ytlDtqgSzSDdnyfD2-NuO0OirMC4o2wxAeco\",\\n        \"user\": {\\n            \"created_at\": \"2023-05-03T21:23:00.261122+02:00\",\\n            \"date_joined\": \"2023-05-03T21:22:59.944836+02:00\",\\n            \"first_name\": \"Ngonidzashe\",\\n            \"id\": \"user_eFfYU8AevLmve9qFVfp5cEVcnrFEhP\",\\n            \"is_active\": true,\\n            \"is_staff\": false,\\n            \"is_superuser\": false,\\n            \"is_verified\": false,\\n            \"last_login\": null,\\n            \"last_name\": \"Mangudya\",\\n            \"password_updated_at\": \"2023-05-03T21:23:00.258050+02:00\",\\n            \"receive_email_notifications\": true,\\n            \"role\": \"PATIENT\",\\n            \"updated_at\": \"2023-05-03T21:23:00.261131+02:00\",\\n            \"username\": \"nmangudya\"\\n        }\\n    },\\n    \"issues\": null,\\n    \"message\": \"OK\",\\n    \"status\": true,\\n    \"status_description\": \"Request was executed successfully\",\\n    \"version\": 1.0,\\n    \"versioned_by\": \"Ngonidzashe Mangudya (H180202M)\"\\n}\\x04\\x04\\x04\\x04'",
+          "name": "plaintext",
+          "class": "builtins.bytes"
+        },
+        {
+          "kind": "opt",
+          "object_id": 4438177472,
+          "value": "None",
+          "name": "output",
+          "class": "builtins.NoneType"
+        }
+      ],
+      "id": 14,
+      "event": "call",
+      "thread_id": 1,
+      "defined_class": "Crypto.Cipher._mode_ecb.EcbMode",
+      "method_id": "encrypt",
+      "path": "env/lib/python3.10/site-packages/Crypto/Cipher/_mode_ecb.py",
+      "lineno": 94
+    },
+    {
+      "return_value": {
+        "object_id": 140518179972608,
+        "value": "b'\\xbc.h\\xcc\\xa3\\'E\\x15\\x9e \\xed\\xd8\\xba\\xac\\xb17\\xaf\\xa7u\\x95\\xf6\\x0et\\xe1\\xdcn\\x9em\\r\\x01\\x10\\x85Z\\xc0,z\\\\<\\xef\\xa8\\x93\\x11b\\x90`a\\xaa\\x8b\\x96\\x01\\x163\\x95\\x00\\x81\\xef\\xbb)\\xc8\\x96\\x86\\x9f\\xa2\\x08\\xa0\\x82\\xcd\\xdf\\x81\\xb5\\xff\\xcc\\xe2>\\x88\\xbdy8\\x1f\\x9d&]\\xed\\xa3K\\xc1Rd\\xa9R\\xb8\\xd6\\x9fHv#eV\\xd0x/\\xd5\\xeezA\\xc4\\xbf\\x84ynTo6\\xf6\\xd4\\x1bi\\x1b\\x0f\\xc2\\x1b\\x9bM\\xa7\\xe3\\x07\\x10\\xdci\\x815Uh\\x1e\\xcb*\\xc8\\x95:\\x1f8`:\\xa4\\xd2\\xdb?Y\\x8aT\\xb5El)\\xeeV\\x0f\\xf5z\\n?\\xe6\\xf2]\\x90\\xc0LI\\xbfh\\xdf\\xce\\xc2|\\xe8\\x0b\\\\mP&\\xd6[hjX \\xd9\\xcc%GS\\xd3\\x11\\x8a\\x9c\\xc4\\xb4;\\xa4\\xf5\\xa8\\xde\\xb6\\xdb\\xb3\\xfb\\x8f\\x06\\xa5\\n\\xbaw\\xdf\\xcbn}\\x0e\\xde\\xb9H]>P\\xe8\\xb4n2\\xd4qH\\xcc\\xf6\\xedjc\\x9c\\xb8\\xdcO\\x9a\\xb6\\xfb\\xe6\\xc1K\\x88Z\\x863+\\x87\\'\\xabE\\xbf\\xfc|_Kp\\xabw\\xafa\\x96\\x07!\\x8c\\xa50r\\xeeH\\xad/Z\\xda\\x8b`\\xc0J+\\xf2\\xf3\\xef,\\xfa\\x8a\\xead\\x93\\xeblXr\\xd5\\xff\\xa1\\xe4\\x1b\\xf5\\x00L\\x82\\xbc6+\\xfa{\\xc05\\x91\\xc4\\xcc\\'\\xf7\\xf2\\x1b\\xf1l\\x05f\\xb4\\xbf\\xdc\\x19\\x08\\x03\\xca\\xd68\\x8c\\x860Y\\xe3\\xc2\\xd0\\xd2\\xdb\\xbfod\\xab\\xfa\\x81-\\xfe\\xafE_\\x1a\\xd6\\xbb\\xcb_\\xb5~t\\xd9\\x7f\\xb2\\xbc\\x0b\\xc0\\x89\\x87l_\\xa940\\xa3\\r\\xe9K?K\\xa4\\xf8#\\xefu\\xe0\\x9a\\x1b\\x12v\\xba\\xd5\\xbe\\x9e^\\x8b\\x9d\\xe3\\xeb\\xa3 \\x99\\x0b\\xa7\\x9eu\\xedwEUh\\x0em$\\xb9\\x88\\x19v\\xd7\\xf4\\xf1r\\x80\\x08^@\\xeay6qf\\x96\\xba\\xab\\xcf\\x973~:\\x03,\\x0c\\x8a\\xe5\\x13I\\x06.q5Qfy\\xfd\\xb5\\xdb#K;\\xaeH.%\\x02\\x8e@\\x87\\xc1&\\\\\\xa5\\x0f\\x05.\\xba\\xc0G\\xf6\\x0fk\\x1d\\x01\\x99\\xdepGV\\xd7\\xc2Q\\xe4\\xe8R&\\xfc\\x01\\n\\x86zE\\x87\\xd9\\xfaW\\xbb\\x97s2k\\xe5\\x04!$\\xaeUy\\xbfr}\\xd9\\x97I\\x06\\x9aGn\\xc5:\\xc9D|\\xc8\\xbf\\xa7,\\xaaw\\x9fs.\\x8a\\xd0\\xa41\\x1c\\xe0+~p\\x0e\\xaa\\x0b\\xfeB\\xcb\\xd0\\xe9?\\x01\\x8c\\n\\xca\\xb0\\xee\\x7f\\xcc\\x14n\\x9a\\x8c:^\\x8f\\x9c\\xb5\\xf6\\x10\\x1d*C\\xf3\\x1f\\xde\\xb4\\xb6([\\x9f\\xf5\\x83\\xcd\\x81]\\x03\\x1d\\xdf\\xb9k\\xd1\\xeb\\r\\xfe\\xc8\\x08I\\xce\\xad\\xa8\\x99\\xfc@\\xc7\\x88\\xb2\\x069\\xa2\\x97\\xf7\\x0f38\\xd2\\x85AF\\xb9e\\xd8A\\x92\\xbd\\xfb:\\xa8b\\xa43\\xf8V\\x90\\xf9\\x12*\\xbc\\x80\\x1b\\xf5\\xa2\\xae\\nu\\xb9\\xf8$Z\\xbd\\xc5\\xfd\\x96\\x8e\\xf9\\xf4\\r0\\xd67\\xcd\\xc7\\x05\\xd4YI\\x18\\x84\\x1as\\xde`\\x12\\xd9t~wSOs\\xefC\\xcf8\\xc3\\x950\\x068M\\xb4*Q\\x0b\\x1b\\xbd\\xe1\\xc6\\xdd\\x86\\xc98\\xda\\x82\\x8by\\x18\\xb3G@\\xae\\xc0u?\\xc8\\xa9\\xec(V$J\\x9b\\xf9\\x1d\\x149ZV\\xb9]>d\\xf5\\x13^]\\xaa\\xa39\\x98E\\x95\\x95\\xf1\\x94\\x98>\\x06b\\x8a\\x18\\xaa\\xec\\xe0\\xed\\xd6\\xb0\\xd4/\\xe4[C\\xbc\\xdc1g7\\x08\\x94\\x0c\\x9d\\x83\\xa9\\xc4\\x8d #\\xc2\\x93\\xbd+[\\x0c\\xf7#\\x8ccG$\\xdc\\xbb\\xae\\xc9\\x13\\xab\\x99\\xd9\\xe1\\xf2H\\x14\\xef\\x07\\x0b\\x9a\\xbe\\xdcQ7\\xc6\\xb4\\xc5*\\x93\\x1f\\x0f]G\\x15\\x8c\\xb0\\xab\\x9e\\xbd\\x81tS)V\\x9f\\xd0\\xe9\\x11\\xf9\\x07\\xedx\\x99!\\x05\\xddk J\\xd5\\xa2@\\x93@\\xf4\\xd2\\x17\\xc2!T&\\xc7}n\\x01|\\xfcM\\xe0v\\xee\\x8e\\xa1a\\x94\\xc6\\x84\\x95\\xcbs5\\xbeJ\\xd8(V\\xe9\\x8e\\t3\\xc8\\xfb\\x03\\xe51\\xb1\\x10Vz\\xf7PNg\\x8e\\xf3\\xfa@\\x8c^\\x95\\xc1s\\xfei=\\x15r2\\xd2 \\x88\\xa1\\x9f\\xe3W\\xba9\\xb2N!\\xa4\\x89\\xab\\xa1\\xfe\\x1fe\\x08*\\xe4\\x8a\\n\\x96~\\x07\\xf0\\xf3\\xd6\\xa5\\\\K\\x19\\xc7\\xa9H\\xd4\\xc3\\xf5o\\xef\\xeb\\xc0\\x96&\\xc0b-iE}\\xe6k\\x12\\x03\\x18%\\xe2\\x08\\xbc1*\\x9a\\xd1\\x9ab\\x91\\x07\\xe5;g\\t \\x85ruI\\x18\\x82<\\x8e\\t9-\\xfc\\xc6p_\\xef@>\\xbaY\\x8exwe\\xaa\\xfb\\x12Q}\\xc4\\xab\\xafNJ\\xb6\\xf5GL\\n\\xd2S\\xda/DizK\\xe9\\xc6B\\xcb\\xf5=\\x13F1m\\xa1\\xf7@\\xadI\\x8f\\xb5R\\x92E\\x80\\xbc\\x13r\\xd7\\xfd[xL\\xe61wl\\x12*\\xbc\\x80\\x1b\\xf5\\xa2\\xae\\nu\\xb9\\xf8$Z\\xbd\\xc51z\\x86I\\x0b\\'E\\xc8DM\\xaa\\x0e-\\xcd\\xaeqh\"\\r\\xd4\\xf9\\x86NM:\\xef\\xf4=\\xb2\\xca\\x9d\\xf9\\x00\\x0e\\xa7Z\\xda\\xb9\\x1b\\x8fX\\x19\\xa5 \\x8f%\\xcc\\xe7}\\x9ePt\\x8e\\x97#:\\xdep:N\\xbea\\xc1\\xdc\\xc6a\\xdc&; \\xfc&\\x1b^\\x8b\\xe9\\x00c\\xa0c\\x84}8\\xddzUk\\x98\\x9f\\xd0\\xa3j\\xcc/\\xd6\\xf7\\x97r/\\x8c\\x8b\\x0c\\xe1\\x17B\\x89\\x98\\x109\\x11,u\\xae)\\x19X\\x8d\\xea\\xe6o\\x10Wv\\x99O6\\xe4i\\x18\\xe2\\xd1\\xfa\\xe2h\\xcd2\\xfa\\xeamI\\xd0\\x9dU\\xadC\\xce\\xd6\\xa9\\x9akB\\xd3\\xfbHq\\xf7\\xe8P\\xe9~\\x1d\\n\\xe5*\\xf0\\xe6\\x17\\x97\\xf0\\xa7\\xe2\\xf9?I8]U\\xc6\\xac\\xea\\xb8\\x11g\\x041`\\xed\\x9f:\\xb0\\xecRw-\\x9dC\\xee\\xfd\\x0c\\x11yr\\x1e\\x91*d\\xe4\\xc3\\xd2\\xdcA\\x89\\xdd\\xf0\\x9as\\x1f\\x07\\x10\\x80\\xbf7\\xa8\\x12\\xbd\\xefs\\x9ay\\xbd{\\x97\\x96~\\xac\\xfc\\x0e\\xc0\\x90J=9\\xc7@&O\\x07\\xeb\\r\\xb9\\x90\\x7f\\xae\\x9c\\xa5~\\xa5j\\xce\\x99\\xf2\\xee\\xdc\\xbaj7E[\\x97\\xfbP\\x1a\\x87\\xdd\\xd4d\\xca$%n\\x91\\x113\\xe2u\\x85b\\xdd\\xc2(r\\xe6\\x1c\\xfe>\\xa2O`w\\xdfM\\x94zKxi\\x9fp\\x1590\\xb5\\xd9\\x8a\\xfb\\xe9\\xcf\\xdc\\x1ec\\xc5\\xd9\\xf6\\xa4\\xb0\\x1f\\xabEug\\'0\\xcfE\\xa5\\x9d\\xadq\\x81\"PS\\x9e\\x03[\\x83\\x14\\xd2\\xb1\\xd8O\\x11\\xc2\\xeadV\\xb9NEn<+\\x9bMR]x6XXz\\'\\xd9dpw\\x82=\\x0f2\\xb3\\xbb|\\xdf\\xba\\xd8V\\xeb\\xc4\\xb2\\xf1\\x8a\\xfc\\xb3g\\x89\\xce\\x17|)p\\xa1)}\\xb8_\\x96\\xaf\\xa3|\\x86\\x1f\\x12\\xeb\\xb6\\xfc'",
+        "class": "builtins.bytes"
+      },
+      "parent_id": 14,
+      "elapsed": 0.00007319450378417969,
+      "id": 15,
+      "event": "return",
+      "thread_id": 1
+    },
+    {
+      "return_value": {
+        "object_id": 4491924896,
+        "value": "<ApiResponse status_code=200, \"application/json\">",
+        "class": "services.helpers.api_response.ApiResponse"
+      },
+      "parent_id": 3,
+      "elapsed": 0.36924219131469727,
+      "id": 16,
+      "event": "return",
+      "thread_id": 1
+    },
+    {
+      "http_server_response": {
+        "status_code": 200,
+        "mime_type": "application/json",
+        "headers": {
+          "Content-Type": "application/json",
+          "Allow": "POST, OPTIONS",
+          "X-Frame-Options": "DENY",
+          "Content-Length": "2023",
+          "X-Content-Type-Options": "nosniff",
+          "Referrer-Policy": "same-origin",
+          "Cross-Origin-Opener-Policy": "same-origin",
+          "Vary": "Origin"
+        }
+      },
+      "parent_id": 2,
+      "elapsed": 0.3798653789854143,
+      "id": 17,
+      "event": "return",
+      "thread_id": 1
+    },
+    {
+      "return_value": {
+        "object_id": 4438177472,
+        "value": "None",
+        "class": "builtins.NoneType"
+      },
+      "parent_id": 1,
+      "elapsed": 0.8078210353851318,
+      "id": 18,
+      "event": "return",
+      "thread_id": 1
+    }
+  ],
+  "version": "1.9",
+  "metadata": {
+    "language": {
+      "name": "python",
+      "engine": "CPython",
+      "version": "3.10.7"
+    },
+    "client": {
+      "name": "appmap",
+      "url": "https://github.com/applandinc/appmap-python"
+    },
+    "git": {
+      "repository": "git@github.com:iamngoni/utano.git",
+      "branch": "development",
+      "commit": "02e7ed6ce8c91afe333bcdd482a6927c3845927c",
+      "status": [
+        "?? appmap.yml"
+      ]
+    },
+    "feature_group": "Auth test",
+    "recording": {
+      "defined_class": "auth0.tests.AuthTest",
+      "method_id": "test_sign_in",
+      "source_location": "auth0/tests.py:21"
+    },
+    "name": "Auth test sign in",
+    "feature": "Sign in",
+    "app": "utano",
+    "recorder": {
+      "name": "unittest",
+      "type": "tests"
+    },
+    "test_status": "succeeded"
+  },
+  "classMap": [
+    {
+      "name": "auth0",
+      "type": "package",
+      "children": [
+        {
+          "name": "tests",
+          "type": "package",
+          "children": [
+            {
+              "name": "AuthTest",
+              "type": "class",
+              "children": [
+                {
+                  "name": "test_sign_in",
+                  "type": "function",
+                  "static": false,
+                  "location": "auth0/tests.py:21"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "api",
+      "type": "package",
+      "children": [
+        {
+          "name": "views",
+          "type": "package",
+          "children": [
+            {
+              "name": "auth",
+              "type": "package",
+              "children": [
+                {
+                  "name": "views",
+                  "type": "package",
+                  "children": [
+                    {
+                      "name": "SignInView",
+                      "type": "class",
+                      "children": [
+                        {
+                          "name": "post",
+                          "type": "function",
+                          "static": false,
+                          "location": "api/views/auth/views.py:47"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "django",
+      "type": "package",
+      "children": [
+        {
+          "name": "contrib",
+          "type": "package",
+          "children": [
+            {
+              "name": "auth",
+              "type": "class",
+              "children": [
+                {
+                  "name": "authenticate",
+                  "type": "function",
+                  "labels": [
+                    "security.authentication"
+                  ],
+                  "static": true,
+                  "location": "env/lib/python3.10/site-packages/django/contrib/auth/__init__.py:63"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "rq",
+      "type": "package",
+      "children": [
+        {
+          "name": "queue",
+          "type": "package",
+          "children": [
+            {
+              "name": "Queue",
+              "type": "class",
+              "children": [
+                {
+                  "name": "create_job",
+                  "type": "function",
+                  "labels": [
+                    "job.create"
+                  ],
+                  "static": false,
+                  "location": "env/lib/python3.10/site-packages/rq/queue.py:295"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Crypto",
+      "type": "package",
+      "children": [
+        {
+          "name": "Cipher",
+          "type": "package",
+          "children": [
+            {
+              "name": "_mode_ecb",
+              "type": "package",
+              "children": [
+                {
+                  "name": "EcbMode",
+                  "type": "class",
+                  "children": [
+                    {
+                      "name": "encrypt",
+                      "type": "function",
+                      "labels": [
+                        "crypto.encrypt"
+                      ],
+                      "static": false,
+                      "location": "env/lib/python3.10/site-packages/Crypto/Cipher/_mode_ecb.py:94"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "http",
+      "name": "HTTP server requests",
+      "children": [
+        {
+          "type": "route",
+          "name": "POST /api/1.0/auth/signin"
+        }
+      ]
+    },
+    {
+      "type": "database",
+      "name": "Database",
+      "children": [
+        {
+          "type": "query",
+          "name": "SELECT \"users_user\".\"password\", \"users_user\".\"last_login\", \"users_user\".\"is_superuser\", \"users_user\".\"first_name\", \"users_user\".\"last_name\", \"users_user\".\"is_staff\", \"users_user\".\"date_joined\", \"users_user\".\"id\", \"users_user\".\"created_at\", \"users_user\".\"updated_at\", \"users_user\".\"deleted_at\", \"users_user\".\"email\", \"users_user\".\"is_active\", \"users_user\".\"is_verified\", \"users_user\".\"username\", \"users_user\".\"role\", \"users_user\".\"gender\", \"users_user\".\"password_history\", \"users_user\".\"password_updated_at\", \"users_user\".\"receive_email_notifications\", \"users_user\".\"one_time_pin\", \"users_user\".\"one_time_pin_generated_at\", \"users_user\".\"device_token\" FROM \"users_user\" WHERE (UPPER(\"users_user\".\"username\"::text) = UPPER('imngonii@gmail.com') OR UPPER(\"users_user\".\"email\"::text) = UPPER('imngonii@gmail.com')) ORDER BY \"users_user\".\"updated_at\" DESC LIMIT 21"
+        },
+        {
+          "type": "query",
+          "name": "SELECT \"users_user\".\"password\", \"users_user\".\"last_login\", \"users_user\".\"is_superuser\", \"users_user\".\"first_name\", \"users_user\".\"last_name\", \"users_user\".\"is_staff\", \"users_user\".\"date_joined\", \"users_user\".\"id\", \"users_user\".\"created_at\", \"users_user\".\"updated_at\", \"users_user\".\"deleted_at\", \"users_user\".\"email\", \"users_user\".\"is_active\", \"users_user\".\"is_verified\", \"users_user\".\"username\", \"users_user\".\"role\", \"users_user\".\"gender\", \"users_user\".\"password_history\", \"users_user\".\"password_updated_at\", \"users_user\".\"receive_email_notifications\", \"users_user\".\"one_time_pin\", \"users_user\".\"one_time_pin_generated_at\", \"users_user\".\"device_token\" FROM \"users_user\" WHERE (UPPER(\"users_user\".\"username\"::text) = UPPER('imngonii@gmail.com') OR UPPER(\"users_user\".\"email\"::text) = UPPER('imngonii@gmail.com')) ORDER BY \"users_user\".\"updated_at\" DESC"
+        }
+      ]
+    }
+  ]
+}

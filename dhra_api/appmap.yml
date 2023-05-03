@@ -1,0 +1,15 @@
+name: utano
+packages:
+  - path: api
+  - path: auth0
+  - path: emails
+  - path: health_institution
+  - path: lab
+  - path: patient
+  - path: payments
+  - path: pharmacy
+  - path: pos
+  - path: staff
+  - path: system
+  - path: users
+  - path: utano

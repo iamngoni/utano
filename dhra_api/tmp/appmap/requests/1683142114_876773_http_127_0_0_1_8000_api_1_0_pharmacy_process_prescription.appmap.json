@@ -1,0 +1,404 @@
+{
+  "events": [
+    {
+      "http_server_request": {
+        "request_method": "POST",
+        "protocol": "HTTP/1.1",
+        "path_info": "/api/1.0/pharmacy/process_prescription",
+        "normalized_path_info": "/api/1.0/pharmacy/process_prescription",
+        "mime_type": "application/json",
+        "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiYWNjZXNzIiwiaWQiOiJ1c2VyXzY3V3REZkVxNlQxZ0Nkall4dzEwUXVZTk1GVzBTdiIsImlhdCI6MTY4Mjg5NDIzNSwiZXhwIjoxNjgyOTgwNjM1LCJpc3MiOiJOZ29uaWR6YXNoZSBNYW5ndWR5YSAoSDE4MDIwMk0pIn0.nwvkz4eWemRbIcQY16RQJdCRjRMg-vbySS2Lge_LrVM",
+        "headers": {
+          "Content-Length": "194",
+          "Content-Type": "application/json",
+          "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiYWNjZXNzIiwiaWQiOiJ1c2VyXzY3V3REZkVxNlQxZ0Nkall4dzEwUXVZTk1GVzBTdiIsImlhdCI6MTY4Mjg5NDIzNSwiZXhwIjoxNjgyOTgwNjM1LCJpc3MiOiJOZ29uaWR6YXNoZSBNYW5ndWR5YSAoSDE4MDIwMk0pIn0.nwvkz4eWemRbIcQY16RQJdCRjRMg-vbySS2Lge_LrVM",
+          "User-Agent": "PostmanRuntime/7.32.2",
+          "Accept": "*/*",
+          "Postman-Token": "c52c97a7-c77d-4c57-9a53-e26ab840704a",
+          "Host": "127.0.0.1:8000",
+          "Accept-Encoding": "gzip, deflate, br",
+          "Connection": "keep-alive",
+          "Cookie": "csrftoken=ST8AhlT4xAM7zNCGgfqF37y8V1WmIvMk"
+        }
+      },
+      "message": [
+        {
+          "object_id": 4526091952,
+          "value": "'pres_kpVbZfIVtwwMYvyyxqtuXW8tbaKIns'",
+          "name": "prescription_id",
+          "class": "builtins.str"
+        },
+        {
+          "object_id": 4532536000,
+          "value": "[{'drug_id': 'drug_9aBOaFXWiAEPOsW6jMAubtjwqEFgqH', 'quantity': 1}]",
+          "name": "items",
+          "class": "builtins.list",
+          "items": [
+            {
+              "class": "builtins.dict",
+              "properties": [
+                {
+                  "name": "drug_id",
+                  "class": "builtins.str"
+                },
+                {
+                  "name": "quantity",
+                  "class": "builtins.int"
+                }
+              ]
+            }
+          ],
+          "size": 1
+        }
+      ],
+      "id": 1,
+      "event": "call",
+      "thread_id": 1
+    },
+    {
+      "static": false,
+      "receiver": {
+        "kind": "req",
+        "object_id": 4532110960,
+        "value": "<ApiRequest: ApiRequest object ()>",
+        "name": "self",
+        "class": "system.models.ApiRequest"
+      },
+      "parameters": [
+        {
+          "kind": "rest",
+          "object_id": 4386308208,
+          "value": "()",
+          "name": "args",
+          "class": "builtins.tuple"
+        },
+        {
+          "kind": "keyrest",
+          "object_id": 4532599936,
+          "value": "{}",
+          "name": "kwargs",
+          "class": "builtins.dict",
+          "size": 0
+        }
+      ],
+      "id": 2,
+      "event": "call",
+      "thread_id": 1,
+      "defined_class": "utano.model.SoftDeleteModel",
+      "method_id": "save",
+      "path": "utano/model.py",
+      "lineno": 45
+    },
+    {
+      "static": false,
+      "receiver": {
+        "kind": "req",
+        "object_id": 4433465776,
+        "value": "<utano.model.SoftDeleteManager object at 0x1084151b0>",
+        "name": "self",
+        "class": "utano.model.SoftDeleteManager"
+      },
+      "id": 3,
+      "event": "call",
+      "thread_id": 1,
+      "defined_class": "utano.model.SoftDeleteManager",
+      "method_id": "get_queryset",
+      "path": "utano/model.py",
+      "lineno": 13
+    },
+    {
+      "sql_query": {
+        "sql": "SELECT \"system_apirequest\".\"id\", \"system_apirequest\".\"created_at\", \"system_apirequest\".\"updated_at\", \"system_apirequest\".\"deleted_at\", \"system_apirequest\".\"method\", \"system_apirequest\".\"path\", \"system_apirequest\".\"headers\" FROM \"system_apirequest\" WHERE \"system_apirequest\".\"deleted_at\" IS NULL LIMIT 21",
+        "database_type": "postgresql",
+        "server_version": "14.0.5"
+      },
+      "id": 4,
+      "event": "call",
+      "thread_id": 1
+    },
+    {
+      "parent_id": 4,
+      "elapsed": 0.0048995380057021976,
+      "id": 5,
+      "event": "return",
+      "thread_id": 1
+    },
+    {
+      "return_value": {
+        "object_id": 4532115280,
+        "value": "<QuerySet [<ApiRequest: ApiRequest object (req_6SLwbM3tQgOsTV4Ql8aSQpYl2WxhnOb)>, <ApiRequest: ApiRequest object (req_zdMJAUkFzYK5Nysg0sFQGu1RaTpdBmm)>, <ApiRequest: ApiRequest object (req_uLR8SCJmkU1xNRJto7WDZgt9c7k68dW)>, <ApiRequest: ApiRequest object (req_4SVyxGhjsZkks7GR0pEa7fTtq5RP8o8)>, <ApiRequest: ApiRequest object (req_6sFVhkRqoJMEMAbuP45ycmjfCs9u24l)>, <ApiRequest: ApiRequest object (req_0XRoPIL91HSMfIZwEOKFfmIgjv2kH78)>, <ApiRequest: ApiRequest object (req_bAjXwf3dL7HZmgMKZzckrfLIjIDHlD5)>, <ApiRequest: ApiRequest object (req_QGG9VvV45Xor6QOONVOCSxmwTDfWcge)>, <ApiRequest: ApiRequest object (req_lPUdcx9sjagMFEBaZDFYnBBCUbrYxpO)>, <ApiRequest: ApiRequest object (req_ocGEczzXObczgEppEmieLIBlPbXzy81)>, <ApiRequest: ApiRequest object (req_y6t3rbqlHOaPYhmOeJeg4nGLyzN8lox)>, <ApiRequest: ApiRequest object (req_KBTHXdifam3EQJmAburJDmiI1Vil7AV)>, <ApiRequest: ApiRequest object (req_KczagIaUznTtez48g3vF4sWUbm6B6XJ)>, <ApiRequest: ApiRequest object (req_p2XlBYJTzqYpJiA0HdPAcZe2eKI44R2)>, <ApiRequest: ApiRequest object (req_cGZXNJYJKaj9KyENEOFnW1MEFrTQd0H)>, <ApiRequest: ApiRequest object (req_TJSXjrU6N4HT6u2Ra5FzHsONdX9FFim)>, <ApiRequest: ApiRequest object (req_3c3YHwT6z6mFfH7DWF78fDtSFlTgiGa)>, <ApiRequest: ApiRequest object (req_1rMk9RULFBTqsCfKUrr4oswRFQIaQDb)>, <ApiRequest: ApiRequest object (req_jgPY8OgSzTri1BCsWZcNn9UN4IjAXal)>, <ApiRequest: ApiRequest object (req_MndWZxhsEts5f4v8ErbkuSQMTCRv5Ur)>, '...(remaining elements truncated)...']>",
+        "class": "django.db.models.query.QuerySet"
+      },
+      "parent_id": 3,
+      "elapsed": 0.000682830810546875,
+      "id": 6,
+      "event": "return",
+      "thread_id": 1
+    },
+    {
+      "sql_query": {
+        "sql": "SELECT 1 AS \"a\" FROM \"system_apirequest\" WHERE (\"system_apirequest\".\"deleted_at\" IS NULL AND \"system_apirequest\".\"id\" = 'req_yICITG8YTDiTa3FGDkCYT4FSAJgkVlt') LIMIT 1",
+        "database_type": "postgresql",
+        "server_version": "14.0.5"
+      },
+      "id": 7,
+      "event": "call",
+      "thread_id": 1
+    },
+    {
+      "parent_id": 7,
+      "elapsed": 0.0014638490101788193,
+      "id": 8,
+      "event": "return",
+      "thread_id": 1
+    },
+    {
+      "sql_query": {
+        "sql": "UPDATE \"system_apirequest\" SET \"created_at\" = NULL, \"updated_at\" = '2023-05-03T19:28:34.758647+00:00'::timestamptz, \"deleted_at\" = NULL, \"method\" = 'POST', \"path\" = '/api/1.0/pharmacy/process_prescription', \"headers\" = '{''Content-Length'': ''194'', ''Content-Type'': ''application/json'', ''User-Agent'': ''PostmanRuntime/7.32.2'', ''Accept'': ''*/*'', ''Postman-Token'': ''c52c97a7-c77d-4c57-9a53-e26ab840704a'', ''Host'': ''127.0.0.1:8000'', ''Accept-Encoding'': ''gzip, deflate, br'', ''Connection'': ''keep-alive''}' WHERE \"system_apirequest\".\"id\" = 'req_yICITG8YTDiTa3FGDkCYT4FSAJgkVlt'",
+        "database_type": "postgresql",
+        "server_version": "14.0.5"
+      },
+      "id": 9,
+      "event": "call",
+      "thread_id": 1
+    },
+    {
+      "parent_id": 9,
+      "elapsed": 0.0010441910126246512,
+      "id": 10,
+      "event": "return",
+      "thread_id": 1
+    },
+    {
+      "sql_query": {
+        "sql": "INSERT INTO \"system_apirequest\" (\"id\", \"created_at\", \"updated_at\", \"deleted_at\", \"method\", \"path\", \"headers\") VALUES ('req_yICITG8YTDiTa3FGDkCYT4FSAJgkVlt', '2023-05-03T19:28:34.760357+00:00'::timestamptz, '2023-05-03T19:28:34.760375+00:00'::timestamptz, NULL, 'POST', '/api/1.0/pharmacy/process_prescription', '{''Content-Length'': ''194'', ''Content-Type'': ''application/json'', ''User-Agent'': ''PostmanRuntime/7.32.2'', ''Accept'': ''*/*'', ''Postman-Token'': ''c52c97a7-c77d-4c57-9a53-e26ab840704a'', ''Host'': ''127.0.0.1:8000'', ''Accept-Encoding'': ''gzip, deflate, br'', ''Connection'': ''keep-alive''}')",
+        "database_type": "postgresql",
+        "server_version": "14.0.5"
+      },
+      "id": 11,
+      "event": "call",
+      "thread_id": 1
+    },
+    {
+      "parent_id": 11,
+      "elapsed": 0.002287768991664052,
+      "id": 12,
+      "event": "return",
+      "thread_id": 1
+    },
+    {
+      "return_value": {
+        "object_id": 4399707840,
+        "value": "None",
+        "class": "builtins.NoneType"
+      },
+      "parent_id": 2,
+      "elapsed": 0.04109597206115723,
+      "id": 13,
+      "event": "return",
+      "thread_id": 1
+    },
+    {
+      "static": false,
+      "receiver": {
+        "kind": "req",
+        "object_id": 4532111488,
+        "value": "<Crypto.Cipher._mode_ecb.EcbMode object at 0x10e228880>",
+        "name": "self",
+        "class": "Crypto.Cipher._mode_ecb.EcbMode"
+      },
+      "parameters": [
+        {
+          "kind": "req",
+          "object_id": 4529207792,
+          "value": "b'{\\n    \"data\": null,\\n    \"issues\": \"Session expired. Please login again.\",\\n    \"message\": \"Session expired. Please login again.\",\\n    \"status\": false,\\n    \"status_description\": \"Request was forbidden\",\\n    \"version\": 1.0,\\n    \"versioned_by\": \"Ngonidzashe Mangudya (H180202M)\"\\n}\\x0c\\x0c\\x0c\\x0c\\x0c\\x0c\\x0c\\x0c\\x0c\\x0c\\x0c\\x0c'",
+          "name": "plaintext",
+          "class": "builtins.bytes"
+        },
+        {
+          "kind": "opt",
+          "object_id": 4399707840,
+          "value": "None",
+          "name": "output",
+          "class": "builtins.NoneType"
+        }
+      ],
+      "id": 14,
+      "event": "call",
+      "thread_id": 1,
+      "defined_class": "Crypto.Cipher._mode_ecb.EcbMode",
+      "method_id": "encrypt",
+      "path": "env/lib/python3.10/site-packages/Crypto/Cipher/_mode_ecb.py",
+      "lineno": 94
+    },
+    {
+      "return_value": {
+        "object_id": 4529204768,
+        "value": "b\"0k\\x00\\xf8!\\xd9R\\x08\\xad?\\xa7\\x0eY\\x96\\x04j\\xc6bH\\xe6\\xed\\xf3\\xc8\\xee-\\x1e\\xb0\\x009\\xc4\\x91\\x95\\t\\x90\\n\\xaa\\x06 \\xfb\\xd8Nq\\xf4\\x02\\xb3A\\xd0\\x11\\xd1\\x99\\xf1\\xc1\\xed\\x17\\xf8Y\\x8b\\x7f\\tO\\xbc\\xcc\\xa0\\x13\\xc9d\\xf8\\xb4\\x1e\\xef\\x10\\xc5sj\\xf5\\xe4\\xf5A6\\x93KJ\\x10\\xee\\x14\\x9a\\xf8\\x88\\xd2gP\\x97\\x1e9U&+\\x87B\\xb1\\xd4C\\xab)~\\x8f\\xf9[\\xb1\\x8e\\x80\\xae\\x18\\xde\\xc4\\xa7\\xf2,\\x1eN\\xbaN\\x94\\xba'\\xcdr\\x05\\x95kvdt\\xbeRT\\x0e\\xa6\\x02c\\xc2\\x1c\\x81\\xe6l\\xe7\\xed\\xd3\\x14ci-R\\xa5S(0\\x9e\\x8c6H\\xc7\\x0cXH{RK\\x1d\\xdcK\\x0b\\xbc\\xbdu.\\x1c\\xbb\\x8e\\x1ak\\x05o\\xcc\\xf5\\xb5\\x19q\\xc8\\xa3<rA\\xb6\\xb8g\\xec\\xb0dL\\x9c}\\xf28\\x122\\x1f\\xfc\\xdb\\xeb\\xb9\\xe8\\xe5\\x13M\\x86Ar\\xbc\\xd7\\xfer\\x15\\x03\\x86\\xeaK\\xc3\\xe3$\\xb1\\x07\\xa2Idj\\xde\\xa7\\x01CS\\xaf\\xa3\\xf7\\xbd\\n\\xd21#C\\x9f\\xb4U\\x15a\\xbdt\\x80\\x0b\\x0f\\xa9}.\\t\\xeb\\xc3\\x84\\xa6D\\xf0uI'\\xe2\\xe8\\xe0m\\xf3\\xc5d\\xe04\\x87\\xde\\xac=Wy\"",
+        "class": "builtins.bytes"
+      },
+      "parent_id": 14,
+      "elapsed": 0.00005507469177246094,
+      "id": 15,
+      "event": "return",
+      "thread_id": 1
+    },
+    {
+      "http_server_response": {
+        "status_code": 403,
+        "mime_type": "application/json",
+        "headers": {
+          "Content-Type": "application/json",
+          "Vary": "Accept, Origin",
+          "Allow": "POST, OPTIONS",
+          "X-Frame-Options": "DENY",
+          "Content-Length": "299",
+          "X-Content-Type-Options": "nosniff",
+          "Referrer-Policy": "same-origin",
+          "Cross-Origin-Opener-Policy": "same-origin"
+        }
+      },
+      "parent_id": 1,
+      "elapsed": 0.15577454600133933,
+      "id": 16,
+      "event": "return",
+      "thread_id": 1
+    }
+  ],
+  "version": "1.9",
+  "metadata": {
+    "language": {
+      "name": "python",
+      "engine": "CPython",
+      "version": "3.10.7"
+    },
+    "client": {
+      "name": "appmap",
+      "url": "https://github.com/applandinc/appmap-python"
+    },
+    "git": {
+      "repository": "git@github.com:iamngoni/utano.git",
+      "branch": "development",
+      "commit": "02e7ed6ce8c91afe333bcdd482a6927c3845927c",
+      "status": [
+        "M services/helpers/api_response.py",
+        "?? appmap.yml",
+        "?? tmp/"
+      ]
+    },
+    "frameworks": [
+      {
+        "name": "Django",
+        "version": "4.1.3"
+      }
+    ],
+    "name": "POST /api/1.0/pharmacy/process_prescription (403) - 21:28:34.876",
+    "timestamp": 1683142114.876773,
+    "recorder": {
+      "name": "record_requests"
+    }
+  },
+  "classMap": [
+    {
+      "name": "utano",
+      "type": "package",
+      "children": [
+        {
+          "name": "model",
+          "type": "package",
+          "children": [
+            {
+              "name": "SoftDeleteModel",
+              "type": "class",
+              "children": [
+                {
+                  "name": "save",
+                  "type": "function",
+                  "static": false,
+                  "location": "utano/model.py:45"
+                }
+              ]
+            },
+            {
+              "name": "SoftDeleteManager",
+              "type": "class",
+              "children": [
+                {
+                  "name": "get_queryset",
+                  "type": "function",
+                  "static": false,
+                  "location": "utano/model.py:13"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Crypto",
+      "type": "package",
+      "children": [
+        {
+          "name": "Cipher",
+          "type": "package",
+          "children": [
+            {
+              "name": "_mode_ecb",
+              "type": "package",
+              "children": [
+                {
+                  "name": "EcbMode",
+                  "type": "class",
+                  "children": [
+                    {
+                      "name": "encrypt",
+                      "type": "function",
+                      "labels": [
+                        "crypto.encrypt"
+                      ],
+                      "static": false,
+                      "location": "env/lib/python3.10/site-packages/Crypto/Cipher/_mode_ecb.py:94"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "http",
+      "name": "HTTP server requests",
+      "children": [
+        {
+          "type": "route",
+          "name": "POST /api/1.0/pharmacy/process_prescription"
+        }
+      ]
+    },
+    {
+      "type": "database",
+      "name": "Database",
+      "children": [
+        {
+          "type": "query",
+          "name": "SELECT \"system_apirequest\".\"id\", \"system_apirequest\".\"created_at\", \"system_apirequest\".\"updated_at\", \"system_apirequest\".\"deleted_at\", \"system_apirequest\".\"method\", \"system_apirequest\".\"path\", \"system_apirequest\".\"headers\" FROM \"system_apirequest\" WHERE \"system_apirequest\".\"deleted_at\" IS NULL LIMIT 21"
+        },
+        {
+          "type": "query",
+          "name": "SELECT 1 AS \"a\" FROM \"system_apirequest\" WHERE (\"system_apirequest\".\"deleted_at\" IS NULL AND \"system_apirequest\".\"id\" = 'req_yICITG8YTDiTa3FGDkCYT4FSAJgkVlt') LIMIT 1"
+        },
+        {
+          "type": "query",
+          "name": "UPDATE \"system_apirequest\" SET \"created_at\" = NULL, \"updated_at\" = '2023-05-03T19:28:34.758647+00:00'::timestamptz, \"deleted_at\" = NULL, \"method\" = 'POST', \"path\" = '/api/1.0/pharmacy/process_prescription', \"headers\" = '{''Content-Length'': ''194'', ''Content-Type'': ''application/json'', ''User-Agent'': ''PostmanRuntime/7.32.2'', ''Accept'': ''*/*'', ''Postman-Token'': ''c52c97a7-c77d-4c57-9a53-e26ab840704a'', ''Host'': ''127.0.0.1:8000'', ''Accept-Encoding'': ''gzip, deflate, br'', ''Connection'': ''keep-alive''}' WHERE \"system_apirequest\".\"id\" = 'req_yICITG8YTDiTa3FGDkCYT4FSAJgkVlt'"
+        },
+        {
+          "type": "query",
+          "name": "INSERT INTO \"system_apirequest\" (\"id\", \"created_at\", \"updated_at\", \"deleted_at\", \"method\", \"path\", \"headers\") VALUES ('req_yICITG8YTDiTa3FGDkCYT4FSAJgkVlt', '2023-05-03T19:28:34.760357+00:00'::timestamptz, '2023-05-03T19:28:34.760375+00:00'::timestamptz, NULL, 'POST', '/api/1.0/pharmacy/process_prescription', '{''Content-Length'': ''194'', ''Content-Type'': ''application/json'', ''User-Agent'': ''PostmanRuntime/7.32.2'', ''Accept'': ''*/*'', ''Postman-Token'': ''c52c97a7-c77d-4c57-9a53-e26ab840704a'', ''Host'': ''127.0.0.1:8000'', ''Accept-Encoding'': ''gzip, deflate, br'', ''Connection'': ''keep-alive''}')"
+        }
+      ]
+    }
+  ]
+}

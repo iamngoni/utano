@@ -1,0 +1,5 @@
+[
+  "crypto.encrypt",
+  "job.create",
+  "security.authentication"
+]

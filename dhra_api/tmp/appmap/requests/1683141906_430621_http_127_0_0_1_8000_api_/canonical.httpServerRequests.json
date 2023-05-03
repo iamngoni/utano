@@ -1,0 +1,7 @@
+[
+  {
+    "route": "GET /api/",
+    "parameters": "()",
+    "status": 404
+  }
+]

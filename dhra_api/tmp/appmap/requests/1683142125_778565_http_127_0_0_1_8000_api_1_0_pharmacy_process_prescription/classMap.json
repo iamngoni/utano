@@ -1,0 +1,291 @@
+[
+  {
+    "name": "utano",
+    "type": "package",
+    "children": [
+      {
+        "name": "model",
+        "type": "package",
+        "children": [
+          {
+            "name": "SoftDeleteModel",
+            "type": "class",
+            "children": [
+              {
+                "name": "save",
+                "type": "function",
+                "static": false,
+                "location": "utano/model.py:45"
+              },
+              {
+                "name": "get_item_by_id",
+                "type": "function",
+                "static": true,
+                "location": "utano/model.py:52"
+              }
+            ]
+          },
+          {
+            "name": "SoftDeleteManager",
+            "type": "class",
+            "children": [
+              {
+                "name": "get_queryset",
+                "type": "function",
+                "static": false,
+                "location": "utano/model.py:13"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "api",
+    "type": "package",
+    "children": [
+      {
+        "name": "views",
+        "type": "package",
+        "children": [
+          {
+            "name": "pharmacy",
+            "type": "package",
+            "children": [
+              {
+                "name": "views",
+                "type": "package",
+                "children": [
+                  {
+                    "name": "ProcessPrescriptionView",
+                    "type": "class",
+                    "children": [
+                      {
+                        "name": "post",
+                        "type": "function",
+                        "static": false,
+                        "location": "api/views/pharmacy/views.py:222"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "serializers",
+                "type": "package",
+                "children": [
+                  {
+                    "name": "payload",
+                    "type": "package",
+                    "children": [
+                      {
+                        "name": "ProcessPrescriptionItemSerializer",
+                        "type": "class",
+                        "children": [
+                          {
+                            "name": "validate",
+                            "type": "function",
+                            "static": false,
+                            "location": "api/views/pharmacy/serializers/payload.py:50"
+                          }
+                        ]
+                      },
+                      {
+                        "name": "ProcessPrescriptionSerializer",
+                        "type": "class",
+                        "children": [
+                          {
+                            "name": "validate",
+                            "type": "function",
+                            "static": false,
+                            "location": "api/views/pharmacy/serializers/payload.py:65"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": "model",
+                    "type": "package",
+                    "children": [
+                      {
+                        "name": "DispenseModelSerializer",
+                        "type": "class",
+                        "children": [
+                          {
+                            "name": "to_representation",
+                            "type": "function",
+                            "static": false,
+                            "location": "api/views/pharmacy/serializers/model.py:42"
+                          }
+                        ]
+                      },
+                      {
+                        "name": "DispenseItemModelSerializer",
+                        "type": "class",
+                        "children": [
+                          {
+                            "name": "to_representation",
+                            "type": "function",
+                            "static": false,
+                            "location": "api/views/pharmacy/serializers/model.py:55"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Crypto",
+    "type": "package",
+    "children": [
+      {
+        "name": "Cipher",
+        "type": "package",
+        "children": [
+          {
+            "name": "_mode_ecb",
+            "type": "package",
+            "children": [
+              {
+                "name": "EcbMode",
+                "type": "class",
+                "children": [
+                  {
+                    "name": "encrypt",
+                    "type": "function",
+                    "labels": [
+                      "crypto.encrypt"
+                    ],
+                    "static": false,
+                    "location": "env/lib/python3.10/site-packages/Crypto/Cipher/_mode_ecb.py:94"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "http",
+    "name": "HTTP server requests",
+    "children": [
+      {
+        "type": "route",
+        "name": "POST /api/1.0/pharmacy/process_prescription"
+      }
+    ]
+  },
+  {
+    "type": "database",
+    "name": "Database",
+    "children": [
+      {
+        "type": "query",
+        "name": "SELECT \"system_apirequest\".\"id\", \"system_apirequest\".\"created_at\", \"system_apirequest\".\"updated_at\", \"system_apirequest\".\"deleted_at\", \"system_apirequest\".\"method\", \"system_apirequest\".\"path\", \"system_apirequest\".\"headers\" FROM \"system_apirequest\" WHERE \"system_apirequest\".\"deleted_at\" IS NULL LIMIT 21"
+      },
+      {
+        "type": "query",
+        "name": "SELECT 1 AS \"a\" FROM \"system_apirequest\" WHERE (\"system_apirequest\".\"deleted_at\" IS NULL AND \"system_apirequest\".\"id\" = 'req_Wf0CdWrHQbYdSQwKTKVuAo5PN6myXU3') LIMIT 1"
+      },
+      {
+        "type": "query",
+        "name": "UPDATE \"system_apirequest\" SET \"created_at\" = NULL, \"updated_at\" = '2023-05-03T19:28:45.631290+00:00'::timestamptz, \"deleted_at\" = NULL, \"method\" = 'POST', \"path\" = '/api/1.0/pharmacy/process_prescription', \"headers\" = '{''Content-Length'': ''194'', ''Content-Type'': ''application/json'', ''User-Agent'': ''PostmanRuntime/7.32.2'', ''Accept'': ''*/*'', ''Postman-Token'': ''d706476b-eb1a-4778-8bd1-f926071fa4fd'', ''Host'': ''127.0.0.1:8000'', ''Accept-Encoding'': ''gzip, deflate, br'', ''Connection'': ''keep-alive''}' WHERE \"system_apirequest\".\"id\" = 'req_Wf0CdWrHQbYdSQwKTKVuAo5PN6myXU3'"
+      },
+      {
+        "type": "query",
+        "name": "INSERT INTO \"system_apirequest\" (\"id\", \"created_at\", \"updated_at\", \"deleted_at\", \"method\", \"path\", \"headers\") VALUES ('req_Wf0CdWrHQbYdSQwKTKVuAo5PN6myXU3', '2023-05-03T19:28:45.631981+00:00'::timestamptz, '2023-05-03T19:28:45.631991+00:00'::timestamptz, NULL, 'POST', '/api/1.0/pharmacy/process_prescription', '{''Content-Length'': ''194'', ''Content-Type'': ''application/json'', ''User-Agent'': ''PostmanRuntime/7.32.2'', ''Accept'': ''*/*'', ''Postman-Token'': ''d706476b-eb1a-4778-8bd1-f926071fa4fd'', ''Host'': ''127.0.0.1:8000'', ''Accept-Encoding'': ''gzip, deflate, br'', ''Connection'': ''keep-alive''}')"
+      },
+      {
+        "type": "query",
+        "name": "SELECT \"users_user\".\"password\", \"users_user\".\"last_login\", \"users_user\".\"is_superuser\", \"users_user\".\"first_name\", \"users_user\".\"last_name\", \"users_user\".\"is_staff\", \"users_user\".\"date_joined\", \"users_user\".\"id\", \"users_user\".\"created_at\", \"users_user\".\"updated_at\", \"users_user\".\"deleted_at\", \"users_user\".\"email\", \"users_user\".\"is_active\", \"users_user\".\"is_verified\", \"users_user\".\"username\", \"users_user\".\"role\", \"users_user\".\"gender\", \"users_user\".\"password_history\", \"users_user\".\"password_updated_at\", \"users_user\".\"receive_email_notifications\", \"users_user\".\"one_time_pin\", \"users_user\".\"one_time_pin_generated_at\", \"users_user\".\"device_token\" FROM \"users_user\" WHERE \"users_user\".\"id\" = 'user_67WtDfEq6T1gCdjYxw10QuYNMFW0Sv' LIMIT 21"
+      },
+      {
+        "type": "query",
+        "name": "SELECT \"pharmacy_drug\".\"id\", \"pharmacy_drug\".\"created_at\", \"pharmacy_drug\".\"updated_at\", \"pharmacy_drug\".\"deleted_at\", \"pharmacy_drug\".\"name\", \"pharmacy_drug\".\"description\", \"pharmacy_drug\".\"price\", \"pharmacy_drug\".\"quantity\", \"pharmacy_drug\".\"form\", \"pharmacy_drug\".\"health_institution_id\", \"pharmacy_drug\".\"is_active\" FROM \"pharmacy_drug\" WHERE \"pharmacy_drug\".\"deleted_at\" IS NULL ORDER BY \"pharmacy_drug\".\"name\" ASC LIMIT 21"
+      },
+      {
+        "type": "query",
+        "name": "SELECT \"pharmacy_drug\".\"id\", \"pharmacy_drug\".\"created_at\", \"pharmacy_drug\".\"updated_at\", \"pharmacy_drug\".\"deleted_at\", \"pharmacy_drug\".\"name\", \"pharmacy_drug\".\"description\", \"pharmacy_drug\".\"price\", \"pharmacy_drug\".\"quantity\", \"pharmacy_drug\".\"form\", \"pharmacy_drug\".\"health_institution_id\", \"pharmacy_drug\".\"is_active\" FROM \"pharmacy_drug\" WHERE (\"pharmacy_drug\".\"deleted_at\" IS NULL AND \"pharmacy_drug\".\"id\" = 'drug_9aBOaFXWiAEPOsW6jMAubtjwqEFgqH') ORDER BY \"pharmacy_drug\".\"name\" ASC LIMIT 1"
+      },
+      {
+        "type": "query",
+        "name": "SELECT \"pos_prescription\".\"id\", \"pos_prescription\".\"created_at\", \"pos_prescription\".\"updated_at\", \"pos_prescription\".\"deleted_at\", \"pos_prescription\".\"patient_id\", \"pos_prescription\".\"check_in_id\", \"pos_prescription\".\"prepared_at_id\", \"pos_prescription\".\"prescription_number\", \"pos_prescription\".\"prepared_by_id\", \"pos_prescription\".\"notes\" FROM \"pos_prescription\" WHERE \"pos_prescription\".\"deleted_at\" IS NULL LIMIT 21"
+      },
+      {
+        "type": "query",
+        "name": "SELECT \"pos_prescription\".\"id\", \"pos_prescription\".\"created_at\", \"pos_prescription\".\"updated_at\", \"pos_prescription\".\"deleted_at\", \"pos_prescription\".\"patient_id\", \"pos_prescription\".\"check_in_id\", \"pos_prescription\".\"prepared_at_id\", \"pos_prescription\".\"prescription_number\", \"pos_prescription\".\"prepared_by_id\", \"pos_prescription\".\"notes\" FROM \"pos_prescription\" WHERE (\"pos_prescription\".\"deleted_at\" IS NULL AND \"pos_prescription\".\"id\" = 'pres_kpVbZfIVtwwMYvyyxqtuXW8tbaKIns') ORDER BY \"pos_prescription\".\"id\" ASC LIMIT 1"
+      },
+      {
+        "type": "query",
+        "name": "SELECT \"pos_prescriptionitem\".\"id\", \"pos_prescriptionitem\".\"created_at\", \"pos_prescriptionitem\".\"updated_at\", \"pos_prescriptionitem\".\"deleted_at\", \"pos_prescriptionitem\".\"prescription_id\", \"pos_prescriptionitem\".\"medicine\", \"pos_prescriptionitem\".\"medicine_id\", \"pos_prescriptionitem\".\"quantity\", \"pos_prescriptionitem\".\"frequency\", \"pos_prescriptionitem\".\"instructions\" FROM \"pos_prescriptionitem\" WHERE \"pos_prescriptionitem\".\"deleted_at\" IS NULL LIMIT 21"
+      },
+      {
+        "type": "query",
+        "name": "SELECT \"pharmacy_approvedmedicine\".\"id\", \"pharmacy_approvedmedicine\".\"created_at\", \"pharmacy_approvedmedicine\".\"updated_at\", \"pharmacy_approvedmedicine\".\"deleted_at\", \"pharmacy_approvedmedicine\".\"name\", \"pharmacy_approvedmedicine\".\"description\", \"pharmacy_approvedmedicine\".\"indication\", \"pharmacy_approvedmedicine\".\"contraindication\", \"pharmacy_approvedmedicine\".\"dosage\", \"pharmacy_approvedmedicine\".\"interactions\" FROM \"pharmacy_approvedmedicine\" WHERE \"pharmacy_approvedmedicine\".\"deleted_at\" IS NULL ORDER BY \"pharmacy_approvedmedicine\".\"name\" ASC LIMIT 21"
+      },
+      {
+        "type": "query",
+        "name": "SELECT \"pharmacy_approvedmedicine\".\"id\", \"pharmacy_approvedmedicine\".\"created_at\", \"pharmacy_approvedmedicine\".\"updated_at\", \"pharmacy_approvedmedicine\".\"deleted_at\", \"pharmacy_approvedmedicine\".\"name\", \"pharmacy_approvedmedicine\".\"description\", \"pharmacy_approvedmedicine\".\"indication\", \"pharmacy_approvedmedicine\".\"contraindication\", \"pharmacy_approvedmedicine\".\"dosage\", \"pharmacy_approvedmedicine\".\"interactions\" FROM \"pharmacy_approvedmedicine\" WHERE (\"pharmacy_approvedmedicine\".\"deleted_at\" IS NULL AND \"pharmacy_approvedmedicine\".\"name\" = 'NEUTRAGEL (400)') ORDER BY \"pharmacy_approvedmedicine\".\"name\" ASC LIMIT 1"
+      },
+      {
+        "type": "query",
+        "name": "SELECT 1 AS \"a\" FROM \"pos_prescriptionitem\" WHERE (\"pos_prescriptionitem\".\"deleted_at\" IS NULL AND \"pos_prescriptionitem\".\"prescription_id\" = 'pres_kpVbZfIVtwwMYvyyxqtuXW8tbaKIns' AND \"pos_prescriptionitem\".\"medicine_id\" = 'medicine_zxYVnxeY8brRxdVuijWDOu8t7C') LIMIT 1"
+      },
+      {
+        "type": "query",
+        "name": "SELECT \"pharmacy_dispense\".\"id\", \"pharmacy_dispense\".\"created_at\", \"pharmacy_dispense\".\"updated_at\", \"pharmacy_dispense\".\"deleted_at\", \"pharmacy_dispense\".\"prescription_id\", \"pharmacy_dispense\".\"payment_id\" FROM \"pharmacy_dispense\" WHERE \"pharmacy_dispense\".\"deleted_at\" IS NULL LIMIT 21"
+      },
+      {
+        "type": "query",
+        "name": "SELECT 1 AS \"a\" FROM \"pharmacy_dispense\" WHERE (\"pharmacy_dispense\".\"deleted_at\" IS NULL AND \"pharmacy_dispense\".\"id\" = 'dispense_p2PzUOAm47akmctNeuJh1hUNfF') LIMIT 1"
+      },
+      {
+        "type": "query",
+        "name": "UPDATE \"pharmacy_dispense\" SET \"created_at\" = NULL, \"updated_at\" = '2023-05-03T19:28:45.691926+00:00'::timestamptz, \"deleted_at\" = NULL, \"prescription_id\" = 'pres_kpVbZfIVtwwMYvyyxqtuXW8tbaKIns', \"payment_id\" = NULL WHERE \"pharmacy_dispense\".\"id\" = 'dispense_p2PzUOAm47akmctNeuJh1hUNfF'"
+      },
+      {
+        "type": "query",
+        "name": "INSERT INTO \"pharmacy_dispense\" (\"id\", \"created_at\", \"updated_at\", \"deleted_at\", \"prescription_id\", \"payment_id\") VALUES ('dispense_p2PzUOAm47akmctNeuJh1hUNfF', '2023-05-03T19:28:45.692658+00:00'::timestamptz, '2023-05-03T19:28:45.692671+00:00'::timestamptz, NULL, 'pres_kpVbZfIVtwwMYvyyxqtuXW8tbaKIns', NULL)"
+      },
+      {
+        "type": "query",
+        "name": "UPDATE \"pharmacy_drug\" SET \"created_at\" = '2023-04-26T06:42:03.520626+00:00'::timestamptz, \"updated_at\" = '2023-05-03T19:28:45.696076+00:00'::timestamptz, \"deleted_at\" = NULL, \"name\" = 'NEUTRAGEL (400)', \"description\" = 'ALUMINIUM HYDROXIDE PASTE; MAGNESIUM HYDROXIDE GEL; SIMETHICONE (SUSPENSION)', \"price\" = 1.00, \"quantity\" = 392, \"form\" = 'tablet', \"health_institution_id\" = 'inst_AV3hQXm9tDBBgI6RUll6L62pY4UW4W', \"is_active\" = true WHERE \"pharmacy_drug\".\"id\" = 'drug_9aBOaFXWiAEPOsW6jMAubtjwqEFgqH'"
+      },
+      {
+        "type": "query",
+        "name": "SELECT \"pharmacy_dispenseitem\".\"id\", \"pharmacy_dispenseitem\".\"created_at\", \"pharmacy_dispenseitem\".\"updated_at\", \"pharmacy_dispenseitem\".\"deleted_at\", \"pharmacy_dispenseitem\".\"dispense_id\", \"pharmacy_dispenseitem\".\"drug_id\", \"pharmacy_dispenseitem\".\"quantity\" FROM \"pharmacy_dispenseitem\" WHERE \"pharmacy_dispenseitem\".\"deleted_at\" IS NULL LIMIT 21"
+      },
+      {
+        "type": "query",
+        "name": "SELECT \"pharmacy_drug\".\"id\", \"pharmacy_drug\".\"created_at\", \"pharmacy_drug\".\"updated_at\", \"pharmacy_drug\".\"deleted_at\", \"pharmacy_drug\".\"name\", \"pharmacy_drug\".\"description\", \"pharmacy_drug\".\"price\", \"pharmacy_drug\".\"quantity\", \"pharmacy_drug\".\"form\", \"pharmacy_drug\".\"health_institution_id\", \"pharmacy_drug\".\"is_active\" FROM \"pharmacy_drug\" WHERE \"pharmacy_drug\".\"id\" = 'drug_9aBOaFXWiAEPOsW6jMAubtjwqEFgqH' LIMIT 21"
+      },
+      {
+        "type": "query",
+        "name": "SELECT 1 AS \"a\" FROM \"pharmacy_dispenseitem\" WHERE (\"pharmacy_dispenseitem\".\"deleted_at\" IS NULL AND \"pharmacy_dispenseitem\".\"id\" = 'dispense_item_FvelJ2C4QgPX5J5zXywAk') LIMIT 1"
+      },
+      {
+        "type": "query",
+        "name": "UPDATE \"pharmacy_dispenseitem\" SET \"created_at\" = NULL, \"updated_at\" = '2023-05-03T19:28:45.717167+00:00'::timestamptz, \"deleted_at\" = NULL, \"dispense_id\" = 'dispense_p2PzUOAm47akmctNeuJh1hUNfF', \"drug_id\" = 'drug_9aBOaFXWiAEPOsW6jMAubtjwqEFgqH', \"quantity\" = 1 WHERE \"pharmacy_dispenseitem\".\"id\" = 'dispense_item_FvelJ2C4QgPX5J5zXywAk'"
+      },
+      {
+        "type": "query",
+        "name": "INSERT INTO \"pharmacy_dispenseitem\" (\"id\", \"created_at\", \"updated_at\", \"deleted_at\", \"dispense_id\", \"drug_id\", \"quantity\") VALUES ('dispense_item_FvelJ2C4QgPX5J5zXywAk', '2023-05-03T19:28:45.717922+00:00'::timestamptz, '2023-05-03T19:28:45.717934+00:00'::timestamptz, NULL, 'dispense_p2PzUOAm47akmctNeuJh1hUNfF', 'drug_9aBOaFXWiAEPOsW6jMAubtjwqEFgqH', 1)"
+      },
+      {
+        "type": "query",
+        "name": "SELECT \"pharmacy_dispenseitem\".\"id\", \"pharmacy_dispenseitem\".\"created_at\", \"pharmacy_dispenseitem\".\"updated_at\", \"pharmacy_dispenseitem\".\"deleted_at\", \"pharmacy_dispenseitem\".\"dispense_id\", \"pharmacy_dispenseitem\".\"drug_id\", \"pharmacy_dispenseitem\".\"quantity\" FROM \"pharmacy_dispenseitem\" WHERE (\"pharmacy_dispenseitem\".\"deleted_at\" IS NULL AND \"pharmacy_dispenseitem\".\"dispense_id\" = 'dispense_p2PzUOAm47akmctNeuJh1hUNfF')"
+      }
+    ]
+  }
+]
