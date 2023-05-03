@@ -17,6 +17,8 @@ import '../../../core/configs/colors.dart';
 import '../../../core/widgets/utano_button.dart';
 import '../../../utano/views/pages/utano_app.dart';
 import '../../blocs/auth/auth_bloc.dart';
+import 'sign_in.dart';
+import 'sign_up.dart';
 
 class UtanoLandingPage extends StatelessWidget {
   const UtanoLandingPage({Key? key}) : super(key: key);
@@ -73,6 +75,7 @@ class UtanoLandingPage extends StatelessWidget {
                     ),
                     UtanoButton(
                       text: 'Get Started',
+                      onTap: () => context.goTo(page: SignUpPage()),
                     ),
                     SizedBox(
                       height: sy(10),
@@ -88,12 +91,15 @@ class UtanoLandingPage extends StatelessWidget {
                             fontSize: sy(9),
                           ),
                         ),
-                        Text(
-                          'Login',
-                          style: TextStyle(
-                            color: UtanoColors.primary,
-                            fontWeight: FontWeight.w600,
-                            fontSize: sy(9),
+                        GestureDetector(
+                          onTap: () => context.goTo(page: SignInPage()),
+                          child: Text(
+                            'Login',
+                            style: TextStyle(
+                              color: UtanoColors.primary,
+                              fontWeight: FontWeight.w600,
+                              fontSize: sy(9),
+                            ),
                           ),
                         ),
                       ],
