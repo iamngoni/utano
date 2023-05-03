@@ -75,11 +75,13 @@ class SignInPage extends StatelessWidget {
                       Container(
                         padding: EdgeInsets.symmetric(
                           horizontal: sx(20),
+                          vertical: sy(3),
                         ),
                         decoration: BoxDecoration(
                           border: Border.all(
                             color: UtanoColors.dark,
                           ),
+                          borderRadius: BorderRadius.circular(10),
                         ),
                         child: TextFormField(
                           controller: emailController,
@@ -122,11 +124,13 @@ class SignInPage extends StatelessWidget {
                       Container(
                         padding: EdgeInsets.symmetric(
                           horizontal: sx(20),
+                          vertical: sy(3),
                         ),
                         decoration: BoxDecoration(
                           border: Border.all(
                             color: UtanoColors.dark,
                           ),
+                          borderRadius: BorderRadius.circular(10),
                         ),
                         child: TextFormField(
                           controller: passwordController,
@@ -169,7 +173,14 @@ class SignInPage extends StatelessWidget {
                       SizedBox(height: sy(20)),
                       Align(
                         alignment: Alignment.center,
-                        child: Text('Sign Up'),
+                        child: Text(
+                          'Sign Up Instead?',
+                          style: TextStyle(
+                            color: UtanoColors.dark,
+                            fontWeight: FontWeight.w500,
+                            fontSize: sy(9),
+                          ),
+                        ),
                       ),
                     ],
                   ),
