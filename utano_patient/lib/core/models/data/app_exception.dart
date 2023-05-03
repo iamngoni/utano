@@ -3,6 +3,14 @@ class AppException implements Exception {
     this.message, {
     this.title = "Hey, it's not your fault",
   });
+
+  factory AppException.unknown() {
+    return AppException(
+      'Unknown error occurred',
+      title: 'Oops!',
+    );
+  }
+
   String title;
   String message;
 

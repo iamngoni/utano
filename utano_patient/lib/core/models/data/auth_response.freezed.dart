@@ -24,6 +24,7 @@ mixin _$AuthResponse {
   String get accessToken => throw _privateConstructorUsedError;
   @JsonKey(name: 'refresh_token')
   String get refreshToken => throw _privateConstructorUsedError;
+  User get user => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -39,7 +40,10 @@ abstract class $AuthResponseCopyWith<$Res> {
   @useResult
   $Res call(
       {@JsonKey(name: 'access_token') String accessToken,
-      @JsonKey(name: 'refresh_token') String refreshToken});
+      @JsonKey(name: 'refresh_token') String refreshToken,
+      User user});
+
+  $UserCopyWith<$Res> get user;
 }
 
 /// @nodoc
@@ -57,6 +61,7 @@ class _$AuthResponseCopyWithImpl<$Res, $Val extends AuthResponse>
   $Res call({
     Object? accessToken = null,
     Object? refreshToken = null,
+    Object? user = null,
   }) {
     return _then(_value.copyWith(
       accessToken: null == accessToken
@@ -67,7 +72,19 @@ class _$AuthResponseCopyWithImpl<$Res, $Val extends AuthResponse>
           ? _value.refreshToken
           : refreshToken // ignore: cast_nullable_to_non_nullable
               as String,
+      user: null == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as User,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $UserCopyWith<$Res> get user {
+    return $UserCopyWith<$Res>(_value.user, (value) {
+      return _then(_value.copyWith(user: value) as $Val);
+    });
   }
 }
 
@@ -81,7 +98,11 @@ abstract class _$$_AuthResponseCopyWith<$Res>
   @useResult
   $Res call(
       {@JsonKey(name: 'access_token') String accessToken,
-      @JsonKey(name: 'refresh_token') String refreshToken});
+      @JsonKey(name: 'refresh_token') String refreshToken,
+      User user});
+
+  @override
+  $UserCopyWith<$Res> get user;
 }
 
 /// @nodoc
@@ -97,6 +118,7 @@ class __$$_AuthResponseCopyWithImpl<$Res>
   $Res call({
     Object? accessToken = null,
     Object? refreshToken = null,
+    Object? user = null,
   }) {
     return _then(_$_AuthResponse(
       accessToken: null == accessToken
@@ -107,16 +129,22 @@ class __$$_AuthResponseCopyWithImpl<$Res>
           ? _value.refreshToken
           : refreshToken // ignore: cast_nullable_to_non_nullable
               as String,
+      user: null == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as User,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$_AuthResponse implements _AuthResponse {
+class _$_AuthResponse extends _AuthResponse {
   const _$_AuthResponse(
       {@JsonKey(name: 'access_token') required this.accessToken,
-      @JsonKey(name: 'refresh_token') required this.refreshToken});
+      @JsonKey(name: 'refresh_token') required this.refreshToken,
+      required this.user})
+      : super._();
 
   factory _$_AuthResponse.fromJson(Map<String, dynamic> json) =>
       _$$_AuthResponseFromJson(json);
@@ -127,10 +155,12 @@ class _$_AuthResponse implements _AuthResponse {
   @override
   @JsonKey(name: 'refresh_token')
   final String refreshToken;
+  @override
+  final User user;
 
   @override
   String toString() {
-    return 'AuthResponse(accessToken: $accessToken, refreshToken: $refreshToken)';
+    return 'AuthResponse(accessToken: $accessToken, refreshToken: $refreshToken, user: $user)';
   }
 
   @override
@@ -141,12 +171,13 @@ class _$_AuthResponse implements _AuthResponse {
             (identical(other.accessToken, accessToken) ||
                 other.accessToken == accessToken) &&
             (identical(other.refreshToken, refreshToken) ||
-                other.refreshToken == refreshToken));
+                other.refreshToken == refreshToken) &&
+            (identical(other.user, user) || other.user == user));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, accessToken, refreshToken);
+  int get hashCode => Object.hash(runtimeType, accessToken, refreshToken, user);
 
   @JsonKey(ignore: true)
   @override
@@ -162,11 +193,12 @@ class _$_AuthResponse implements _AuthResponse {
   }
 }
 
-abstract class _AuthResponse implements AuthResponse {
+abstract class _AuthResponse extends AuthResponse {
   const factory _AuthResponse(
-          {@JsonKey(name: 'access_token') required final String accessToken,
-          @JsonKey(name: 'refresh_token') required final String refreshToken}) =
-      _$_AuthResponse;
+      {@JsonKey(name: 'access_token') required final String accessToken,
+      @JsonKey(name: 'refresh_token') required final String refreshToken,
+      required final User user}) = _$_AuthResponse;
+  const _AuthResponse._() : super._();
 
   factory _AuthResponse.fromJson(Map<String, dynamic> json) =
       _$_AuthResponse.fromJson;
@@ -177,6 +209,8 @@ abstract class _AuthResponse implements AuthResponse {
   @override
   @JsonKey(name: 'refresh_token')
   String get refreshToken;
+  @override
+  User get user;
   @override
   @JsonKey(ignore: true)
   _$$_AuthResponseCopyWith<_$_AuthResponse> get copyWith =>
