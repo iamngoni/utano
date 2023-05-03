@@ -7,21 +7,95 @@ environment:
   sdk: ">=2.18.0 <3.0.0"
 
 dependencies:
+  add_2_calendar: ^2.2.3
+  animations: ^2.0.5
   bloc: ^8.1.1
+  cached_network_image: ^3.2.3
+  connectivity_plus: ^3.0.2
+  cupertino_icons: ^1.0.5
+  curl_logger_dio_interceptor: ^0.0.3
+  dartz: ^0.10.1
+  dio: ^4.0.6
+  dyte_client: ^0.8.14
+  equatable: ^2.0.3
+  file_picker: ^5.2.3
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.2
   flutter_localizations:
     sdk: flutter
+  flutter_secure_storage: ^8.0.0
+  freezed_annotation: ^2.1.0
+  get_it: ^7.2.0
+  handy_extensions: ^0.0.8+1
+  hydrated_bloc: ^9.0.0
+  image_picker: ^0.8.6
   intl: ^0.17.0
+  json_annotation: ^4.6.0
+  jwt_decode: ^0.3.1
+  localregex: ^4.0.5
+  modal_bottom_sheet: ^2.1.0
+  money_formatter:
+  path: ^1.8.1
+  path_provider: ^2.0.11
+  paynow:
+  permission_handler: ^10.0.0
+  pinput: ^2.2.31
+  pretty_dio_logger: ^1.2.0-beta-1
+  relative_scale: ^2.0.0
+  shared_preferences: ^2.0.17
 
 dev_dependencies:
   bloc_test: ^9.1.1
+  build_runner: ^2.2.0
+  flutter_native_splash: ^2.2.7
   flutter_test:
     sdk: flutter
+  freezed: ^2.1.0+1
+  json_serializable: ^6.3.1
   mocktail: ^0.3.0
   very_good_analysis: ^3.1.0
 
 flutter:
   uses-material-design: true
   generate: true
+
+  assets:
+    - assets/images/
+    - assets/icons/
+
+  fonts:
+    - family: Poppins
+      fonts:
+        - asset: fonts/Poppins/Poppins-Thin.ttf
+          weight: 100
+        - asset: fonts/Poppins/Poppins-Light.ttf
+          weight: 200
+        - asset: fonts/Poppins/Poppins-ExtraLight.ttf
+          weight: 300
+        - asset: fonts/Poppins/Poppins-Regular.ttf
+          weight: 400
+        - asset: fonts/Poppins/Poppins-Medium.ttf
+          weight: 500
+        - asset: fonts/Poppins/Poppins-SemiBold.ttf
+          weight: 600
+        - asset: fonts/Poppins/Poppins-Bold.ttf
+          weight: 700
+        - asset: fonts/Poppins/Poppins-ExtraBold.ttf
+          weight: 800
+        - asset: fonts/Poppins/Poppins-Black.ttf
+          weight: 900
+    - family: Playfair Display
+      fonts:
+        - asset: fonts/Playfair/PlayfairDisplay-Regular.ttf
+          weight: 400
+        - asset: fonts/Playfair/PlayfairDisplay-Medium.ttf
+          weight: 500
+        - asset: fonts/Playfair/PlayfairDisplay-SemiBold.ttf
+          weight: 600
+        - asset: fonts/Playfair/PlayfairDisplay-Bold.ttf
+          weight: 700
+        - asset: fonts/Playfair/PlayfairDisplay-ExtraBold.ttf
+          weight: 800
+        - asset: fonts/Playfair/PlayfairDisplay-Black.ttf
+          weight: 900
