@@ -14,6 +14,10 @@ import 'auth/blocs/auth/auth_bloc.dart';
 import 'auth/blocs/sign_up/sign_up_bloc.dart';
 import 'auth/models/repos/impl/dio_auth_repository.dart';
 import 'core/services/di.dart';
+import 'utano/blocs/check_in/check_in_bloc.dart';
+import 'utano/blocs/health_institutions/health_institutions_bloc.dart';
+import 'utano/blocs/prescriptions/prescriptions_bloc.dart';
+import 'utano/models/repos/impl/dio_system_repository.dart';
 
 final Dio dio = di<Dio>();
 
@@ -30,5 +34,20 @@ List<BlocProvider> providers = [
     create: (_) => SignUpBloc(
       repository: DioAuthRepository(dio: dio),
     ),
+  ),
+  BlocProvider<PrescriptionsBloc>(
+    create: (_) => PrescriptionsBloc(
+      repository: DioSystemRepository(dio: dio),
+    )..add(ListPrescriptions()),
+  ),
+  BlocProvider<CheckInBloc>(
+    create: (_) => CheckInBloc(
+      repository: DioSystemRepository(dio: dio),
+    )..add(ListCheckIns()),
+  ),
+  BlocProvider<HealthInstitutionsBloc>(
+    create: (_) => HealthInstitutionsBloc(
+      repository: DioSystemRepository(dio: dio),
+    )..add(ListHealthInstitutions()),
   ),
 ];
