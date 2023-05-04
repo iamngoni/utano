@@ -12,6 +12,7 @@ from rest_framework.views import APIView
 from api.views.patient.serializers.model import (
     PatientModelSerializer,
     EmergencyContactModelSerializer,
+    PatientPrescriptionModelSerializer,
     PatientTestRequestModelSerializer,
     HealthInstitutionModelSerializer,
     PatientCheckInModelSerializer,
@@ -23,7 +24,7 @@ from api.views.patient.serializers.payload import (
 from health_institution.models import HealthInstitution
 from lab.models import TestRequest
 from patient.models import EmergencyContact
-from pos.models import PatientCheckIn
+from pos.models import PatientCheckIn, Prescription
 from services.helpers.api_response import ApiResponse
 from services.permissions.is_patient import IsPatient
 
@@ -302,6 +303,24 @@ class PatientCheckInDetailsView(APIView):
                 data={"patient_checkin": PatientCheckInModelSerializer(checkin).data}
             )
 
+        except Exception as exc:
+            logger.error(exc)
+            return ApiResponse(num_status=500, bool_status=False)
+
+
+class PatientPrescriptionsView(APIView):
+    permission_classes = (IsAuthenticated, IsPatient)
+
+    def get(self, request):
+        try:
+            prescriptions = Prescription.objects.filter(patient=request.user.patient)
+            return ApiResponse(
+                data={
+                    "prescriptions": PatientPrescriptionModelSerializer(
+                        prescriptions, many=True
+                    ).data,
+                }
+            )
         except Exception as exc:
             logger.error(exc)
             return ApiResponse(num_status=500, bool_status=False)

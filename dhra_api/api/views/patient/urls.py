@@ -16,6 +16,7 @@ from api.views.patient.views import (
     HealthInstitutionsView,
     PatientCheckInView,
     PatientCheckInDetailsView,
+    PatientPrescriptionsView,
 )
 
 urlpatterns = [
@@ -50,5 +51,10 @@ urlpatterns = [
         "checkins/<str:check_in_id>",
         PatientCheckInDetailsView.as_view(),
         name="patient-checkin-details",
+    ),
+    path(
+        "prescriptions",
+        PatientPrescriptionsView.as_view(),
+        name="patient-prescriptions",
     ),
 ]
