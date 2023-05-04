@@ -16,4 +16,5 @@ class UtanoColors {
   static const Color grey2 = Color(0xFF919EAB);
   static const Color background = Color(0xFF0B3530);
   static const Color orange = Color(0xFFFF6600);
+  static const Color pink = Colors.pink;
 }

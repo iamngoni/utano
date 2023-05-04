@@ -7,6 +7,7 @@
 
 import 'package:dio/dio.dart';
 
+import '../configs/storage_keys.dart';
 import '../models/data/auth_response.dart';
 import '../models/data/network_response.dart';
 import '../services/di.dart';
@@ -15,13 +16,14 @@ import '../services/secure_storage.dart';
 class DioOnErrorInterceptor extends Interceptor {
   @override
   Future<void> onError(DioError err, ErrorInterceptorHandler handler) async {
-    if (err.response?.statusCode == 401) {
-      final String? refreshToken =
-          await di<SecureStorageService>().getFromDisk('refresh_token');
+    if (err.response?.statusCode == 401 &&
+        !err.requestOptions.uri.path.contains('/signin')) {
+      final String? refreshToken = await di<SecureStorageService>()
+          .getFromDisk(StorageKeys.refreshToken);
       if (refreshToken != null) {
         final dio = di<Dio>();
         final Response<NetworkResponse> response = await dio.post(
-          '/auth/token/refresh',
+          '/auth/refresh',
           data: {
             'refresh_token': refreshToken,
           },
@@ -30,9 +32,9 @@ class DioOnErrorInterceptor extends Interceptor {
         final AuthResponse authResponse =
             AuthResponse.fromJson(networkResponse.data!);
         await di<SecureStorageService>()
-            .saveToDisk('access_token', authResponse.accessToken);
+            .saveToDisk(StorageKeys.accessToken, authResponse.accessToken);
         await di<SecureStorageService>()
-            .saveToDisk('refresh_token', authResponse.refreshToken);
+            .saveToDisk(StorageKeys.refreshToken, authResponse.refreshToken);
 
         // process initial request
         final RequestOptions requestOptions = err.requestOptions;
