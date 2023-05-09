@@ -10,7 +10,7 @@ from rest_framework import serializers
 from health_institution.models import HealthInstitution
 from lab.models import TestRequest
 from patient.models import EmergencyContact
-from pos.models import PatientCheckIn, Prescription
+from pos.models import PatientCheckIn, Prescription, PrescriptionItem
 from users.models import Patient, User
 
 
@@ -93,4 +93,20 @@ class PatientCheckInModelSerializer(serializers.ModelSerializer):
 class PatientPrescriptionModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Prescription
+        fields = "__all__"
+
+    def to_representation(self, instance):
+        prescription = super(
+            PatientPrescriptionModelSerializer, self
+        ).to_representation(instance)
+        prescription["health_institution"] = instance.prepared_at.name
+        prescription["prescription_items"] = PatientPrescriptionItemModelSerializer(
+            instance.items, many=True
+        ).data
+        return prescription
+
+
+class PatientPrescriptionItemModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PrescriptionItem
         fields = "__all__"

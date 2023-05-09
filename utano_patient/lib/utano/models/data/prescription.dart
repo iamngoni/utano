@@ -21,6 +21,7 @@ class Prescription with _$Prescription {
     required String patient,
     @JsonKey(name: 'prescription_number') required String prescriptionNumber,
     @JsonKey(name: 'prepared_at') required String preparedAt,
+    @JsonKey(name: 'health_institution') required String healthInstitution,
     @JsonKey(name: 'prepared_by') required String preparedBy,
     @JsonKey(name: 'check_in') required String checkIn,
     @JsonKey(name: 'created_at') required DateTime createdAt,

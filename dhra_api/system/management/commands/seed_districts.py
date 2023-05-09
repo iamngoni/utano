@@ -20,18 +20,8 @@ class Command(BaseCommand):
         """
         try:
             provinces = [
-                {
-                    "name": "Bulawayo",
-                    "districts": [
-                        "Bulawayo"
-                    ]
-                },
-                {
-                    "name": "Harare",
-                    "districts": [
-                        "Harare"
-                    ]
-                },
+                {"name": "Bulawayo", "districts": ["Bulawayo"]},
+                {"name": "Harare", "districts": ["Harare"]},
                 {
                     "name": "Manicaland",
                     "districts": [
@@ -41,8 +31,8 @@ class Command(BaseCommand):
                         "Makoni",
                         "Mutare",
                         "Mutasa",
-                        "Nyanga"
-                    ]
+                        "Nyanga",
+                    ],
                 },
                 {
                     "name": "Mashonaland Central",
@@ -55,8 +45,8 @@ class Command(BaseCommand):
                         "Muzarabani",
                         "Mukumbura",
                         "Rushinga",
-                        "Shamva"
-                    ]
+                        "Shamva",
+                    ],
                 },
                 {
                     "name": "Mashonaland East",
@@ -69,8 +59,8 @@ class Command(BaseCommand):
                         "Mutoko",
                         "Seke",
                         "Uzumba Maramba Pfungwe",
-                        "Wedza"
-                    ]
+                        "Wedza",
+                    ],
                 },
                 {
                     "name": "Mashonaland West",
@@ -83,8 +73,8 @@ class Command(BaseCommand):
                         "Sanyati",
                         "Zvimba",
                         "Kadoma",
-                        "Chinhoyi"
-                    ]
+                        "Chinhoyi",
+                    ],
                 },
                 {
                     "name": "Masvingo",
@@ -95,8 +85,8 @@ class Command(BaseCommand):
                         "Gutu",
                         "Masvingo",
                         "Mwenezi",
-                        "Zaka"
-                    ]
+                        "Zaka",
+                    ],
                 },
                 {
                     "name": "Matabeleland North",
@@ -107,8 +97,8 @@ class Command(BaseCommand):
                         "Lupane",
                         "Nkayi",
                         "Tsholotsho",
-                        "Umguza"
-                    ]
+                        "Umguza",
+                    ],
                 },
                 {
                     "name": "Matabeleland South",
@@ -119,8 +109,8 @@ class Command(BaseCommand):
                         "Insiza",
                         "Mangwe",
                         "Matobo",
-                        "Umzingwane"
-                    ]
+                        "Umzingwane",
+                    ],
                 },
                 {
                     "name": "Midlands",
@@ -132,9 +122,9 @@ class Command(BaseCommand):
                         "Kwekwe",
                         "Mberengwa",
                         "Shurugwi",
-                        "Zvishavane"
-                    ]
-                }
+                        "Zvishavane",
+                    ],
+                },
             ]
 
             for province in provinces:

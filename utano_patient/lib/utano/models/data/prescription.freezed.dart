@@ -27,6 +27,8 @@ mixin _$Prescription {
   String get prescriptionNumber => throw _privateConstructorUsedError;
   @JsonKey(name: 'prepared_at')
   String get preparedAt => throw _privateConstructorUsedError;
+  @JsonKey(name: 'health_institution')
+  String get healthInstitution => throw _privateConstructorUsedError;
   @JsonKey(name: 'prepared_by')
   String get preparedBy => throw _privateConstructorUsedError;
   @JsonKey(name: 'check_in')
@@ -57,6 +59,8 @@ abstract class $PrescriptionCopyWith<$Res> {
           String prescriptionNumber,
       @JsonKey(name: 'prepared_at')
           String preparedAt,
+      @JsonKey(name: 'health_institution')
+          String healthInstitution,
       @JsonKey(name: 'prepared_by')
           String preparedBy,
       @JsonKey(name: 'check_in')
@@ -85,6 +89,7 @@ class _$PrescriptionCopyWithImpl<$Res, $Val extends Prescription>
     Object? patient = null,
     Object? prescriptionNumber = null,
     Object? preparedAt = null,
+    Object? healthInstitution = null,
     Object? preparedBy = null,
     Object? checkIn = null,
     Object? createdAt = null,
@@ -110,6 +115,10 @@ class _$PrescriptionCopyWithImpl<$Res, $Val extends Prescription>
       preparedAt: null == preparedAt
           ? _value.preparedAt
           : preparedAt // ignore: cast_nullable_to_non_nullable
+              as String,
+      healthInstitution: null == healthInstitution
+          ? _value.healthInstitution
+          : healthInstitution // ignore: cast_nullable_to_non_nullable
               as String,
       preparedBy: null == preparedBy
           ? _value.preparedBy
@@ -147,6 +156,8 @@ abstract class _$$_PrescriptionCopyWith<$Res>
           String prescriptionNumber,
       @JsonKey(name: 'prepared_at')
           String preparedAt,
+      @JsonKey(name: 'health_institution')
+          String healthInstitution,
       @JsonKey(name: 'prepared_by')
           String preparedBy,
       @JsonKey(name: 'check_in')
@@ -173,6 +184,7 @@ class __$$_PrescriptionCopyWithImpl<$Res>
     Object? patient = null,
     Object? prescriptionNumber = null,
     Object? preparedAt = null,
+    Object? healthInstitution = null,
     Object? preparedBy = null,
     Object? checkIn = null,
     Object? createdAt = null,
@@ -198,6 +210,10 @@ class __$$_PrescriptionCopyWithImpl<$Res>
       preparedAt: null == preparedAt
           ? _value.preparedAt
           : preparedAt // ignore: cast_nullable_to_non_nullable
+              as String,
+      healthInstitution: null == healthInstitution
+          ? _value.healthInstitution
+          : healthInstitution // ignore: cast_nullable_to_non_nullable
               as String,
       preparedBy: null == preparedBy
           ? _value.preparedBy
@@ -230,6 +246,8 @@ class _$_Prescription extends _Prescription {
           required this.prescriptionNumber,
       @JsonKey(name: 'prepared_at')
           required this.preparedAt,
+      @JsonKey(name: 'health_institution')
+          required this.healthInstitution,
       @JsonKey(name: 'prepared_by')
           required this.preparedBy,
       @JsonKey(name: 'check_in')
@@ -257,6 +275,9 @@ class _$_Prescription extends _Prescription {
   @JsonKey(name: 'prepared_at')
   final String preparedAt;
   @override
+  @JsonKey(name: 'health_institution')
+  final String healthInstitution;
+  @override
   @JsonKey(name: 'prepared_by')
   final String preparedBy;
   @override
@@ -277,7 +298,7 @@ class _$_Prescription extends _Prescription {
 
   @override
   String toString() {
-    return 'Prescription(id: $id, notes: $notes, patient: $patient, prescriptionNumber: $prescriptionNumber, preparedAt: $preparedAt, preparedBy: $preparedBy, checkIn: $checkIn, createdAt: $createdAt, prescriptionItems: $prescriptionItems)';
+    return 'Prescription(id: $id, notes: $notes, patient: $patient, prescriptionNumber: $prescriptionNumber, preparedAt: $preparedAt, healthInstitution: $healthInstitution, preparedBy: $preparedBy, checkIn: $checkIn, createdAt: $createdAt, prescriptionItems: $prescriptionItems)';
   }
 
   @override
@@ -292,6 +313,8 @@ class _$_Prescription extends _Prescription {
                 other.prescriptionNumber == prescriptionNumber) &&
             (identical(other.preparedAt, preparedAt) ||
                 other.preparedAt == preparedAt) &&
+            (identical(other.healthInstitution, healthInstitution) ||
+                other.healthInstitution == healthInstitution) &&
             (identical(other.preparedBy, preparedBy) ||
                 other.preparedBy == preparedBy) &&
             (identical(other.checkIn, checkIn) || other.checkIn == checkIn) &&
@@ -310,6 +333,7 @@ class _$_Prescription extends _Prescription {
       patient,
       prescriptionNumber,
       preparedAt,
+      healthInstitution,
       preparedBy,
       checkIn,
       createdAt,
@@ -338,6 +362,8 @@ abstract class _Prescription extends Prescription {
               required final String prescriptionNumber,
           @JsonKey(name: 'prepared_at')
               required final String preparedAt,
+          @JsonKey(name: 'health_institution')
+              required final String healthInstitution,
           @JsonKey(name: 'prepared_by')
               required final String preparedBy,
           @JsonKey(name: 'check_in')
@@ -364,6 +390,9 @@ abstract class _Prescription extends Prescription {
   @override
   @JsonKey(name: 'prepared_at')
   String get preparedAt;
+  @override
+  @JsonKey(name: 'health_institution')
+  String get healthInstitution;
   @override
   @JsonKey(name: 'prepared_by')
   String get preparedBy;
